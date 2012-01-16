@@ -1,0 +1,75 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>注册 - @ViewData["SiteName"]</title>
+    <link href="../../Content/css/base.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+    .form label
+    {
+        display:block;
+        margin-bottom:5px;
+    }
+    </style>
+</head>
+<body>
+    <div>
+    <h2>注册新的帐户</h2>
+    <p>
+        使用下面的表单创建新的帐户。&nbsp;&nbsp;&nbsp;&nbsp; 如果已经注册，请 @Html.ActionLink("登录", "Login")。
+    </p>
+    @Html.ValidationSummary()
+
+    @using (Html.BeginForm()) {
+        <div class="form">
+            <fieldset>
+                <legend>帐户信息</legend>
+                <p>
+                    <label for="username">邮 箱：</label>
+                    @Html.TextBox("email")
+                    @Html.ValidationMessage("email")
+                </p>
+                <p>
+                    <label for="password">密 码：</label>
+                    @Html.Password("password")
+                    @Html.ValidationMessage("password")
+                </p>
+                <p>
+                    <label for="confirmPassword">确认密码：</label>
+                    @Html.Password("repassword")
+                    @Html.ValidationMessage("repassword")
+                </p>
+                <p>
+                    <label for="username">昵 称：</label>
+                    @Html.TextBox("nickname")
+                    @Html.ValidationMessage("nickname")
+                </p>
+                <p>
+                    <label for="confirmPassword">验证码：</label>
+                    @Html.TextBox("verifyCode")
+                    <img id="imgVerifyCode" src="../../Common/VerifyCode.aspx?t=<%=DateTime.Now %>" alt="刷新验证码" style="cursor:pointer;" onclick="refreshCode('imgVerifyCode')" />
+          	        <a href="javascript:refreshCode('imgVerifyCode')">看不清？</a>
+                    @Html.ValidationMessage("verifyCode")
+                    <script type="text/javascript">
+                        //刷新
+                        function refreshCode(id) {
+                            var img = document.getElementById(id);
+                            img.src = "../../Common/VerifyCode.aspx?t=" + new Date().getTime();
+                        }
+                    </script>
+                </p>
+                <p>
+                    <input type="submit" value="注册" /> 
+                     @Html.ValidationMessage("ErrorMsg")
+                </p>
+            </fieldset>
+        </div>
+    }
+    </div>
+</body>
+</html>
+
