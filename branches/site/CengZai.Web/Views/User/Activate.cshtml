@@ -1,0 +1,36 @@
+﻿@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<link href="../../Content/Site.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+.form label
+{
+    display:block;
+    margin-bottom:5px;
+}
+</style>
+<html>
+<head>
+    <title>用户激活-@ViewData["SiteName"]</title>
+</head>
+<body>
+    <div>
+    <h2>用户激活</h2>
+    <p>
+    </p>
+
+        <div class="form">
+            <fieldset>
+                <legend>激活提示</legend>
+                    @ViewData["Msg"] 
+                    <br />
+                    @Html.ActionLink("进行登录", "Login", "User")
+            </fieldset>
+        </div>
+
+    </div>
+</body>
+</html>

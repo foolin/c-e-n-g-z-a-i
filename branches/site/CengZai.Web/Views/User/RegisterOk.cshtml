@@ -1,0 +1,52 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>注册成功！ - @ViewData["SiteName"]</title>
+</head>
+<body>
+    <div>
+        
+    </div>
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<link href="../../Content/Site.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+.form label
+{
+    display:block;
+    margin-bottom:5px;
+}
+</style>
+<html>
+<head>
+    <title>List</title>
+</head>
+<body>
+    <div>
+    <h2>注册成功</h2>
+    <p>
+       如果无法收到邮件，请点击这里 @Html.ActionLink("重发注册激活邮件", "Login")。
+    </p>
+
+        <div class="form">
+            <fieldset>
+                <legend>温馨提示</legend>
+                恭喜你，你已经注册成功！我们已发送一封激活邮件到您邮箱：  @ViewData["Email"]
+                <br />
+                为了您帐号的安全，请及时登录邮箱进行激活！
+            </fieldset>
+        </div>
+
+    </div>
+</body>
+</html>
+
+
