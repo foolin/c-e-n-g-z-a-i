@@ -83,9 +83,9 @@ namespace CengZai.Web.Controllers
                 Session["LOGIN_USER"] = user;
 
                 if (Request["ReturnUrl"] == null || Request["ReturnUrl"].Length == 0)
-                    return Content("<script>alert('登录成功！');location.href='/';</script>");
+                    return Content("<script>location.href='/';</script>");
                 else
-                    return Content("<script>alert('登录成功！');location.href='" + Request["ReturnUrl"].ToString() + "';</script>");
+                    return Content("<script>location.href='" + Request["ReturnUrl"].ToString() + "';</script>");
             }
             catch (Exception ex)
             {
@@ -173,7 +173,7 @@ namespace CengZai.Web.Controllers
                 user.LoginIp = "";
                 user.LoginTime = null;
                 user.Mobile = "";
-                user.Nickname = "";
+                user.Nickname = nickname;
                 user.Password = md5Password;
                 user.Private = 0;
                 user.RegIp = Helper.Util.GetIP();
@@ -256,7 +256,7 @@ namespace CengZai.Web.Controllers
 
             ViewData["Msg"] = "激活失败，非法Url！";
             string verifyActiveCode = FormsAuthentication.HashPasswordForStoringInConfigFile(email + "#" + user.RegTime, "MD5");
-            if (verifyActiveCode.ToLower() != activateCode.Trim().ToLower())
+            if (verifyActiveCode.ToLower() == activateCode.Trim().ToLower())
             {
                 user.State = 1;
                 bll.Update(user);

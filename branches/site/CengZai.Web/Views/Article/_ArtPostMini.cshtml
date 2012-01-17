@@ -1,0 +1,14 @@
+﻿@{
+    Layout = null;
+}
+
+@using (Html.BeginForm("Post", "Article"))
+{
+    <div class="post-edit-mini">
+        <div>@Html.ActionLink("进入完整版编辑器", "Post", "Article")</div>
+        @Html.TextArea("Content", new { @class = "editor" })
+        <div><a href="#">图片</a> <a href="#">视频</a> <a href="#">图片</a> <input type="submit" name="btn-post" value="提交" /> </div>
+    </div>
+                                                         
+}
+
