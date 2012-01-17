@@ -53,11 +53,13 @@
     <Compile Include="BLL\Article.cs" />
     <Compile Include="BLL\ArtReply.cs" />
     <Compile Include="BLL\Category.cs" />
+    <Compile Include="BLL\Dynamic.cs" />
     <Compile Include="BLL\Like.cs" />
     <Compile Include="BLL\User.cs" />
     <Compile Include="DAL\Article.cs" />
     <Compile Include="DAL\ArtReply.cs" />
     <Compile Include="DAL\Category.cs" />
+    <Compile Include="DAL\Dynamic.cs" />
     <Compile Include="DAL\Like.cs" />
     <Compile Include="DAL\User.cs" />
     <Compile Include="Helper\CommandInfo.cs" />
@@ -71,6 +73,7 @@
     <Compile Include="Model\Article.cs" />
     <Compile Include="Model\ArtReply.cs" />
     <Compile Include="Model\Category.cs" />
+    <Compile Include="Model\Dynamic.cs" />
     <Compile Include="Model\Like.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -3,11 +3,30 @@ namespace CengZai.Model
 {
     public enum ArtType
     {
+        /// <summary>
+        /// 微博/心情
+        /// </summary>
         Weibo = 0,
+        /// <summary>
+        /// 文本提交
+        /// </summary>
         Text = 1,
+        /// <summary>
+        /// 图片
+        /// </summary>
         Image = 2,
+        /// <summary>
+        /// 音频
+        /// </summary>
         Audio = 3,
-        Video = 4
+        /// <summary>
+        /// 视频
+        /// </summary>
+        Video = 4,
+        /// <summary>
+        /// 连接
+        /// </summary>
+        Link = 5,
     }
 
 
@@ -69,7 +88,7 @@ namespace CengZai.Model
 			get{return _content;}
 		}
 		/// <summary>
-		/// Url资源（图片）
+		/// Url资源（图片、音频、视频、连接），多用竖线“|”分割
 		/// </summary>
 		public string Source
 		{
