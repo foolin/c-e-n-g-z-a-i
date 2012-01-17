@@ -52,9 +52,11 @@ namespace CengZai.DAL
 			strSql.Append(";select @@IDENTITY");
 			SqlParameter[] parameters = {
 					new SqlParameter("@CategoryName", SqlDbType.NVarChar,50),
-					new SqlParameter("@CategoryDesc", SqlDbType.NVarChar,300)};
+					new SqlParameter("@CategoryDesc", SqlDbType.NVarChar,300),
+                    new SqlParameter("@UserID", SqlDbType.Int, 4)};
 			parameters[0].Value = model.CategoryName;
 			parameters[1].Value = model.CategoryDesc;
+            parameters[2].Value = model.UserID;
 
 			object obj = DbHelperSQL.GetSingle(strSql.ToString(),parameters);
 			if (obj == null)
@@ -146,7 +148,7 @@ namespace CengZai.DAL
 		{
 			
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select  top 1 CategoryID,CategoryName,CategoryDesc from T_Category ");
+			strSql.Append("select  top 1 CategoryID,CategoryName,CategoryDesc,UserID from T_Category ");
 			strSql.Append(" where CategoryID=@CategoryID");
 			SqlParameter[] parameters = {
 					new SqlParameter("@CategoryID", SqlDbType.Int,4)
@@ -169,6 +171,10 @@ namespace CengZai.DAL
 				{
 					model.CategoryDesc=ds.Tables[0].Rows[0]["CategoryDesc"].ToString();
 				}
+                if (ds.Tables[0].Rows[0]["UserID"] != null && ds.Tables[0].Rows[0]["UserID"].ToString() != "")
+                {
+                    model.UserID = int.Parse(ds.Tables[0].Rows[0]["CategoryDesc"].ToString());
+                }
 				return model;
 			}
 			else
@@ -203,7 +209,7 @@ namespace CengZai.DAL
 			{
 				strSql.Append(" top "+Top.ToString());
 			}
-			strSql.Append(" CategoryID,CategoryName,CategoryDesc ");
+            strSql.Append(" CategoryID,CategoryName,CategoryDesc,UserID ");
 			strSql.Append(" FROM T_Category ");
 			if(strWhere.Trim()!="")
 			{

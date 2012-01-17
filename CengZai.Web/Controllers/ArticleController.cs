@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using CengZai.Web.Code;
 
 namespace CengZai.Web.Controllers
 {
@@ -10,7 +11,7 @@ namespace CengZai.Web.Controllers
     {
         //
         // GET: /Article/
-
+        [AuthorizedFilter]
         public ActionResult Index()
         {
             BLL.Article bll = new BLL.Article();
@@ -18,7 +19,21 @@ namespace CengZai.Web.Controllers
             return View();
         }
 
+        [AuthorizedFilter]
         public ActionResult List()
+        {
+            return View();
+        }
+
+        [AuthorizedFilter]
+        public ActionResult Post()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [AuthorizedFilter]
+        public ActionResult Post()
         {
             return View();
         }

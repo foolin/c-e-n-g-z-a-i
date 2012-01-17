@@ -83,6 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Common\VerifyCode.aspx" />
+    <Content Include="Content\css\article.css" />
     <Content Include="Content\css\ui-lightness\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
     <Content Include="Content\css\ui-lightness\images\ui-bg_diagonals-thick_20_666666_40x40.png" />
     <Content Include="Content\css\ui-lightness\images\ui-bg_flat_10_000000_40x100.png" />
@@ -147,6 +148,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Article\_ArtPostMini.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

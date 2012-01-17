@@ -34,6 +34,11 @@
                     @Html.ValidationMessage("email")
                 </p>
                 <p>
+                    <label for="username">昵 称：</label>
+                    @Html.TextBox("nickname")
+                    @Html.ValidationMessage("nickname")
+                </p>
+                <p>
                     <label for="password">密 码：</label>
                     @Html.Password("password")
                     @Html.ValidationMessage("password")
@@ -42,11 +47,6 @@
                     <label for="confirmPassword">确认密码：</label>
                     @Html.Password("repassword")
                     @Html.ValidationMessage("repassword")
-                </p>
-                <p>
-                    <label for="username">昵 称：</label>
-                    @Html.TextBox("nickname")
-                    @Html.ValidationMessage("nickname")
                 </p>
                 <p>
                     <label for="confirmPassword">验证码：</label>

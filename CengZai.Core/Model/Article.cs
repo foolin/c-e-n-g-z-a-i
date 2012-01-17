@@ -1,6 +1,16 @@
 ﻿using System;
 namespace CengZai.Model
 {
+    public enum ArtType
+    {
+        Weibo = 0,
+        Text = 1,
+        Image = 2,
+        Audio = 3,
+        Video = 4
+    }
+
+
 	/// <summary>
 	/// Article:实体类(属性说明自动提取数据库字段的描述信息)
 	/// </summary>

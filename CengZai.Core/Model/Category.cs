@@ -13,8 +13,9 @@ namespace CengZai.Model
 		private int _categoryid;
 		private string _categoryname;
 		private string _categorydesc;
+        private int? _userid;
 		/// <summary>
-		/// 
+		/// 分类ID
 		/// </summary>
 		public int CategoryID
 		{
@@ -22,7 +23,7 @@ namespace CengZai.Model
 			get{return _categoryid;}
 		}
 		/// <summary>
-		/// 
+		/// 分类名称
 		/// </summary>
 		public string CategoryName
 		{
@@ -30,13 +31,22 @@ namespace CengZai.Model
 			get{return _categoryname;}
 		}
 		/// <summary>
-		/// 
+		/// 分类描述
 		/// </summary>
 		public string CategoryDesc
 		{
 			set{ _categorydesc=value;}
 			get{return _categorydesc;}
 		}
+
+        /// <summary>
+        /// 用户ID
+        /// </summary>
+        public int? UserID
+        {
+            set { _userid = value; }
+            get { return _userid; }
+        }
 		#endregion Model
 
 	}
