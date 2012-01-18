@@ -4,10 +4,25 @@
 
 @using (Html.BeginForm("Post", "Article"))
 {
-    <div class="post-edit-mini">
-        <div>@Html.ActionLink("进入完整版编辑器", "Post", "Article")</div>
-        @Html.TextArea("Content", new { @class = "editor" })
-        <div><a href="#">图片</a> <a href="#">视频</a> <a href="#">图片</a> <input type="submit" name="btn-post" value="提交" /> </div>
+    <div class="post-editor">
+        <h2>发布日志</h2>
+        <dl>
+            <dt><h3>标题</h3><span>（可不填）</span></dt>
+            <dd>@Html.TextBox("title")</dd>
+            <dt>内容</dt>
+            <dd>@Html.TextArea("content", new { @class = "editor" })</dd>
+            <dt><h3>分类</h3><span>（可不填）</span></dt>
+            <dd>@Html.DropDownList("categoryid", ViewBag.CategoryList as SelectList)</dd>
+            <dd>
+                @Html.Hidden("type", CengZai.Model.ArtType.Text)
+               @Html.ActionLink("取消","Index","Home") <input type="submit" name="btn-draft" value="草稿" />   <input type="submit" name="btn-post" value="提交" /> 
+            </dd>
+        </dl>
+        <div>
+        
+            
+        </div>
+
     </div>
                                                          
 }

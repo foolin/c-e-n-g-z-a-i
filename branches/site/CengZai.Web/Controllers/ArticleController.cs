@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using CengZai.Web.Code;
 using CengZai;
+using System.Data;
 
 namespace CengZai.Web.Controllers
 {
@@ -61,20 +62,32 @@ namespace CengZai.Web.Controllers
 
         [HttpPost]
         [AuthorizedFilter]
-        public ActionResult Post(string title, string content, string type)
+        public ActionResult PostText(string title, string content, string categoryid)
         {
-            if (Request.IsAjaxRequest())
-            {
-                return AlertAndBack("Ajax提交！");
-            }
-            else
-            {
-                return AlertAndBack("非Ajax提交！");
-            }
             if (string.IsNullOrEmpty(title) || string.IsNullOrEmpty(content))
             {
-                return AlertAndBack("标题或者内容至少1一项不能为空！");
+                return AlertAndBack("标题或者内容至少一项不能为空！");
             }
+
+            List<Model.Category> categories = new BLL.Category().GetModelList(string.Format("UserID={0}", loginUser.UserID));
+            ViewData["Categories"] = new SelectList(categories, "CategoryID", "CategoryName");
+            return View();
+        }
+
+
+        [HttpPost]
+        [AuthorizedFilter]
+        public ActionResult PostText(string title, string content, string source, string type)
+        {
+            type = (type + "").Trim().ToLower();
+            if (string.IsNullOrEmpty(source))
+            {
+                if (type == Model.ArtType.Image.ToString().ToLower())
+                {
+                    return AlertAndBack("请上传图片");
+                }
+            }
+
             return View();
         }
 

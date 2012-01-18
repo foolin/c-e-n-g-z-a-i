@@ -176,7 +176,7 @@ namespace CengZai.Model
 			get{return _private;}
 		}
 		/// <summary>
-		/// 状态：0=正常，-1=删除
+        /// 状态：-1=删除，0=草稿，1=发布
 		/// </summary>
 		public int? State
 		{
