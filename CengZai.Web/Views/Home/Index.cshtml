@@ -16,7 +16,7 @@
 
 <div class="nav">
     <ul>
-        <li>@Html.ActionLink("日志","PostText", "Article", new { Type=CengZai.Model.ArtType.Text}, null)</li>
+        <li>@Html.ActionLink("日志","Post", "Article", new { Type=(int)CengZai.Model.ArtType.Text}, null)</li>
         <li>@Html.ActionLink("相册","Post", "Article", new { Type=CengZai.Model.ArtType.Image}, null)</li>
         <li>@Html.ActionLink("音频","Post", "Article", new { Type=CengZai.Model.ArtType.Audio}, null)</li>
         <li>@Html.ActionLink("视频","Post", "Article", new { Type=CengZai.Model.ArtType.Video}, null)</li>

@@ -30,65 +30,136 @@ namespace CengZai.Web.Controllers
         [AuthorizedFilter]
         public ActionResult Post()
         {
-            string strType = (Request["type"] + "").Trim().ToLower();
+            int type = 0;
+            int.TryParse(Request["type"], out type);
+            //分类设置
+            List<Model.Category> categories = new BLL.Category().GetModelList(string.Format("UserID={0}", GetLoginUser().UserID));
+            if (categories == null)
+            {
+                ViewBag.CategoryList = new List<SelectListItem>(){
+                    new SelectListItem(){ Text = "默认分类", Value = "0"}
+                };
+            }
+            else
+            {
+                ViewBag.CategoryList = new SelectList(categories, "CategoryID", "CategoryName");
+            }
+            //隐私设置
+            var privateList = new List<SelectListItem>(){
+                new SelectListItem(){ Text = "所有人可见", Value="0", Selected=true},
+                new SelectListItem(){ Text = "仅好友可见", Value="1"},
+                new SelectListItem(){Text = "仅自己可见", Value="2"},
+            };
+            ViewBag.PrivateList = privateList;
 
-            if (strType == Model.ArtType.Audio.ToString().ToLower())
+            if (type == (int)Model.ArtType.Audio)
             {
                 return View("PostAudio");
             }
-            else if (strType == Model.ArtType.Image.ToString().ToLower())
+            else if (type == (int)Model.ArtType.Image)
             {
                 return View("PostImage");
             }
-            else if (strType == Model.ArtType.Link.ToString().ToLower())
+            else if (type == (int)Model.ArtType.Link)
             {
                 return View("PostLink");
             }
-            else if (strType == Model.ArtType.Video.ToString().ToLower())
+            else if (type == (int)Model.ArtType.Video)
             {
                 return View("PostVideo");
             }
-            //else if (strType == Model.ArtType.Weibo.ToString().ToLower())
-            //{
-            //    return View("PostText");
-            //}
-            else if (strType == Model.ArtType.Text.ToString().ToLower())
+            else if (type == (int)Model.ArtType.Text)
             {
                 //文章
+                return View("PostText");
+            }
+            else if (type == (int)Model.ArtType.Weibo)
+            {
                 return View();
             }
             return View();
         }
 
-        [HttpPost]
-        [AuthorizedFilter]
-        public ActionResult PostText(string title, string content, string categoryid)
-        {
-            if (string.IsNullOrEmpty(title) || string.IsNullOrEmpty(content))
-            {
-                return AlertAndBack("标题或者内容至少一项不能为空！");
-            }
-
-            List<Model.Category> categories = new BLL.Category().GetModelList(string.Format("UserID={0}", loginUser.UserID));
-            ViewData["Categories"] = new SelectList(categories, "CategoryID", "CategoryName");
-            return View();
-        }
-
 
         [HttpPost]
         [AuthorizedFilter]
-        public ActionResult PostText(string title, string content, string source, string type)
+        public ActionResult Post(FormCollection form, bool? bIsTop)
         {
-            type = (type + "").Trim().ToLower();
-            if (string.IsNullOrEmpty(source))
+            try
             {
-                if (type == Model.ArtType.Image.ToString().ToLower())
+                int type = 0;
+                int.TryParse(form["type"], out type);
+                int categoryID = 0;
+                int.TryParse(form["type"], out categoryID);
+                int isTop = 0;
+                if (form["isTop"] == "true")
                 {
-                    return AlertAndBack("请上传图片");
+                    isTop = 1;
                 }
+                int.TryParse(form["isTop"], out isTop);
+                int privat = 0;
+                int.TryParse(form["private"], out privat);
+
+                BLL.Article bll = new BLL.Article();
+                Model.Article model = new Model.Article();
+                model.CategoryID = categoryID;
+                model.Content = form["content"];
+                model.DownCount = 0;
+                model.IsTop = isTop;
+                model.PostIP = Helper.Util.GetIP();
+                model.PostTime = DateTime.Now;
+                model.Private = privat;
+                model.ReportCount = 0;
+                model.Source = form["source"];
+                model.State = 1;
+                model.Title = form["title"];
+                model.TopCount = 0;
+                model.Type = type;
+                model.UserID = GetLoginUser().UserID;
+                model.ViewCount = 0;
+
+
+                if (type == (int)Model.ArtType.Audio)
+                {
+                    if (string.IsNullOrEmpty(form["source"]))
+                    {
+                        return AlertAndBack("请上传图片");
+                    }
+                }
+                else if (type == (int)Model.ArtType.Image)
+                {
+                    return View("PostImage");
+                }
+                else if (type == (int)Model.ArtType.Link)
+                {
+                    return View("PostLink");
+                }
+                else if (type == (int)Model.ArtType.Video)
+                {
+                    return View("PostVideo");
+                }
+                else if (type == (int)Model.ArtType.Text)
+                {
+                    if (string.IsNullOrEmpty(model.Title) && string.IsNullOrEmpty(model.Content))
+                    {
+                        return AlertAndBack("标题或者内容至少一项不能为空！");
+                    }
+                    //文章
+                }
+                //else if (strType == Model.ArtType.Weibo.ToString().ToLower())
+                //{
+                //    return View("PostText");
+                //}
+
+                bll.Add(model);
+            }
+            catch (Exception ex)
+            {
+                Helper.Log.AddErrorInfo("Article/Post操作异常:" + ex.Message);
+                return AlertAndBack("操作异常，请检查输入是否合法！");
             }
 
-            return View();
+            return AlertAndBack("提交成功！");
         }
 
     }
