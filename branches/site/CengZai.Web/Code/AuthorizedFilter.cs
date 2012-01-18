@@ -10,7 +10,7 @@ namespace CengZai.Web.Code
 {
     public class AuthorizedFilter : ActionFilterAttribute
     {
-        public override void OnActionExecuted(ActionExecutedContext filterContext)
+        public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             //判断权限
             Model.User user = filterContext.HttpContext.Session["LOGIN_USER"] as Model.User;

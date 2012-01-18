@@ -9,18 +9,8 @@ namespace CengZai.Web.Controllers
 {
     public class BaseController : Controller
     {
-        /// <summary>
-        /// 用户
-        /// </summary>
-        protected Model.User loginUser = null;
-
         public BaseController()
         {
-            //try
-            //{
-            //    loginUser = Session["LOGIN_USER"] as Model.User;    //取User的值
-            //}
-            //catch { }
             //初始化
             ViewData["SiteName"] = Config.SiteName;
         }
@@ -31,7 +21,7 @@ namespace CengZai.Web.Controllers
         /// <returns></returns>
         public Model.User GetLoginUser()
         {
-            return loginUser;
+            return Session["LOGIN_USER"] as Model.User;
         }
 
 
