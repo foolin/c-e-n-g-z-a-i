@@ -10,17 +10,17 @@ namespace CengZai.Model
 		public Dynamic()
 		{}
 		#region Model
-		private int _id;
+		private int _dynid;
 		private string _content;
 		private int? _userid;
 		private DateTime? _posttime;
 		/// <summary>
 		/// 
 		/// </summary>
-		public int ID
+		public int DynID
 		{
-			set{ _id=value;}
-			get{return _id;}
+			set{ _dynid=value;}
+			get{return _dynid;}
 		}
 		/// <summary>
 		/// 

@@ -14,7 +14,7 @@
             <dt><h3>分类</h3><span>（可不填）</span></dt>
             <dd>@Html.DropDownList("categoryid", ViewData["CategoryList"] as SelectList, "默认分类") <a href="#">新建分类</a></dd>
             <dt><h3>是否置顶</h3><span>（可不填）</span></dt>
-            <dd>@Html.CheckBox("isTop", false)置顶</dd>
+            <dd><input type="checkbox" name="isTop" value="1" />置顶1</dd>
             <dt><h3>设置隐私</h3><span>（可不填）</span></dt>
             <dd>@Html.DropDownList("private", ViewData["PrivateList"] as List<SelectListItem>)</dd>
             <dd>

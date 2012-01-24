@@ -38,7 +38,6 @@ namespace CengZai.BLL
         {
             return dal.Exists(email);
         }
-
 		/// <summary>
 		/// 增加一条数据
 		/// </summary>
@@ -170,6 +169,10 @@ namespace CengZai.BLL
 					{
 						model.LoginTime=DateTime.Parse(dt.Rows[n]["LoginTime"].ToString());
 					}
+					if(dt.Rows[n]["LoginCount"]!=null && dt.Rows[n]["LoginCount"].ToString()!="")
+					{
+						model.LoginCount=int.Parse(dt.Rows[n]["LoginCount"].ToString());
+					}
 					if(dt.Rows[n]["RegIp"]!=null && dt.Rows[n]["RegIp"].ToString()!="")
 					{
 					model.RegIp=dt.Rows[n]["RegIp"].ToString();
@@ -186,9 +189,9 @@ namespace CengZai.BLL
 					{
 						model.Private=int.Parse(dt.Rows[n]["Private"].ToString());
 					}
-					if(dt.Rows[n]["LoginCount"]!=null && dt.Rows[n]["LoginCount"].ToString()!="")
+					if(dt.Rows[n]["Domain"]!=null && dt.Rows[n]["Domain"].ToString()!="")
 					{
-						model.LoginCount=int.Parse(dt.Rows[n]["LoginCount"].ToString());
+					model.Domain=dt.Rows[n]["Domain"].ToString();
 					}
 					modelList.Add(model);
 				}

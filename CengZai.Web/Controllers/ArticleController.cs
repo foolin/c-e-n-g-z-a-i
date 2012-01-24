@@ -92,7 +92,7 @@ namespace CengZai.Web.Controllers
                 int categoryID = 0;
                 int.TryParse(form["type"], out categoryID);
                 int isTop = 0;
-                if (form["isTop"] == "true")
+                if (form["isTop"] == "1")
                 {
                     isTop = 1;
                 }
@@ -110,7 +110,6 @@ namespace CengZai.Web.Controllers
                 model.PostTime = DateTime.Now;
                 model.Private = privat;
                 model.ReportCount = 0;
-                model.Source = form["source"];
                 model.State = 1;
                 model.Title = form["title"];
                 model.TopCount = 0;

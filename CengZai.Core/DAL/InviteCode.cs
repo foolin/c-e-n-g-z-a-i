@@ -6,11 +6,11 @@ using CengZai.Helper;
 namespace CengZai.DAL
 {
 	/// <summary>
-	/// 数据访问类:Dynamic
+	/// 数据访问类:InviteCode
 	/// </summary>
-	public partial class Dynamic
+	public partial class InviteCode
 	{
-		public Dynamic()
+		public InviteCode()
 		{}
 		#region  Method
 
@@ -19,21 +19,21 @@ namespace CengZai.DAL
 		/// </summary>
 		public int GetMaxId()
 		{
-		return DbHelperSQL.GetMaxID("DynID", "T_Dynamic"); 
+		return DbHelperSQL.GetMaxID("ID", "T_InviteCode"); 
 		}
 
 		/// <summary>
 		/// 是否存在该记录
 		/// </summary>
-		public bool Exists(int DynID)
+		public bool Exists(int ID)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select count(1) from T_Dynamic");
-			strSql.Append(" where DynID=@DynID");
+			strSql.Append("select count(1) from T_InviteCode");
+			strSql.Append(" where ID=@ID");
 			SqlParameter[] parameters = {
-					new SqlParameter("@DynID", SqlDbType.Int,4)
+					new SqlParameter("@ID", SqlDbType.Int,4)
 			};
-			parameters[0].Value = DynID;
+			parameters[0].Value = ID;
 
 			return DbHelperSQL.Exists(strSql.ToString(),parameters);
 		}
@@ -42,21 +42,21 @@ namespace CengZai.DAL
 		/// <summary>
 		/// 增加一条数据
 		/// </summary>
-		public int Add(CengZai.Model.Dynamic model)
+		public int Add(CengZai.Model.InviteCode model)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("insert into T_Dynamic(");
-			strSql.Append("Content,UserID,PostTime)");
+			strSql.Append("insert into T_InviteCode(");
+			strSql.Append("Email,Invite,UserID)");
 			strSql.Append(" values (");
-			strSql.Append("@Content,@UserID,@PostTime)");
+			strSql.Append("@Email,@Invite,@UserID)");
 			strSql.Append(";select @@IDENTITY");
 			SqlParameter[] parameters = {
-					new SqlParameter("@Content", SqlDbType.NVarChar,300),
-					new SqlParameter("@UserID", SqlDbType.Int,4),
-					new SqlParameter("@PostTime", SqlDbType.DateTime)};
-			parameters[0].Value = model.Content;
-			parameters[1].Value = model.UserID;
-			parameters[2].Value = model.PostTime;
+					new SqlParameter("@Email", SqlDbType.NVarChar,50),
+					new SqlParameter("@Invite", SqlDbType.NVarChar,50),
+					new SqlParameter("@UserID", SqlDbType.Int,4)};
+			parameters[0].Value = model.Email;
+			parameters[1].Value = model.Invite;
+			parameters[2].Value = model.UserID;
 
 			object obj = DbHelperSQL.GetSingle(strSql.ToString(),parameters);
 			if (obj == null)
@@ -71,23 +71,23 @@ namespace CengZai.DAL
 		/// <summary>
 		/// 更新一条数据
 		/// </summary>
-		public bool Update(CengZai.Model.Dynamic model)
+		public bool Update(CengZai.Model.InviteCode model)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("update T_Dynamic set ");
-			strSql.Append("Content=@Content,");
-			strSql.Append("UserID=@UserID,");
-			strSql.Append("PostTime=@PostTime");
-			strSql.Append(" where DynID=@DynID");
+			strSql.Append("update T_InviteCode set ");
+			strSql.Append("Email=@Email,");
+			strSql.Append("Invite=@Invite,");
+			strSql.Append("UserID=@UserID");
+			strSql.Append(" where ID=@ID");
 			SqlParameter[] parameters = {
-					new SqlParameter("@Content", SqlDbType.NVarChar,300),
+					new SqlParameter("@Email", SqlDbType.NVarChar,50),
+					new SqlParameter("@Invite", SqlDbType.NVarChar,50),
 					new SqlParameter("@UserID", SqlDbType.Int,4),
-					new SqlParameter("@PostTime", SqlDbType.DateTime),
-					new SqlParameter("@DynID", SqlDbType.Int,4)};
-			parameters[0].Value = model.Content;
-			parameters[1].Value = model.UserID;
-			parameters[2].Value = model.PostTime;
-			parameters[3].Value = model.DynID;
+					new SqlParameter("@ID", SqlDbType.Int,4)};
+			parameters[0].Value = model.Email;
+			parameters[1].Value = model.Invite;
+			parameters[2].Value = model.UserID;
+			parameters[3].Value = model.ID;
 
 			int rows=DbHelperSQL.ExecuteSql(strSql.ToString(),parameters);
 			if (rows > 0)
@@ -103,16 +103,16 @@ namespace CengZai.DAL
 		/// <summary>
 		/// 删除一条数据
 		/// </summary>
-		public bool Delete(int DynID)
+		public bool Delete(int ID)
 		{
 			
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("delete from T_Dynamic ");
-			strSql.Append(" where DynID=@DynID");
+			strSql.Append("delete from T_InviteCode ");
+			strSql.Append(" where ID=@ID");
 			SqlParameter[] parameters = {
-					new SqlParameter("@DynID", SqlDbType.Int,4)
+					new SqlParameter("@ID", SqlDbType.Int,4)
 			};
-			parameters[0].Value = DynID;
+			parameters[0].Value = ID;
 
 			int rows=DbHelperSQL.ExecuteSql(strSql.ToString(),parameters);
 			if (rows > 0)
@@ -127,11 +127,11 @@ namespace CengZai.DAL
 		/// <summary>
 		/// 批量删除数据
 		/// </summary>
-		public bool DeleteList(string DynIDlist )
+		public bool DeleteList(string IDlist )
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("delete from T_Dynamic ");
-			strSql.Append(" where DynID in ("+DynIDlist + ")  ");
+			strSql.Append("delete from T_InviteCode ");
+			strSql.Append(" where ID in ("+IDlist + ")  ");
 			int rows=DbHelperSQL.ExecuteSql(strSql.ToString());
 			if (rows > 0)
 			{
@@ -147,36 +147,36 @@ namespace CengZai.DAL
 		/// <summary>
 		/// 得到一个对象实体
 		/// </summary>
-		public CengZai.Model.Dynamic GetModel(int DynID)
+		public CengZai.Model.InviteCode GetModel(int ID)
 		{
 			
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select  top 1 DynID,Content,UserID,PostTime from T_Dynamic ");
-			strSql.Append(" where DynID=@DynID");
+			strSql.Append("select  top 1 ID,Email,Invite,UserID from T_InviteCode ");
+			strSql.Append(" where ID=@ID");
 			SqlParameter[] parameters = {
-					new SqlParameter("@DynID", SqlDbType.Int,4)
+					new SqlParameter("@ID", SqlDbType.Int,4)
 			};
-			parameters[0].Value = DynID;
+			parameters[0].Value = ID;
 
-			CengZai.Model.Dynamic model=new CengZai.Model.Dynamic();
+			CengZai.Model.InviteCode model=new CengZai.Model.InviteCode();
 			DataSet ds=DbHelperSQL.Query(strSql.ToString(),parameters);
 			if(ds.Tables[0].Rows.Count>0)
 			{
-				if(ds.Tables[0].Rows[0]["DynID"]!=null && ds.Tables[0].Rows[0]["DynID"].ToString()!="")
+				if(ds.Tables[0].Rows[0]["ID"]!=null && ds.Tables[0].Rows[0]["ID"].ToString()!="")
 				{
-					model.DynID=int.Parse(ds.Tables[0].Rows[0]["DynID"].ToString());
+					model.ID=int.Parse(ds.Tables[0].Rows[0]["ID"].ToString());
 				}
-				if(ds.Tables[0].Rows[0]["Content"]!=null && ds.Tables[0].Rows[0]["Content"].ToString()!="")
+				if(ds.Tables[0].Rows[0]["Email"]!=null && ds.Tables[0].Rows[0]["Email"].ToString()!="")
 				{
-					model.Content=ds.Tables[0].Rows[0]["Content"].ToString();
+					model.Email=ds.Tables[0].Rows[0]["Email"].ToString();
+				}
+				if(ds.Tables[0].Rows[0]["Invite"]!=null && ds.Tables[0].Rows[0]["Invite"].ToString()!="")
+				{
+					model.Invite=ds.Tables[0].Rows[0]["Invite"].ToString();
 				}
 				if(ds.Tables[0].Rows[0]["UserID"]!=null && ds.Tables[0].Rows[0]["UserID"].ToString()!="")
 				{
 					model.UserID=int.Parse(ds.Tables[0].Rows[0]["UserID"].ToString());
-				}
-				if(ds.Tables[0].Rows[0]["PostTime"]!=null && ds.Tables[0].Rows[0]["PostTime"].ToString()!="")
-				{
-					model.PostTime=DateTime.Parse(ds.Tables[0].Rows[0]["PostTime"].ToString());
 				}
 				return model;
 			}
@@ -192,8 +192,8 @@ namespace CengZai.DAL
 		public DataSet GetList(string strWhere)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select DynID,Content,UserID,PostTime ");
-			strSql.Append(" FROM T_Dynamic ");
+			strSql.Append("select ID,Email,Invite,UserID ");
+			strSql.Append(" FROM T_InviteCode ");
 			if(strWhere.Trim()!="")
 			{
 				strSql.Append(" where "+strWhere);
@@ -212,8 +212,8 @@ namespace CengZai.DAL
 			{
 				strSql.Append(" top "+Top.ToString());
 			}
-			strSql.Append(" DynID,Content,UserID,PostTime ");
-			strSql.Append(" FROM T_Dynamic ");
+			strSql.Append(" ID,Email,Invite,UserID ");
+			strSql.Append(" FROM T_InviteCode ");
 			if(strWhere.Trim()!="")
 			{
 				strSql.Append(" where "+strWhere);
@@ -228,7 +228,7 @@ namespace CengZai.DAL
 		public int GetRecordCount(string strWhere)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select count(1) FROM T_Dynamic ");
+			strSql.Append("select count(1) FROM T_InviteCode ");
 			if(strWhere.Trim()!="")
 			{
 				strSql.Append(" where "+strWhere);
@@ -257,9 +257,9 @@ namespace CengZai.DAL
 			}
 			else
 			{
-				strSql.Append("order by T.DynID desc");
+				strSql.Append("order by T.ID desc");
 			}
-			strSql.Append(")AS Row, T.*  from T_Dynamic T ");
+			strSql.Append(")AS Row, T.*  from T_InviteCode T ");
 			if (!string.IsNullOrEmpty(strWhere.Trim()))
 			{
 				strSql.Append(" WHERE " + strWhere);
@@ -284,8 +284,8 @@ namespace CengZai.DAL
 					new SqlParameter("@OrderType", SqlDbType.Bit),
 					new SqlParameter("@strWhere", SqlDbType.VarChar,1000),
 					};
-			parameters[0].Value = "T_Dynamic";
-			parameters[1].Value = "DynID";
+			parameters[0].Value = "T_InviteCode";
+			parameters[1].Value = "ID";
 			parameters[2].Value = PageSize;
 			parameters[3].Value = PageIndex;
 			parameters[4].Value = 0;

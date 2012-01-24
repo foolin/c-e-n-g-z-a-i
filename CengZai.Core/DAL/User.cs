@@ -55,7 +55,6 @@ namespace CengZai.DAL
             return DbHelperSQL.Exists(strSql.ToString(), parameters);
         }
 
-
 		/// <summary>
 		/// 增加一条数据
 		/// </summary>
@@ -63,9 +62,9 @@ namespace CengZai.DAL
 		{
 			StringBuilder strSql=new StringBuilder();
 			strSql.Append("insert into T_User(");
-			strSql.Append("Email,Password,Nickname,Sign,Intro,Birth,Sex,AreaID,Mobile,LoginIp,LoginTime,RegIp,RegTime,State,Private,LoginCount)");
+			strSql.Append("Email,Password,Nickname,Sign,Intro,Birth,Sex,AreaID,Mobile,LoginIp,LoginTime,LoginCount,RegIp,RegTime,State,Private,Domain)");
 			strSql.Append(" values (");
-			strSql.Append("@Email,@Password,@Nickname,@Sign,@Intro,@Birth,@Sex,@AreaID,@Mobile,@LoginIp,@LoginTime,@RegIp,@RegTime,@State,@Private,@LoginCount)");
+			strSql.Append("@Email,@Password,@Nickname,@Sign,@Intro,@Birth,@Sex,@AreaID,@Mobile,@LoginIp,@LoginTime,@LoginCount,@RegIp,@RegTime,@State,@Private,@Domain)");
 			strSql.Append(";select @@IDENTITY");
 			SqlParameter[] parameters = {
 					new SqlParameter("@Email", SqlDbType.NVarChar,50),
@@ -73,17 +72,18 @@ namespace CengZai.DAL
 					new SqlParameter("@Nickname", SqlDbType.NVarChar,50),
 					new SqlParameter("@Sign", SqlDbType.NVarChar,50),
 					new SqlParameter("@Intro", SqlDbType.NVarChar,500),
-					new SqlParameter("@Birth", SqlDbType.DateTime,3),
+					new SqlParameter("@Birth", SqlDbType.DateTime),
 					new SqlParameter("@Sex", SqlDbType.Int,4),
 					new SqlParameter("@AreaID", SqlDbType.Int,4),
 					new SqlParameter("@Mobile", SqlDbType.NVarChar,50),
 					new SqlParameter("@LoginIp", SqlDbType.NVarChar,50),
 					new SqlParameter("@LoginTime", SqlDbType.DateTime),
+					new SqlParameter("@LoginCount", SqlDbType.Int,4),
 					new SqlParameter("@RegIp", SqlDbType.NVarChar,50),
 					new SqlParameter("@RegTime", SqlDbType.DateTime),
 					new SqlParameter("@State", SqlDbType.Int,4),
 					new SqlParameter("@Private", SqlDbType.Int,4),
-					new SqlParameter("@LoginCount", SqlDbType.Int,4)};
+					new SqlParameter("@Domain", SqlDbType.NVarChar,50)};
 			parameters[0].Value = model.Email;
 			parameters[1].Value = model.Password;
 			parameters[2].Value = model.Nickname;
@@ -95,11 +95,12 @@ namespace CengZai.DAL
 			parameters[8].Value = model.Mobile;
 			parameters[9].Value = model.LoginIp;
 			parameters[10].Value = model.LoginTime;
-			parameters[11].Value = model.RegIp;
-			parameters[12].Value = model.RegTime;
-			parameters[13].Value = model.State;
-			parameters[14].Value = model.Private;
-			parameters[15].Value = model.LoginCount;
+			parameters[11].Value = model.LoginCount;
+			parameters[12].Value = model.RegIp;
+			parameters[13].Value = model.RegTime;
+			parameters[14].Value = model.State;
+			parameters[15].Value = model.Private;
+			parameters[16].Value = model.Domain;
 
 			object obj = DbHelperSQL.GetSingle(strSql.ToString(),parameters);
 			if (obj == null)
@@ -129,11 +130,12 @@ namespace CengZai.DAL
 			strSql.Append("Mobile=@Mobile,");
 			strSql.Append("LoginIp=@LoginIp,");
 			strSql.Append("LoginTime=@LoginTime,");
+			strSql.Append("LoginCount=@LoginCount,");
 			strSql.Append("RegIp=@RegIp,");
 			strSql.Append("RegTime=@RegTime,");
 			strSql.Append("State=@State,");
 			strSql.Append("Private=@Private,");
-			strSql.Append("LoginCount=@LoginCount");
+			strSql.Append("Domain=@Domain");
 			strSql.Append(" where UserID=@UserID");
 			SqlParameter[] parameters = {
 					new SqlParameter("@Email", SqlDbType.NVarChar,50),
@@ -141,17 +143,18 @@ namespace CengZai.DAL
 					new SqlParameter("@Nickname", SqlDbType.NVarChar,50),
 					new SqlParameter("@Sign", SqlDbType.NVarChar,50),
 					new SqlParameter("@Intro", SqlDbType.NVarChar,500),
-					new SqlParameter("@Birth", SqlDbType.DateTime,3),
+					new SqlParameter("@Birth", SqlDbType.DateTime),
 					new SqlParameter("@Sex", SqlDbType.Int,4),
 					new SqlParameter("@AreaID", SqlDbType.Int,4),
 					new SqlParameter("@Mobile", SqlDbType.NVarChar,50),
 					new SqlParameter("@LoginIp", SqlDbType.NVarChar,50),
 					new SqlParameter("@LoginTime", SqlDbType.DateTime),
+					new SqlParameter("@LoginCount", SqlDbType.Int,4),
 					new SqlParameter("@RegIp", SqlDbType.NVarChar,50),
 					new SqlParameter("@RegTime", SqlDbType.DateTime),
 					new SqlParameter("@State", SqlDbType.Int,4),
 					new SqlParameter("@Private", SqlDbType.Int,4),
-					new SqlParameter("@LoginCount", SqlDbType.Int,4),
+					new SqlParameter("@Domain", SqlDbType.NVarChar,50),
 					new SqlParameter("@UserID", SqlDbType.Int,4)};
 			parameters[0].Value = model.Email;
 			parameters[1].Value = model.Password;
@@ -164,12 +167,13 @@ namespace CengZai.DAL
 			parameters[8].Value = model.Mobile;
 			parameters[9].Value = model.LoginIp;
 			parameters[10].Value = model.LoginTime;
-			parameters[11].Value = model.RegIp;
-			parameters[12].Value = model.RegTime;
-			parameters[13].Value = model.State;
-			parameters[14].Value = model.Private;
-			parameters[15].Value = model.LoginCount;
-			parameters[16].Value = model.UserID;
+			parameters[11].Value = model.LoginCount;
+			parameters[12].Value = model.RegIp;
+			parameters[13].Value = model.RegTime;
+			parameters[14].Value = model.State;
+			parameters[15].Value = model.Private;
+			parameters[16].Value = model.Domain;
+			parameters[17].Value = model.UserID;
 
 			int rows=DbHelperSQL.ExecuteSql(strSql.ToString(),parameters);
 			if (rows > 0)
@@ -233,7 +237,7 @@ namespace CengZai.DAL
 		{
 			
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select  top 1 UserID,Email,Password,Nickname,Sign,Intro,Birth,Sex,AreaID,Mobile,LoginIp,LoginTime,RegIp,RegTime,State,Private,LoginCount from T_User ");
+			strSql.Append("select  top 1 UserID,Email,Password,Nickname,Sign,Intro,Birth,Sex,AreaID,Mobile,LoginIp,LoginTime,LoginCount,RegIp,RegTime,State,Private,Domain from T_User ");
             SqlParameter[] parameters = null;
             if (UserID > 0)
             {
@@ -304,6 +308,10 @@ namespace CengZai.DAL
 				{
 					model.LoginTime=DateTime.Parse(ds.Tables[0].Rows[0]["LoginTime"].ToString());
 				}
+				if(ds.Tables[0].Rows[0]["LoginCount"]!=null && ds.Tables[0].Rows[0]["LoginCount"].ToString()!="")
+				{
+					model.LoginCount=int.Parse(ds.Tables[0].Rows[0]["LoginCount"].ToString());
+				}
 				if(ds.Tables[0].Rows[0]["RegIp"]!=null && ds.Tables[0].Rows[0]["RegIp"].ToString()!="")
 				{
 					model.RegIp=ds.Tables[0].Rows[0]["RegIp"].ToString();
@@ -320,9 +328,9 @@ namespace CengZai.DAL
 				{
 					model.Private=int.Parse(ds.Tables[0].Rows[0]["Private"].ToString());
 				}
-				if(ds.Tables[0].Rows[0]["LoginCount"]!=null && ds.Tables[0].Rows[0]["LoginCount"].ToString()!="")
+				if(ds.Tables[0].Rows[0]["Domain"]!=null && ds.Tables[0].Rows[0]["Domain"].ToString()!="")
 				{
-					model.LoginCount=int.Parse(ds.Tables[0].Rows[0]["LoginCount"].ToString());
+					model.Domain=ds.Tables[0].Rows[0]["Domain"].ToString();
 				}
 				return model;
 			}
@@ -338,7 +346,7 @@ namespace CengZai.DAL
 		public DataSet GetList(string strWhere)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select UserID,Email,Password,Nickname,Sign,Intro,Birth,Sex,AreaID,Mobile,LoginIp,LoginTime,RegIp,RegTime,State,Private,LoginCount ");
+			strSql.Append("select UserID,Email,Password,Nickname,Sign,Intro,Birth,Sex,AreaID,Mobile,LoginIp,LoginTime,LoginCount,RegIp,RegTime,State,Private,Domain ");
 			strSql.Append(" FROM T_User ");
 			if(strWhere.Trim()!="")
 			{
@@ -358,7 +366,7 @@ namespace CengZai.DAL
 			{
 				strSql.Append(" top "+Top.ToString());
 			}
-			strSql.Append(" UserID,Email,Password,Nickname,Sign,Intro,Birth,Sex,AreaID,Mobile,LoginIp,LoginTime,RegIp,RegTime,State,Private,LoginCount ");
+			strSql.Append(" UserID,Email,Password,Nickname,Sign,Intro,Birth,Sex,AreaID,Mobile,LoginIp,LoginTime,LoginCount,RegIp,RegTime,State,Private,Domain ");
 			strSql.Append(" FROM T_User ");
 			if(strWhere.Trim()!="")
 			{
@@ -415,7 +423,7 @@ namespace CengZai.DAL
 			return DbHelperSQL.Query(strSql.ToString());
 		}
 
-
+		/*
 		/// <summary>
 		/// 分页获取数据列表
 		/// </summary>
@@ -438,7 +446,7 @@ namespace CengZai.DAL
 			parameters[5].Value = 0;
 			parameters[6].Value = strWhere;	
 			return DbHelperSQL.RunProcedure("UP_GetRecordByPage",parameters,"ds");
-		}
+		}*/
 
 		#endregion  Method
 	}

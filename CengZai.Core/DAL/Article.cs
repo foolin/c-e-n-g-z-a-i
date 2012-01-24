@@ -46,15 +46,14 @@ namespace CengZai.DAL
 		{
 			StringBuilder strSql=new StringBuilder();
 			strSql.Append("insert into T_Article(");
-			strSql.Append("CategoryID,Title,Content,Source,Type,IsTop,UserID,PostTime,PostIP,ViewCount,TopCount,DownCount,ReportCount,Private,State)");
+			strSql.Append("CategoryID,Title,Content,Type,IsTop,UserID,PostTime,PostIP,ViewCount,TopCount,DownCount,ReportCount,Private,State)");
 			strSql.Append(" values (");
-			strSql.Append("@CategoryID,@Title,@Content,@Source,@Type,@IsTop,@UserID,@PostTime,@PostIP,@ViewCount,@TopCount,@DownCount,@ReportCount,@Private,@State)");
+			strSql.Append("@CategoryID,@Title,@Content,@Type,@IsTop,@UserID,@PostTime,@PostIP,@ViewCount,@TopCount,@DownCount,@ReportCount,@Private,@State)");
 			strSql.Append(";select @@IDENTITY");
 			SqlParameter[] parameters = {
 					new SqlParameter("@CategoryID", SqlDbType.Int,4),
 					new SqlParameter("@Title", SqlDbType.NVarChar,50),
 					new SqlParameter("@Content", SqlDbType.NVarChar,4000),
-					new SqlParameter("@Source", SqlDbType.NVarChar,1000),
 					new SqlParameter("@Type", SqlDbType.Int,4),
 					new SqlParameter("@IsTop", SqlDbType.Int,4),
 					new SqlParameter("@UserID", SqlDbType.Int,4),
@@ -69,18 +68,17 @@ namespace CengZai.DAL
 			parameters[0].Value = model.CategoryID;
 			parameters[1].Value = model.Title;
 			parameters[2].Value = model.Content;
-			parameters[3].Value = model.Source;
-			parameters[4].Value = model.Type;
-			parameters[5].Value = model.IsTop;
-			parameters[6].Value = model.UserID;
-			parameters[7].Value = model.PostTime;
-			parameters[8].Value = model.PostIP;
-			parameters[9].Value = model.ViewCount;
-			parameters[10].Value = model.TopCount;
-			parameters[11].Value = model.DownCount;
-			parameters[12].Value = model.ReportCount;
-			parameters[13].Value = model.Private;
-			parameters[14].Value = model.State;
+			parameters[3].Value = model.Type;
+			parameters[4].Value = model.IsTop;
+			parameters[5].Value = model.UserID;
+			parameters[6].Value = model.PostTime;
+			parameters[7].Value = model.PostIP;
+			parameters[8].Value = model.ViewCount;
+			parameters[9].Value = model.TopCount;
+			parameters[10].Value = model.DownCount;
+			parameters[11].Value = model.ReportCount;
+			parameters[12].Value = model.Private;
+			parameters[13].Value = model.State;
 
 			object obj = DbHelperSQL.GetSingle(strSql.ToString(),parameters);
 			if (obj == null)
@@ -102,7 +100,6 @@ namespace CengZai.DAL
 			strSql.Append("CategoryID=@CategoryID,");
 			strSql.Append("Title=@Title,");
 			strSql.Append("Content=@Content,");
-			strSql.Append("Source=@Source,");
 			strSql.Append("Type=@Type,");
 			strSql.Append("IsTop=@IsTop,");
 			strSql.Append("UserID=@UserID,");
@@ -119,7 +116,6 @@ namespace CengZai.DAL
 					new SqlParameter("@CategoryID", SqlDbType.Int,4),
 					new SqlParameter("@Title", SqlDbType.NVarChar,50),
 					new SqlParameter("@Content", SqlDbType.NVarChar,4000),
-					new SqlParameter("@Source", SqlDbType.NVarChar,1000),
 					new SqlParameter("@Type", SqlDbType.Int,4),
 					new SqlParameter("@IsTop", SqlDbType.Int,4),
 					new SqlParameter("@UserID", SqlDbType.Int,4),
@@ -135,19 +131,18 @@ namespace CengZai.DAL
 			parameters[0].Value = model.CategoryID;
 			parameters[1].Value = model.Title;
 			parameters[2].Value = model.Content;
-			parameters[3].Value = model.Source;
-			parameters[4].Value = model.Type;
-			parameters[5].Value = model.IsTop;
-			parameters[6].Value = model.UserID;
-			parameters[7].Value = model.PostTime;
-			parameters[8].Value = model.PostIP;
-			parameters[9].Value = model.ViewCount;
-			parameters[10].Value = model.TopCount;
-			parameters[11].Value = model.DownCount;
-			parameters[12].Value = model.ReportCount;
-			parameters[13].Value = model.Private;
-			parameters[14].Value = model.State;
-			parameters[15].Value = model.ArtID;
+			parameters[3].Value = model.Type;
+			parameters[4].Value = model.IsTop;
+			parameters[5].Value = model.UserID;
+			parameters[6].Value = model.PostTime;
+			parameters[7].Value = model.PostIP;
+			parameters[8].Value = model.ViewCount;
+			parameters[9].Value = model.TopCount;
+			parameters[10].Value = model.DownCount;
+			parameters[11].Value = model.ReportCount;
+			parameters[12].Value = model.Private;
+			parameters[13].Value = model.State;
+			parameters[14].Value = model.ArtID;
 
 			int rows=DbHelperSQL.ExecuteSql(strSql.ToString(),parameters);
 			if (rows > 0)
@@ -211,7 +206,7 @@ namespace CengZai.DAL
 		{
 			
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select  top 1 ArtID,CategoryID,Title,Content,Source,Type,IsTop,UserID,PostTime,PostIP,ViewCount,TopCount,DownCount,ReportCount,Private,State from T_Article ");
+			strSql.Append("select  top 1 ArtID,CategoryID,Title,Content,Type,IsTop,UserID,PostTime,PostIP,ViewCount,TopCount,DownCount,ReportCount,Private,State from T_Article ");
 			strSql.Append(" where ArtID=@ArtID");
 			SqlParameter[] parameters = {
 					new SqlParameter("@ArtID", SqlDbType.Int,4)
@@ -237,10 +232,6 @@ namespace CengZai.DAL
 				if(ds.Tables[0].Rows[0]["Content"]!=null && ds.Tables[0].Rows[0]["Content"].ToString()!="")
 				{
 					model.Content=ds.Tables[0].Rows[0]["Content"].ToString();
-				}
-				if(ds.Tables[0].Rows[0]["Source"]!=null && ds.Tables[0].Rows[0]["Source"].ToString()!="")
-				{
-					model.Source=ds.Tables[0].Rows[0]["Source"].ToString();
 				}
 				if(ds.Tables[0].Rows[0]["Type"]!=null && ds.Tables[0].Rows[0]["Type"].ToString()!="")
 				{
@@ -300,7 +291,7 @@ namespace CengZai.DAL
 		public DataSet GetList(string strWhere)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select ArtID,CategoryID,Title,Content,Source,Type,IsTop,UserID,PostTime,PostIP,ViewCount,TopCount,DownCount,ReportCount,Private,State ");
+			strSql.Append("select ArtID,CategoryID,Title,Content,Type,IsTop,UserID,PostTime,PostIP,ViewCount,TopCount,DownCount,ReportCount,Private,State ");
 			strSql.Append(" FROM T_Article ");
 			if(strWhere.Trim()!="")
 			{
@@ -320,7 +311,7 @@ namespace CengZai.DAL
 			{
 				strSql.Append(" top "+Top.ToString());
 			}
-			strSql.Append(" ArtID,CategoryID,Title,Content,Source,Type,IsTop,UserID,PostTime,PostIP,ViewCount,TopCount,DownCount,ReportCount,Private,State ");
+			strSql.Append(" ArtID,CategoryID,Title,Content,Type,IsTop,UserID,PostTime,PostIP,ViewCount,TopCount,DownCount,ReportCount,Private,State ");
 			strSql.Append(" FROM T_Article ");
 			if(strWhere.Trim()!="")
 			{

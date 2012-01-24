@@ -6,12 +6,12 @@ using CengZai.Model;
 namespace CengZai.BLL
 {
 	/// <summary>
-	/// Dynamic
+	/// Message
 	/// </summary>
-	public partial class Dynamic
+	public partial class Message
 	{
-		private readonly CengZai.DAL.Dynamic dal=new CengZai.DAL.Dynamic();
-		public Dynamic()
+		private readonly CengZai.DAL.Message dal=new CengZai.DAL.Message();
+		public Message()
 		{}
 		#region  Method
 
@@ -26,15 +26,15 @@ namespace CengZai.BLL
 		/// <summary>
 		/// 是否存在该记录
 		/// </summary>
-		public bool Exists(int DynID)
+		public bool Exists(int MsgID)
 		{
-			return dal.Exists(DynID);
+			return dal.Exists(MsgID);
 		}
 
 		/// <summary>
 		/// 增加一条数据
 		/// </summary>
-		public int  Add(CengZai.Model.Dynamic model)
+		public int  Add(CengZai.Model.Message model)
 		{
 			return dal.Add(model);
 		}
@@ -42,7 +42,7 @@ namespace CengZai.BLL
 		/// <summary>
 		/// 更新一条数据
 		/// </summary>
-		public bool Update(CengZai.Model.Dynamic model)
+		public bool Update(CengZai.Model.Message model)
 		{
 			return dal.Update(model);
 		}
@@ -50,26 +50,26 @@ namespace CengZai.BLL
 		/// <summary>
 		/// 删除一条数据
 		/// </summary>
-		public bool Delete(int DynID)
+		public bool Delete(int MsgID)
 		{
 			
-			return dal.Delete(DynID);
+			return dal.Delete(MsgID);
 		}
 		/// <summary>
 		/// 删除一条数据
 		/// </summary>
-		public bool DeleteList(string DynIDlist )
+		public bool DeleteList(string MsgIDlist )
 		{
-			return dal.DeleteList(DynIDlist );
+			return dal.DeleteList(MsgIDlist );
 		}
 
 		/// <summary>
 		/// 得到一个对象实体
 		/// </summary>
-		public CengZai.Model.Dynamic GetModel(int DynID)
+		public CengZai.Model.Message GetModel(int MsgID)
 		{
 			
-			return dal.GetModel(DynID);
+			return dal.GetModel(MsgID);
 		}
 
 		/// <summary>
@@ -89,7 +89,7 @@ namespace CengZai.BLL
 		/// <summary>
 		/// 获得数据列表
 		/// </summary>
-		public List<CengZai.Model.Dynamic> GetModelList(string strWhere)
+		public List<CengZai.Model.Message> GetModelList(string strWhere)
 		{
 			DataSet ds = dal.GetList(strWhere);
 			return DataTableToList(ds.Tables[0]);
@@ -97,31 +97,47 @@ namespace CengZai.BLL
 		/// <summary>
 		/// 获得数据列表
 		/// </summary>
-		public List<CengZai.Model.Dynamic> DataTableToList(DataTable dt)
+		public List<CengZai.Model.Message> DataTableToList(DataTable dt)
 		{
-			List<CengZai.Model.Dynamic> modelList = new List<CengZai.Model.Dynamic>();
+			List<CengZai.Model.Message> modelList = new List<CengZai.Model.Message>();
 			int rowsCount = dt.Rows.Count;
 			if (rowsCount > 0)
 			{
-				CengZai.Model.Dynamic model;
+				CengZai.Model.Message model;
 				for (int n = 0; n < rowsCount; n++)
 				{
-					model = new CengZai.Model.Dynamic();
-					if(dt.Rows[n]["DynID"]!=null && dt.Rows[n]["DynID"].ToString()!="")
+					model = new CengZai.Model.Message();
+					if(dt.Rows[n]["MsgID"]!=null && dt.Rows[n]["MsgID"].ToString()!="")
 					{
-						model.DynID=int.Parse(dt.Rows[n]["DynID"].ToString());
+						model.MsgID=int.Parse(dt.Rows[n]["MsgID"].ToString());
+					}
+					if(dt.Rows[n]["Title"]!=null && dt.Rows[n]["Title"].ToString()!="")
+					{
+					model.Title=dt.Rows[n]["Title"].ToString();
 					}
 					if(dt.Rows[n]["Content"]!=null && dt.Rows[n]["Content"].ToString()!="")
 					{
 					model.Content=dt.Rows[n]["Content"].ToString();
 					}
-					if(dt.Rows[n]["UserID"]!=null && dt.Rows[n]["UserID"].ToString()!="")
+					if(dt.Rows[n]["ToUserID"]!=null && dt.Rows[n]["ToUserID"].ToString()!="")
 					{
-						model.UserID=int.Parse(dt.Rows[n]["UserID"].ToString());
+						model.ToUserID=int.Parse(dt.Rows[n]["ToUserID"].ToString());
 					}
-					if(dt.Rows[n]["PostTime"]!=null && dt.Rows[n]["PostTime"].ToString()!="")
+					if(dt.Rows[n]["FromUserID"]!=null && dt.Rows[n]["FromUserID"].ToString()!="")
 					{
-						model.PostTime=DateTime.Parse(dt.Rows[n]["PostTime"].ToString());
+						model.FromUserID=int.Parse(dt.Rows[n]["FromUserID"].ToString());
+					}
+					if(dt.Rows[n]["SendTime"]!=null && dt.Rows[n]["SendTime"].ToString()!="")
+					{
+						model.SendTime=DateTime.Parse(dt.Rows[n]["SendTime"].ToString());
+					}
+					if(dt.Rows[n]["IsRead"]!=null && dt.Rows[n]["IsRead"].ToString()!="")
+					{
+						model.IsRead=int.Parse(dt.Rows[n]["IsRead"].ToString());
+					}
+					if(dt.Rows[n]["IsSystem"]!=null && dt.Rows[n]["IsSystem"].ToString()!="")
+					{
+						model.IsSystem=int.Parse(dt.Rows[n]["IsSystem"].ToString());
 					}
 					modelList.Add(model);
 				}

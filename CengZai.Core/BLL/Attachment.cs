@@ -6,12 +6,12 @@ using CengZai.Model;
 namespace CengZai.BLL
 {
 	/// <summary>
-	/// Dynamic
+	/// Attachment
 	/// </summary>
-	public partial class Dynamic
+	public partial class Attachment
 	{
-		private readonly CengZai.DAL.Dynamic dal=new CengZai.DAL.Dynamic();
-		public Dynamic()
+		private readonly CengZai.DAL.Attachment dal=new CengZai.DAL.Attachment();
+		public Attachment()
 		{}
 		#region  Method
 
@@ -26,15 +26,15 @@ namespace CengZai.BLL
 		/// <summary>
 		/// 是否存在该记录
 		/// </summary>
-		public bool Exists(int DynID)
+		public bool Exists(int AttachID)
 		{
-			return dal.Exists(DynID);
+			return dal.Exists(AttachID);
 		}
 
 		/// <summary>
 		/// 增加一条数据
 		/// </summary>
-		public int  Add(CengZai.Model.Dynamic model)
+		public int  Add(CengZai.Model.Attachment model)
 		{
 			return dal.Add(model);
 		}
@@ -42,7 +42,7 @@ namespace CengZai.BLL
 		/// <summary>
 		/// 更新一条数据
 		/// </summary>
-		public bool Update(CengZai.Model.Dynamic model)
+		public bool Update(CengZai.Model.Attachment model)
 		{
 			return dal.Update(model);
 		}
@@ -50,26 +50,26 @@ namespace CengZai.BLL
 		/// <summary>
 		/// 删除一条数据
 		/// </summary>
-		public bool Delete(int DynID)
+		public bool Delete(int AttachID)
 		{
 			
-			return dal.Delete(DynID);
+			return dal.Delete(AttachID);
 		}
 		/// <summary>
 		/// 删除一条数据
 		/// </summary>
-		public bool DeleteList(string DynIDlist )
+		public bool DeleteList(string AttachIDlist )
 		{
-			return dal.DeleteList(DynIDlist );
+			return dal.DeleteList(AttachIDlist );
 		}
 
 		/// <summary>
 		/// 得到一个对象实体
 		/// </summary>
-		public CengZai.Model.Dynamic GetModel(int DynID)
+		public CengZai.Model.Attachment GetModel(int AttachID)
 		{
 			
-			return dal.GetModel(DynID);
+			return dal.GetModel(AttachID);
 		}
 
 		/// <summary>
@@ -89,7 +89,7 @@ namespace CengZai.BLL
 		/// <summary>
 		/// 获得数据列表
 		/// </summary>
-		public List<CengZai.Model.Dynamic> GetModelList(string strWhere)
+		public List<CengZai.Model.Attachment> GetModelList(string strWhere)
 		{
 			DataSet ds = dal.GetList(strWhere);
 			return DataTableToList(ds.Tables[0]);
@@ -97,31 +97,27 @@ namespace CengZai.BLL
 		/// <summary>
 		/// 获得数据列表
 		/// </summary>
-		public List<CengZai.Model.Dynamic> DataTableToList(DataTable dt)
+		public List<CengZai.Model.Attachment> DataTableToList(DataTable dt)
 		{
-			List<CengZai.Model.Dynamic> modelList = new List<CengZai.Model.Dynamic>();
+			List<CengZai.Model.Attachment> modelList = new List<CengZai.Model.Attachment>();
 			int rowsCount = dt.Rows.Count;
 			if (rowsCount > 0)
 			{
-				CengZai.Model.Dynamic model;
+				CengZai.Model.Attachment model;
 				for (int n = 0; n < rowsCount; n++)
 				{
-					model = new CengZai.Model.Dynamic();
-					if(dt.Rows[n]["DynID"]!=null && dt.Rows[n]["DynID"].ToString()!="")
+					model = new CengZai.Model.Attachment();
+					if(dt.Rows[n]["AttachID"]!=null && dt.Rows[n]["AttachID"].ToString()!="")
 					{
-						model.DynID=int.Parse(dt.Rows[n]["DynID"].ToString());
+						model.AttachID=int.Parse(dt.Rows[n]["AttachID"].ToString());
 					}
-					if(dt.Rows[n]["Content"]!=null && dt.Rows[n]["Content"].ToString()!="")
+					if(dt.Rows[n]["ArtID"]!=null && dt.Rows[n]["ArtID"].ToString()!="")
 					{
-					model.Content=dt.Rows[n]["Content"].ToString();
+						model.ArtID=int.Parse(dt.Rows[n]["ArtID"].ToString());
 					}
-					if(dt.Rows[n]["UserID"]!=null && dt.Rows[n]["UserID"].ToString()!="")
+					if(dt.Rows[n]["Source"]!=null && dt.Rows[n]["Source"].ToString()!="")
 					{
-						model.UserID=int.Parse(dt.Rows[n]["UserID"].ToString());
-					}
-					if(dt.Rows[n]["PostTime"]!=null && dt.Rows[n]["PostTime"].ToString()!="")
-					{
-						model.PostTime=DateTime.Parse(dt.Rows[n]["PostTime"].ToString());
+					model.Source=dt.Rows[n]["Source"].ToString();
 					}
 					modelList.Add(model);
 				}

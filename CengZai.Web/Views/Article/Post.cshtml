@@ -7,14 +7,14 @@
     <div class="post-editor">
         <h2>发布日志</h2>
         <dl>
-            <dt><h3>标题</h3><span>（可不填）</span></dt>
+            <dt>标题<span>（可不填）</span></dt>
             <dd>@Html.TextBox("title")</dd>
             <dt>内容</dt>
             <dd>@Html.TextArea("content", new { @class = "editor" })</dd>
-            <dt><h3>分类</h3><span>（可不填）</span></dt>
+            <dt>分类<span>（可不填）</span></dt>
             <dd>@Html.DropDownList("categoryid", ViewData["CategoryList"] as SelectList)</dd>
-            <dt><h3>是否置顶</h3><span>（可不填）</span></dt>
-            <dd>@Html.CheckBox("isTop")置顶</dd>
+            <dt>是否置顶<span>（可不填）</span></dt>
+            <dd><input type="checkbox" name="isTop" value="1" />置顶</dd>
             <dd>
                 @Html.Hidden("type", CengZai.Model.ArtType.Text)
                @Html.ActionLink("取消","Index","Home") <input type="submit" name="btn-draft" value="草稿" />   <input type="submit" name="btn-post" value="提交" /> 

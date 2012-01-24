@@ -132,6 +132,7 @@ namespace CengZai.Helper
                     }
                     catch(Exception ex)
                     {
+                        Log.AddErrorInfo("Email地址非法：" + feTo + ",原因：" + ex.Message);
                         //WebLog.WriteErrLog("Email地址非法：" + feTo + ",原因：" + ex.Message);
                     }
                 }
@@ -148,6 +149,7 @@ namespace CengZai.Helper
                     }
                     catch (Exception ex)
                     {
+                        Log.AddErrorInfo("Email地址非法：" + feCc + ",原因：" + ex.Message);
                         //WebLog.WriteErrLog("Email地址非法：" + feCc + ",原因：" + ex.Message);
                     }
                 }

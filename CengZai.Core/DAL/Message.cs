@@ -6,11 +6,11 @@ using CengZai.Helper;
 namespace CengZai.DAL
 {
 	/// <summary>
-	/// 数据访问类:Dynamic
+	/// 数据访问类:Message
 	/// </summary>
-	public partial class Dynamic
+	public partial class Message
 	{
-		public Dynamic()
+		public Message()
 		{}
 		#region  Method
 
@@ -19,21 +19,21 @@ namespace CengZai.DAL
 		/// </summary>
 		public int GetMaxId()
 		{
-		return DbHelperSQL.GetMaxID("DynID", "T_Dynamic"); 
+		return DbHelperSQL.GetMaxID("MsgID", "T_Message"); 
 		}
 
 		/// <summary>
 		/// 是否存在该记录
 		/// </summary>
-		public bool Exists(int DynID)
+		public bool Exists(int MsgID)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select count(1) from T_Dynamic");
-			strSql.Append(" where DynID=@DynID");
+			strSql.Append("select count(1) from T_Message");
+			strSql.Append(" where MsgID=@MsgID");
 			SqlParameter[] parameters = {
-					new SqlParameter("@DynID", SqlDbType.Int,4)
+					new SqlParameter("@MsgID", SqlDbType.Int,4)
 			};
-			parameters[0].Value = DynID;
+			parameters[0].Value = MsgID;
 
 			return DbHelperSQL.Exists(strSql.ToString(),parameters);
 		}
@@ -42,21 +42,29 @@ namespace CengZai.DAL
 		/// <summary>
 		/// 增加一条数据
 		/// </summary>
-		public int Add(CengZai.Model.Dynamic model)
+		public int Add(CengZai.Model.Message model)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("insert into T_Dynamic(");
-			strSql.Append("Content,UserID,PostTime)");
+			strSql.Append("insert into T_Message(");
+			strSql.Append("Title,Content,ToUserID,FromUserID,SendTime,IsRead,IsSystem)");
 			strSql.Append(" values (");
-			strSql.Append("@Content,@UserID,@PostTime)");
+			strSql.Append("@Title,@Content,@ToUserID,@FromUserID,@SendTime,@IsRead,@IsSystem)");
 			strSql.Append(";select @@IDENTITY");
 			SqlParameter[] parameters = {
+					new SqlParameter("@Title", SqlDbType.NVarChar,50),
 					new SqlParameter("@Content", SqlDbType.NVarChar,300),
-					new SqlParameter("@UserID", SqlDbType.Int,4),
-					new SqlParameter("@PostTime", SqlDbType.DateTime)};
-			parameters[0].Value = model.Content;
-			parameters[1].Value = model.UserID;
-			parameters[2].Value = model.PostTime;
+					new SqlParameter("@ToUserID", SqlDbType.Int,4),
+					new SqlParameter("@FromUserID", SqlDbType.Int,4),
+					new SqlParameter("@SendTime", SqlDbType.DateTime),
+					new SqlParameter("@IsRead", SqlDbType.Int,4),
+					new SqlParameter("@IsSystem", SqlDbType.Int,4)};
+			parameters[0].Value = model.Title;
+			parameters[1].Value = model.Content;
+			parameters[2].Value = model.ToUserID;
+			parameters[3].Value = model.FromUserID;
+			parameters[4].Value = model.SendTime;
+			parameters[5].Value = model.IsRead;
+			parameters[6].Value = model.IsSystem;
 
 			object obj = DbHelperSQL.GetSingle(strSql.ToString(),parameters);
 			if (obj == null)
@@ -71,23 +79,35 @@ namespace CengZai.DAL
 		/// <summary>
 		/// 更新一条数据
 		/// </summary>
-		public bool Update(CengZai.Model.Dynamic model)
+		public bool Update(CengZai.Model.Message model)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("update T_Dynamic set ");
+			strSql.Append("update T_Message set ");
+			strSql.Append("Title=@Title,");
 			strSql.Append("Content=@Content,");
-			strSql.Append("UserID=@UserID,");
-			strSql.Append("PostTime=@PostTime");
-			strSql.Append(" where DynID=@DynID");
+			strSql.Append("ToUserID=@ToUserID,");
+			strSql.Append("FromUserID=@FromUserID,");
+			strSql.Append("SendTime=@SendTime,");
+			strSql.Append("IsRead=@IsRead,");
+			strSql.Append("IsSystem=@IsSystem");
+			strSql.Append(" where MsgID=@MsgID");
 			SqlParameter[] parameters = {
+					new SqlParameter("@Title", SqlDbType.NVarChar,50),
 					new SqlParameter("@Content", SqlDbType.NVarChar,300),
-					new SqlParameter("@UserID", SqlDbType.Int,4),
-					new SqlParameter("@PostTime", SqlDbType.DateTime),
-					new SqlParameter("@DynID", SqlDbType.Int,4)};
-			parameters[0].Value = model.Content;
-			parameters[1].Value = model.UserID;
-			parameters[2].Value = model.PostTime;
-			parameters[3].Value = model.DynID;
+					new SqlParameter("@ToUserID", SqlDbType.Int,4),
+					new SqlParameter("@FromUserID", SqlDbType.Int,4),
+					new SqlParameter("@SendTime", SqlDbType.DateTime),
+					new SqlParameter("@IsRead", SqlDbType.Int,4),
+					new SqlParameter("@IsSystem", SqlDbType.Int,4),
+					new SqlParameter("@MsgID", SqlDbType.Int,4)};
+			parameters[0].Value = model.Title;
+			parameters[1].Value = model.Content;
+			parameters[2].Value = model.ToUserID;
+			parameters[3].Value = model.FromUserID;
+			parameters[4].Value = model.SendTime;
+			parameters[5].Value = model.IsRead;
+			parameters[6].Value = model.IsSystem;
+			parameters[7].Value = model.MsgID;
 
 			int rows=DbHelperSQL.ExecuteSql(strSql.ToString(),parameters);
 			if (rows > 0)
@@ -103,16 +123,16 @@ namespace CengZai.DAL
 		/// <summary>
 		/// 删除一条数据
 		/// </summary>
-		public bool Delete(int DynID)
+		public bool Delete(int MsgID)
 		{
 			
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("delete from T_Dynamic ");
-			strSql.Append(" where DynID=@DynID");
+			strSql.Append("delete from T_Message ");
+			strSql.Append(" where MsgID=@MsgID");
 			SqlParameter[] parameters = {
-					new SqlParameter("@DynID", SqlDbType.Int,4)
+					new SqlParameter("@MsgID", SqlDbType.Int,4)
 			};
-			parameters[0].Value = DynID;
+			parameters[0].Value = MsgID;
 
 			int rows=DbHelperSQL.ExecuteSql(strSql.ToString(),parameters);
 			if (rows > 0)
@@ -127,11 +147,11 @@ namespace CengZai.DAL
 		/// <summary>
 		/// 批量删除数据
 		/// </summary>
-		public bool DeleteList(string DynIDlist )
+		public bool DeleteList(string MsgIDlist )
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("delete from T_Dynamic ");
-			strSql.Append(" where DynID in ("+DynIDlist + ")  ");
+			strSql.Append("delete from T_Message ");
+			strSql.Append(" where MsgID in ("+MsgIDlist + ")  ");
 			int rows=DbHelperSQL.ExecuteSql(strSql.ToString());
 			if (rows > 0)
 			{
@@ -147,36 +167,52 @@ namespace CengZai.DAL
 		/// <summary>
 		/// 得到一个对象实体
 		/// </summary>
-		public CengZai.Model.Dynamic GetModel(int DynID)
+		public CengZai.Model.Message GetModel(int MsgID)
 		{
 			
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select  top 1 DynID,Content,UserID,PostTime from T_Dynamic ");
-			strSql.Append(" where DynID=@DynID");
+			strSql.Append("select  top 1 MsgID,Title,Content,ToUserID,FromUserID,SendTime,IsRead,IsSystem from T_Message ");
+			strSql.Append(" where MsgID=@MsgID");
 			SqlParameter[] parameters = {
-					new SqlParameter("@DynID", SqlDbType.Int,4)
+					new SqlParameter("@MsgID", SqlDbType.Int,4)
 			};
-			parameters[0].Value = DynID;
+			parameters[0].Value = MsgID;
 
-			CengZai.Model.Dynamic model=new CengZai.Model.Dynamic();
+			CengZai.Model.Message model=new CengZai.Model.Message();
 			DataSet ds=DbHelperSQL.Query(strSql.ToString(),parameters);
 			if(ds.Tables[0].Rows.Count>0)
 			{
-				if(ds.Tables[0].Rows[0]["DynID"]!=null && ds.Tables[0].Rows[0]["DynID"].ToString()!="")
+				if(ds.Tables[0].Rows[0]["MsgID"]!=null && ds.Tables[0].Rows[0]["MsgID"].ToString()!="")
 				{
-					model.DynID=int.Parse(ds.Tables[0].Rows[0]["DynID"].ToString());
+					model.MsgID=int.Parse(ds.Tables[0].Rows[0]["MsgID"].ToString());
+				}
+				if(ds.Tables[0].Rows[0]["Title"]!=null && ds.Tables[0].Rows[0]["Title"].ToString()!="")
+				{
+					model.Title=ds.Tables[0].Rows[0]["Title"].ToString();
 				}
 				if(ds.Tables[0].Rows[0]["Content"]!=null && ds.Tables[0].Rows[0]["Content"].ToString()!="")
 				{
 					model.Content=ds.Tables[0].Rows[0]["Content"].ToString();
 				}
-				if(ds.Tables[0].Rows[0]["UserID"]!=null && ds.Tables[0].Rows[0]["UserID"].ToString()!="")
+				if(ds.Tables[0].Rows[0]["ToUserID"]!=null && ds.Tables[0].Rows[0]["ToUserID"].ToString()!="")
 				{
-					model.UserID=int.Parse(ds.Tables[0].Rows[0]["UserID"].ToString());
+					model.ToUserID=int.Parse(ds.Tables[0].Rows[0]["ToUserID"].ToString());
 				}
-				if(ds.Tables[0].Rows[0]["PostTime"]!=null && ds.Tables[0].Rows[0]["PostTime"].ToString()!="")
+				if(ds.Tables[0].Rows[0]["FromUserID"]!=null && ds.Tables[0].Rows[0]["FromUserID"].ToString()!="")
 				{
-					model.PostTime=DateTime.Parse(ds.Tables[0].Rows[0]["PostTime"].ToString());
+					model.FromUserID=int.Parse(ds.Tables[0].Rows[0]["FromUserID"].ToString());
+				}
+				if(ds.Tables[0].Rows[0]["SendTime"]!=null && ds.Tables[0].Rows[0]["SendTime"].ToString()!="")
+				{
+					model.SendTime=DateTime.Parse(ds.Tables[0].Rows[0]["SendTime"].ToString());
+				}
+				if(ds.Tables[0].Rows[0]["IsRead"]!=null && ds.Tables[0].Rows[0]["IsRead"].ToString()!="")
+				{
+					model.IsRead=int.Parse(ds.Tables[0].Rows[0]["IsRead"].ToString());
+				}
+				if(ds.Tables[0].Rows[0]["IsSystem"]!=null && ds.Tables[0].Rows[0]["IsSystem"].ToString()!="")
+				{
+					model.IsSystem=int.Parse(ds.Tables[0].Rows[0]["IsSystem"].ToString());
 				}
 				return model;
 			}
@@ -192,8 +228,8 @@ namespace CengZai.DAL
 		public DataSet GetList(string strWhere)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select DynID,Content,UserID,PostTime ");
-			strSql.Append(" FROM T_Dynamic ");
+			strSql.Append("select MsgID,Title,Content,ToUserID,FromUserID,SendTime,IsRead,IsSystem ");
+			strSql.Append(" FROM T_Message ");
 			if(strWhere.Trim()!="")
 			{
 				strSql.Append(" where "+strWhere);
@@ -212,8 +248,8 @@ namespace CengZai.DAL
 			{
 				strSql.Append(" top "+Top.ToString());
 			}
-			strSql.Append(" DynID,Content,UserID,PostTime ");
-			strSql.Append(" FROM T_Dynamic ");
+			strSql.Append(" MsgID,Title,Content,ToUserID,FromUserID,SendTime,IsRead,IsSystem ");
+			strSql.Append(" FROM T_Message ");
 			if(strWhere.Trim()!="")
 			{
 				strSql.Append(" where "+strWhere);
@@ -228,7 +264,7 @@ namespace CengZai.DAL
 		public int GetRecordCount(string strWhere)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select count(1) FROM T_Dynamic ");
+			strSql.Append("select count(1) FROM T_Message ");
 			if(strWhere.Trim()!="")
 			{
 				strSql.Append(" where "+strWhere);
@@ -257,9 +293,9 @@ namespace CengZai.DAL
 			}
 			else
 			{
-				strSql.Append("order by T.DynID desc");
+				strSql.Append("order by T.MsgID desc");
 			}
-			strSql.Append(")AS Row, T.*  from T_Dynamic T ");
+			strSql.Append(")AS Row, T.*  from T_Message T ");
 			if (!string.IsNullOrEmpty(strWhere.Trim()))
 			{
 				strSql.Append(" WHERE " + strWhere);
@@ -284,8 +320,8 @@ namespace CengZai.DAL
 					new SqlParameter("@OrderType", SqlDbType.Bit),
 					new SqlParameter("@strWhere", SqlDbType.VarChar,1000),
 					};
-			parameters[0].Value = "T_Dynamic";
-			parameters[1].Value = "DynID";
+			parameters[0].Value = "T_Message";
+			parameters[1].Value = "MsgID";
 			parameters[2].Value = PageSize;
 			parameters[3].Value = PageIndex;
 			parameters[4].Value = 0;

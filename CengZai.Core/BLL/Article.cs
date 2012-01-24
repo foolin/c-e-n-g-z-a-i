@@ -72,6 +72,7 @@ namespace CengZai.BLL
 			return dal.GetModel(ArtID);
 		}
 
+
 		/// <summary>
 		/// 获得数据列表
 		/// </summary>
@@ -122,10 +123,6 @@ namespace CengZai.BLL
 					if(dt.Rows[n]["Content"]!=null && dt.Rows[n]["Content"].ToString()!="")
 					{
 					model.Content=dt.Rows[n]["Content"].ToString();
-					}
-					if(dt.Rows[n]["Source"]!=null && dt.Rows[n]["Source"].ToString()!="")
-					{
-					model.Source=dt.Rows[n]["Source"].ToString();
 					}
 					if(dt.Rows[n]["Type"]!=null && dt.Rows[n]["Type"].ToString()!="")
 					{
