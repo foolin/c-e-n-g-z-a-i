@@ -22,11 +22,12 @@ namespace CengZai.Model
 		private string _mobile;
 		private string _loginip;
 		private DateTime? _logintime;
+		private int? _logincount=0;
 		private string _regip;
 		private DateTime? _regtime;
 		private int? _state;
 		private int? _private;
-		private int? _logincount;
+		private string _domain;
 		/// <summary>
 		/// 
 		/// </summary>
@@ -124,6 +125,14 @@ namespace CengZai.Model
 			get{return _logintime;}
 		}
 		/// <summary>
+		/// 登录次数
+		/// </summary>
+		public int? LoginCount
+		{
+			set{ _logincount=value;}
+			get{return _logincount;}
+		}
+		/// <summary>
 		/// 
 		/// </summary>
 		public string RegIp
@@ -156,12 +165,12 @@ namespace CengZai.Model
 			get{return _private;}
 		}
 		/// <summary>
-		/// 登录次数
+		/// 域名
 		/// </summary>
-		public int? LoginCount
+		public string Domain
 		{
-			set{ _logincount=value;}
-			get{return _logincount;}
+			set{ _domain=value;}
+			get{return _domain;}
 		}
 		#endregion Model
 

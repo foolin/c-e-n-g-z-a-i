@@ -72,6 +72,7 @@ namespace CengZai.BLL
 			return dal.GetModel(ReplyID);
 		}
 
+
 		/// <summary>
 		/// 获得数据列表
 		/// </summary>

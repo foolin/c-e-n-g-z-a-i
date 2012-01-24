@@ -6,12 +6,12 @@ using CengZai.Model;
 namespace CengZai.BLL
 {
 	/// <summary>
-	/// Dynamic
+	/// Area
 	/// </summary>
-	public partial class Dynamic
+	public partial class Area
 	{
-		private readonly CengZai.DAL.Dynamic dal=new CengZai.DAL.Dynamic();
-		public Dynamic()
+		private readonly CengZai.DAL.Area dal=new CengZai.DAL.Area();
+		public Area()
 		{}
 		#region  Method
 
@@ -26,15 +26,15 @@ namespace CengZai.BLL
 		/// <summary>
 		/// 是否存在该记录
 		/// </summary>
-		public bool Exists(int DynID)
+		public bool Exists(int AreaID)
 		{
-			return dal.Exists(DynID);
+			return dal.Exists(AreaID);
 		}
 
 		/// <summary>
 		/// 增加一条数据
 		/// </summary>
-		public int  Add(CengZai.Model.Dynamic model)
+		public int  Add(CengZai.Model.Area model)
 		{
 			return dal.Add(model);
 		}
@@ -42,7 +42,7 @@ namespace CengZai.BLL
 		/// <summary>
 		/// 更新一条数据
 		/// </summary>
-		public bool Update(CengZai.Model.Dynamic model)
+		public bool Update(CengZai.Model.Area model)
 		{
 			return dal.Update(model);
 		}
@@ -50,26 +50,26 @@ namespace CengZai.BLL
 		/// <summary>
 		/// 删除一条数据
 		/// </summary>
-		public bool Delete(int DynID)
+		public bool Delete(int AreaID)
 		{
 			
-			return dal.Delete(DynID);
+			return dal.Delete(AreaID);
 		}
 		/// <summary>
 		/// 删除一条数据
 		/// </summary>
-		public bool DeleteList(string DynIDlist )
+		public bool DeleteList(string AreaIDlist )
 		{
-			return dal.DeleteList(DynIDlist );
+			return dal.DeleteList(AreaIDlist );
 		}
 
 		/// <summary>
 		/// 得到一个对象实体
 		/// </summary>
-		public CengZai.Model.Dynamic GetModel(int DynID)
+		public CengZai.Model.Area GetModel(int AreaID)
 		{
 			
-			return dal.GetModel(DynID);
+			return dal.GetModel(AreaID);
 		}
 
 		/// <summary>
@@ -89,7 +89,7 @@ namespace CengZai.BLL
 		/// <summary>
 		/// 获得数据列表
 		/// </summary>
-		public List<CengZai.Model.Dynamic> GetModelList(string strWhere)
+		public List<CengZai.Model.Area> GetModelList(string strWhere)
 		{
 			DataSet ds = dal.GetList(strWhere);
 			return DataTableToList(ds.Tables[0]);
@@ -97,31 +97,35 @@ namespace CengZai.BLL
 		/// <summary>
 		/// 获得数据列表
 		/// </summary>
-		public List<CengZai.Model.Dynamic> DataTableToList(DataTable dt)
+		public List<CengZai.Model.Area> DataTableToList(DataTable dt)
 		{
-			List<CengZai.Model.Dynamic> modelList = new List<CengZai.Model.Dynamic>();
+			List<CengZai.Model.Area> modelList = new List<CengZai.Model.Area>();
 			int rowsCount = dt.Rows.Count;
 			if (rowsCount > 0)
 			{
-				CengZai.Model.Dynamic model;
+				CengZai.Model.Area model;
 				for (int n = 0; n < rowsCount; n++)
 				{
-					model = new CengZai.Model.Dynamic();
-					if(dt.Rows[n]["DynID"]!=null && dt.Rows[n]["DynID"].ToString()!="")
+					model = new CengZai.Model.Area();
+					if(dt.Rows[n]["AreaID"]!=null && dt.Rows[n]["AreaID"].ToString()!="")
 					{
-						model.DynID=int.Parse(dt.Rows[n]["DynID"].ToString());
+						model.AreaID=int.Parse(dt.Rows[n]["AreaID"].ToString());
 					}
-					if(dt.Rows[n]["Content"]!=null && dt.Rows[n]["Content"].ToString()!="")
+					if(dt.Rows[n]["ParentID"]!=null && dt.Rows[n]["ParentID"].ToString()!="")
 					{
-					model.Content=dt.Rows[n]["Content"].ToString();
+						model.ParentID=int.Parse(dt.Rows[n]["ParentID"].ToString());
 					}
-					if(dt.Rows[n]["UserID"]!=null && dt.Rows[n]["UserID"].ToString()!="")
+					if(dt.Rows[n]["EnName"]!=null && dt.Rows[n]["EnName"].ToString()!="")
 					{
-						model.UserID=int.Parse(dt.Rows[n]["UserID"].ToString());
+					model.EnName=dt.Rows[n]["EnName"].ToString();
 					}
-					if(dt.Rows[n]["PostTime"]!=null && dt.Rows[n]["PostTime"].ToString()!="")
+					if(dt.Rows[n]["AreaName"]!=null && dt.Rows[n]["AreaName"].ToString()!="")
 					{
-						model.PostTime=DateTime.Parse(dt.Rows[n]["PostTime"].ToString());
+					model.AreaName=dt.Rows[n]["AreaName"].ToString();
+					}
+					if(dt.Rows[n]["RegionNO"]!=null && dt.Rows[n]["RegionNO"].ToString()!="")
+					{
+					model.RegionNO=dt.Rows[n]["RegionNO"].ToString();
 					}
 					modelList.Add(model);
 				}

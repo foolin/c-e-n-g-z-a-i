@@ -29,7 +29,6 @@ namespace CengZai.Model
         Link = 5,
     }
 
-
 	/// <summary>
 	/// Article:实体类(属性说明自动提取数据库字段的描述信息)
 	/// </summary>
@@ -43,7 +42,6 @@ namespace CengZai.Model
 		private int? _categoryid;
 		private string _title;
 		private string _content;
-		private string _source;
 		private int? _type;
 		private int? _istop;
 		private int? _userid;
@@ -88,15 +86,7 @@ namespace CengZai.Model
 			get{return _content;}
 		}
 		/// <summary>
-		/// Url资源（图片、音频、视频、连接），多用竖线“|”分割
-		/// </summary>
-		public string Source
-		{
-			set{ _source=value;}
-			get{return _source;}
-		}
-		/// <summary>
-		/// 0=文章,1=图片
+		/// 0=文章,1=图片,2=视频
 		/// </summary>
 		public int? Type
 		{
@@ -168,7 +158,7 @@ namespace CengZai.Model
 			get{return _reportcount;}
 		}
 		/// <summary>
-		/// 隐私设置：0=否，1=是
+		/// 隐私设置：0=所有人可见，1=仅好友可见，2=仅自己可见
 		/// </summary>
 		public int? Private
 		{
@@ -176,7 +166,7 @@ namespace CengZai.Model
 			get{return _private;}
 		}
 		/// <summary>
-        /// 状态：-1=删除，0=草稿，1=发布
+		/// 状态：-1=删除，0=草稿，1=发布
 		/// </summary>
 		public int? State
 		{
