@@ -4,23 +4,16 @@
 }
 
 <h2>@user.Nickname</h2>
-@*<div class="nav">
+<div class="nav">
     <ul>
         <li>@Html.ActionLink("首页","Index", "Home")</li>
         <li>@Html.ActionLink("所有日志","Index", "Article")</li>
         <li>@Html.ActionLink("所有日志","Index", "Article")</li>
         <li>@Html.ActionLink("关于我","About", "Home")</li>
+        <li>@Html.ActionLink("注销","Logout", "User")</li>
     </ul>
 </div>
-*@
 
-<div class="nav">
-    <ul>
-        <li>@Html.ActionLink("日志","Post", "Article", new { Type=(int)CengZai.Model.ArtType.Text}, null)</li>
-        <li>@Html.ActionLink("相册","Post", "Article", new { Type=CengZai.Model.ArtType.Image}, null)</li>
-        <li>@Html.ActionLink("音频","Post", "Article", new { Type=CengZai.Model.ArtType.Audio}, null)</li>
-        <li>@Html.ActionLink("视频","Post", "Article", new { Type=CengZai.Model.ArtType.Video}, null)</li>
-        <li>@Html.ActionLink("连接","Post", "Article", new { Type=CengZai.Model.ArtType.Link}, null)</li>
-    </ul>
-</div>
+
+@RenderPage("../Article/_Layout_ArtNav.cshtml", null)
 

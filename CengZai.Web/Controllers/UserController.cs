@@ -98,8 +98,8 @@ namespace CengZai.Web.Controllers
 
         public ActionResult Logout()
         {
-            Session["LOGIN_USER"] = null;
-            return AlertAndGo("退出登录成功！", "/");
+            Session["LOGIN_USER"]  = null;
+            return RedirectToAction("Login", "User");
         }
 
         public ActionResult Register()
