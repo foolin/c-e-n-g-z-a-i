@@ -21,6 +21,35 @@ namespace CengZai.Web
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            //用户相关
+            routes.MapRoute(
+                "Home", // Route name
+                "Home/{action}/", // URL with parameters
+                new { controller = "Home", action = "Index" } // Parameter defaults
+            );
+
+            //路由相关
+            routes.MapRoute(
+                "Article", // Route name
+                "Article/{action}/", // URL with parameters
+                new { controller = "Article", action = "Index",} // Parameter defaults
+            );
+
+            routes.MapRoute(
+                "Blog", // Route name
+                "blog/{domain}/{controller}/{action}/{id}", // URL with parameters
+                new { controller = "Article", action = "Index", domain = @"", id = UrlParameter.Optional }
+                , 
+                new{domain = @"[a-zA-Z0-9_-]{5,30}",}
+
+            );
+
+            //routes.MapRoute(
+            //    "Domain", // Route name
+            //    "{domain}/{controller}/{action}/", // URL with parameters
+            //    new { controller = "Article", action = "Index", domain = @"[a-zA-Z0-9_-]{5,30}", } // Parameter defaults
+            //);
+
             routes.MapRoute(
                 "Default", // Route name
                 "{controller}/{action}/{id}", // URL with parameters

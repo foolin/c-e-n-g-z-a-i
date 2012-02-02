@@ -2,6 +2,8 @@
     ViewBag.Title = "提交文本";
 }
 
+@RenderPage("_Layout_ArtNav.cshtml", null)
+
 @using (Html.BeginForm("Post", "Article"))
 {
     <div class="post-editor">

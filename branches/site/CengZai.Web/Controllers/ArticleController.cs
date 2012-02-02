@@ -14,17 +14,17 @@ namespace CengZai.Web.Controllers
         //
         // GET: /Article/
         [AuthorizedFilter]
-        public ActionResult Index()
+        public ActionResult Index(string domain)
         {
             BLL.Article bll = new BLL.Article();
-            //List<Model.Article> artList = bll.GetListByPage(
-            return View();
-        }
+            int pageSize = 20;
+            int pageIndex = 1;
+            string where = "";
 
-        [AuthorizedFilter]
-        public ActionResult List()
-        {
-            return View();
+            List<Model.Article> artList = bll.GetModelList("State=1");
+            
+            ViewBag.Domain = domain + "";
+            return View(artList);
         }
 
         [AuthorizedFilter]
@@ -75,9 +75,9 @@ namespace CengZai.Web.Controllers
             }
             else if (type == (int)Model.ArtType.Weibo)
             {
-                return View();
+                return View("PostText");
             }
-            return View();
+            return View("PostText");
         }
 
 

@@ -1,0 +1,13 @@
+﻿@{
+    Layout = null;
+}
+
+<div class="nav">
+    <ul>
+        <li>@Html.ActionLink("日志","Post", "Article", new { Type=(int)CengZai.Model.ArtType.Text}, null)</li>
+        <li>@Html.ActionLink("相册", "Post", "Article", new { Type = (int)CengZai.Model.ArtType.Image }, null)</li>
+        <li>@Html.ActionLink("音频", "Post", "Article", new { Type = (int)CengZai.Model.ArtType.Audio }, null)</li>
+        <li>@Html.ActionLink("视频", "Post", "Article", new { Type = (int)CengZai.Model.ArtType.Video }, null)</li>
+        <li>@Html.ActionLink("连接", "Post", "Article", new { Type = (int)CengZai.Model.ArtType.Link }, null)</li>
+    </ul>
+</div>
