@@ -1,0 +1,61 @@
+﻿@{
+    Layout = null;
+    if (ViewBag.Title == null)
+    {
+        ViewBag.Title = "跳转提示";
+    }
+    if (ViewBag.Message == null)
+    {
+        ViewBag.Message = "正在跳转，请稍后...";
+    }
+    if (ViewBag.Url == null)
+    {
+        if(Request.UrlReferrer != null)
+        {
+            ViewBag.Url = Request.UrlReferrer.AbsolutePath;
+        }
+        else
+        {
+            ViewBag.Url = CengZai.Helper.Util.GetCurrDomainUrl();
+        }
+    }
+    if (ViewBag.Time == null)
+    {
+        ViewBag.Time = 5;//5秒
+    }
+}
+
+<!DOCTYPE html>
+<link href="../../Content/Site.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+.form label
+{
+    display:block;
+    margin-bottom:5px;
+}
+</style>
+<html>
+<head>
+    <title>正在跳转...</title>
+    @if (@ViewBag.Time > 0)
+    {
+        <text><meta http-equiv="refresh" content="@ViewBag.Time;url=@ViewBag.Url"></text>
+    }
+</head>
+<body>
+    <div>
+    <h2>@ViewBag.Title</h2>
+    <p>
+       @ViewBag.Message
+
+    </p>
+    @if (@ViewBag.Time > 0)
+    {
+        <p>
+            本页面将在<b>@ViewBag.Time</b>秒后自动跳转，如果没有跳转，<a href="@ViewBag.Url">请点击这里</a>
+        </p>
+    }
+    </div>
+</body>
+</html>
+

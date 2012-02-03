@@ -8,6 +8,8 @@ namespace CengZai.Helper
 {
     public partial class Config
     {
+
+
         /// <summary>
         /// 网站名：曾在网
         /// </summary>
@@ -42,6 +44,9 @@ namespace CengZai.Helper
         }
 
 
+
+
+
         /// <summary>
         /// 密钥
         /// </summary>
@@ -55,6 +60,49 @@ namespace CengZai.Helper
                     key = "LiufuLing";
                 }
                 return key;
+            }
+        }
+
+        /*********** 相关开关配置 ************/
+        /// <summary>
+        /// 登录限制：
+        /// 0=非锁定注册用户可登录，
+        /// 1=仅激活用户可登录，
+        /// 2=所有用户禁止登录，
+        /// -1=不作限制，所有用户可以登录（包括锁定）
+        /// </summary>
+        public static int LoginLimit
+        {
+            get
+            {
+                int val = 0;
+                try
+                {
+                    val = Convert.ToInt32(ConfigurationManager.AppSettings["LoginLimit"]);
+                }
+                catch { }
+                return val;
+            }
+        }
+
+
+        /// <summary>
+        /// 注册限制：
+        /// 0=开放所有人注册，
+        /// 1=仅有邀请码用户可以注册，
+        /// 2=禁止注册，
+        /// </summary>
+        public static int RegisterLimit
+        {
+            get
+            {
+                int val = 0;
+                try
+                {
+                    val = Convert.ToInt32(ConfigurationManager.AppSettings["RegisterLimit"]);
+                }
+                catch { }
+                return val;
             }
         }
 

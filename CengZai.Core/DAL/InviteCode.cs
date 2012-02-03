@@ -158,33 +158,40 @@ namespace CengZai.DAL
 			};
 			parameters[0].Value = ID;
 
-			CengZai.Model.InviteCode model=new CengZai.Model.InviteCode();
 			DataSet ds=DbHelperSQL.Query(strSql.ToString(),parameters);
 			if(ds.Tables[0].Rows.Count>0)
 			{
-				if(ds.Tables[0].Rows[0]["ID"]!=null && ds.Tables[0].Rows[0]["ID"].ToString()!="")
-				{
-					model.ID=int.Parse(ds.Tables[0].Rows[0]["ID"].ToString());
-				}
-				if(ds.Tables[0].Rows[0]["Email"]!=null && ds.Tables[0].Rows[0]["Email"].ToString()!="")
-				{
-					model.Email=ds.Tables[0].Rows[0]["Email"].ToString();
-				}
-				if(ds.Tables[0].Rows[0]["Invite"]!=null && ds.Tables[0].Rows[0]["Invite"].ToString()!="")
-				{
-					model.Invite=ds.Tables[0].Rows[0]["Invite"].ToString();
-				}
-				if(ds.Tables[0].Rows[0]["UserID"]!=null && ds.Tables[0].Rows[0]["UserID"].ToString()!="")
-				{
-					model.UserID=int.Parse(ds.Tables[0].Rows[0]["UserID"].ToString());
-				}
-				return model;
+                return ToModel(ds.Tables[0].Rows[0]);
 			}
 			else
 			{
 				return null;
 			}
 		}
+
+        /// <summary>
+        /// 得到一个对象实体
+        /// </summary>
+        public CengZai.Model.InviteCode GetModelByInvite(string invite)
+        {
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("select  top 1 ID,Email,Invite,UserID from T_InviteCode ");
+            strSql.Append(" where Invite=@invite");
+            SqlParameter[] parameters = {
+					new SqlParameter("@Invite", SqlDbType.NVarChar, 50)
+			};
+            parameters[0].Value = invite;
+
+            DataSet ds = DbHelperSQL.Query(strSql.ToString(), parameters);
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                return ToModel(ds.Tables[0].Rows[0]);
+            }
+            else
+            {
+                return null;
+            }
+        }
 
 		/// <summary>
 		/// 获得数据列表
@@ -293,6 +300,33 @@ namespace CengZai.DAL
 			parameters[6].Value = strWhere;	
 			return DbHelperSQL.RunProcedure("UP_GetRecordByPage",parameters,"ds");
 		}*/
+
+
+        /// <summary>
+        /// 转成Model
+        /// </summary>
+        /// <param name="row"></param>
+        public CengZai.Model.InviteCode ToModel(DataRow row)
+        {
+            CengZai.Model.InviteCode model = new CengZai.Model.InviteCode();
+            if (row["ID"] != null && row["ID"].ToString() != "")
+            {
+                model.ID = int.Parse(row["ID"].ToString());
+            }
+            if (row["Email"] != null && row["Email"].ToString() != "")
+            {
+                model.Email = row["Email"].ToString();
+            }
+            if (row["Invite"] != null && row["Invite"].ToString() != "")
+            {
+                model.Invite = row["Invite"].ToString();
+            }
+            if (row["UserID"] != null && row["UserID"].ToString() != "")
+            {
+                model.UserID = int.Parse(row["UserID"].ToString());
+            }
+            return model;
+        }
 
 		#endregion  Method
 	}

@@ -28,7 +28,7 @@ namespace CengZai.Web
                 new { controller = "Home", action = "Index" } // Parameter defaults
             );
 
-            //路由相关
+            //文章相关
             routes.MapRoute(
                 "Article", // Route name
                 "Article/{action}/", // URL with parameters

@@ -19,7 +19,7 @@ namespace CengZai.Web.Controllers
         /// 取当前登录用户权限
         /// </summary>
         /// <returns></returns>
-        public Model.User GetLoginUser()
+        protected Model.User GetLoginUser()
         {
             return Session["LOGIN_USER"] as Model.User;
         }
@@ -31,7 +31,7 @@ namespace CengZai.Web.Controllers
         /// <param name="msg"></param>
         /// <param name="url"></param>
         /// <returns></returns>
-        public ContentResult AlertAndGo(string msg, string url)
+        protected ContentResult AlertAndGo(string msg, string url)
         {
             if (string.IsNullOrEmpty(url))
             {
@@ -48,7 +48,7 @@ namespace CengZai.Web.Controllers
         /// </summary>
         /// <param name="msg"></param>
         /// <returns></returns>
-        public ContentResult AlertAndBack(string msg)
+        protected ContentResult AlertAndBack(string msg)
         {
             return Content(string.Format("<script>alert('{0}');history.back();</script>", msg));
         }
@@ -59,9 +59,26 @@ namespace CengZai.Web.Controllers
         /// </summary>
         /// <param name="msg"></param>
         /// <returns></returns>
-        public ContentResult AlertAndRefresh(string msg)
+        protected ContentResult AlertAndRefresh(string msg)
         {
             return Content(string.Format("<script>alert('{0}');location.href='{1}';</script>", msg, Request.UrlReferrer.PathAndQuery));
+        }
+
+        /// <summary>
+        /// 跳转到其它页面
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="msg"></param>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        protected ContentResult JumpTo(string title, string msg, string url, int time)
+        {
+            ViewBag.Title = title;
+            ViewBag.Message = msg;
+            ViewBag.Url = url;
+            ViewBag.Time = 5;
+            string viewContent = View("JumpTo").ToString();
+            return Content(viewContent);
         }
 
     }

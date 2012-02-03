@@ -8,6 +8,7 @@ using CengZai;
 using System.Text;
 using System.Web.Security;
 using CengZai.Helper;
+using System.Data;
 
 namespace CengZai.Web.Controllers
 {
@@ -60,10 +61,43 @@ namespace CengZai.Web.Controllers
                     return View();
                 }
 
-                if (user.State < 0)
+                switch(Config.LoginLimit)
                 {
-                    ModelState.AddModelError("Error", "您的帐号已经冻结，如有问题，请联系客服！");
-                    return View();
+                    //禁止所有用户登录
+                    case 2:
+                        ModelState.AddModelError("Error", "系统正在维护，暂停登录，请稍后再试！");
+                        return View();
+                        //break;
+
+                    //只有激活用户可以登录
+                    case 1:
+                        if (user.State == 0)
+                        {
+                            ModelState.AddModelError("Error", "您的帐号尚未激活，请先登录邮箱激活帐号！");
+                            return View();
+                        }
+                        else if (user.State == -1)
+                        {
+                            ModelState.AddModelError("Error", "您的帐号被冻结，暂时无法登录！");
+                            return View();
+                        }
+                        break;
+                    
+                    //全部用户可以登录，包括锁定用户
+                    case -1:
+                        //全部用户可以登录
+                        break;
+
+                    //非锁定用户可以登录
+                    case 0:
+                    default:
+                        if (user.State == -1)
+                        {
+                            ModelState.AddModelError("Error", "您的帐号被冻结，暂时无法登录！");
+                            return View();
+                        }
+                        break;
+                    
                 }
 
                 //更新用户到数据库
@@ -102,18 +136,54 @@ namespace CengZai.Web.Controllers
             return RedirectToAction("Login", "User");
         }
 
+        /// <summary>
+        /// 用户注册
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Register()
         {
+            ViewBag.RegisterLimit = Config.RegisterLimit;
+            if (Config.RegisterLimit == 2)
+            {
+                return Content(string.Format("系统在升级，暂停开放注册！ <a href='{2}'>返回首页</a>  <hr><a href='http://{1}'>{0}</a> ", Config.SiteName, Config.SiteDomain, Util.GetCurrDomainUrl()));
+            }
             return View();
         }
 
         [HttpPost]
-        public ActionResult Register(string email, string nickname, string password, string repassword, string verifyCode)
+        public ActionResult Register(string email, string nickname, string password, string repassword, string verifyCode, string invite)
         {
+            ViewBag.RegisterLimit = Config.RegisterLimit;
+
+            if (Config.RegisterLimit == 2)
+            {
+                ModelState.AddModelError("Error", "系统在升级，暂停开放注册！");
+                return View();
+            }
             if (string.IsNullOrEmpty(email) || !Regex.IsMatch(email, @"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$"))
             {
                 ModelState.AddModelError("Email", "请输入正确的邮箱！");
                 return View();
+            }
+            if (Config.RegisterLimit == 1)
+            {
+                if (string.IsNullOrEmpty(invite))
+                {
+                    ModelState.AddModelError("Invite", "请输入邀请码！");
+                    return View();
+                }
+                BLL.InviteCode bllInvite = new BLL.InviteCode();
+                Model.InviteCode mInvite = bllInvite.GetModelByInvite(invite);
+                if (mInvite == null)
+                {
+                    ModelState.AddModelError("Invite", "邀请码无效！");
+                    return View();
+                }
+                else if (mInvite.Email != email)
+                {
+                    ModelState.AddModelError("Invite", "该邀请码已经被其它用户使用！");
+                    return View();
+                }
             }
             if (string.IsNullOrEmpty(nickname))
             {
@@ -183,37 +253,52 @@ namespace CengZai.Web.Controllers
                 user.State = 0;
                 bll.Add(user);
 
-                //激活码：邮箱#注册时间 转md5
-                string activeCode = FormsAuthentication.HashPasswordForStoringInConfigFile(user.Email + "#" + user.RegTime, "MD5");
-                string domainUrl = Request.Url.GetLeftPart(UriPartial.Authority);
+                try
+                {
+                    //激活码：邮箱#注册时间 转md5
+                    string activeCode = FormsAuthentication.HashPasswordForStoringInConfigFile(user.Email + "#" + user.RegTime, "MD5");
+                    string domainUrl = Request.Url.GetLeftPart(UriPartial.Authority);
 
-                StringBuilder mailContent = new StringBuilder();
-                string strActivateCodeURL = domainUrl + "/User/Activate?Email="+ email +"&ActivateCode=" + activeCode;
+                    StringBuilder mailContent = new StringBuilder();
+                    string strActivateCodeURL = domainUrl + "/User/Activate?Email=" + email + "&ActivateCode=" + activeCode;
 
-                mailContent.Append("<div style=\"font-size:14px; line-height:25px;\">");
-                mailContent.Append("尊敬的" + nickname + "：");
-                mailContent.Append("<br />&nbsp;&nbsp;&nbsp;&nbsp;");
+                    mailContent.Append("<div style=\"font-size:14px; line-height:25px;\">");
+                    mailContent.Append("尊敬的" + nickname + "：");
+                    mailContent.Append("<br />&nbsp;&nbsp;&nbsp;&nbsp;");
 
-                mailContent.Append("恭喜您在<b>"+ Config.SiteName+"</b>注册成功，你注册帐号是：" + email + "，请您妥善保管您的密码，如果忘记密码，请<a href=\"" +
-                    domainUrl + "/User/FindPassword?Email=" + email  + "\">点击这里找回密码</a>。");
-                mailContent.Append("<br />&nbsp;&nbsp;&nbsp;&nbsp;");
+                    mailContent.Append("恭喜您在<b>" + Config.SiteName + "</b>注册成功，你注册帐号是：" + email + "，请您妥善保管您的密码，如果忘记密码，请<a href=\"" +
+                        domainUrl + "/User/FindPassword?Email=" + email + "\">点击这里找回密码</a>。");
+                    mailContent.Append("<br />&nbsp;&nbsp;&nbsp;&nbsp;");
 
-                mailContent.Append("您注册的账号需要激活才能正常使用，请尽快激活您的账号。<a href=\"" + strActivateCodeURL + "\"  target=\"_blank\">点击这里</a>进行激活，或者点击下面链接激活：");
-                mailContent.Append("<br />&nbsp;&nbsp;&nbsp;&nbsp;");
+                    mailContent.Append("您注册的账号需要激活才能正常使用，请尽快激活您的账号。<a href=\"" + strActivateCodeURL + "\"  target=\"_blank\">点击这里</a>进行激活，或者点击下面链接激活：");
+                    mailContent.Append("<br />&nbsp;&nbsp;&nbsp;&nbsp;");
 
-                mailContent.Append("<a href=\"" + strActivateCodeURL + "\"  target=\"_blank\">" + strActivateCodeURL + "</a>");
-                mailContent.Append("<br />");
-                mailContent.Append("<br />");
+                    mailContent.Append("<a href=\"" + strActivateCodeURL + "\"  target=\"_blank\">" + strActivateCodeURL + "</a>");
+                    mailContent.Append("<br />");
+                    mailContent.Append("<br />");
 
-                mailContent.Append("<a href=\"http://" + Config.SiteDomain + "\"  target=\"_blank\"><span style=\"font-weight:bold; color:#F00; text-decoration:none;\">" + Config.SiteName + "（" + Config.SiteDomain + ")</span></a>");
-                mailContent.Append("<br />");
-                mailContent.Append(DateTime.Now.ToString("yyyy年MM月dd日"));
-                mailContent.Append("<hr />");
-                mailContent.Append("此邮件为自动发送，切勿回复。");
-                mailContent.Append("</div>");
+                    mailContent.Append("<a href=\"http://" + Config.SiteDomain + "\"  target=\"_blank\"><span style=\"font-weight:bold; color:#F00; text-decoration:none;\">" + Config.SiteName + "（" + Config.SiteDomain + ")</span></a>");
+                    mailContent.Append("<br />");
+                    mailContent.Append(DateTime.Now.ToString("yyyy年MM月dd日"));
+                    mailContent.Append("<hr />");
+                    mailContent.Append("此邮件为自动发送，切勿回复。");
+                    mailContent.Append("</div>");
 
-                Mail.Send(email, Config.SiteName + "注册成功，请及时激活帐号！", mailContent.ToString());
+                    Mail.Send(email, Config.SiteName + "注册成功，请及时激活帐号！", mailContent.ToString());
+                }
+                catch
+                {
+                    ViewBag.RegisterStatus = 0;
+                    ViewBag.Message = string.Format(@"
+                    你已经注册成功！但我们无法发送激活邮件到您的邮箱：{0},
+                    为了您帐号的安全，请确认您的邮箱[{0}]是否正确！", email);
+                    return View("RegisterOk");
+                }
 
+                ViewBag.RegisterStatus = 1;
+                ViewBag.Message = string.Format(@"
+                    恭喜你，你已经注册成功！我们已发送一封激活邮件到您邮箱：{0},
+                    为了您帐号的安全，请及时登录邮箱[{0}]进行激活！", email);
                 ViewData["Email"] = email;
                 return View("RegisterOk");
             }

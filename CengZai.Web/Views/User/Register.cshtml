@@ -28,6 +28,15 @@
         <div class="form">
             <fieldset>
                 <legend>帐户信息</legend>
+                @if (ViewBag.RegisterLimit == 1)
+                {
+                <p>
+                    <label for="username">邀请码：</label>
+                    @Html.TextBox("invite")
+                    @Html.ValidationMessage("invite") 
+                    @Html.ActionLink("申请邀请码", "ApplyInviteCode")
+                </p>
+                }
                 <p>
                     <label for="username">邮 箱：</label>
                     @Html.TextBox("email")
