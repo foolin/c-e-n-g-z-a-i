@@ -8,7 +8,7 @@ using System.Web.Security;
 
 namespace CengZai.Web.Code
 {
-    public class AuthorizedFilter : ActionFilterAttribute
+    public class CheckAuthFilter : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {

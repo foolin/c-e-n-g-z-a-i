@@ -72,6 +72,15 @@ namespace CengZai.BLL
 			return dal.GetModel(ID);
 		}
 
+        /// <summary>
+        /// 得到一个对象实体
+        /// </summary>
+        public CengZai.Model.InviteCode GetModelByInvite(string invite)
+        {
+
+            return dal.GetModelByInvite(invite);
+        }
+
 		/// <summary>
 		/// 获得数据列表
 		/// </summary>

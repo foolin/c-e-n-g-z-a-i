@@ -13,7 +13,7 @@ namespace CengZai.Web.Controllers
     {
         //
         // GET: /Article/
-        [AuthorizedFilter]
+        [CheckAuthFilter]
         public ActionResult Index(string domain)
         {
             BLL.Article bll = new BLL.Article();
@@ -27,7 +27,7 @@ namespace CengZai.Web.Controllers
             return View(artList);
         }
 
-        [AuthorizedFilter]
+        [CheckAuthFilter]
         public ActionResult Post()
         {
             int type = 0;
@@ -82,7 +82,7 @@ namespace CengZai.Web.Controllers
 
 
         [HttpPost]
-        [AuthorizedFilter]
+        [CheckAuthFilter]
         public ActionResult Post(FormCollection form, bool? bIsTop)
         {
             try

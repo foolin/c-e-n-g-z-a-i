@@ -12,12 +12,17 @@ namespace CengZai.Web.Controllers
         //
         // GET: /Home/
 
-        [AuthorizedFilter]
+        [CheckAuthFilter]
         public ActionResult Index()
         {
             Model.User user = GetLoginUser();
             ViewBag.User = user;
             return View();
+        }
+
+        public ActionResult JumpTo()
+        {
+            return JumpTo("注册成功", "恭喜您，注册成功！", "/User/Login", 3);
         }
 
     }

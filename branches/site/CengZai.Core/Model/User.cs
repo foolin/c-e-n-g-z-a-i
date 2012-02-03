@@ -149,7 +149,7 @@ namespace CengZai.Model
 			get{return _regtime;}
 		}
 		/// <summary>
-		/// 0=未激活，1=已经激活
+		/// 0=未激活，1=已经激活，-1=锁定
 		/// </summary>
 		public int? State
 		{
