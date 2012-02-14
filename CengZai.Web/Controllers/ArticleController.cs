@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using CengZai.Web.Code;
 using CengZai;
 using System.Data;
+using System.IO;
+using CengZai.Helper;
 
 namespace CengZai.Web.Controllers
 {
@@ -159,6 +161,89 @@ namespace CengZai.Web.Controllers
             }
 
             return AlertAndBack("提交成功！");
+        }
+
+
+        [HttpPost]
+        [CheckAuthFilter]
+        public ActionResult UploadImage()
+        {
+            System.Drawing.Image thumbnail_image = null;
+            System.Drawing.Image original_image = null;
+            //System.Drawing.Bitmap thumbnail_image = null;
+            System.Drawing.Graphics graphic = null;
+            System.IO.MemoryStream ms = null;
+
+            try
+            {
+                // Get the data
+                HttpPostedFileBase jpeg_image_upload = Request.Files["Filedata"];
+
+                // Retrieve the uploaded image
+                original_image = System.Drawing.Image.FromStream(jpeg_image_upload.InputStream);
+
+                // Calculate the new width and height
+                int max = Config.ThumbImageMax > 0 ? Config.ThumbImageMax : 200;
+                int width = original_image.Width;
+                int height = original_image.Height;
+                int thumb_width = max, thumb_height = max;
+                if (width > height)
+                {
+                    thumb_width = max;
+                    thumb_height = max * height / width;
+                }
+                else
+                {
+                    thumb_width = max * width / height;
+                    thumb_height = max;
+                }
+
+                // Create the thumbnail
+                thumbnail_image = original_image.GetThumbnailImage(thumb_width, thumb_height, null, System.IntPtr.Zero);
+
+                string _path = "/upload/photo/{##$$##}u" + GetLoginUser().UserID + "-" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + Guid.NewGuid().ToString().Substring(0, 5) + ".jpg";
+                string original_id = _path.Replace("{##$$##}", "");
+                string thumbnail_id = _path.Replace("{##$$##}", "thumb-");
+
+                //保存
+                try
+                {
+                    string _base = Server.MapPath(_path.Substring(0, _path.LastIndexOf('/')));
+                    if(!Directory.Exists(_base))
+                    {
+                        string[] dirs = _path.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+                        _base = Server.MapPath("/");
+                        for(int i=0 ; i < (dirs.Length - 1); i++)
+                        {
+                            _base += dirs[i] + "\\";
+                            if (!Directory.Exists(_base))
+                            {
+                                Directory.CreateDirectory(_base);
+                            }
+                        }
+                    }
+                }
+                catch { }
+                original_image.Save(Server.MapPath(original_id), System.Drawing.Imaging.ImageFormat.Jpeg);
+                thumbnail_image.Save(Server.MapPath(thumbnail_id) , System.Drawing.Imaging.ImageFormat.Jpeg);
+
+                return Content(thumbnail_id);
+            }
+            catch(Exception ex)
+            {
+                // If any kind of error occurs return a 500 Internal Server error
+                Response.StatusCode = 500;
+                return Content(ex.Message);
+            }
+            finally
+            {
+                // Clean up
+                if (thumbnail_image != null) thumbnail_image.Dispose();
+                if (graphic != null) graphic.Dispose();
+                if (original_image != null) original_image.Dispose();
+                if (thumbnail_image != null) thumbnail_image.Dispose();
+                if (ms != null) ms.Close();
+            }
         }
 
     }

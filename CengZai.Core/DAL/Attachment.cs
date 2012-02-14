@@ -52,7 +52,7 @@ namespace CengZai.DAL
 			strSql.Append(";select @@IDENTITY");
 			SqlParameter[] parameters = {
 					new SqlParameter("@ArtID", SqlDbType.Int,4),
-					new SqlParameter("@Source", SqlDbType.NVarChar,300)};
+					new SqlParameter("@Source", SqlDbType.NVarChar,1000)};
 			parameters[0].Value = model.ArtID;
 			parameters[1].Value = model.Source;
 
@@ -78,7 +78,7 @@ namespace CengZai.DAL
 			strSql.Append(" where AttachID=@AttachID");
 			SqlParameter[] parameters = {
 					new SqlParameter("@ArtID", SqlDbType.Int,4),
-					new SqlParameter("@Source", SqlDbType.NVarChar,300),
+					new SqlParameter("@Source", SqlDbType.NVarChar,1000),
 					new SqlParameter("@AttachID", SqlDbType.Int,4)};
 			parameters[0].Value = model.ArtID;
 			parameters[1].Value = model.Source;
