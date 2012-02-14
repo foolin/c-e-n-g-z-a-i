@@ -107,6 +107,24 @@ namespace CengZai.Helper
         }
 
 
+        /// <summary>
+        /// 缩略图最大值
+        /// </summary>
+        public static int ThumbImageMax
+        {
+            get
+            {
+                int val = 0;
+                try
+                {
+                    val = Convert.ToInt32(ConfigurationManager.AppSettings["ThumbImageMax"]);
+                }
+                catch { }
+                return val;
+            }
+        }
+
+
         /************ 邮箱相关配置 ***********/
 
         //From

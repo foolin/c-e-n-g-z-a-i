@@ -106,6 +106,14 @@
     <Content Include="Content\css\ui-lightness\jquery-ui-1.8.17.custom.css" />
     <Content Include="Content\js\jquery-1.7.1.min.js" />
     <Content Include="Content\js\jquery-ui-1.8.17.custom.min.js" />
+    <Content Include="js\swfupload\handlers.js" />
+    <Content Include="js\swfupload\swfupload.cookies.js" />
+    <Content Include="js\swfupload\swfupload.js" />
+    <Content Include="js\swfupload\swfupload.proxy.js" />
+    <Content Include="js\swfupload\swfupload.queue.js" />
+    <Content Include="js\swfupload\swfupload.speed.js" />
+    <Content Include="js\swfupload\swfupload.swf" />
+    <Content Include="js\swfupload\swfupload_fp9.swf" />
     <Content Include="Test.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Content\css\base.css" />
