@@ -1,19 +1,18 @@
 ﻿@{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "我的首页-曾在网";
     var user = ViewBag.User as CengZai.Model.User;
 }
 
-<h2>@user.Nickname</h2>
-<div class="nav">
-    <ul>
-        <li>@Html.ActionLink("首页","Index", "Home")</li>
-        <li>@Html.ActionLink("所有日志","Index", "Article")</li>
-        <li>@Html.ActionLink("所有日志","Index", "Article")</li>
-        <li>@Html.ActionLink("关于我","About", "Home")</li>
-        <li>@Html.ActionLink("注销","Logout", "User")</li>
-    </ul>
+<div class="container-fluid">
+
+    <h2>@user.Nickname</h2>
+
+     <div class="row-fluid">
+      <div class="span6">Level 2</div>
+      <div class="span6">Level 2</div>
+    </div>
+
+
+    @RenderPage("../Shared/Footer.cshtml", null)
 </div>
-
-
-@RenderPage("../Article/_Layout_ArtNav.cshtml", null)
 

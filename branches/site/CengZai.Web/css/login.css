@@ -1,0 +1,51 @@
+﻿body {
+}
+.container{
+	margin-top:20px;
+}
+.logo a
+{
+    display:block;
+    background:url(../img/logo.png) no-repeat;
+    width:200px;
+    height:56px;
+    text-indent:-999px;
+}
+.slogan{
+	color:#093;
+	font-family:"Courier New", Courier, monospace;
+	line-height:30px;
+}
+
+
+/* Styles for validation helpers
+-----------------------------------------------------------*/
+.field-validation-error
+{
+    color: #ff0000;
+}
+
+.field-validation-valid
+{
+    display: none;
+}
+
+.input-validation-error
+{
+    border: 1px solid #ff0000;
+    background-color: #ffeeee;
+}
+
+.validation-summary-errors
+{
+    font-weight: bold;
+    color: #ff0000;
+}
+
+.validation-summary-valid
+{
+    display: none;
+}
+.inline{
+	display:inline;
+}
