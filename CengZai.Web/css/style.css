@@ -1,0 +1,20 @@
+@charset "utf-8";
+html, body {
+  height: 100%;
+  background-color: #E3E9ED;
+}
+.nav{
+	font-size:14px;
+	font-weight:bold;
+}
+.logo {
+	background:url(../img/logo_topbar.png) no-repeat;
+	width:150px;
+	text-indent:-999px;
+}
+.navbar-link{
+	list-style:none;
+}
+.navbar-link li{
+	float:right;
+}
