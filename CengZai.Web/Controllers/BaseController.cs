@@ -14,6 +14,7 @@ namespace CengZai.Web.Controllers
             //初始化
             ViewData["SiteName"] = Config.SiteName;
             ViewData["SiteDomain"] = Config.SiteDomain;
+            ViewData["SiteSlogan"] = Config.SiteSlogan;
         }
 
         /// <summary>
