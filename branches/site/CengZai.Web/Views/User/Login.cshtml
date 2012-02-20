@@ -14,7 +14,7 @@
 <div class="container">
     <div class="header">
         <h1 class="logo"><a href="/">曾在网</a></h1>
-        <div class="slogan">致力于挽救爱情的情感交友社区</div>
+        <div class="slogan">@ViewBag.SiteSlogan</div>
     </div>
     <hr />
     <div class="login-form">
@@ -32,7 +32,7 @@
             </p>
                 
             <p>
-                @Html.CheckBox("rememberMe") <label class="inline" for="rememberMe">记住我</label>
+                @Html.CheckBox("rememberMe") <label class="inline" for="rememberMe">记住我?</label>
             </p>
             <p class="btn-group">
                 <input type="submit" class="btn btn-primary" value="登录" />

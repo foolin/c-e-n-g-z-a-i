@@ -11,7 +11,7 @@ namespace CengZai.Helper
 
 
         /// <summary>
-        /// 网站名：曾在网
+        /// 站名
         /// </summary>
         public static string SiteName
         {
@@ -22,13 +22,24 @@ namespace CengZai.Helper
         }
 
         /// <summary>
-        /// 网站域名：cengzai.com
+        /// 网站域名
         /// </summary>
         public static string SiteDomain
         {
             get
             {
                 return ConfigurationManager.AppSettings["SiteDomain"] + "";
+            }
+        }
+
+        /// <summary>
+        /// 网站标语
+        /// </summary>
+        public static string SiteSlogan
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["SiteSlogan"] + "";
             }
         }
 

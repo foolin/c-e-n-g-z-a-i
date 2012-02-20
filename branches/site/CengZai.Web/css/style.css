@@ -73,10 +73,36 @@ body {
 	float:left;
 	position:relative;
 }
-.avatar a.blog-avatar {
+a.blog-avatar {
 	display: block;
 	width: 64px;
 	height: 64px;
+	background-position: center center;
+	text-indent: -9999px;
+	outline: none;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	box-shadow: 0 1px 2px #b0b3b6;
+	-moz-box-shadow: 0 1px 2px #b0b3b6;
+	-webkit-box-shadow: 0 1px 2px #b0b3b6;
+	box-shadow: 0 1px 2px #b0b3b6;
+	-moz-box-shadow: 0 1px 2px #b0b3b6;
+	-webkit-box-shadow: 0 1px 2px #b0b3b6;
+	box-shadow: 0 1px 2px #b0b3b6;
+	-moz-box-shadow: 0 1px 2px #b0b3b6;
+	-webkit-box-shadow: 0 1px 2px #b0b3b6;
+}
+a.blog-mini-avatar{
+	display: block;
+	width: 30px;
+	height: 30px;
 	background-position: center center;
 	text-indent: -9999px;
 	outline: none;
@@ -129,7 +155,8 @@ body {
 }
 .feed-list {
 	clear: both;
-	padding: 5px 0;
+	margin:0;
+	padding:5px 0;
 }
 
 .feed {
@@ -172,20 +199,43 @@ body {
 	line-height: 20px;
 }
 .feed .feed-comment{
-	margin:18px 0;
+	margin:0px 2px;
 	border:0;
 	border-top:solid 1px #e1e1e1;
 	border-bottom:solid 1px #fdfdfd;
+	padding:10px;
+	overflow:hidden;
 }
 .feed ul.feed-comment{
 	list-style:none;
 }
 .feed ul.feed-comment li{
+	margin:0;
 	display:block;
+	padding:5px 0;
+	border-bottom:dashed 1px #ccc;
 }
 .feed .feed-comment .comment-avatar{
+	width:18%;
+	float:left;
+}
+.feed .feed-comment .comment-avatar a.blog-mini-avatar{
+	margin:0 auto;
 }
 .feed .feed-comment .comment-content{
+	width:82%;
+	float:right;
+}
+.feed .feed-comment .comment-info{
+	color:#999;
+	font-size:12px;
+	padding:2px 0;
+}
+.feed .comment-form{
+	margin:0px 10px;
+}
+.feed .comment-form form{
+	margin:0 10px;
 }
 .feed .link-to-post-holder{
 	position:absolute;right:-2px;
@@ -196,8 +246,8 @@ body {
 	display:block;
 	text-indent:-9999px;
 	outline:none;
-	background:url("../img/feed-icons.png") no-repeat 0 -90px;
-	_background:url("/img/icon/feed-icons-ie.$5106.png") no-repeat 0 -90px;
+	background:url("../img/box-icons.png") no-repeat 0 -90px;
+	_background:url("../img/box-icons.png") no-repeat 0 -90px;
 	width:30px;
 	height:32px
 }
