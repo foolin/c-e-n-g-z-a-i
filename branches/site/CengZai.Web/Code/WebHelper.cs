@@ -21,5 +21,21 @@ namespace CengZai.Web.Code
             catch { }
             return (user != null);
         }
+
+
+        /// <summary>
+        /// 取邮箱域名
+        /// </summary>
+        /// <param name="email"></param>
+        public static string GetEmailDomain(string email)
+        {
+            if(string.IsNullOrEmpty(email) || email.IndexOf('@') == -1)
+            {
+                return email;
+            }
+
+            string domain = email.Substring(email.IndexOf('@') + 1);
+            return domain;
+        }
     }
 }

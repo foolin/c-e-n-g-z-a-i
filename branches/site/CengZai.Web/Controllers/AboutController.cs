@@ -17,6 +17,13 @@ namespace CengZai.Web.Controllers
         }
 
 
+
+        public ActionResult Join()
+        {
+            return View();
+        }
+
+
         public ActionResult Agreement()
         {
             return View();
@@ -28,6 +35,7 @@ namespace CengZai.Web.Controllers
         {
             return View();
         }
+
 
     }
 }
