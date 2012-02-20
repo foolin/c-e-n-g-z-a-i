@@ -23,6 +23,19 @@
 }
 
 <div class="container">
+    
+    @if (ViewBag.User != null && ViewBag.User.State == 0)
+    {
+    <div class="alert alert-block fade in"> 
+        <a class="close" data-dismiss="alert" href="#">&times;</a> 
+        <h4 class="alert-heading">@ViewBag.User.Nickname，你的邮箱[@ViewBag.User.Email]尚未激活!</h4> 
+        <p>您的邮箱尚未激活！邮箱是作为找回密码的重要方式，为了您的帐号安全，建议您立刻登录邮箱进行激活！</p> 
+        <p> 
+            <a class="btn btn-danger" href="http://mail.@CengZai.Web.Code.WebHelper.GetEmailDomain(ViewBag.User.Email)" target="_blank">登录邮箱进行激活</a> 
+            @Html.ActionLink("重新发送激活邮件", "ResendActivate", "User", null, new { @class = "btn" })
+        </p> 
+    </div>
+    }
 
      <div class="row-fluid">
       <div class="span8">
@@ -223,7 +236,21 @@
 
       <!-- Side 开始 -->
       <div class="span4">
-        
+          <div class="well sidebar-nav"> 
+            <ul class="nav nav-list"> 
+              <li class="nav-header">我的主页</li> 
+              <li class="active"><a href="#">最新动态</a></li> 
+              <li><a href="#">发表日志</a></li> 
+              <li><a href="#">上传照片</a></li> 
+              <li><a href="#">发表唠叨</a></li> 
+              <li class="nav-header">控制面板</li> 
+              <li><a href="#">邀请好友</a></li> 
+              <li><a href="#">修改资料</a></li>
+              <li><a href="#">隐私设置</a></li>
+              <li><a href="#">修改密码</a></li> 
+            </ul> 
+            @RenderPage("~/Views/Shared/_AboutNavList.cshtml")
+          </div><!--/.well --> 
       </div>
       <!-- Side 结束 -->
 

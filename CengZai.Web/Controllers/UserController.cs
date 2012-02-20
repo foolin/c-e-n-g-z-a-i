@@ -313,6 +313,16 @@ namespace CengZai.Web.Controllers
 
 
         /// <summary>
+        /// 重发激活码邮件
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ResendActivate()
+        {
+            return View();
+        }
+
+
+        /// <summary>
         /// 用户激活
         /// </summary>
         /// <returns></returns>
