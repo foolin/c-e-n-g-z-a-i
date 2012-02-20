@@ -36,10 +36,10 @@
                 <li class="dropdown"> 
                     <a href="http://www.baidu.com" class="dropdown-toggle" data-toggle="dropdown">发表<b class="caret"></b></a> 
                     <ul class="dropdown-menu"> 
-                        <li><a href="#WenZhang">日志</a></li> 
-                        <li><a href="#Picture">相片</a></li> 
+                        <li>@Html.ActionLink("日志", "PostText", "Article")</li> 
+                        <li>@Html.ActionLink("照片", "PostText", "Article")</li> 
                         <li class="divider"></li> 
-                        <li><a href="#LaoDao">唠叨</a></li> 
+                        <li>@Html.ActionLink("唠叨", "Send", "Message")</li> 
                     </ul> 
                 </li>
                 <li><a href="#message">我的主页</a></li>

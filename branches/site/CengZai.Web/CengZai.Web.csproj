@@ -208,7 +208,7 @@
     <Content Include="Views\About\Agreement.cshtml" />
     <Content Include="Views\About\Privacy.cshtml" />
     <Content Include="Views\About\Join.cshtml" />
-    <Content Include="Views\Shared\_AboutNavList.cshtml" />
+    <Content Include="Views\About\_NavList.cshtml" />
     <Content Include="Views\User\ResendActivate.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
