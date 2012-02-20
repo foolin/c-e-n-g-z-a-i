@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Code\CheckAuthFilter.cs" />
     <Compile Include="Code\ErrorFilter.cs" />
+    <Compile Include="Code\WebHelper.cs" />
     <Compile Include="Common\VerifyCode.aspx.cs">
       <DependentUpon>VerifyCode.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -69,6 +70,7 @@
     <Compile Include="Common\VerifyCode.aspx.designer.cs">
       <DependentUpon>VerifyCode.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\ArticleController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -201,6 +203,10 @@
   <ItemGroup>
     <None Include="psd\CengZai_Ico.psd" />
     <None Include="psd\logo_topbar.psd" />
+    <Content Include="Views\User\_LoginLayout.cshtml" />
+    <Content Include="Views\About\Us.cshtml" />
+    <Content Include="Views\About\Agreement.cshtml" />
+    <Content Include="Views\About\Privacy.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

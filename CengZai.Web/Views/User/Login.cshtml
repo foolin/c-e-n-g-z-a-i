@@ -1,22 +1,8 @@
 ﻿@{
-    Layout = null;
+    ViewBag.Title = "用户登录";
+    Layout = "_LoginLayout.cshtml";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <title>用户登录 - @ViewData["SiteName"]</title>
-    <link href="../../css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="../../css/login.css" rel="stylesheet" type="text/css" />
-</head>
-<body>
-<div class="container">
-    <div class="header">
-        <h1 class="logo"><a href="/">曾在网</a></h1>
-        <div class="slogan">@ViewBag.SiteSlogan</div>
-    </div>
-    <hr />
     <div class="login-form">
         @using (Html.BeginForm()) {
             
@@ -43,16 +29,3 @@
             
         }
     </div>
-    <hr />
-    <div class="link">
-        <p class="pull-left">&copy 2012 @ViewData["SiteName"]<text>(</text>@ViewData["SiteDomain"])</p>
-        <div class="pull-right">
-            @Html.ActionLink("关于我们", "Us", "About") | 
-            @Html.ActionLink("用户协议", "Agreement", "About") | 
-            @Html.ActionLink("隐身政策", "Privacy", "About") | 
-            <a href="http://www.miibeian.gov.cn" target="_blank">粤ICP备11056743号</a>
-        </div>
-    </div>
-</div>
-</body>
-</html>
