@@ -46,6 +46,7 @@
             <button type="submit" class="btn btn-primary">保存</button> 
             @Html.ActionLink("取消", "Index", "Home", new { @class = "btn" })
           </div> 
+          <div>@Html.ValidationSummary()</div>
         </fieldset>
       
       </div>
@@ -56,10 +57,10 @@
             @Html.DropDownList("categoryid", ViewData["CategoryList"] as SelectList, "默认分类")
             <a href="#">新建</a>
             <hr />
-            @Html.DropDownList("private", ViewData["PrivateList"] as List<SelectListItem>)
+            @Html.DropDownList("privacy", ViewData["PrivateList"] as List<SelectListItem>)
             <hr />
             <label class="checkbox inline"> 
-                <input type="checkbox" id="isTop" value="1"> 置顶
+                <input type="checkbox" name="top" value="1"> 置顶
              </label> 
 
           </div><!--/.well -->
