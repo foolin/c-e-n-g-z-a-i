@@ -30,10 +30,22 @@ namespace CengZai.Web.Controllers
         }
 
         [CheckAuthFilter]
-        public ActionResult Post()
+        public ActionResult PostText()
         {
-            int type = 0;
-            int.TryParse(Request["type"], out type);
+            _InitPostForm();    //初始化
+            return View();
+        }
+
+        [HttpPost]
+        [CheckAuthFilter]
+        public ActionResult PostText(FormCollection form)
+        {
+            
+            return View();
+        }
+
+        private void _InitPostForm()
+        {
             //分类设置
             List<Model.Category> categories = new BLL.Category().GetModelList(string.Format("UserID={0}", GetLoginUser().UserID));
             if (categories == null)
@@ -53,6 +65,18 @@ namespace CengZai.Web.Controllers
                 new SelectListItem(){Text = "仅自己可见", Value="2"},
             };
             ViewBag.PrivateList = privateList;
+        }
+
+
+        /************* old ****************/
+
+        /*
+        [CheckAuthFilter]
+        public ActionResult Post()
+        {
+            int type = 0;
+            int.TryParse(Request["type"], out type);
+
 
             if (type == (int)Model.ArtType.Audio)
             {
@@ -162,7 +186,7 @@ namespace CengZai.Web.Controllers
 
             return AlertAndBack("提交成功！");
         }
-
+        */
 
         [HttpPost]
         [CheckAuthFilter]

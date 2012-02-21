@@ -2,34 +2,53 @@
     ViewBag.Title = "提交文本";
 }
 
-@RenderPage("_Layout_ArtNav.cshtml", null)
 
-@using (Html.BeginForm("Post", "Article"))
+<div class="container">
+@using (Html.BeginForm("PostText", "Article", FormMethod.Post, new {@class="form-horizontal"}))
 {
-    <div class="post-editor">
-        <h2>发布日志</h2>
-        <dl>
-            <dt><h3>标题</h3><span>（可不填）</span></dt>
-            <dd>@Html.TextBox("title", "")</dd>
-            <dt>内容</dt>
-            <dd>@Html.TextArea("content", new { @class = "editor" })</dd>
-            <dt><h3>分类</h3><span>（可不填）</span></dt>
-            <dd>@Html.DropDownList("categoryid", ViewData["CategoryList"] as SelectList, "默认分类") <a href="#">新建分类</a></dd>
-            <dt><h3>是否置顶</h3><span>（可不填）</span></dt>
-            <dd><input type="checkbox" name="isTop" value="1" />置顶1</dd>
-            <dt><h3>设置隐私</h3><span>（可不填）</span></dt>
-            <dd>@Html.DropDownList("private", ViewData["PrivateList"] as List<SelectListItem>)</dd>
-            <dd>
-                @Html.Hidden("source", "")
-                @Html.Hidden("type", (int)CengZai.Model.ArtType.Text)
-               @Html.ActionLink("取消","Index","Home") <input type="submit" name="btn-draft" value="草稿" />   <input type="submit" name="btn-post" value="提交" /> 
-            </dd>
-        </dl>
-        <div>
-        
-            
-        </div>
+    <div class="row-fluid">
+      <div class="span8 bg-white">
+      <div class="padding">
 
+        <fieldset> 
+          <legend>发表日志</legend> 
+          <div class="control-group"> 
+            <label class="control-label" for="title">标题</label> 
+            <div class="controls"> 
+              @Html.TextBox("title", "", new { @class = "my-input-xxlarge" }) 
+              <span class="help-block">（可不填）</span> 
+            </div> 
+          </div>
+          <div class="control-group"> 
+            <label class="control-label" for="content">标题</label>
+            <div class="controls"> 
+            @Html.TextArea("content", "", 10, 20, new { @class = "my-input-xxlarge editor" })
+            </div>
+          </div>
+          <div class="form-actions"> 
+            <button type="submit" class="btn btn-primary">保存</button> 
+            @Html.ActionLink("取消", "Index", "Home", new { @class = "btn" })
+          </div> 
+        </fieldset>
+      
+      </div>
+      </div>
+      <!--.span8-->
+      <div class="span4">
+          <div class="well">
+            @Html.DropDownList("categoryid", ViewData["CategoryList"] as SelectList, "默认分类")
+            <a href="#">新建</a>
+            <hr />
+            @Html.DropDownList("private", ViewData["PrivateList"] as List<SelectListItem>)
+            <hr />
+            <label class="checkbox inline"> 
+                <input type="checkbox" id="isTop" value="1"> 置顶
+             </label> 
+
+          </div><!--/.well -->
+      </div>
     </div>
+    <!--/.span4 -->
 }
-               
+</div>   
+<!--/.container -->

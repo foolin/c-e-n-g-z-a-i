@@ -16,11 +16,6 @@
 	font-family:"Courier New", Courier, monospace;
 	line-height:30px;
 }
-.inline{
-	display:inline;
-}
-
-
 /* Styles for validation helpers
 -----------------------------------------------------------*/
 .field-validation-error

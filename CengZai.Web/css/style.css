@@ -35,13 +35,24 @@ body {
 {
     clear:both;
 }
+.inline{
+	display:inline-block;
+}
 
 /************** 重写 **********/
 .container{
 	width:960px;
 }
-
-
+.form-horizontal .control-group > label 
+{
+    width:80px;
+}
+.form-horizontal .controls {
+    margin-left: 100px;
+}
+.my-input-xxlarge {
+  width: 400px;
+}
 /* Styles for validation helpers
 -----------------------------------------------------------*/
 .field-validation-error
