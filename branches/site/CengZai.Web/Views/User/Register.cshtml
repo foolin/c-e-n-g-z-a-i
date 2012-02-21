@@ -50,7 +50,9 @@
             </script>
         </p>
         <p>
-                @Html.CheckBox("agreement") <label class="inline" for="agreement">同意《@Html.ActionLink("用户协议", "Agreement", "About", null, new { target = "_blank" })》</label>
+            <label class="checkbox inline"> 
+                <input type="checkbox" name="agreement" id="agreement" value="1"> 同意《@Html.ActionLink("用户协议", "Agreement", "About", null, new { target = "_blank" })》
+            </label> 
         </p>
         <p class="btn-group">
             <input type="submit" class="btn btn-primary" value="注册" />

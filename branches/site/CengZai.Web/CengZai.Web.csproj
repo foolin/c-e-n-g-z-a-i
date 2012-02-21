@@ -195,9 +195,6 @@
     <Content Include="Views\Article\PostText.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Article\_Layout_ArtNav.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Shared\JumpTo.cshtml" />
   </ItemGroup>
   <ItemGroup>
