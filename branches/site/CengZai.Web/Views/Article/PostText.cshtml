@@ -2,6 +2,24 @@
     ViewBag.Title = "提交文本";
 }
 
+@section head{
+	<script charset="utf-8" src="../js/kindeditor/kindeditor-min.js"></script>
+	<script charset="utf-8" src="../js/kindeditor/lang/zh_CN.js"></script>
+	<script>
+	    $(function () {
+	        var editor = KindEditor.create('textarea[name="content"]',
+            {
+                resizeType: 1,
+                allowPreviewEmoticons: false,
+                allowImageUpload: false,
+                items: [
+						'bold', 'italic', 'underline',
+						'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+						'insertunorderedlist', '|', 'image', 'link']
+            });
+	    });
+	</script>
+}
 
 <div class="container">
 @using (Html.BeginForm("PostText", "Article", FormMethod.Post, new {@class="form-horizontal"}))
@@ -11,19 +29,18 @@
       <div class="padding">
 
         <fieldset> 
-          <legend>发表日志</legend> 
-          <div class="control-group"> 
-            <label class="control-label" for="title">标题</label> 
-            <div class="controls"> 
-              @Html.TextBox("title", "", new { @class = "my-input-xxlarge" }) 
-              <span class="help-block">（可不填）</span> 
+          <legend>发表日志</legend>
+          <div class="my-control-group"> 
+            <label class="control-label" for="title">标题 <span class="help-block">（可不填）</span></label> 
+            <div> 
+              @Html.TextBox("title", "", new { @class = "input-xxlarge" }) 
             </div> 
           </div>
-          <div class="control-group"> 
-            <label class="control-label" for="content">标题</label>
-            <div class="controls"> 
-            @Html.TextArea("content", "", 10, 20, new { @class = "my-input-xxlarge editor" })
-            </div>
+          <div class="my-control-group"> 
+            <label class="control-label" for="title">内容</label> 
+            <div> 
+              @Html.TextArea("content", "", 15, 20, new { @class = "input-xxlarge editor" })
+            </div> 
           </div>
           <div class="form-actions"> 
             <button type="submit" class="btn btn-primary">保存</button> 
