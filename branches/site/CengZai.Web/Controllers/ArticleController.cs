@@ -38,9 +38,18 @@ namespace CengZai.Web.Controllers
 
         [HttpPost]
         [CheckAuthFilter]
-        public ActionResult PostText(FormCollection form)
+        public ActionResult PostText(string title, string content, int? categoryid, int? privacy, int? top)
         {
-            
+            if (string.IsNullOrEmpty(content))
+            {
+                ModelState.AddModelError("Error", "内容不能为空！");
+                _InitPostForm();    //初始化
+                return View();
+            }
+
+            RedirectToAction("Index", "Article");
+
+            _InitPostForm();    //初始化
             return View();
         }
 
