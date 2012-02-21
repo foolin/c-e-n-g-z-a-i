@@ -6,7 +6,7 @@ html, body {
 body {
     padding-top: 60px;
     padding-bottom: 40px;
-	background:url(../images/content_bg.png) repeat-x #dde1e5;
+	background:#dde1e5;
 }
 .bg-white{
 	background:#ffffff;
@@ -35,6 +35,17 @@ body {
 {
     clear:both;
 }
+
+.clearfix {
+  margin-bottom: 18px;
+  zoom: 1;
+}
+.clearfix:before, .clearfix:after {
+  display: table;
+  content: "";
+  zoom: 1;
+}
+
 .inline{
 	display:inline-block;
 }
@@ -52,6 +63,26 @@ body {
 }
 .my-input-xxlarge {
   width: 400px;
+}
+.my-control-group {
+	margin-top: 18px;
+	-webkit-margin-top-collapse: separate;
+}
+/********* 编辑器 *************/
+.ke-container
+{
+	border:#f0f0f0 solid 1px !important;
+}
+.ke-toolbar
+{
+	border-bottom:#f0f0f0 solid 1px !important;
+	padding:5px !important;
+	background-color:#f9f9f9 !important;
+}
+.ke-statusbar
+{
+	background-color:#f9f9f9 !important;
+	border-top: 1px solid #f0f0f0 !important;
 }
 /* Styles for validation helpers
 -----------------------------------------------------------*/
