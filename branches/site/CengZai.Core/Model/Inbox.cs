@@ -2,12 +2,12 @@
 namespace CengZai.Model
 {
 	/// <summary>
-	/// Message:实体类(属性说明自动提取数据库字段的描述信息)
+	/// Inbox:实体类(属性说明自动提取数据库字段的描述信息)
 	/// </summary>
 	[Serializable]
-	public partial class Message
+	public partial class Inbox
 	{
-		public Message()
+		public Inbox()
 		{}
 		#region Model
 		private int _msgid;

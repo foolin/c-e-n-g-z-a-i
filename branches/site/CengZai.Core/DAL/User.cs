@@ -62,14 +62,16 @@ namespace CengZai.DAL
 		{
 			StringBuilder strSql=new StringBuilder();
 			strSql.Append("insert into T_User(");
-			strSql.Append("Email,Password,Nickname,Sign,Intro,Birth,Sex,AreaID,Mobile,LoginIp,LoginTime,LoginCount,RegIp,RegTime,State,Private,Domain)");
-			strSql.Append(" values (");
-			strSql.Append("@Email,@Password,@Nickname,@Sign,@Intro,@Birth,@Sex,@AreaID,@Mobile,@LoginIp,@LoginTime,@LoginCount,@RegIp,@RegTime,@State,@Private,@Domain)");
-			strSql.Append(";select @@IDENTITY");
-			SqlParameter[] parameters = {
+            strSql.Append("Email,Password,Username,Nickname,Love,Sign,Intro,Birth,Sex,AreaID,Mobile,LoginIp,LoginTime,LoginCount,RegIp,RegTime,State,Privacy,Credit,Vip,Money,Config)");
+            strSql.Append(" values (");
+            strSql.Append("@Email,@Password,@Username,@Nickname,@Love,@Sign,@Intro,@Birth,@Sex,@AreaID,@Mobile,@LoginIp,@LoginTime,@LoginCount,@RegIp,@RegTime,@State,@Privacy,@Credit,@Vip,@Money,@Config)");
+            strSql.Append(";select @@IDENTITY");
+            SqlParameter[] parameters = {
 					new SqlParameter("@Email", SqlDbType.NVarChar,50),
 					new SqlParameter("@Password", SqlDbType.NVarChar,50),
+					new SqlParameter("@Username", SqlDbType.NVarChar,50),
 					new SqlParameter("@Nickname", SqlDbType.NVarChar,50),
+					new SqlParameter("@Love", SqlDbType.Int,4),
 					new SqlParameter("@Sign", SqlDbType.NVarChar,50),
 					new SqlParameter("@Intro", SqlDbType.NVarChar,500),
 					new SqlParameter("@Birth", SqlDbType.DateTime),
@@ -82,25 +84,34 @@ namespace CengZai.DAL
 					new SqlParameter("@RegIp", SqlDbType.NVarChar,50),
 					new SqlParameter("@RegTime", SqlDbType.DateTime),
 					new SqlParameter("@State", SqlDbType.Int,4),
-					new SqlParameter("@Private", SqlDbType.Int,4),
-					new SqlParameter("@Domain", SqlDbType.NVarChar,50)};
-			parameters[0].Value = model.Email;
-			parameters[1].Value = model.Password;
-			parameters[2].Value = model.Nickname;
-			parameters[3].Value = model.Sign;
-			parameters[4].Value = model.Intro;
-			parameters[5].Value = model.Birth;
-			parameters[6].Value = model.Sex;
-			parameters[7].Value = model.AreaID;
-			parameters[8].Value = model.Mobile;
-			parameters[9].Value = model.LoginIp;
-			parameters[10].Value = model.LoginTime;
-			parameters[11].Value = model.LoginCount;
-			parameters[12].Value = model.RegIp;
-			parameters[13].Value = model.RegTime;
-			parameters[14].Value = model.State;
-			parameters[15].Value = model.Private;
-			parameters[16].Value = model.Domain;
+					new SqlParameter("@Privacy", SqlDbType.Int,4),
+					new SqlParameter("@Credit", SqlDbType.Int,4),
+					new SqlParameter("@Vip", SqlDbType.Int,4),
+					new SqlParameter("@Money", SqlDbType.Int,4),
+					new SqlParameter("@Config", SqlDbType.NVarChar,2000)};
+            parameters[0].Value = model.Email;
+            parameters[1].Value = model.Password;
+            parameters[2].Value = model.Username;
+            parameters[3].Value = model.Nickname;
+            parameters[4].Value = model.Love;
+            parameters[5].Value = model.Sign;
+            parameters[6].Value = model.Intro;
+            parameters[7].Value = model.Birth;
+            parameters[8].Value = model.Sex;
+            parameters[9].Value = model.AreaID;
+            parameters[10].Value = model.Mobile;
+            parameters[11].Value = model.LoginIp;
+            parameters[12].Value = model.LoginTime;
+            parameters[13].Value = model.LoginCount;
+            parameters[14].Value = model.RegIp;
+            parameters[15].Value = model.RegTime;
+            parameters[16].Value = model.State;
+            parameters[17].Value = model.Privacy;
+            parameters[18].Value = model.Credit;
+            parameters[19].Value = model.Vip;
+            parameters[20].Value = model.Money;
+            parameters[21].Value = model.Config;
+			
 
 			object obj = DbHelperSQL.GetSingle(strSql.ToString(),parameters);
 			if (obj == null)
@@ -118,29 +129,36 @@ namespace CengZai.DAL
 		public bool Update(CengZai.Model.User model)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("update T_User set ");
-			strSql.Append("Email=@Email,");
-			strSql.Append("Password=@Password,");
-			strSql.Append("Nickname=@Nickname,");
-			strSql.Append("Sign=@Sign,");
-			strSql.Append("Intro=@Intro,");
-			strSql.Append("Birth=@Birth,");
-			strSql.Append("Sex=@Sex,");
-			strSql.Append("AreaID=@AreaID,");
-			strSql.Append("Mobile=@Mobile,");
-			strSql.Append("LoginIp=@LoginIp,");
-			strSql.Append("LoginTime=@LoginTime,");
-			strSql.Append("LoginCount=@LoginCount,");
-			strSql.Append("RegIp=@RegIp,");
-			strSql.Append("RegTime=@RegTime,");
-			strSql.Append("State=@State,");
-			strSql.Append("Private=@Private,");
-			strSql.Append("Domain=@Domain");
-			strSql.Append(" where UserID=@UserID");
-			SqlParameter[] parameters = {
+            strSql.Append("update T_User set ");
+            strSql.Append("Email=@Email,");
+            strSql.Append("Password=@Password,");
+            strSql.Append("Username=@Username,");
+            strSql.Append("Nickname=@Nickname,");
+            strSql.Append("Love=@Love,");
+            strSql.Append("Sign=@Sign,");
+            strSql.Append("Intro=@Intro,");
+            strSql.Append("Birth=@Birth,");
+            strSql.Append("Sex=@Sex,");
+            strSql.Append("AreaID=@AreaID,");
+            strSql.Append("Mobile=@Mobile,");
+            strSql.Append("LoginIp=@LoginIp,");
+            strSql.Append("LoginTime=@LoginTime,");
+            strSql.Append("LoginCount=@LoginCount,");
+            strSql.Append("RegIp=@RegIp,");
+            strSql.Append("RegTime=@RegTime,");
+            strSql.Append("State=@State,");
+            strSql.Append("Privacy=@Privacy,");
+            strSql.Append("Credit=@Credit,");
+            strSql.Append("Vip=@Vip,");
+            strSql.Append("Money=@Money,");
+            strSql.Append("Config=@Config");
+            strSql.Append(" where UserID=@UserID");
+            SqlParameter[] parameters = {
 					new SqlParameter("@Email", SqlDbType.NVarChar,50),
 					new SqlParameter("@Password", SqlDbType.NVarChar,50),
+					new SqlParameter("@Username", SqlDbType.NVarChar,50),
 					new SqlParameter("@Nickname", SqlDbType.NVarChar,50),
+					new SqlParameter("@Love", SqlDbType.Int,4),
 					new SqlParameter("@Sign", SqlDbType.NVarChar,50),
 					new SqlParameter("@Intro", SqlDbType.NVarChar,500),
 					new SqlParameter("@Birth", SqlDbType.DateTime),
@@ -153,27 +171,35 @@ namespace CengZai.DAL
 					new SqlParameter("@RegIp", SqlDbType.NVarChar,50),
 					new SqlParameter("@RegTime", SqlDbType.DateTime),
 					new SqlParameter("@State", SqlDbType.Int,4),
-					new SqlParameter("@Private", SqlDbType.Int,4),
-					new SqlParameter("@Domain", SqlDbType.NVarChar,50),
+					new SqlParameter("@Privacy", SqlDbType.Int,4),
+					new SqlParameter("@Credit", SqlDbType.Int,4),
+					new SqlParameter("@Vip", SqlDbType.Int,4),
+					new SqlParameter("@Money", SqlDbType.Int,4),
+					new SqlParameter("@Config", SqlDbType.NVarChar,2000),
 					new SqlParameter("@UserID", SqlDbType.Int,4)};
-			parameters[0].Value = model.Email;
-			parameters[1].Value = model.Password;
-			parameters[2].Value = model.Nickname;
-			parameters[3].Value = model.Sign;
-			parameters[4].Value = model.Intro;
-			parameters[5].Value = model.Birth;
-			parameters[6].Value = model.Sex;
-			parameters[7].Value = model.AreaID;
-			parameters[8].Value = model.Mobile;
-			parameters[9].Value = model.LoginIp;
-			parameters[10].Value = model.LoginTime;
-			parameters[11].Value = model.LoginCount;
-			parameters[12].Value = model.RegIp;
-			parameters[13].Value = model.RegTime;
-			parameters[14].Value = model.State;
-			parameters[15].Value = model.Private;
-			parameters[16].Value = model.Domain;
-			parameters[17].Value = model.UserID;
+            parameters[0].Value = model.Email;
+            parameters[1].Value = model.Password;
+            parameters[2].Value = model.Username;
+            parameters[3].Value = model.Nickname;
+            parameters[4].Value = model.Love;
+            parameters[5].Value = model.Sign;
+            parameters[6].Value = model.Intro;
+            parameters[7].Value = model.Birth;
+            parameters[8].Value = model.Sex;
+            parameters[9].Value = model.AreaID;
+            parameters[10].Value = model.Mobile;
+            parameters[11].Value = model.LoginIp;
+            parameters[12].Value = model.LoginTime;
+            parameters[13].Value = model.LoginCount;
+            parameters[14].Value = model.RegIp;
+            parameters[15].Value = model.RegTime;
+            parameters[16].Value = model.State;
+            parameters[17].Value = model.Privacy;
+            parameters[18].Value = model.Credit;
+            parameters[19].Value = model.Vip;
+            parameters[20].Value = model.Money;
+            parameters[21].Value = model.Config;
+            parameters[22].Value = model.UserID;
 
 			int rows=DbHelperSQL.ExecuteSql(strSql.ToString(),parameters);
 			if (rows > 0)
@@ -237,7 +263,7 @@ namespace CengZai.DAL
 		{
 			
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select  top 1 UserID,Email,Password,Nickname,Sign,Intro,Birth,Sex,AreaID,Mobile,LoginIp,LoginTime,LoginCount,RegIp,RegTime,State,Private,Domain from T_User ");
+			strSql.Append("select  top 1 * from T_User ");
             SqlParameter[] parameters = null;
             if (UserID > 0)
             {
@@ -260,78 +286,98 @@ namespace CengZai.DAL
 			DataSet ds=DbHelperSQL.Query(strSql.ToString(),parameters);
 			if(ds.Tables[0].Rows.Count>0)
 			{
-				if(ds.Tables[0].Rows[0]["UserID"]!=null && ds.Tables[0].Rows[0]["UserID"].ToString()!="")
-				{
-					model.UserID=int.Parse(ds.Tables[0].Rows[0]["UserID"].ToString());
-				}
-				if(ds.Tables[0].Rows[0]["Email"]!=null && ds.Tables[0].Rows[0]["Email"].ToString()!="")
-				{
-					model.Email=ds.Tables[0].Rows[0]["Email"].ToString();
-				}
-				if(ds.Tables[0].Rows[0]["Password"]!=null && ds.Tables[0].Rows[0]["Password"].ToString()!="")
-				{
-					model.Password=ds.Tables[0].Rows[0]["Password"].ToString();
-				}
-				if(ds.Tables[0].Rows[0]["Nickname"]!=null && ds.Tables[0].Rows[0]["Nickname"].ToString()!="")
-				{
-					model.Nickname=ds.Tables[0].Rows[0]["Nickname"].ToString();
-				}
-				if(ds.Tables[0].Rows[0]["Sign"]!=null && ds.Tables[0].Rows[0]["Sign"].ToString()!="")
-				{
-					model.Sign=ds.Tables[0].Rows[0]["Sign"].ToString();
-				}
-				if(ds.Tables[0].Rows[0]["Intro"]!=null && ds.Tables[0].Rows[0]["Intro"].ToString()!="")
-				{
-					model.Intro=ds.Tables[0].Rows[0]["Intro"].ToString();
-				}
-				if(ds.Tables[0].Rows[0]["Birth"]!=null && ds.Tables[0].Rows[0]["Birth"].ToString()!="")
-				{
-					model.Birth=DateTime.Parse(ds.Tables[0].Rows[0]["Birth"].ToString());
-				}
-				if(ds.Tables[0].Rows[0]["Sex"]!=null && ds.Tables[0].Rows[0]["Sex"].ToString()!="")
-				{
-					model.Sex=int.Parse(ds.Tables[0].Rows[0]["Sex"].ToString());
-				}
-				if(ds.Tables[0].Rows[0]["AreaID"]!=null && ds.Tables[0].Rows[0]["AreaID"].ToString()!="")
-				{
-					model.AreaID=int.Parse(ds.Tables[0].Rows[0]["AreaID"].ToString());
-				}
-				if(ds.Tables[0].Rows[0]["Mobile"]!=null && ds.Tables[0].Rows[0]["Mobile"].ToString()!="")
-				{
-					model.Mobile=ds.Tables[0].Rows[0]["Mobile"].ToString();
-				}
-				if(ds.Tables[0].Rows[0]["LoginIp"]!=null && ds.Tables[0].Rows[0]["LoginIp"].ToString()!="")
-				{
-					model.LoginIp=ds.Tables[0].Rows[0]["LoginIp"].ToString();
-				}
-				if(ds.Tables[0].Rows[0]["LoginTime"]!=null && ds.Tables[0].Rows[0]["LoginTime"].ToString()!="")
-				{
-					model.LoginTime=DateTime.Parse(ds.Tables[0].Rows[0]["LoginTime"].ToString());
-				}
-				if(ds.Tables[0].Rows[0]["LoginCount"]!=null && ds.Tables[0].Rows[0]["LoginCount"].ToString()!="")
-				{
-					model.LoginCount=int.Parse(ds.Tables[0].Rows[0]["LoginCount"].ToString());
-				}
-				if(ds.Tables[0].Rows[0]["RegIp"]!=null && ds.Tables[0].Rows[0]["RegIp"].ToString()!="")
-				{
-					model.RegIp=ds.Tables[0].Rows[0]["RegIp"].ToString();
-				}
-				if(ds.Tables[0].Rows[0]["RegTime"]!=null && ds.Tables[0].Rows[0]["RegTime"].ToString()!="")
-				{
-					model.RegTime=DateTime.Parse(ds.Tables[0].Rows[0]["RegTime"].ToString());
-				}
-				if(ds.Tables[0].Rows[0]["State"]!=null && ds.Tables[0].Rows[0]["State"].ToString()!="")
-				{
-					model.State=int.Parse(ds.Tables[0].Rows[0]["State"].ToString());
-				}
-				if(ds.Tables[0].Rows[0]["Private"]!=null && ds.Tables[0].Rows[0]["Private"].ToString()!="")
-				{
-					model.Private=int.Parse(ds.Tables[0].Rows[0]["Private"].ToString());
-				}
-				if(ds.Tables[0].Rows[0]["Domain"]!=null && ds.Tables[0].Rows[0]["Domain"].ToString()!="")
-				{
-					model.Domain=ds.Tables[0].Rows[0]["Domain"].ToString();
-				}
+                if (ds.Tables[0].Rows[0]["UserID"] != null && ds.Tables[0].Rows[0]["UserID"].ToString() != "")
+                {
+                    model.UserID = int.Parse(ds.Tables[0].Rows[0]["UserID"].ToString());
+                }
+                if (ds.Tables[0].Rows[0]["Email"] != null && ds.Tables[0].Rows[0]["Email"].ToString() != "")
+                {
+                    model.Email = ds.Tables[0].Rows[0]["Email"].ToString();
+                }
+                if (ds.Tables[0].Rows[0]["Password"] != null && ds.Tables[0].Rows[0]["Password"].ToString() != "")
+                {
+                    model.Password = ds.Tables[0].Rows[0]["Password"].ToString();
+                }
+                if (ds.Tables[0].Rows[0]["Username"] != null && ds.Tables[0].Rows[0]["Username"].ToString() != "")
+                {
+                    model.Username = ds.Tables[0].Rows[0]["Username"].ToString();
+                }
+                if (ds.Tables[0].Rows[0]["Nickname"] != null && ds.Tables[0].Rows[0]["Nickname"].ToString() != "")
+                {
+                    model.Nickname = ds.Tables[0].Rows[0]["Nickname"].ToString();
+                }
+                if (ds.Tables[0].Rows[0]["Love"] != null && ds.Tables[0].Rows[0]["Love"].ToString() != "")
+                {
+                    model.Love = int.Parse(ds.Tables[0].Rows[0]["Love"].ToString());
+                }
+                if (ds.Tables[0].Rows[0]["Sign"] != null && ds.Tables[0].Rows[0]["Sign"].ToString() != "")
+                {
+                    model.Sign = ds.Tables[0].Rows[0]["Sign"].ToString();
+                }
+                if (ds.Tables[0].Rows[0]["Intro"] != null && ds.Tables[0].Rows[0]["Intro"].ToString() != "")
+                {
+                    model.Intro = ds.Tables[0].Rows[0]["Intro"].ToString();
+                }
+                if (ds.Tables[0].Rows[0]["Birth"] != null && ds.Tables[0].Rows[0]["Birth"].ToString() != "")
+                {
+                    model.Birth = DateTime.Parse(ds.Tables[0].Rows[0]["Birth"].ToString());
+                }
+                if (ds.Tables[0].Rows[0]["Sex"] != null && ds.Tables[0].Rows[0]["Sex"].ToString() != "")
+                {
+                    model.Sex = int.Parse(ds.Tables[0].Rows[0]["Sex"].ToString());
+                }
+                if (ds.Tables[0].Rows[0]["AreaID"] != null && ds.Tables[0].Rows[0]["AreaID"].ToString() != "")
+                {
+                    model.AreaID = int.Parse(ds.Tables[0].Rows[0]["AreaID"].ToString());
+                }
+                if (ds.Tables[0].Rows[0]["Mobile"] != null && ds.Tables[0].Rows[0]["Mobile"].ToString() != "")
+                {
+                    model.Mobile = ds.Tables[0].Rows[0]["Mobile"].ToString();
+                }
+                if (ds.Tables[0].Rows[0]["LoginIp"] != null && ds.Tables[0].Rows[0]["LoginIp"].ToString() != "")
+                {
+                    model.LoginIp = ds.Tables[0].Rows[0]["LoginIp"].ToString();
+                }
+                if (ds.Tables[0].Rows[0]["LoginTime"] != null && ds.Tables[0].Rows[0]["LoginTime"].ToString() != "")
+                {
+                    model.LoginTime = DateTime.Parse(ds.Tables[0].Rows[0]["LoginTime"].ToString());
+                }
+                if (ds.Tables[0].Rows[0]["LoginCount"] != null && ds.Tables[0].Rows[0]["LoginCount"].ToString() != "")
+                {
+                    model.LoginCount = int.Parse(ds.Tables[0].Rows[0]["LoginCount"].ToString());
+                }
+                if (ds.Tables[0].Rows[0]["RegIp"] != null && ds.Tables[0].Rows[0]["RegIp"].ToString() != "")
+                {
+                    model.RegIp = ds.Tables[0].Rows[0]["RegIp"].ToString();
+                }
+                if (ds.Tables[0].Rows[0]["RegTime"] != null && ds.Tables[0].Rows[0]["RegTime"].ToString() != "")
+                {
+                    model.RegTime = DateTime.Parse(ds.Tables[0].Rows[0]["RegTime"].ToString());
+                }
+                if (ds.Tables[0].Rows[0]["State"] != null && ds.Tables[0].Rows[0]["State"].ToString() != "")
+                {
+                    model.State = int.Parse(ds.Tables[0].Rows[0]["State"].ToString());
+                }
+                if (ds.Tables[0].Rows[0]["Privacy"] != null && ds.Tables[0].Rows[0]["Privacy"].ToString() != "")
+                {
+                    model.Privacy = int.Parse(ds.Tables[0].Rows[0]["Privacy"].ToString());
+                }
+                if (ds.Tables[0].Rows[0]["Credit"] != null && ds.Tables[0].Rows[0]["Credit"].ToString() != "")
+                {
+                    model.Credit = int.Parse(ds.Tables[0].Rows[0]["Credit"].ToString());
+                }
+                if (ds.Tables[0].Rows[0]["Vip"] != null && ds.Tables[0].Rows[0]["Vip"].ToString() != "")
+                {
+                    model.Vip = int.Parse(ds.Tables[0].Rows[0]["Vip"].ToString());
+                }
+                if (ds.Tables[0].Rows[0]["Money"] != null && ds.Tables[0].Rows[0]["Money"].ToString() != "")
+                {
+                    model.Money = int.Parse(ds.Tables[0].Rows[0]["Money"].ToString());
+                }
+                if (ds.Tables[0].Rows[0]["Config"] != null && ds.Tables[0].Rows[0]["Config"].ToString() != "")
+                {
+                    model.Config = ds.Tables[0].Rows[0]["Config"].ToString();
+                }
 				return model;
 			}
 			else
@@ -346,7 +392,7 @@ namespace CengZai.DAL
 		public DataSet GetList(string strWhere)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select UserID,Email,Password,Nickname,Sign,Intro,Birth,Sex,AreaID,Mobile,LoginIp,LoginTime,LoginCount,RegIp,RegTime,State,Private,Domain ");
+			strSql.Append("select * ");
 			strSql.Append(" FROM T_User ");
 			if(strWhere.Trim()!="")
 			{
@@ -366,7 +412,7 @@ namespace CengZai.DAL
 			{
 				strSql.Append(" top "+Top.ToString());
 			}
-			strSql.Append(" UserID,Email,Password,Nickname,Sign,Intro,Birth,Sex,AreaID,Mobile,LoginIp,LoginTime,LoginCount,RegIp,RegTime,State,Private,Domain ");
+			strSql.Append(" * ");
 			strSql.Append(" FROM T_User ");
 			if(strWhere.Trim()!="")
 			{

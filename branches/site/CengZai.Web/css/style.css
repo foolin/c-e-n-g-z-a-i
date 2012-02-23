@@ -71,18 +71,18 @@ body {
 /********* 编辑器 *************/
 .ke-container
 {
-	border:#f0f0f0 solid 1px !important;
+	border:#ccc solid 1px !important;
 }
 .ke-toolbar
 {
-	border-bottom:#f0f0f0 solid 1px !important;
+	border-bottom:#ccc solid 1px !important;
 	padding:5px !important;
 	background-color:#f9f9f9 !important;
 }
 .ke-statusbar
 {
 	background-color:#f9f9f9 !important;
-	border-top: 1px solid #f0f0f0 !important;
+	border-top: 1px solid #ccc !important;
 }
 /* Styles for validation helpers
 -----------------------------------------------------------*/

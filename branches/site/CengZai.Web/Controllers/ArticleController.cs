@@ -38,19 +38,55 @@ namespace CengZai.Web.Controllers
 
         [HttpPost]
         [CheckAuthFilter]
-        public ActionResult PostText(string title, string content, int? categoryid, int? privacy, int? top)
+        public ActionResult PostText(string title, string content, int? categoryid, int? privacy, int? top, int? draft)
         {
-            if (string.IsNullOrEmpty(content))
+            try
             {
-                ModelState.AddModelError("Error", "内容不能为空！");
+                if (string.IsNullOrEmpty(content))
+                {
+                    ModelState.AddModelError("Error", "内容不能为空！");
+                    _InitPostForm();    //初始化
+                    return View();
+                }
+                if (!string.IsNullOrEmpty(title) && title.Length > 50)
+                {
+                    ModelState.AddModelError("Error", "标题不能超过50个字符！");
+                    _InitPostForm();    //初始化
+                    return View();
+                }
+                Model.Article model = new Model.Article();
+                model.CategoryID = (categoryid == null ? 0 : categoryid);
+                model.Content = content;
+                model.IsTop = (top == null ? 0 : top);
+                model.PostIP = Helper.Util.GetIP();
+                model.PostTime = DateTime.Now;
+                model.Privacy = (privacy == null ? 0 : privacy);
+                model.ReplyCount = 0;
+                model.ReportCount = 0;
+                if (draft == 1)
+                {
+                    model.State = 0;
+                }
+                else
+                {
+                    model.State = 1;
+                }
+                model.Title = title;
+                model.Type = 0;
+                model.UserID = GetLoginUser().UserID;
+                model.ViewCount = 0;
+                BLL.Article bll = new BLL.Article();
+                bll.Add(model);
+
+                return RedirectToAction("User", "Home", new { ID = 1 });
+            }
+            catch (Exception ex)
+            {
+                Log.AddErrorInfo(GetLoginUser().Email + "提交文章出现异常：" + ex.Message + ",详细：" + ex.StackTrace);
+                ModelState.AddModelError("Error", "提交出现异常，请稍后重试！");
                 _InitPostForm();    //初始化
                 return View();
             }
-
-            RedirectToAction("Index", "Article");
-
-            _InitPostForm();    //初始化
-            return View();
         }
 
         private void _InitPostForm()

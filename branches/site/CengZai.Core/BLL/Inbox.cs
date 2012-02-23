@@ -6,12 +6,12 @@ using CengZai.Model;
 namespace CengZai.BLL
 {
 	/// <summary>
-	/// Message
+	/// Inbox
 	/// </summary>
-	public partial class Message
+	public partial class Inbox
 	{
-		private readonly CengZai.DAL.Message dal=new CengZai.DAL.Message();
-		public Message()
+		private readonly CengZai.DAL.Inbox dal=new CengZai.DAL.Inbox();
+		public Inbox()
 		{}
 		#region  Method
 
@@ -34,7 +34,7 @@ namespace CengZai.BLL
 		/// <summary>
 		/// 增加一条数据
 		/// </summary>
-		public int  Add(CengZai.Model.Message model)
+		public int  Add(CengZai.Model.Inbox model)
 		{
 			return dal.Add(model);
 		}
@@ -42,7 +42,7 @@ namespace CengZai.BLL
 		/// <summary>
 		/// 更新一条数据
 		/// </summary>
-		public bool Update(CengZai.Model.Message model)
+		public bool Update(CengZai.Model.Inbox model)
 		{
 			return dal.Update(model);
 		}
@@ -66,7 +66,7 @@ namespace CengZai.BLL
 		/// <summary>
 		/// 得到一个对象实体
 		/// </summary>
-		public CengZai.Model.Message GetModel(int MsgID)
+		public CengZai.Model.Inbox GetModel(int MsgID)
 		{
 			
 			return dal.GetModel(MsgID);
@@ -89,7 +89,7 @@ namespace CengZai.BLL
 		/// <summary>
 		/// 获得数据列表
 		/// </summary>
-		public List<CengZai.Model.Message> GetModelList(string strWhere)
+		public List<CengZai.Model.Inbox> GetModelList(string strWhere)
 		{
 			DataSet ds = dal.GetList(strWhere);
 			return DataTableToList(ds.Tables[0]);
@@ -97,16 +97,16 @@ namespace CengZai.BLL
 		/// <summary>
 		/// 获得数据列表
 		/// </summary>
-		public List<CengZai.Model.Message> DataTableToList(DataTable dt)
+		public List<CengZai.Model.Inbox> DataTableToList(DataTable dt)
 		{
-			List<CengZai.Model.Message> modelList = new List<CengZai.Model.Message>();
+			List<CengZai.Model.Inbox> modelList = new List<CengZai.Model.Inbox>();
 			int rowsCount = dt.Rows.Count;
 			if (rowsCount > 0)
 			{
-				CengZai.Model.Message model;
+				CengZai.Model.Inbox model;
 				for (int n = 0; n < rowsCount; n++)
 				{
-					model = new CengZai.Model.Message();
+					model = new CengZai.Model.Inbox();
 					if(dt.Rows[n]["MsgID"]!=null && dt.Rows[n]["MsgID"].ToString()!="")
 					{
 						model.MsgID=int.Parse(dt.Rows[n]["MsgID"].ToString());

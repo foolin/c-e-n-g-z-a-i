@@ -119,6 +119,10 @@ namespace CengZai.BLL
 					{
 					model.CategoryDesc=dt.Rows[n]["CategoryDesc"].ToString();
 					}
+					if(dt.Rows[n]["UserID"]!=null && dt.Rows[n]["UserID"].ToString()!="")
+					{
+						model.UserID=int.Parse(dt.Rows[n]["UserID"].ToString());
+					}
 					modelList.Add(model);
 				}
 			}

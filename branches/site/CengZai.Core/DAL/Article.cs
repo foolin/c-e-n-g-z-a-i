@@ -46,9 +46,9 @@ namespace CengZai.DAL
 		{
 			StringBuilder strSql=new StringBuilder();
 			strSql.Append("insert into T_Article(");
-			strSql.Append("CategoryID,Title,Content,Type,IsTop,UserID,PostTime,PostIP,ViewCount,TopCount,DownCount,ReportCount,Private,State)");
+			strSql.Append("CategoryID,Title,Content,Type,IsTop,UserID,PostTime,PostIP,ViewCount,ReplyCount,ReportCount,Privacy,State)");
 			strSql.Append(" values (");
-			strSql.Append("@CategoryID,@Title,@Content,@Type,@IsTop,@UserID,@PostTime,@PostIP,@ViewCount,@TopCount,@DownCount,@ReportCount,@Private,@State)");
+			strSql.Append("@CategoryID,@Title,@Content,@Type,@IsTop,@UserID,@PostTime,@PostIP,@ViewCount,@ReplyCount,@ReportCount,@Privacy,@State)");
 			strSql.Append(";select @@IDENTITY");
 			SqlParameter[] parameters = {
 					new SqlParameter("@CategoryID", SqlDbType.Int,4),
@@ -60,10 +60,9 @@ namespace CengZai.DAL
 					new SqlParameter("@PostTime", SqlDbType.DateTime),
 					new SqlParameter("@PostIP", SqlDbType.NVarChar,50),
 					new SqlParameter("@ViewCount", SqlDbType.Int,4),
-					new SqlParameter("@TopCount", SqlDbType.Int,4),
-					new SqlParameter("@DownCount", SqlDbType.Int,4),
+					new SqlParameter("@ReplyCount", SqlDbType.Int,4),
 					new SqlParameter("@ReportCount", SqlDbType.Int,4),
-					new SqlParameter("@Private", SqlDbType.Int,4),
+					new SqlParameter("@Privacy", SqlDbType.Int,4),
 					new SqlParameter("@State", SqlDbType.Int,4)};
 			parameters[0].Value = model.CategoryID;
 			parameters[1].Value = model.Title;
@@ -74,11 +73,10 @@ namespace CengZai.DAL
 			parameters[6].Value = model.PostTime;
 			parameters[7].Value = model.PostIP;
 			parameters[8].Value = model.ViewCount;
-			parameters[9].Value = model.TopCount;
-			parameters[10].Value = model.DownCount;
-			parameters[11].Value = model.ReportCount;
-			parameters[12].Value = model.Private;
-			parameters[13].Value = model.State;
+			parameters[9].Value = model.ReplyCount;
+			parameters[10].Value = model.ReportCount;
+			parameters[11].Value = model.Privacy;
+			parameters[12].Value = model.State;
 
 			object obj = DbHelperSQL.GetSingle(strSql.ToString(),parameters);
 			if (obj == null)
@@ -106,10 +104,9 @@ namespace CengZai.DAL
 			strSql.Append("PostTime=@PostTime,");
 			strSql.Append("PostIP=@PostIP,");
 			strSql.Append("ViewCount=@ViewCount,");
-			strSql.Append("TopCount=@TopCount,");
-			strSql.Append("DownCount=@DownCount,");
+			strSql.Append("ReplyCount=@ReplyCount,");
 			strSql.Append("ReportCount=@ReportCount,");
-			strSql.Append("Private=@Private,");
+			strSql.Append("Privacy=@Privacy,");
 			strSql.Append("State=@State");
 			strSql.Append(" where ArtID=@ArtID");
 			SqlParameter[] parameters = {
@@ -122,10 +119,9 @@ namespace CengZai.DAL
 					new SqlParameter("@PostTime", SqlDbType.DateTime),
 					new SqlParameter("@PostIP", SqlDbType.NVarChar,50),
 					new SqlParameter("@ViewCount", SqlDbType.Int,4),
-					new SqlParameter("@TopCount", SqlDbType.Int,4),
-					new SqlParameter("@DownCount", SqlDbType.Int,4),
+					new SqlParameter("@ReplyCount", SqlDbType.Int,4),
 					new SqlParameter("@ReportCount", SqlDbType.Int,4),
-					new SqlParameter("@Private", SqlDbType.Int,4),
+					new SqlParameter("@Privacy", SqlDbType.Int,4),
 					new SqlParameter("@State", SqlDbType.Int,4),
 					new SqlParameter("@ArtID", SqlDbType.Int,4)};
 			parameters[0].Value = model.CategoryID;
@@ -137,12 +133,11 @@ namespace CengZai.DAL
 			parameters[6].Value = model.PostTime;
 			parameters[7].Value = model.PostIP;
 			parameters[8].Value = model.ViewCount;
-			parameters[9].Value = model.TopCount;
-			parameters[10].Value = model.DownCount;
-			parameters[11].Value = model.ReportCount;
-			parameters[12].Value = model.Private;
-			parameters[13].Value = model.State;
-			parameters[14].Value = model.ArtID;
+			parameters[9].Value = model.ReplyCount;
+			parameters[10].Value = model.ReportCount;
+			parameters[11].Value = model.Privacy;
+			parameters[12].Value = model.State;
+			parameters[13].Value = model.ArtID;
 
 			int rows=DbHelperSQL.ExecuteSql(strSql.ToString(),parameters);
 			if (rows > 0)
@@ -206,7 +201,7 @@ namespace CengZai.DAL
 		{
 			
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select  top 1 ArtID,CategoryID,Title,Content,Type,IsTop,UserID,PostTime,PostIP,ViewCount,TopCount,DownCount,ReportCount,Private,State from T_Article ");
+			strSql.Append("select  top 1 ArtID,CategoryID,Title,Content,Type,IsTop,UserID,PostTime,PostIP,ViewCount,ReplyCount,ReportCount,Privacy,State from T_Article ");
 			strSql.Append(" where ArtID=@ArtID");
 			SqlParameter[] parameters = {
 					new SqlParameter("@ArtID", SqlDbType.Int,4)
@@ -257,21 +252,17 @@ namespace CengZai.DAL
 				{
 					model.ViewCount=int.Parse(ds.Tables[0].Rows[0]["ViewCount"].ToString());
 				}
-				if(ds.Tables[0].Rows[0]["TopCount"]!=null && ds.Tables[0].Rows[0]["TopCount"].ToString()!="")
+				if(ds.Tables[0].Rows[0]["ReplyCount"]!=null && ds.Tables[0].Rows[0]["ReplyCount"].ToString()!="")
 				{
-					model.TopCount=int.Parse(ds.Tables[0].Rows[0]["TopCount"].ToString());
-				}
-				if(ds.Tables[0].Rows[0]["DownCount"]!=null && ds.Tables[0].Rows[0]["DownCount"].ToString()!="")
-				{
-					model.DownCount=int.Parse(ds.Tables[0].Rows[0]["DownCount"].ToString());
+					model.ReplyCount=int.Parse(ds.Tables[0].Rows[0]["ReplyCount"].ToString());
 				}
 				if(ds.Tables[0].Rows[0]["ReportCount"]!=null && ds.Tables[0].Rows[0]["ReportCount"].ToString()!="")
 				{
 					model.ReportCount=int.Parse(ds.Tables[0].Rows[0]["ReportCount"].ToString());
 				}
-				if(ds.Tables[0].Rows[0]["Private"]!=null && ds.Tables[0].Rows[0]["Private"].ToString()!="")
+				if(ds.Tables[0].Rows[0]["Privacy"]!=null && ds.Tables[0].Rows[0]["Privacy"].ToString()!="")
 				{
-					model.Private=int.Parse(ds.Tables[0].Rows[0]["Private"].ToString());
+					model.Privacy=int.Parse(ds.Tables[0].Rows[0]["Privacy"].ToString());
 				}
 				if(ds.Tables[0].Rows[0]["State"]!=null && ds.Tables[0].Rows[0]["State"].ToString()!="")
 				{
@@ -291,7 +282,7 @@ namespace CengZai.DAL
 		public DataSet GetList(string strWhere)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select ArtID,CategoryID,Title,Content,Type,IsTop,UserID,PostTime,PostIP,ViewCount,TopCount,DownCount,ReportCount,Private,State ");
+			strSql.Append("select ArtID,CategoryID,Title,Content,Type,IsTop,UserID,PostTime,PostIP,ViewCount,ReplyCount,ReportCount,Privacy,State ");
 			strSql.Append(" FROM T_Article ");
 			if(strWhere.Trim()!="")
 			{
@@ -311,7 +302,7 @@ namespace CengZai.DAL
 			{
 				strSql.Append(" top "+Top.ToString());
 			}
-			strSql.Append(" ArtID,CategoryID,Title,Content,Type,IsTop,UserID,PostTime,PostIP,ViewCount,TopCount,DownCount,ReportCount,Private,State ");
+			strSql.Append(" ArtID,CategoryID,Title,Content,Type,IsTop,UserID,PostTime,PostIP,ViewCount,ReplyCount,ReportCount,Privacy,State ");
 			strSql.Append(" FROM T_Article ");
 			if(strWhere.Trim()!="")
 			{

@@ -72,7 +72,6 @@ namespace CengZai.BLL
 			return dal.GetModel(ArtID);
 		}
 
-
 		/// <summary>
 		/// 获得数据列表
 		/// </summary>
@@ -148,21 +147,17 @@ namespace CengZai.BLL
 					{
 						model.ViewCount=int.Parse(dt.Rows[n]["ViewCount"].ToString());
 					}
-					if(dt.Rows[n]["TopCount"]!=null && dt.Rows[n]["TopCount"].ToString()!="")
+					if(dt.Rows[n]["ReplyCount"]!=null && dt.Rows[n]["ReplyCount"].ToString()!="")
 					{
-						model.TopCount=int.Parse(dt.Rows[n]["TopCount"].ToString());
-					}
-					if(dt.Rows[n]["DownCount"]!=null && dt.Rows[n]["DownCount"].ToString()!="")
-					{
-						model.DownCount=int.Parse(dt.Rows[n]["DownCount"].ToString());
+						model.ReplyCount=int.Parse(dt.Rows[n]["ReplyCount"].ToString());
 					}
 					if(dt.Rows[n]["ReportCount"]!=null && dt.Rows[n]["ReportCount"].ToString()!="")
 					{
 						model.ReportCount=int.Parse(dt.Rows[n]["ReportCount"].ToString());
 					}
-					if(dt.Rows[n]["Private"]!=null && dt.Rows[n]["Private"].ToString()!="")
+					if(dt.Rows[n]["Privacy"]!=null && dt.Rows[n]["Privacy"].ToString()!="")
 					{
-						model.Private=int.Parse(dt.Rows[n]["Private"].ToString());
+						model.Privacy=int.Parse(dt.Rows[n]["Privacy"].ToString());
 					}
 					if(dt.Rows[n]["State"]!=null && dt.Rows[n]["State"].ToString()!="")
 					{
