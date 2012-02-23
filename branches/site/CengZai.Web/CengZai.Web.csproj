@@ -375,6 +375,8 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="bin\" />
+    <Folder Include="Dlls\" />
     <Folder Include="js\kindeditor\attached\" />
     <Folder Include="Models\" />
   </ItemGroup>

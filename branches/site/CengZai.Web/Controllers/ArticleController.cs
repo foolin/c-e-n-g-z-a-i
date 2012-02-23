@@ -36,12 +36,14 @@ namespace CengZai.Web.Controllers
             return View();
         }
 
+        [ValidateInput(false)]
         [HttpPost]
         [CheckAuthFilter]
         public ActionResult PostText(string title, string content, int? categoryid, int? privacy, int? top, int? draft)
         {
             try
             {
+                
                 if (string.IsNullOrEmpty(content))
                 {
                     ModelState.AddModelError("Error", "内容不能为空！");
@@ -56,7 +58,8 @@ namespace CengZai.Web.Controllers
                 }
                 Model.Article model = new Model.Article();
                 model.CategoryID = (categoryid == null ? 0 : categoryid);
-                model.Content = content;
+                model.Title = Server.HtmlEncode(title); //过滤html代码
+                model.Content = Helper.Util.GetSafeHtml(content);
                 model.IsTop = (top == null ? 0 : top);
                 model.PostIP = Helper.Util.GetIP();
                 model.PostTime = DateTime.Now;
@@ -71,7 +74,7 @@ namespace CengZai.Web.Controllers
                 {
                     model.State = 1;
                 }
-                model.Title = title;
+                
                 model.Type = 0;
                 model.UserID = GetLoginUser().UserID;
                 model.ViewCount = 0;

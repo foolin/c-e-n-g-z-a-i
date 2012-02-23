@@ -52,5 +52,43 @@ namespace CengZai.Helper
             }
             return domain;
         }
+
+
+        /// <summary>
+        /// 获取安全html代码
+        /// </summary>
+        /// <param name="html"></param>
+        /// <returns></returns>
+        public static string GetSafeHtml(string html)
+        {
+            //过滤<script></script>标记 
+            System.Text.RegularExpressions.Regex script =
+                  new System.Text.RegularExpressions.Regex(@"<script[\s\S]+</script *>",
+                  System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+            //过滤href=javascript: (<A>) 属性 
+            System.Text.RegularExpressions.Regex attrScript =
+                  new System.Text.RegularExpressions.Regex(@" href *= *[\s\S]*script *:",
+                  System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+            //过滤其它控件的on...事件 
+            System.Text.RegularExpressions.Regex onScript =
+                  new System.Text.RegularExpressions.Regex(@" on[\s\S]*=",
+                  System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+            //过滤iframe 
+            System.Text.RegularExpressions.Regex iframe =
+                  new System.Text.RegularExpressions.Regex(@"<iframe[\s\S]+</iframe *>",
+                  System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+            //过滤frameset 
+            System.Text.RegularExpressions.Regex frameset =
+                  new System.Text.RegularExpressions.Regex(@"<frameset[\s\S]+</frameset *>",
+                  System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+
+            html = script.Replace(html, ""); //过滤<script></script>标记 
+            html = attrScript.Replace(html, ""); //过滤href=javascript: (<A>) 属性 
+            html = onScript.Replace(html, " _disibledevent="); //过滤其它控件的on...事件 
+            html = iframe.Replace(html, ""); //过滤iframe 
+            html = frameset.Replace(html, ""); //过滤frameset 
+
+            return html;
+        }
     }
 }
