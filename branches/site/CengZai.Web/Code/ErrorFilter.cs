@@ -14,7 +14,7 @@ namespace CengZai.Web.Code
             if (filterContext.Exception != null)
             {
                 filterContext.ExceptionHandled = true;
-                filterContext.Result = new RedirectToRouteResult("Default", 
+                filterContext.Result = new RedirectToRouteResult("Default",
                     new RouteValueDictionary(new { controller = "Shared", action = "Error" }));
             }
         }
