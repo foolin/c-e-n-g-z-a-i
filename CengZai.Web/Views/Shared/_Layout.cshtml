@@ -29,7 +29,7 @@
 		</a>
 		<a class="brand logo" href="#">@ViewBag.SiteName</a>
 		<div class="nav-collapse">
-        @if (CengZai.Web.Code.WebHelper.IsLogin())
+        @if (CengZai.Web.WebHelper.IsLogin())
         {
 		    <ul class="nav">
 			    <li class="active">@Html.ActionLink("首页","Index","Home")</li>

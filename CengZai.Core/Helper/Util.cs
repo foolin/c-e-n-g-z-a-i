@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web;
+using System.Text.RegularExpressions;
 
 namespace CengZai.Helper
 {
@@ -90,5 +91,21 @@ namespace CengZai.Helper
 
             return html;
         }
+
+
+
+        /// <summary>
+        /// 检测非法字符
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public bool CheckBadWord(string str)
+        {
+            string pattern = @"select|insert|delete|from|count\(|drop table|update|truncate|asc\(|mid\(|char\(|xp_cmdshell|exec   master|netlocalgroup administrators|:|net user|""|or|and";
+            if (Regex.IsMatch(str, pattern, RegexOptions.IgnoreCase) || Regex.IsMatch(str, @"[-|;|,|\/|\(|\)|\[|\]|\}|\{|%|@|\*|!|\']"))
+                return true;
+            return false;
+        }
+
     }
 }

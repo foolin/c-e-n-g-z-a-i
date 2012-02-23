@@ -60,9 +60,9 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Code\CheckAuthFilter.cs" />
-    <Compile Include="Code\ErrorFilter.cs" />
-    <Compile Include="Code\WebHelper.cs" />
+    <Compile Include="App_Code\CheckAuthFilter.cs" />
+    <Compile Include="App_Code\ErrorFilter.cs" />
+    <Content Include="App_Code\WebHelper.cs" />
     <Compile Include="Common\VerifyCode.aspx.cs">
       <DependentUpon>VerifyCode.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

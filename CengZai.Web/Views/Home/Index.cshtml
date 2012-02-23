@@ -31,7 +31,7 @@
         <h4 class="alert-heading">@ViewBag.User.Nickname，你的邮箱[@ViewBag.User.Email]尚未激活!</h4> 
         <p>您的邮箱尚未激活！邮箱是作为找回密码的重要方式，为了您的帐号安全，建议您立刻登录邮箱进行激活！</p> 
         <p> 
-            <a class="btn btn-danger" href="http://mail.@CengZai.Web.Code.WebHelper.GetEmailDomain(user.Email)" target="_blank">登录邮箱进行激活</a> 
+            <a class="btn btn-danger" href="http://mail.@CengZai.Web.WebHelper.GetEmailDomain(user.Email)" target="_blank">登录邮箱进行激活</a> 
             @Html.ActionLink("重新发送激活邮件", "ResendActivate", "User", null, new { @class = "btn" })
         </p> 
     </div>
@@ -231,6 +231,8 @@
 
           </div>
           <!-- feed-list end -->
+
+          <div class="pager"></div>
       </div>
       <!-- Main 结束 -->
 

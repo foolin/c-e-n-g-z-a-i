@@ -139,5 +139,20 @@ namespace CengZai.Model
 		#endregion Model
 
 	}
+
+    /// <summary>
+    /// 文章类型
+    /// </summary>
+    public enum ArticleType
+    {
+        /// <summary>
+        /// 普通文章
+        /// </summary>
+        Text = 0,
+        /// <summary>
+        /// 图片
+        /// </summary>
+        Image = 1,
+    }
 }
 
