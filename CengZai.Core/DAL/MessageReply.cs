@@ -6,11 +6,11 @@ using CengZai.Helper;
 namespace CengZai.DAL
 {
 	/// <summary>
-	/// 数据访问类:Category
+	/// 数据访问类:MessageReply
 	/// </summary>
-	public partial class Category
+	public partial class MessageReply
 	{
-		public Category()
+		public MessageReply()
 		{}
 		#region  Method
 
@@ -19,21 +19,21 @@ namespace CengZai.DAL
 		/// </summary>
 		public int GetMaxId()
 		{
-		return DbHelperSQL.GetMaxID("CategoryID", "T_Category"); 
+		return DbHelperSQL.GetMaxID("ReplyID", "T_MessageReply"); 
 		}
 
 		/// <summary>
 		/// 是否存在该记录
 		/// </summary>
-		public bool Exists(int CategoryID)
+		public bool Exists(int ReplyID)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select count(1) from T_Category");
-			strSql.Append(" where CategoryID=@CategoryID");
+			strSql.Append("select count(1) from T_MessageReply");
+			strSql.Append(" where ReplyID=@ReplyID");
 			SqlParameter[] parameters = {
-					new SqlParameter("@CategoryID", SqlDbType.Int,4)
+					new SqlParameter("@ReplyID", SqlDbType.Int,4)
 			};
-			parameters[0].Value = CategoryID;
+			parameters[0].Value = ReplyID;
 
 			return DbHelperSQL.Exists(strSql.ToString(),parameters);
 		}
@@ -42,21 +42,23 @@ namespace CengZai.DAL
 		/// <summary>
 		/// 增加一条数据
 		/// </summary>
-		public int Add(CengZai.Model.Category model)
+		public int Add(CengZai.Model.MessageReply model)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("insert into T_Category(");
-			strSql.Append("CategoryName,CategoryDesc,UserID)");
+			strSql.Append("insert into T_MessageReply(");
+			strSql.Append("MsgID,Content,ReplyUserID,ReplyTime)");
 			strSql.Append(" values (");
-			strSql.Append("@CategoryName,@CategoryDesc,@UserID)");
+			strSql.Append("@MsgID,@Content,@ReplyUserID,@ReplyTime)");
 			strSql.Append(";select @@IDENTITY");
 			SqlParameter[] parameters = {
-					new SqlParameter("@CategoryName", SqlDbType.NVarChar,50),
-					new SqlParameter("@CategoryDesc", SqlDbType.NVarChar,300),
-					new SqlParameter("@UserID", SqlDbType.Int,4)};
-			parameters[0].Value = model.CategoryName;
-			parameters[1].Value = model.CategoryDesc;
-			parameters[2].Value = model.UserID;
+					new SqlParameter("@MsgID", SqlDbType.Int,4),
+					new SqlParameter("@Content", SqlDbType.NVarChar,500),
+					new SqlParameter("@ReplyUserID", SqlDbType.Int,4),
+					new SqlParameter("@ReplyTime", SqlDbType.DateTime)};
+			parameters[0].Value = model.MsgID;
+			parameters[1].Value = model.Content;
+			parameters[2].Value = model.ReplyUserID;
+			parameters[3].Value = model.ReplyTime;
 
 			object obj = DbHelperSQL.GetSingle(strSql.ToString(),parameters);
 			if (obj == null)
@@ -71,23 +73,26 @@ namespace CengZai.DAL
 		/// <summary>
 		/// 更新一条数据
 		/// </summary>
-		public bool Update(CengZai.Model.Category model)
+		public bool Update(CengZai.Model.MessageReply model)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("update T_Category set ");
-			strSql.Append("CategoryName=@CategoryName,");
-			strSql.Append("CategoryDesc=@CategoryDesc,");
-			strSql.Append("UserID=@UserID");
-			strSql.Append(" where CategoryID=@CategoryID");
+			strSql.Append("update T_MessageReply set ");
+			strSql.Append("MsgID=@MsgID,");
+			strSql.Append("Content=@Content,");
+			strSql.Append("ReplyUserID=@ReplyUserID,");
+			strSql.Append("ReplyTime=@ReplyTime");
+			strSql.Append(" where ReplyID=@ReplyID");
 			SqlParameter[] parameters = {
-					new SqlParameter("@CategoryName", SqlDbType.NVarChar,50),
-					new SqlParameter("@CategoryDesc", SqlDbType.NVarChar,300),
-					new SqlParameter("@UserID", SqlDbType.Int,4),
-					new SqlParameter("@CategoryID", SqlDbType.Int,4)};
-			parameters[0].Value = model.CategoryName;
-			parameters[1].Value = model.CategoryDesc;
-			parameters[2].Value = model.UserID;
-			parameters[3].Value = model.CategoryID;
+					new SqlParameter("@MsgID", SqlDbType.Int,4),
+					new SqlParameter("@Content", SqlDbType.NVarChar,500),
+					new SqlParameter("@ReplyUserID", SqlDbType.Int,4),
+					new SqlParameter("@ReplyTime", SqlDbType.DateTime),
+					new SqlParameter("@ReplyID", SqlDbType.Int,4)};
+			parameters[0].Value = model.MsgID;
+			parameters[1].Value = model.Content;
+			parameters[2].Value = model.ReplyUserID;
+			parameters[3].Value = model.ReplyTime;
+			parameters[4].Value = model.ReplyID;
 
 			int rows=DbHelperSQL.ExecuteSql(strSql.ToString(),parameters);
 			if (rows > 0)
@@ -103,16 +108,16 @@ namespace CengZai.DAL
 		/// <summary>
 		/// 删除一条数据
 		/// </summary>
-		public bool Delete(int CategoryID)
+		public bool Delete(int ReplyID)
 		{
 			
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("delete from T_Category ");
-			strSql.Append(" where CategoryID=@CategoryID");
+			strSql.Append("delete from T_MessageReply ");
+			strSql.Append(" where ReplyID=@ReplyID");
 			SqlParameter[] parameters = {
-					new SqlParameter("@CategoryID", SqlDbType.Int,4)
+					new SqlParameter("@ReplyID", SqlDbType.Int,4)
 			};
-			parameters[0].Value = CategoryID;
+			parameters[0].Value = ReplyID;
 
 			int rows=DbHelperSQL.ExecuteSql(strSql.ToString(),parameters);
 			if (rows > 0)
@@ -127,11 +132,11 @@ namespace CengZai.DAL
 		/// <summary>
 		/// 批量删除数据
 		/// </summary>
-		public bool DeleteList(string CategoryIDlist )
+		public bool DeleteList(string ReplyIDlist )
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("delete from T_Category ");
-			strSql.Append(" where CategoryID in ("+CategoryIDlist + ")  ");
+			strSql.Append("delete from T_MessageReply ");
+			strSql.Append(" where ReplyID in ("+ReplyIDlist + ")  ");
 			int rows=DbHelperSQL.ExecuteSql(strSql.ToString());
 			if (rows > 0)
 			{
@@ -147,36 +152,40 @@ namespace CengZai.DAL
 		/// <summary>
 		/// 得到一个对象实体
 		/// </summary>
-		public CengZai.Model.Category GetModel(int CategoryID)
+		public CengZai.Model.MessageReply GetModel(int ReplyID)
 		{
 			
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select  top 1 CategoryID,CategoryName,CategoryDesc,UserID from T_Category ");
-			strSql.Append(" where CategoryID=@CategoryID");
+			strSql.Append("select  top 1 ReplyID,MsgID,Content,ReplyUserID,ReplyTime from T_MessageReply ");
+			strSql.Append(" where ReplyID=@ReplyID");
 			SqlParameter[] parameters = {
-					new SqlParameter("@CategoryID", SqlDbType.Int,4)
+					new SqlParameter("@ReplyID", SqlDbType.Int,4)
 			};
-			parameters[0].Value = CategoryID;
+			parameters[0].Value = ReplyID;
 
-			CengZai.Model.Category model=new CengZai.Model.Category();
+			CengZai.Model.MessageReply model=new CengZai.Model.MessageReply();
 			DataSet ds=DbHelperSQL.Query(strSql.ToString(),parameters);
 			if(ds.Tables[0].Rows.Count>0)
 			{
-				if(ds.Tables[0].Rows[0]["CategoryID"]!=null && ds.Tables[0].Rows[0]["CategoryID"].ToString()!="")
+				if(ds.Tables[0].Rows[0]["ReplyID"]!=null && ds.Tables[0].Rows[0]["ReplyID"].ToString()!="")
 				{
-					model.CategoryID=int.Parse(ds.Tables[0].Rows[0]["CategoryID"].ToString());
+					model.ReplyID=int.Parse(ds.Tables[0].Rows[0]["ReplyID"].ToString());
 				}
-				if(ds.Tables[0].Rows[0]["CategoryName"]!=null && ds.Tables[0].Rows[0]["CategoryName"].ToString()!="")
+				if(ds.Tables[0].Rows[0]["MsgID"]!=null && ds.Tables[0].Rows[0]["MsgID"].ToString()!="")
 				{
-					model.CategoryName=ds.Tables[0].Rows[0]["CategoryName"].ToString();
+					model.MsgID=int.Parse(ds.Tables[0].Rows[0]["MsgID"].ToString());
 				}
-				if(ds.Tables[0].Rows[0]["CategoryDesc"]!=null && ds.Tables[0].Rows[0]["CategoryDesc"].ToString()!="")
+				if(ds.Tables[0].Rows[0]["Content"]!=null && ds.Tables[0].Rows[0]["Content"].ToString()!="")
 				{
-					model.CategoryDesc=ds.Tables[0].Rows[0]["CategoryDesc"].ToString();
+					model.Content=ds.Tables[0].Rows[0]["Content"].ToString();
 				}
-				if(ds.Tables[0].Rows[0]["UserID"]!=null && ds.Tables[0].Rows[0]["UserID"].ToString()!="")
+				if(ds.Tables[0].Rows[0]["ReplyUserID"]!=null && ds.Tables[0].Rows[0]["ReplyUserID"].ToString()!="")
 				{
-					model.UserID=int.Parse(ds.Tables[0].Rows[0]["UserID"].ToString());
+					model.ReplyUserID=int.Parse(ds.Tables[0].Rows[0]["ReplyUserID"].ToString());
+				}
+				if(ds.Tables[0].Rows[0]["ReplyTime"]!=null && ds.Tables[0].Rows[0]["ReplyTime"].ToString()!="")
+				{
+					model.ReplyTime=DateTime.Parse(ds.Tables[0].Rows[0]["ReplyTime"].ToString());
 				}
 				return model;
 			}
@@ -192,8 +201,8 @@ namespace CengZai.DAL
 		public DataSet GetList(string strWhere)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select CategoryID,CategoryName,CategoryDesc,UserID ");
-			strSql.Append(" FROM T_Category ");
+			strSql.Append("select ReplyID,MsgID,Content,ReplyUserID,ReplyTime ");
+			strSql.Append(" FROM T_MessageReply ");
 			if(strWhere.Trim()!="")
 			{
 				strSql.Append(" where "+strWhere);
@@ -212,8 +221,8 @@ namespace CengZai.DAL
 			{
 				strSql.Append(" top "+Top.ToString());
 			}
-			strSql.Append(" CategoryID,CategoryName,CategoryDesc,UserID ");
-			strSql.Append(" FROM T_Category ");
+			strSql.Append(" ReplyID,MsgID,Content,ReplyUserID,ReplyTime ");
+			strSql.Append(" FROM T_MessageReply ");
 			if(strWhere.Trim()!="")
 			{
 				strSql.Append(" where "+strWhere);
@@ -228,7 +237,7 @@ namespace CengZai.DAL
 		public int GetRecordCount(string strWhere)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select count(1) FROM T_Category ");
+			strSql.Append("select count(1) FROM T_MessageReply ");
 			if(strWhere.Trim()!="")
 			{
 				strSql.Append(" where "+strWhere);
@@ -257,9 +266,9 @@ namespace CengZai.DAL
 			}
 			else
 			{
-				strSql.Append("order by T.CategoryID desc");
+				strSql.Append("order by T.ReplyID desc");
 			}
-			strSql.Append(")AS Row, T.*  from T_Category T ");
+			strSql.Append(")AS Row, T.*  from T_MessageReply T ");
 			if (!string.IsNullOrEmpty(strWhere.Trim()))
 			{
 				strSql.Append(" WHERE " + strWhere);
@@ -284,8 +293,8 @@ namespace CengZai.DAL
 					new SqlParameter("@OrderType", SqlDbType.Bit),
 					new SqlParameter("@strWhere", SqlDbType.VarChar,1000),
 					};
-			parameters[0].Value = "T_Category";
-			parameters[1].Value = "CategoryID";
+			parameters[0].Value = "T_MessageReply";
+			parameters[1].Value = "ReplyID";
 			parameters[2].Value = PageSize;
 			parameters[3].Value = PageIndex;
 			parameters[4].Value = 0;

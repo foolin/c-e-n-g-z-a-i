@@ -115,9 +115,13 @@ namespace CengZai.BLL
 					{
 						model.ArtID=int.Parse(dt.Rows[n]["ArtID"].ToString());
 					}
-					if(dt.Rows[n]["Source"]!=null && dt.Rows[n]["Source"].ToString()!="")
+					if(dt.Rows[n]["File"]!=null && dt.Rows[n]["File"].ToString()!="")
 					{
-					model.Source=dt.Rows[n]["Source"].ToString();
+					model.File=dt.Rows[n]["File"].ToString();
+					}
+					if(dt.Rows[n]["SubFile"]!=null && dt.Rows[n]["SubFile"].ToString()!="")
+					{
+					model.SubFile=dt.Rows[n]["SubFile"].ToString();
 					}
 					modelList.Add(model);
 				}

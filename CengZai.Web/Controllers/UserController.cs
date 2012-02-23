@@ -245,7 +245,7 @@ namespace CengZai.Web.Controllers
                 user.Mobile = "";
                 user.Nickname = nickname;
                 user.Password = md5Password;
-                user.Private = 0;
+                user.Privacy = 0;
                 user.RegIp = Helper.Util.GetIP();
                 user.RegTime = DateTime.Now;
                 user.Sex = 0;

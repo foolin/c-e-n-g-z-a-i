@@ -58,8 +58,10 @@
     <Compile Include="BLL\Category.cs" />
     <Compile Include="BLL\Dynamic.cs" />
     <Compile Include="BLL\Friend.cs" />
+    <Compile Include="BLL\Inbox.cs" />
     <Compile Include="BLL\InviteCode.cs" />
     <Compile Include="BLL\Message.cs" />
+    <Compile Include="BLL\MessageReply.cs" />
     <Compile Include="BLL\User.cs" />
     <Compile Include="DAL\Area.cs" />
     <Compile Include="DAL\Article.cs" />
@@ -68,8 +70,10 @@
     <Compile Include="DAL\Category.cs" />
     <Compile Include="DAL\Dynamic.cs" />
     <Compile Include="DAL\Friend.cs" />
+    <Compile Include="DAL\Inbox.cs" />
     <Compile Include="DAL\InviteCode.cs" />
     <Compile Include="DAL\Message.cs" />
+    <Compile Include="DAL\MessageReply.cs" />
     <Compile Include="DAL\User.cs" />
     <Compile Include="Helper\CommandInfo.cs" />
     <Compile Include="Helper\Config.cs" />
@@ -87,8 +91,10 @@
     <Compile Include="Model\Category.cs" />
     <Compile Include="Model\Dynamic.cs" />
     <Compile Include="Model\Friend.cs" />
+    <Compile Include="Model\Inbox.cs" />
     <Compile Include="Model\InviteCode.cs" />
     <Compile Include="Model\Message.cs" />
+    <Compile Include="Model\MessageReply.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

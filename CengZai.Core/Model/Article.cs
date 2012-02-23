@@ -1,34 +1,6 @@
 ﻿using System;
 namespace CengZai.Model
 {
-    public enum ArtType
-    {
-        /// <summary>
-        /// 微博/心情
-        /// </summary>
-        Weibo = 0,
-        /// <summary>
-        /// 文本提交
-        /// </summary>
-        Text = 1,
-        /// <summary>
-        /// 图片
-        /// </summary>
-        Image = 2,
-        /// <summary>
-        /// 音频
-        /// </summary>
-        Audio = 3,
-        /// <summary>
-        /// 视频
-        /// </summary>
-        Video = 4,
-        /// <summary>
-        /// 连接
-        /// </summary>
-        Link = 5,
-    }
-
 	/// <summary>
 	/// Article:实体类(属性说明自动提取数据库字段的描述信息)
 	/// </summary>
@@ -48,10 +20,9 @@ namespace CengZai.Model
 		private DateTime? _posttime;
 		private string _postip;
 		private int? _viewcount;
-		private int? _topcount;
-		private int? _downcount;
+		private int? _replycount;
 		private int? _reportcount;
-		private int? _private;
+		private int? _privacy;
 		private int? _state;
 		/// <summary>
 		/// 
@@ -86,7 +57,7 @@ namespace CengZai.Model
 			get{return _content;}
 		}
 		/// <summary>
-		/// 0=文章,1=图片,2=视频
+		/// 0=文章,1=图片
 		/// </summary>
 		public int? Type
 		{
@@ -134,23 +105,15 @@ namespace CengZai.Model
 			get{return _viewcount;}
 		}
 		/// <summary>
-		/// 顶次数
+		/// 回复次数
 		/// </summary>
-		public int? TopCount
+		public int? ReplyCount
 		{
-			set{ _topcount=value;}
-			get{return _topcount;}
+			set{ _replycount=value;}
+			get{return _replycount;}
 		}
 		/// <summary>
-		/// 踩次数
-		/// </summary>
-		public int? DownCount
-		{
-			set{ _downcount=value;}
-			get{return _downcount;}
-		}
-		/// <summary>
-		/// 举报
+		/// 举报次数
 		/// </summary>
 		public int? ReportCount
 		{
@@ -160,10 +123,10 @@ namespace CengZai.Model
 		/// <summary>
 		/// 隐私设置：0=所有人可见，1=仅好友可见，2=仅自己可见
 		/// </summary>
-		public int? Private
+		public int? Privacy
 		{
-			set{ _private=value;}
-			get{return _private;}
+			set{ _privacy=value;}
+			get{return _privacy;}
 		}
 		/// <summary>
 		/// 状态：-1=删除，0=草稿，1=发布

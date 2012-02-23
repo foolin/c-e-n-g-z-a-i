@@ -6,11 +6,11 @@ using CengZai.Helper;
 namespace CengZai.DAL
 {
 	/// <summary>
-	/// 数据访问类:Message
+	/// 数据访问类:Inbox
 	/// </summary>
-	public partial class Message
+	public partial class Inbox
 	{
-		public Message()
+		public Inbox()
 		{}
 		#region  Method
 
@@ -19,7 +19,7 @@ namespace CengZai.DAL
 		/// </summary>
 		public int GetMaxId()
 		{
-		return DbHelperSQL.GetMaxID("MsgID", "T_Message"); 
+		return DbHelperSQL.GetMaxID("MsgID", "T_Inbox"); 
 		}
 
 		/// <summary>
@@ -28,7 +28,7 @@ namespace CengZai.DAL
 		public bool Exists(int MsgID)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select count(1) from T_Message");
+			strSql.Append("select count(1) from T_Inbox");
 			strSql.Append(" where MsgID=@MsgID");
 			SqlParameter[] parameters = {
 					new SqlParameter("@MsgID", SqlDbType.Int,4)
@@ -42,10 +42,10 @@ namespace CengZai.DAL
 		/// <summary>
 		/// 增加一条数据
 		/// </summary>
-		public int Add(CengZai.Model.Message model)
+		public int Add(CengZai.Model.Inbox model)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("insert into T_Message(");
+			strSql.Append("insert into T_Inbox(");
 			strSql.Append("Title,Content,ToUserID,FromUserID,SendTime,IsRead,IsSystem,IsDelete)");
 			strSql.Append(" values (");
 			strSql.Append("@Title,@Content,@ToUserID,@FromUserID,@SendTime,@IsRead,@IsSystem,@IsDelete)");
@@ -81,10 +81,10 @@ namespace CengZai.DAL
 		/// <summary>
 		/// 更新一条数据
 		/// </summary>
-		public bool Update(CengZai.Model.Message model)
+		public bool Update(CengZai.Model.Inbox model)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("update T_Message set ");
+			strSql.Append("update T_Inbox set ");
 			strSql.Append("Title=@Title,");
 			strSql.Append("Content=@Content,");
 			strSql.Append("ToUserID=@ToUserID,");
@@ -132,7 +132,7 @@ namespace CengZai.DAL
 		{
 			
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("delete from T_Message ");
+			strSql.Append("delete from T_Inbox ");
 			strSql.Append(" where MsgID=@MsgID");
 			SqlParameter[] parameters = {
 					new SqlParameter("@MsgID", SqlDbType.Int,4)
@@ -155,7 +155,7 @@ namespace CengZai.DAL
 		public bool DeleteList(string MsgIDlist )
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("delete from T_Message ");
+			strSql.Append("delete from T_Inbox ");
 			strSql.Append(" where MsgID in ("+MsgIDlist + ")  ");
 			int rows=DbHelperSQL.ExecuteSql(strSql.ToString());
 			if (rows > 0)
@@ -172,18 +172,18 @@ namespace CengZai.DAL
 		/// <summary>
 		/// 得到一个对象实体
 		/// </summary>
-		public CengZai.Model.Message GetModel(int MsgID)
+		public CengZai.Model.Inbox GetModel(int MsgID)
 		{
 			
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select  top 1 MsgID,Title,Content,ToUserID,FromUserID,SendTime,IsRead,IsSystem,IsDelete from T_Message ");
+			strSql.Append("select  top 1 MsgID,Title,Content,ToUserID,FromUserID,SendTime,IsRead,IsSystem,IsDelete from T_Inbox ");
 			strSql.Append(" where MsgID=@MsgID");
 			SqlParameter[] parameters = {
 					new SqlParameter("@MsgID", SqlDbType.Int,4)
 			};
 			parameters[0].Value = MsgID;
 
-			CengZai.Model.Message model=new CengZai.Model.Message();
+			CengZai.Model.Inbox model=new CengZai.Model.Inbox();
 			DataSet ds=DbHelperSQL.Query(strSql.ToString(),parameters);
 			if(ds.Tables[0].Rows.Count>0)
 			{
@@ -238,7 +238,7 @@ namespace CengZai.DAL
 		{
 			StringBuilder strSql=new StringBuilder();
 			strSql.Append("select MsgID,Title,Content,ToUserID,FromUserID,SendTime,IsRead,IsSystem,IsDelete ");
-			strSql.Append(" FROM T_Message ");
+			strSql.Append(" FROM T_Inbox ");
 			if(strWhere.Trim()!="")
 			{
 				strSql.Append(" where "+strWhere);
@@ -258,7 +258,7 @@ namespace CengZai.DAL
 				strSql.Append(" top "+Top.ToString());
 			}
 			strSql.Append(" MsgID,Title,Content,ToUserID,FromUserID,SendTime,IsRead,IsSystem,IsDelete ");
-			strSql.Append(" FROM T_Message ");
+			strSql.Append(" FROM T_Inbox ");
 			if(strWhere.Trim()!="")
 			{
 				strSql.Append(" where "+strWhere);
@@ -273,7 +273,7 @@ namespace CengZai.DAL
 		public int GetRecordCount(string strWhere)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select count(1) FROM T_Message ");
+			strSql.Append("select count(1) FROM T_Inbox ");
 			if(strWhere.Trim()!="")
 			{
 				strSql.Append(" where "+strWhere);
@@ -304,7 +304,7 @@ namespace CengZai.DAL
 			{
 				strSql.Append("order by T.MsgID desc");
 			}
-			strSql.Append(")AS Row, T.*  from T_Message T ");
+			strSql.Append(")AS Row, T.*  from T_Inbox T ");
 			if (!string.IsNullOrEmpty(strWhere.Trim()))
 			{
 				strSql.Append(" WHERE " + strWhere);
@@ -329,7 +329,7 @@ namespace CengZai.DAL
 					new SqlParameter("@OrderType", SqlDbType.Bit),
 					new SqlParameter("@strWhere", SqlDbType.VarChar,1000),
 					};
-			parameters[0].Value = "T_Message";
+			parameters[0].Value = "T_Inbox";
 			parameters[1].Value = "MsgID";
 			parameters[2].Value = PageSize;
 			parameters[3].Value = PageIndex;

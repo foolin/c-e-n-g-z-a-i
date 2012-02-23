@@ -12,7 +12,8 @@ namespace CengZai.Model
 		#region Model
 		private int _attachid;
 		private int? _artid;
-		private string _source;
+		private string _file;
+		private string _subfile;
 		/// <summary>
 		/// 
 		/// </summary>
@@ -32,10 +33,18 @@ namespace CengZai.Model
 		/// <summary>
 		/// 
 		/// </summary>
-		public string Source
+		public string File
 		{
-			set{ _source=value;}
-			get{return _source;}
+			set{ _file=value;}
+			get{return _file;}
+		}
+		/// <summary>
+		/// 
+		/// </summary>
+		public string SubFile
+		{
+			set{ _subfile=value;}
+			get{return _subfile;}
 		}
 		#endregion Model
 

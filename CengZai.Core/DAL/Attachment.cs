@@ -46,15 +46,17 @@ namespace CengZai.DAL
 		{
 			StringBuilder strSql=new StringBuilder();
 			strSql.Append("insert into T_Attachment(");
-			strSql.Append("ArtID,Source)");
+			strSql.Append("ArtID,File,SubFile)");
 			strSql.Append(" values (");
-			strSql.Append("@ArtID,@Source)");
+			strSql.Append("@ArtID,@File,@SubFile)");
 			strSql.Append(";select @@IDENTITY");
 			SqlParameter[] parameters = {
 					new SqlParameter("@ArtID", SqlDbType.Int,4),
-					new SqlParameter("@Source", SqlDbType.NVarChar,1000)};
+					new SqlParameter("@File", SqlDbType.NVarChar,1000),
+					new SqlParameter("@SubFile", SqlDbType.NVarChar,1000)};
 			parameters[0].Value = model.ArtID;
-			parameters[1].Value = model.Source;
+			parameters[1].Value = model.File;
+			parameters[2].Value = model.SubFile;
 
 			object obj = DbHelperSQL.GetSingle(strSql.ToString(),parameters);
 			if (obj == null)
@@ -74,15 +76,18 @@ namespace CengZai.DAL
 			StringBuilder strSql=new StringBuilder();
 			strSql.Append("update T_Attachment set ");
 			strSql.Append("ArtID=@ArtID,");
-			strSql.Append("Source=@Source");
+			strSql.Append("File=@File,");
+			strSql.Append("SubFile=@SubFile");
 			strSql.Append(" where AttachID=@AttachID");
 			SqlParameter[] parameters = {
 					new SqlParameter("@ArtID", SqlDbType.Int,4),
-					new SqlParameter("@Source", SqlDbType.NVarChar,1000),
+					new SqlParameter("@File", SqlDbType.NVarChar,1000),
+					new SqlParameter("@SubFile", SqlDbType.NVarChar,1000),
 					new SqlParameter("@AttachID", SqlDbType.Int,4)};
 			parameters[0].Value = model.ArtID;
-			parameters[1].Value = model.Source;
-			parameters[2].Value = model.AttachID;
+			parameters[1].Value = model.File;
+			parameters[2].Value = model.SubFile;
+			parameters[3].Value = model.AttachID;
 
 			int rows=DbHelperSQL.ExecuteSql(strSql.ToString(),parameters);
 			if (rows > 0)
@@ -146,7 +151,7 @@ namespace CengZai.DAL
 		{
 			
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select  top 1 AttachID,ArtID,Source from T_Attachment ");
+			strSql.Append("select  top 1 AttachID,ArtID,File,SubFile from T_Attachment ");
 			strSql.Append(" where AttachID=@AttachID");
 			SqlParameter[] parameters = {
 					new SqlParameter("@AttachID", SqlDbType.Int,4)
@@ -165,9 +170,13 @@ namespace CengZai.DAL
 				{
 					model.ArtID=int.Parse(ds.Tables[0].Rows[0]["ArtID"].ToString());
 				}
-				if(ds.Tables[0].Rows[0]["Source"]!=null && ds.Tables[0].Rows[0]["Source"].ToString()!="")
+				if(ds.Tables[0].Rows[0]["File"]!=null && ds.Tables[0].Rows[0]["File"].ToString()!="")
 				{
-					model.Source=ds.Tables[0].Rows[0]["Source"].ToString();
+					model.File=ds.Tables[0].Rows[0]["File"].ToString();
+				}
+				if(ds.Tables[0].Rows[0]["SubFile"]!=null && ds.Tables[0].Rows[0]["SubFile"].ToString()!="")
+				{
+					model.SubFile=ds.Tables[0].Rows[0]["SubFile"].ToString();
 				}
 				return model;
 			}
@@ -183,7 +192,7 @@ namespace CengZai.DAL
 		public DataSet GetList(string strWhere)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select AttachID,ArtID,Source ");
+			strSql.Append("select AttachID,ArtID,File,SubFile ");
 			strSql.Append(" FROM T_Attachment ");
 			if(strWhere.Trim()!="")
 			{
@@ -203,7 +212,7 @@ namespace CengZai.DAL
 			{
 				strSql.Append(" top "+Top.ToString());
 			}
-			strSql.Append(" AttachID,ArtID,Source ");
+			strSql.Append(" AttachID,ArtID,File,SubFile ");
 			strSql.Append(" FROM T_Attachment ");
 			if(strWhere.Trim()!="")
 			{
