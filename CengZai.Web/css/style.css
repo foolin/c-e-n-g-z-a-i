@@ -54,6 +54,11 @@ body {
 .container{
 	width:960px;
 }
+.pager li.active a
+{
+    color:#999;
+    cursor:default;
+}
 .form-horizontal .control-group > label 
 {
     width:80px;

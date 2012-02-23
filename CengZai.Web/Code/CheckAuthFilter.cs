@@ -6,14 +6,16 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
 
+
 namespace CengZai.Web.Code
 {
+
     public class CheckAuthFilter : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             //判断权限
-            Model.User user = filterContext.HttpContext.Session["LOGIN_USER"] as Model.User;
+            CengZai.Model.User user = filterContext.HttpContext.Session["LOGIN_USER"] as CengZai.Model.User;
             if (user == null)
             {
                 filterContext.Result = new RedirectToRouteResult("Default",
@@ -21,4 +23,5 @@ namespace CengZai.Web.Code
             }
         }
     }
+
 }
