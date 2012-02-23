@@ -1,23 +1,32 @@
 ﻿@{
     ViewBag.Title = "提交文本";
+    var content = Request.Unvalidated().Form["content"];
 }
 
 @section head{
 	<script charset="utf-8" src="../js/kindeditor/kindeditor-min.js"></script>
 	<script charset="utf-8" src="../js/kindeditor/lang/zh_CN.js"></script>
 	<script>
-//	    $(function () {
-//	        var editor = KindEditor.create('textarea[name="content"]',
-//            {
-//                resizeType: 1,
-//                allowPreviewEmoticons: false,
-//                allowImageUpload: false,
-//                items: [
-//						'bold', 'italic', 'underline',
-//						'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
-//						'insertunorderedlist', '|', 'image', 'link', 'unlink', '|', 'fullscreen']
-//            });
-//	    });
+	    $(function () {
+	        var editor = KindEditor.create('textarea[name="content"]',
+            {
+                resizeType: 1,
+                allowPreviewEmoticons: false,
+                allowImageUpload: false,
+                filterMode: true,
+                htmlTags: {
+                        a: ['href', 'target', 'name'],
+                        img: ['src', 'width', 'height', 'border', 'alt', 'title', '.width', '.height'],
+                        'p,ol,ul,li,blockquote': ['align', '.text-align'],
+                        pre: ['class'],
+                        'hr,br,strong,b,sub,sup,em,i,u': []
+                },
+                items: [
+						'bold', 'italic', 'underline',
+						'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+						'insertunorderedlist', '|', 'image', 'link', 'unlink', '|', 'source', 'fullscreen']
+            });
+	    });
 	</script>
 }
 
@@ -63,7 +72,7 @@
                 <input type="checkbox" name="top" value="1"> 设为置顶
              </label> 
              <label class="checkbox inline"> 
-                <input type="checkbox" name="draft" value="1"> 存草稿
+                <input type="checkbox" name="draft" value="1"> 存为草稿
              </label> 
 
           </div><!--/.well -->
