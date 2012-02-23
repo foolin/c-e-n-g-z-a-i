@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using CengZai.Web.Code;
 using CengZai;
 using System.Data;
 using System.IO;

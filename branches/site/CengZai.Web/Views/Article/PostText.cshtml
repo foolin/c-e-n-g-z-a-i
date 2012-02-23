@@ -4,9 +4,9 @@
 }
 
 @section head{
-	<script charset="utf-8" src="../js/kindeditor/kindeditor-min.js"></script>
-	<script charset="utf-8" src="../js/kindeditor/lang/zh_CN.js"></script>
-	<script>
+	<script type="text/javascript" charset="utf-8" src="../js/kindeditor/kindeditor-min.js"></script>
+	<script type="text/javascript" charset="utf-8" src="../js/kindeditor/lang/zh_CN.js"></script>
+	<script type="text/javascript">
 	    $(function () {
 	        var editor = KindEditor.create('textarea[name="content"]',
             {
@@ -24,7 +24,7 @@
                 items: [
 						'bold', 'italic', 'underline',
 						'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
-						'insertunorderedlist', '|', 'image', 'link', 'unlink', '|', 'source', 'fullscreen']
+						'insertunorderedlist', '|', 'link', 'unlink', '|', 'source', 'fullscreen']
             });
 	    });
 	</script>
@@ -36,7 +36,7 @@
     <div class="row-fluid">
       <div class="span8 bg-white">
       <div class="padding">
-
+        
         <fieldset> 
           <legend>发表日志</legend>
           <div class="my-control-group"> 
@@ -51,7 +51,7 @@
               @Html.TextArea("content", "", 15, 20, new { @class = "input-xxlarge editor" })
             </div> 
           </div>
-          <div class="form-actions"> 
+          <div class="form-actions">
             <button type="submit" class="btn btn-primary">保存</button> 
             @Html.ActionLink("取消", "Index", "Home", new { @class = "btn" })
           </div> 
