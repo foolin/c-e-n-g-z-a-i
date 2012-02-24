@@ -103,67 +103,9 @@ namespace CengZai.BLL
 			int rowsCount = dt.Rows.Count;
 			if (rowsCount > 0)
 			{
-				CengZai.Model.Article model;
 				for (int n = 0; n < rowsCount; n++)
 				{
-					model = new CengZai.Model.Article();
-					if(dt.Rows[n]["ArtID"]!=null && dt.Rows[n]["ArtID"].ToString()!="")
-					{
-						model.ArtID=int.Parse(dt.Rows[n]["ArtID"].ToString());
-					}
-					if(dt.Rows[n]["CategoryID"]!=null && dt.Rows[n]["CategoryID"].ToString()!="")
-					{
-						model.CategoryID=int.Parse(dt.Rows[n]["CategoryID"].ToString());
-					}
-					if(dt.Rows[n]["Title"]!=null && dt.Rows[n]["Title"].ToString()!="")
-					{
-					model.Title=dt.Rows[n]["Title"].ToString();
-					}
-					if(dt.Rows[n]["Content"]!=null && dt.Rows[n]["Content"].ToString()!="")
-					{
-					model.Content=dt.Rows[n]["Content"].ToString();
-					}
-					if(dt.Rows[n]["Type"]!=null && dt.Rows[n]["Type"].ToString()!="")
-					{
-						model.Type=int.Parse(dt.Rows[n]["Type"].ToString());
-					}
-					if(dt.Rows[n]["IsTop"]!=null && dt.Rows[n]["IsTop"].ToString()!="")
-					{
-						model.IsTop=int.Parse(dt.Rows[n]["IsTop"].ToString());
-					}
-					if(dt.Rows[n]["UserID"]!=null && dt.Rows[n]["UserID"].ToString()!="")
-					{
-						model.UserID=int.Parse(dt.Rows[n]["UserID"].ToString());
-					}
-					if(dt.Rows[n]["PostTime"]!=null && dt.Rows[n]["PostTime"].ToString()!="")
-					{
-						model.PostTime=DateTime.Parse(dt.Rows[n]["PostTime"].ToString());
-					}
-					if(dt.Rows[n]["PostIP"]!=null && dt.Rows[n]["PostIP"].ToString()!="")
-					{
-					model.PostIP=dt.Rows[n]["PostIP"].ToString();
-					}
-					if(dt.Rows[n]["ViewCount"]!=null && dt.Rows[n]["ViewCount"].ToString()!="")
-					{
-						model.ViewCount=int.Parse(dt.Rows[n]["ViewCount"].ToString());
-					}
-					if(dt.Rows[n]["ReplyCount"]!=null && dt.Rows[n]["ReplyCount"].ToString()!="")
-					{
-						model.ReplyCount=int.Parse(dt.Rows[n]["ReplyCount"].ToString());
-					}
-					if(dt.Rows[n]["ReportCount"]!=null && dt.Rows[n]["ReportCount"].ToString()!="")
-					{
-						model.ReportCount=int.Parse(dt.Rows[n]["ReportCount"].ToString());
-					}
-					if(dt.Rows[n]["Privacy"]!=null && dt.Rows[n]["Privacy"].ToString()!="")
-					{
-						model.Privacy=int.Parse(dt.Rows[n]["Privacy"].ToString());
-					}
-					if(dt.Rows[n]["State"]!=null && dt.Rows[n]["State"].ToString()!="")
-					{
-						model.State=int.Parse(dt.Rows[n]["State"].ToString());
-					}
-					modelList.Add(model);
+					modelList.Add(dal.RowToModel(dt.Rows[n]));
 				}
 			}
 			return modelList;
@@ -200,6 +142,21 @@ namespace CengZai.BLL
 		//}
 
 		#endregion  Method
+
+
+                /// <summary>
+        /// 分页
+        /// </summary>
+        /// <param name="strWhere"></param>
+        /// <param name="fieldOrder"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="totalCount"></param>
+        /// <returns></returns>
+        public DataSet GetListByPage(string strWhere, string fieldOrder, int pageSize, int pageIndex, out int totalCount)
+        {
+            return dal.GetListByPage(strWhere, fieldOrder, pageSize, pageIndex, out totalCount);
+        }
 	}
 }
 

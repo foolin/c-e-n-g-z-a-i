@@ -83,5 +83,25 @@ namespace CengZai.Web.Controllers
             return Content(viewContent);
         }
 
+        /// <summary>
+        /// 取页码
+        /// </summary>
+        /// <param name="pageTag"></param>
+        /// <returns></returns>
+        protected int GetPageNum(string pageTag)
+        {
+            if (string.IsNullOrEmpty(pageTag))
+            {
+                pageTag = "page";
+            }
+            int pageIndex = 0;
+            int.TryParse(Request[pageTag], out pageIndex);
+            if (pageIndex < 1)
+            {
+                pageIndex = 1;
+            }
+            return pageIndex;
+        }
+
     }
 }

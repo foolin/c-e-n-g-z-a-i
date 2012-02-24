@@ -42,8 +42,8 @@ namespace System.Web.Mvc
             //首页、上一页
             if (pageIndex <= 1)
             {
-                html.AppendFormat("<li class=\"active\"><a href=\"#\">|<</a></li>");
-                html.AppendFormat("<li class=\"active\"><a href=\"#\"><</a></li>");
+                html.AppendFormat("<li class=\"active\"><a>|<</a></li>");
+                html.AppendFormat("<li class=\"active\"><a><</a></li>");
             }
             else
             {
@@ -81,7 +81,7 @@ namespace System.Web.Mvc
                     }
                 }
                 //当前页
-                html.AppendFormat("<li class=\"active\"><a href=\"#\">{0}</a></li>", pageIndex);
+                html.AppendFormat("<li class=\"active\"><a>{0}</a></li>", pageIndex);
                 //当前页后面数字
                 if (pageIndex < pageCount)
                 {
@@ -99,8 +99,8 @@ namespace System.Web.Mvc
             //下一页、尾页
             if (pageIndex >= pageCount)
             {
-                html.AppendFormat("<li class=\"active\"><a href=\"#\">></a></li>");
-                html.AppendFormat("<li class=\"active\"><a href=\"#\">>|</a></li>");
+                html.AppendFormat("<li class=\"active\"><a>></a></li>");
+                html.AppendFormat("<li class=\"active\"><a>>|</a></li>");
             }
             else
             {
@@ -139,50 +139,6 @@ namespace System.Web.Mvc
 
             return " <a href=\"" + url + "?" + pageTag + "=" + pageNum + "\">" + pageName + "</a> ";
         }
-
-
-        /// <summary>
-        /// 创建分页链接
-        /// </summary>
-        /// <param name="helper">HtmlHelper类</param>
-        /// <param name="startPage">开始页 (多数情况下是 1)</param>
-        /// <param name="currentPage">当前页</param>
-        /// <param name="totalPages">总页数</param>
-        /// <param name="pagesToShow">前后显示的页数</param>
-        public static MvcHtmlString Pagers(this HtmlHelper helper, int startPage,
-            int currentPage, int totalPages, int pagesToShow)
-        {
-            RouteData routeData = helper.ViewContext.RouteData;
-            //你可能还要获取action
-            //routeData.Values["action"].ToString();
-            string controller = routeData.Values["controller"].ToString();
-            StringBuilder html = new StringBuilder();
-            //创建从第一页到最后一页的列表
-            html = Enumerable.Range(startPage, totalPages)
-            .Where(i => (currentPage - pagesToShow) < i & i < (currentPage + pagesToShow))
-            .Aggregate(new StringBuilder(@"<div class=""pagination""><span>共" + totalPages + "页</span>"), (seed, page) =>
-            {
-                //当前页
-                if (page == currentPage)
-                    seed.AppendFormat("<span>{0}</span>", page);
-                else
-                {
-                    //第一页时显示：domain/archives
-                    if (page == 1)
-                    {
-                        seed.AppendFormat("<a href=\"/{0}\">{1}</a>", controller.ToLower(), page);
-                    }
-                    else
-                    {
-                        seed.AppendFormat("<a href=\"/{0}/{1}\">{1}</a>", controller.ToLower(), page);
-                    }
-                }
-                return seed;
-            });
-            html.Append(@"</div>");
-            return MvcHtmlString.Create(html.ToString());
-        }
-
 
 
         /// <summary>

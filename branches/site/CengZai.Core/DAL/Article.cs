@@ -212,63 +212,7 @@ namespace CengZai.DAL
 			DataSet ds=DbHelperSQL.Query(strSql.ToString(),parameters);
 			if(ds.Tables[0].Rows.Count>0)
 			{
-				if(ds.Tables[0].Rows[0]["ArtID"]!=null && ds.Tables[0].Rows[0]["ArtID"].ToString()!="")
-				{
-					model.ArtID=int.Parse(ds.Tables[0].Rows[0]["ArtID"].ToString());
-				}
-				if(ds.Tables[0].Rows[0]["CategoryID"]!=null && ds.Tables[0].Rows[0]["CategoryID"].ToString()!="")
-				{
-					model.CategoryID=int.Parse(ds.Tables[0].Rows[0]["CategoryID"].ToString());
-				}
-				if(ds.Tables[0].Rows[0]["Title"]!=null && ds.Tables[0].Rows[0]["Title"].ToString()!="")
-				{
-					model.Title=ds.Tables[0].Rows[0]["Title"].ToString();
-				}
-				if(ds.Tables[0].Rows[0]["Content"]!=null && ds.Tables[0].Rows[0]["Content"].ToString()!="")
-				{
-					model.Content=ds.Tables[0].Rows[0]["Content"].ToString();
-				}
-				if(ds.Tables[0].Rows[0]["Type"]!=null && ds.Tables[0].Rows[0]["Type"].ToString()!="")
-				{
-					model.Type=int.Parse(ds.Tables[0].Rows[0]["Type"].ToString());
-				}
-				if(ds.Tables[0].Rows[0]["IsTop"]!=null && ds.Tables[0].Rows[0]["IsTop"].ToString()!="")
-				{
-					model.IsTop=int.Parse(ds.Tables[0].Rows[0]["IsTop"].ToString());
-				}
-				if(ds.Tables[0].Rows[0]["UserID"]!=null && ds.Tables[0].Rows[0]["UserID"].ToString()!="")
-				{
-					model.UserID=int.Parse(ds.Tables[0].Rows[0]["UserID"].ToString());
-				}
-				if(ds.Tables[0].Rows[0]["PostTime"]!=null && ds.Tables[0].Rows[0]["PostTime"].ToString()!="")
-				{
-					model.PostTime=DateTime.Parse(ds.Tables[0].Rows[0]["PostTime"].ToString());
-				}
-				if(ds.Tables[0].Rows[0]["PostIP"]!=null && ds.Tables[0].Rows[0]["PostIP"].ToString()!="")
-				{
-					model.PostIP=ds.Tables[0].Rows[0]["PostIP"].ToString();
-				}
-				if(ds.Tables[0].Rows[0]["ViewCount"]!=null && ds.Tables[0].Rows[0]["ViewCount"].ToString()!="")
-				{
-					model.ViewCount=int.Parse(ds.Tables[0].Rows[0]["ViewCount"].ToString());
-				}
-				if(ds.Tables[0].Rows[0]["ReplyCount"]!=null && ds.Tables[0].Rows[0]["ReplyCount"].ToString()!="")
-				{
-					model.ReplyCount=int.Parse(ds.Tables[0].Rows[0]["ReplyCount"].ToString());
-				}
-				if(ds.Tables[0].Rows[0]["ReportCount"]!=null && ds.Tables[0].Rows[0]["ReportCount"].ToString()!="")
-				{
-					model.ReportCount=int.Parse(ds.Tables[0].Rows[0]["ReportCount"].ToString());
-				}
-				if(ds.Tables[0].Rows[0]["Privacy"]!=null && ds.Tables[0].Rows[0]["Privacy"].ToString()!="")
-				{
-					model.Privacy=int.Parse(ds.Tables[0].Rows[0]["Privacy"].ToString());
-				}
-				if(ds.Tables[0].Rows[0]["State"]!=null && ds.Tables[0].Rows[0]["State"].ToString()!="")
-				{
-					model.State=int.Parse(ds.Tables[0].Rows[0]["State"].ToString());
-				}
-				return model;
+                return RowToModel(ds.Tables[0].Rows[0]);
 			}
 			else
 			{
@@ -384,7 +328,107 @@ namespace CengZai.DAL
 			return DbHelperSQL.RunProcedure("UP_GetRecordByPage",parameters,"ds");
 		}*/
 
+
+        /// <summary>
+        /// 分页
+        /// </summary>
+        /// <param name="strWhere"></param>
+        /// <param name="fieldOrder"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="totalCount"></param>
+        /// <returns></returns>
+        public DataSet GetListByPage(string strWhere, string fieldOrder, int pageSize, int pageIndex, out int totalCount)
+        {
+
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("SELECT * ");
+            strSql.Append(" FROM T_Article ");
+
+            if (!string.IsNullOrEmpty(strWhere))
+            {
+                strSql.Append(" Where " + strWhere);
+            }
+
+            if (string.IsNullOrEmpty(fieldOrder))
+            {
+                fieldOrder = "ArtID DESC";
+            }
+
+            DataSet dsList = null;
+            dsList = SqlHelperEx.ExecuteDatasetByPage(Config.ConnString, strSql.ToString(), fieldOrder, pageSize, pageIndex, out totalCount);
+            return dsList;
+        }
+
 		#endregion  Method
+
+
+        /// <summary>
+        /// 转Model
+        /// </summary>
+        /// <param name="row"></param>
+        /// <returns></returns>
+        public Model.Article RowToModel(DataRow row)
+        {
+            Model.Article model = new CengZai.Model.Article();
+            if (row["ArtID"] != null && row["ArtID"].ToString() != "")
+            {
+                model.ArtID = int.Parse(row["ArtID"].ToString());
+            }
+            if (row["CategoryID"] != null && row["CategoryID"].ToString() != "")
+            {
+                model.CategoryID = int.Parse(row["CategoryID"].ToString());
+            }
+            if (row["Title"] != null && row["Title"].ToString() != "")
+            {
+                model.Title = row["Title"].ToString();
+            }
+            if (row["Content"] != null && row["Content"].ToString() != "")
+            {
+                model.Content = row["Content"].ToString();
+            }
+            if (row["Type"] != null && row["Type"].ToString() != "")
+            {
+                model.Type = int.Parse(row["Type"].ToString());
+            }
+            if (row["IsTop"] != null && row["IsTop"].ToString() != "")
+            {
+                model.IsTop = int.Parse(row["IsTop"].ToString());
+            }
+            if (row["UserID"] != null && row["UserID"].ToString() != "")
+            {
+                model.UserID = int.Parse(row["UserID"].ToString());
+            }
+            if (row["PostTime"] != null && row["PostTime"].ToString() != "")
+            {
+                model.PostTime = DateTime.Parse(row["PostTime"].ToString());
+            }
+            if (row["PostIP"] != null && row["PostIP"].ToString() != "")
+            {
+                model.PostIP = row["PostIP"].ToString();
+            }
+            if (row["ViewCount"] != null && row["ViewCount"].ToString() != "")
+            {
+                model.ViewCount = int.Parse(row["ViewCount"].ToString());
+            }
+            if (row["ReplyCount"] != null && row["ReplyCount"].ToString() != "")
+            {
+                model.ReplyCount = int.Parse(row["ReplyCount"].ToString());
+            }
+            if (row["ReportCount"] != null && row["ReportCount"].ToString() != "")
+            {
+                model.ReportCount = int.Parse(row["ReportCount"].ToString());
+            }
+            if (row["Privacy"] != null && row["Privacy"].ToString() != "")
+            {
+                model.Privacy = int.Parse(row["Privacy"].ToString());
+            }
+            if (row["State"] != null && row["State"].ToString() != "")
+            {
+                model.State = int.Parse(row["State"].ToString());
+            }
+            return model;
+        }
 	}
 }
 

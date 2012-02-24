@@ -286,99 +286,7 @@ namespace CengZai.DAL
 			DataSet ds=DbHelperSQL.Query(strSql.ToString(),parameters);
 			if(ds.Tables[0].Rows.Count>0)
 			{
-                if (ds.Tables[0].Rows[0]["UserID"] != null && ds.Tables[0].Rows[0]["UserID"].ToString() != "")
-                {
-                    model.UserID = int.Parse(ds.Tables[0].Rows[0]["UserID"].ToString());
-                }
-                if (ds.Tables[0].Rows[0]["Email"] != null && ds.Tables[0].Rows[0]["Email"].ToString() != "")
-                {
-                    model.Email = ds.Tables[0].Rows[0]["Email"].ToString();
-                }
-                if (ds.Tables[0].Rows[0]["Password"] != null && ds.Tables[0].Rows[0]["Password"].ToString() != "")
-                {
-                    model.Password = ds.Tables[0].Rows[0]["Password"].ToString();
-                }
-                if (ds.Tables[0].Rows[0]["Username"] != null && ds.Tables[0].Rows[0]["Username"].ToString() != "")
-                {
-                    model.Username = ds.Tables[0].Rows[0]["Username"].ToString();
-                }
-                if (ds.Tables[0].Rows[0]["Nickname"] != null && ds.Tables[0].Rows[0]["Nickname"].ToString() != "")
-                {
-                    model.Nickname = ds.Tables[0].Rows[0]["Nickname"].ToString();
-                }
-                if (ds.Tables[0].Rows[0]["Love"] != null && ds.Tables[0].Rows[0]["Love"].ToString() != "")
-                {
-                    model.Love = int.Parse(ds.Tables[0].Rows[0]["Love"].ToString());
-                }
-                if (ds.Tables[0].Rows[0]["Sign"] != null && ds.Tables[0].Rows[0]["Sign"].ToString() != "")
-                {
-                    model.Sign = ds.Tables[0].Rows[0]["Sign"].ToString();
-                }
-                if (ds.Tables[0].Rows[0]["Intro"] != null && ds.Tables[0].Rows[0]["Intro"].ToString() != "")
-                {
-                    model.Intro = ds.Tables[0].Rows[0]["Intro"].ToString();
-                }
-                if (ds.Tables[0].Rows[0]["Birth"] != null && ds.Tables[0].Rows[0]["Birth"].ToString() != "")
-                {
-                    model.Birth = DateTime.Parse(ds.Tables[0].Rows[0]["Birth"].ToString());
-                }
-                if (ds.Tables[0].Rows[0]["Sex"] != null && ds.Tables[0].Rows[0]["Sex"].ToString() != "")
-                {
-                    model.Sex = int.Parse(ds.Tables[0].Rows[0]["Sex"].ToString());
-                }
-                if (ds.Tables[0].Rows[0]["AreaID"] != null && ds.Tables[0].Rows[0]["AreaID"].ToString() != "")
-                {
-                    model.AreaID = int.Parse(ds.Tables[0].Rows[0]["AreaID"].ToString());
-                }
-                if (ds.Tables[0].Rows[0]["Mobile"] != null && ds.Tables[0].Rows[0]["Mobile"].ToString() != "")
-                {
-                    model.Mobile = ds.Tables[0].Rows[0]["Mobile"].ToString();
-                }
-                if (ds.Tables[0].Rows[0]["LoginIp"] != null && ds.Tables[0].Rows[0]["LoginIp"].ToString() != "")
-                {
-                    model.LoginIp = ds.Tables[0].Rows[0]["LoginIp"].ToString();
-                }
-                if (ds.Tables[0].Rows[0]["LoginTime"] != null && ds.Tables[0].Rows[0]["LoginTime"].ToString() != "")
-                {
-                    model.LoginTime = DateTime.Parse(ds.Tables[0].Rows[0]["LoginTime"].ToString());
-                }
-                if (ds.Tables[0].Rows[0]["LoginCount"] != null && ds.Tables[0].Rows[0]["LoginCount"].ToString() != "")
-                {
-                    model.LoginCount = int.Parse(ds.Tables[0].Rows[0]["LoginCount"].ToString());
-                }
-                if (ds.Tables[0].Rows[0]["RegIp"] != null && ds.Tables[0].Rows[0]["RegIp"].ToString() != "")
-                {
-                    model.RegIp = ds.Tables[0].Rows[0]["RegIp"].ToString();
-                }
-                if (ds.Tables[0].Rows[0]["RegTime"] != null && ds.Tables[0].Rows[0]["RegTime"].ToString() != "")
-                {
-                    model.RegTime = DateTime.Parse(ds.Tables[0].Rows[0]["RegTime"].ToString());
-                }
-                if (ds.Tables[0].Rows[0]["State"] != null && ds.Tables[0].Rows[0]["State"].ToString() != "")
-                {
-                    model.State = int.Parse(ds.Tables[0].Rows[0]["State"].ToString());
-                }
-                if (ds.Tables[0].Rows[0]["Privacy"] != null && ds.Tables[0].Rows[0]["Privacy"].ToString() != "")
-                {
-                    model.Privacy = int.Parse(ds.Tables[0].Rows[0]["Privacy"].ToString());
-                }
-                if (ds.Tables[0].Rows[0]["Credit"] != null && ds.Tables[0].Rows[0]["Credit"].ToString() != "")
-                {
-                    model.Credit = int.Parse(ds.Tables[0].Rows[0]["Credit"].ToString());
-                }
-                if (ds.Tables[0].Rows[0]["Vip"] != null && ds.Tables[0].Rows[0]["Vip"].ToString() != "")
-                {
-                    model.Vip = int.Parse(ds.Tables[0].Rows[0]["Vip"].ToString());
-                }
-                if (ds.Tables[0].Rows[0]["Money"] != null && ds.Tables[0].Rows[0]["Money"].ToString() != "")
-                {
-                    model.Money = int.Parse(ds.Tables[0].Rows[0]["Money"].ToString());
-                }
-                if (ds.Tables[0].Rows[0]["Config"] != null && ds.Tables[0].Rows[0]["Config"].ToString() != "")
-                {
-                    model.Config = ds.Tables[0].Rows[0]["Config"].ToString();
-                }
-				return model;
+                return RowToModel(ds.Tables[0].Rows[0]);
 			}
 			else
 			{
@@ -495,6 +403,111 @@ namespace CengZai.DAL
 		}*/
 
 		#endregion  Method
+
+
+        /// <summary>
+        /// 转Model
+        /// </summary>
+        /// <param name="row"></param>
+        /// <returns></returns>
+        public Model.User RowToModel(DataRow row)
+        {
+            Model.User model = new Model.User();
+            if (row["UserID"] != null && row["UserID"].ToString() != "")
+            {
+                model.UserID = int.Parse(row["UserID"].ToString());
+            }
+            if (row["Email"] != null && row["Email"].ToString() != "")
+            {
+                model.Email = row["Email"].ToString();
+            }
+            if (row["Password"] != null && row["Password"].ToString() != "")
+            {
+                model.Password = row["Password"].ToString();
+            }
+            if (row["Username"] != null && row["Username"].ToString() != "")
+            {
+                model.Username = row["Username"].ToString();
+            }
+            if (row["Nickname"] != null && row["Nickname"].ToString() != "")
+            {
+                model.Nickname = row["Nickname"].ToString();
+            }
+            if (row["Love"] != null && row["Love"].ToString() != "")
+            {
+                model.Love = int.Parse(row["Love"].ToString());
+            }
+            if (row["Sign"] != null && row["Sign"].ToString() != "")
+            {
+                model.Sign = row["Sign"].ToString();
+            }
+            if (row["Intro"] != null && row["Intro"].ToString() != "")
+            {
+                model.Intro = row["Intro"].ToString();
+            }
+            if (row["Birth"] != null && row["Birth"].ToString() != "")
+            {
+                model.Birth = DateTime.Parse(row["Birth"].ToString());
+            }
+            if (row["Sex"] != null && row["Sex"].ToString() != "")
+            {
+                model.Sex = int.Parse(row["Sex"].ToString());
+            }
+            if (row["AreaID"] != null && row["AreaID"].ToString() != "")
+            {
+                model.AreaID = int.Parse(row["AreaID"].ToString());
+            }
+            if (row["Mobile"] != null && row["Mobile"].ToString() != "")
+            {
+                model.Mobile = row["Mobile"].ToString();
+            }
+            if (row["LoginIp"] != null && row["LoginIp"].ToString() != "")
+            {
+                model.LoginIp = row["LoginIp"].ToString();
+            }
+            if (row["LoginTime"] != null && row["LoginTime"].ToString() != "")
+            {
+                model.LoginTime = DateTime.Parse(row["LoginTime"].ToString());
+            }
+            if (row["LoginCount"] != null && row["LoginCount"].ToString() != "")
+            {
+                model.LoginCount = int.Parse(row["LoginCount"].ToString());
+            }
+            if (row["RegIp"] != null && row["RegIp"].ToString() != "")
+            {
+                model.RegIp = row["RegIp"].ToString();
+            }
+            if (row["RegTime"] != null && row["RegTime"].ToString() != "")
+            {
+                model.RegTime = DateTime.Parse(row["RegTime"].ToString());
+            }
+            if (row["State"] != null && row["State"].ToString() != "")
+            {
+                model.State = int.Parse(row["State"].ToString());
+            }
+            if (row["Privacy"] != null && row["Privacy"].ToString() != "")
+            {
+                model.Privacy = int.Parse(row["Privacy"].ToString());
+            }
+            if (row["Credit"] != null && row["Credit"].ToString() != "")
+            {
+                model.Credit = int.Parse(row["Credit"].ToString());
+            }
+            if (row["Vip"] != null && row["Vip"].ToString() != "")
+            {
+                model.Vip = int.Parse(row["Vip"].ToString());
+            }
+            if (row["Money"] != null && row["Money"].ToString() != "")
+            {
+                model.Money = int.Parse(row["Money"].ToString());
+            }
+            if (row["Config"] != null && row["Config"].ToString() != "")
+            {
+                model.Config = row["Config"].ToString();
+            }
+            return model;
+        }
+
 	}
 }
 
