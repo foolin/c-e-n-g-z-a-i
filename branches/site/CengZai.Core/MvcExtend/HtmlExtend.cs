@@ -21,13 +21,13 @@ namespace System.Web.Mvc
         public static MvcHtmlString Pager(this HtmlHelper helper, int pageSize, int totalCount, string pageTag, int perSideNum)
         {
             var queryString = helper.ViewContext.HttpContext.Request.QueryString;
-            
+
             pageTag = string.IsNullOrEmpty(pageTag) ? "page" : pageTag;
             int pageIndex = 1; //当前页
             int.TryParse(queryString[pageTag], out pageIndex); //与相应的QueryString绑定
             int pageCount = Math.Max((totalCount + pageSize - 1) / pageSize, 1); //总页数
             StringBuilder str = new StringBuilder();
-            pageIndex = pageIndex < 1 ? 1 : pageIndex;
+            pageIndex = (pageIndex < 1 || pageIndex > pageCount) ? 1 : pageIndex;
             pageSize = pageSize < 1 ? 20 : pageSize;
 
             RouteData routeData = helper.ViewContext.RouteData;
@@ -50,17 +50,29 @@ namespace System.Web.Mvc
                 html.AppendFormat("<li>{0}</li>", ParsePageLink(url, pageTag, "|<", 1));
                 html.AppendFormat("<li>{0}</li>", ParsePageLink(url, pageTag, "<", pageIndex - 1));
             }
-            int margin = pageIndex - (perSideNum + 1);
+            int margin = pageIndex - (perSideNum + 1);  //数字左边偏移，如果为负，则右边相应加差额
             if (margin > 0)
             {
-                margin = 0;
+                if ((pageIndex + perSideNum + 1) > pageCount)
+                {
+                    margin = (pageIndex + perSideNum) - pageCount;  //数字右边偏移，如果为正，则左边相应加差额
+                }
+                else
+                {
+                    margin = 0;
+                }
             }
             if (perSideNum >= 0)
             {
                 //当前页的前面数字
                 if (pageIndex > 1)
                 {
-                    for (int i = pageIndex - perSideNum; i < pageIndex; i++)
+                    var mar = 0;
+                    if (margin > 0)
+                    {
+                        mar = margin;
+                    }
+                    for (int i = pageIndex - (perSideNum + mar); i < pageIndex; i++)
                     {
                         if (i > 0)
                         {
@@ -73,7 +85,12 @@ namespace System.Web.Mvc
                 //当前页后面数字
                 if (pageIndex < pageCount)
                 {
-                    for (int j = pageIndex + 1; (j <= pageCount) && j <= (pageIndex + perSideNum - margin); j++)
+                    var mar = 0;
+                    if (margin < 0)
+                    {
+                        mar = -margin;
+                    }
+                    for (int j = pageIndex + 1; (j <= pageCount) && j <= (pageIndex + perSideNum + mar); j++)
                     {
                         html.AppendFormat("<li>{0}</li>", ParsePageLink(url, pageTag, j.ToString(), j));
                     }
@@ -91,7 +108,7 @@ namespace System.Web.Mvc
                 html.AppendFormat("<li>{0}</li>", ParsePageLink(url, pageTag, ">|", pageCount));
             }
             //前后加<ul>
-            
+
             html.Append("</ul>");
 
             //<ul> 
