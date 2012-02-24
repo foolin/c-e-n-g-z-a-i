@@ -86,6 +86,7 @@
     <Compile Include="Helper\JsonConvert.cs" />
     <Compile Include="Helper\Log.cs" />
     <Compile Include="Helper\Mail.cs" />
+    <Compile Include="Helper\SqlHelperEx.cs" />
     <Compile Include="Helper\Util.cs" />
     <Compile Include="Helper\SqlHelper.cs" />
     <Compile Include="Model\Area.cs" />
@@ -101,6 +102,7 @@
     <Compile Include="Model\MessageReply.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="MvcExtend\HtmlExtend.cs" />
+    <Compile Include="MvcExtend\HtmlExtendForUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

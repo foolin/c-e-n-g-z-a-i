@@ -136,6 +136,18 @@ namespace CengZai.Helper
         }
 
 
+        /// <summary>
+        /// 缓存键前缀~
+        /// </summary>
+        public static string CacheKeyPrefix
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["CacheKeyPrefix"] + "";
+            }
+        }
+
+
         /************ 邮箱相关配置 ***********/
 
         //From
