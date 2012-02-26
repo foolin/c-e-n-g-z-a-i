@@ -28,8 +28,8 @@ namespace CengZai.Web.Controllers
             {
                 artList = bllArt.DataTableToList(dsArtList.Tables[0]);
             }
-            ViewBag.PageSize = 20;
-            ViewBag.TotalCount = 20;
+            ViewBag.PageSize = pageSize;
+            ViewBag.TotalCount = totalCount;
             ViewBag.ArtList = artList;
             return View();
         }

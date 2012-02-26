@@ -140,23 +140,6 @@ namespace System.Web.Mvc
             return " <a href=\"" + url + "?" + pageTag + "=" + pageNum + "\">" + pageName + "</a> ";
         }
 
-
-        /// <summary>
-        /// 判断是否登录
-        /// </summary>
-        /// <returns></returns>
-        public static bool IsLogin(this HtmlHelper helper)
-        {
-            CengZai.Model.User user = null;
-            try
-            {
-                user = System.Web.HttpContext.Current.Session["LOGIN_USER"] as CengZai.Model.User;
-            }
-            catch { }
-            return (user != null);
-        }
-
-
         /// <summary>
         /// 取邮箱域名
         /// </summary>
@@ -170,6 +153,23 @@ namespace System.Web.Mvc
 
             string domain = email.Substring(email.IndexOf('@') + 1);
             return domain;
+        }
+
+
+        /// <summary>
+        /// 获取移除Html内容
+        /// </summary>
+        /// <param name="helper"></param>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        public static string GetRemoveHtmlContent(this HtmlHelper helper, string content, int length)
+        {
+            content = CengZai.Helper.Util.RemoveHtml(content) + "";
+            if(content.Length > length)
+            {
+                content = content.Substring(0, length);
+            }
+            return content;
         }
 
     }

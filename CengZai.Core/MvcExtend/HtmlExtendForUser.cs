@@ -35,6 +35,12 @@ namespace System.Web.Mvc
         }
 
 
+        /// <summary>
+        /// 取用户名
+        /// </summary>
+        /// <param name="helper"></param>
+        /// <param name="userID"></param>
+        /// <returns></returns>
         public static string GetUserNickname(this HtmlHelper helper, object userID)
         {
             string nickname = "";
@@ -56,5 +62,22 @@ namespace System.Web.Mvc
             }
             return nickname;
         }
+
+        /// <summary>
+        /// 判断是否登录
+        /// </summary>
+        /// <returns></returns>
+        public static bool IsLogin(this HtmlHelper helper)
+        {
+            CengZai.Model.User user = null;
+            try
+            {
+                user = System.Web.HttpContext.Current.Session["LOGIN_USER"] as CengZai.Model.User;
+            }
+            catch { }
+            return (user != null);
+        }
+
+
     }
 }

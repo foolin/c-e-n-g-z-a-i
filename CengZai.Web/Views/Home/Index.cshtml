@@ -65,7 +65,8 @@
                             	    <h4 class="feed-title">@Html.ActionLink(art.Title, "Detail", "Article", new { artid = art.ArtID }, new { target = "_blank" }) </h4>
                                 }
                                 <div class="feed-content">
-                                	@MvcHtmlString.Create(art.Content)
+                                	@*@MvcHtmlString.Create(art.Content)*@
+                                    @Html.GetRemoveHtmlContent(art.Content, 300)
                                 </div>
                                 <div id="feed-comment-@art.ArtID">
 @*                                <ul class="feed-comment">
@@ -136,7 +137,7 @@
                 <!--feed-list-item 结束-->
            }
 
-
+           @* Feed模板
                 <article class="feed">
                     <div class="avatar">
                         <a class="blog-avatar" href="http://foolin.diandian.com" style="background-image:url(http://m1.img.libdd.com/farm1/53/2FCCB335D03ADF18DE0340F650E6BB35_64_64.jpg)">Foolin</a>
@@ -229,6 +230,7 @@
                     <div class="clear"></div>
                 </article>
                 <!--feed-list-item 结束-->
+                *@
 
                 <div class="pager">@Html.Pager((int)ViewBag.PageSize, (int)ViewBag.TotalCount, "page", 3)</div>
 
