@@ -62,9 +62,9 @@ namespace CengZai.DAL
 		{
 			StringBuilder strSql=new StringBuilder();
 			strSql.Append("insert into T_User(");
-            strSql.Append("Email,Password,Username,Nickname,Love,Sign,Intro,Birth,Sex,AreaID,Mobile,LoginIp,LoginTime,LoginCount,RegIp,RegTime,State,Privacy,Credit,Vip,Money,Config)");
+            strSql.Append("Email,Password,Username,Nickname,Love,Sign,Intro,Birth,Sex,AreaID,Mobile,LoginIp,LoginTime,LoginCount,RegIp,RegTime,State,Privacy,Credit,Vip,Money,Config,Avatar)");
             strSql.Append(" values (");
-            strSql.Append("@Email,@Password,@Username,@Nickname,@Love,@Sign,@Intro,@Birth,@Sex,@AreaID,@Mobile,@LoginIp,@LoginTime,@LoginCount,@RegIp,@RegTime,@State,@Privacy,@Credit,@Vip,@Money,@Config)");
+            strSql.Append("@Email,@Password,@Username,@Nickname,@Love,@Sign,@Intro,@Birth,@Sex,@AreaID,@Mobile,@LoginIp,@LoginTime,@LoginCount,@RegIp,@RegTime,@State,@Privacy,@Credit,@Vip,@Money,@Config,@Avatar)");
             strSql.Append(";select @@IDENTITY");
             SqlParameter[] parameters = {
 					new SqlParameter("@Email", SqlDbType.NVarChar,50),
@@ -88,7 +88,8 @@ namespace CengZai.DAL
 					new SqlParameter("@Credit", SqlDbType.Int,4),
 					new SqlParameter("@Vip", SqlDbType.Int,4),
 					new SqlParameter("@Money", SqlDbType.Int,4),
-					new SqlParameter("@Config", SqlDbType.NVarChar,2000)};
+					new SqlParameter("@Config", SqlDbType.NVarChar,2000),
+                    new SqlParameter("@Avatar", SqlDbType.NVarChar,50)};
             parameters[0].Value = model.Email;
             parameters[1].Value = model.Password;
             parameters[2].Value = model.Username;
@@ -111,7 +112,7 @@ namespace CengZai.DAL
             parameters[19].Value = model.Vip;
             parameters[20].Value = model.Money;
             parameters[21].Value = model.Config;
-			
+            parameters[22].Value = model.Avatar;
 
 			object obj = DbHelperSQL.GetSingle(strSql.ToString(),parameters);
 			if (obj == null)
@@ -152,6 +153,7 @@ namespace CengZai.DAL
             strSql.Append("Vip=@Vip,");
             strSql.Append("Money=@Money,");
             strSql.Append("Config=@Config");
+            strSql.Append("Avatar=@Avatar");
             strSql.Append(" where UserID=@UserID");
             SqlParameter[] parameters = {
 					new SqlParameter("@Email", SqlDbType.NVarChar,50),
@@ -176,7 +178,8 @@ namespace CengZai.DAL
 					new SqlParameter("@Vip", SqlDbType.Int,4),
 					new SqlParameter("@Money", SqlDbType.Int,4),
 					new SqlParameter("@Config", SqlDbType.NVarChar,2000),
-					new SqlParameter("@UserID", SqlDbType.Int,4)};
+					new SqlParameter("@UserID", SqlDbType.Int,4),
+                    new SqlParameter("@Avatar", SqlDbType.NVarChar,50)};
             parameters[0].Value = model.Email;
             parameters[1].Value = model.Password;
             parameters[2].Value = model.Username;
@@ -200,6 +203,7 @@ namespace CengZai.DAL
             parameters[20].Value = model.Money;
             parameters[21].Value = model.Config;
             parameters[22].Value = model.UserID;
+            parameters[23].Value = model.Avatar;
 
 			int rows=DbHelperSQL.ExecuteSql(strSql.ToString(),parameters);
 			if (rows > 0)
@@ -504,6 +508,10 @@ namespace CengZai.DAL
             if (row["Config"] != null && row["Config"].ToString() != "")
             {
                 model.Config = row["Config"].ToString();
+            }
+            if (row["Avatar"] != null && row["Avatar"].ToString() != "")
+            {
+                model.Avatar = row["Avatar"].ToString();
             }
             return model;
         }
