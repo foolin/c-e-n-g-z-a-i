@@ -15,6 +15,7 @@ namespace CengZai.Model
 		private string _password;
         private string _username;
 		private string _nickname;
+        private string _avatar;
         private int? _love; //添加恋爱状态
 		private string _sign;
 		private string _intro;
@@ -73,6 +74,14 @@ namespace CengZai.Model
 			set{ _nickname=value;}
 			get{return _nickname;}
 		}
+        /// <summary>
+        /// 用户头像
+        /// </summary>
+        public string Avatar
+        {
+            set { _avatar = value; }
+            get { return _avatar; }
+        }
         /// <summary>
         /// 爱情状态：0=爱我吧,1=我在恋爱,2=失恋,3=已婚,4=请勿打扰
         /// </summary>
