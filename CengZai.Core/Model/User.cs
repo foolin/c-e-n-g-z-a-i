@@ -220,5 +220,19 @@ namespace CengZai.Model
 		#endregion Model
 
 	}
+
+}
+
+
+/// <summary>
+/// 恋爱状态
+/// </summary>
+public enum LoveState
+{
+    Waiting = 0, //爱我吧
+    Loving = 1, //我在恋爱
+    Lost = 2,   //失恋
+    Marry = 3, //已婚
+    Hide = 4, //请勿打扰
 }
 
