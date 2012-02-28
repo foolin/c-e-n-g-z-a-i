@@ -442,6 +442,7 @@
     <Content Include="Views\About\Join.cshtml" />
     <Content Include="Views\About\_NavList.cshtml" />
     <Content Include="Views\User\ResendActivate.cshtml" />
+    <Content Include="Views\Home\User.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

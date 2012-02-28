@@ -49,6 +49,14 @@ body {
 .inline{
 	display:inline-block;
 }
+.font14
+{
+    font-size:14px;
+}
+.font12
+{
+    font-size:12px;
+}
 
 /************** 重写 **********/
 .container{

@@ -7,18 +7,18 @@
     <link type="text/css" href="../js/imgzoom/jquery.artZoom.css" rel="stylesheet">
     <script type="text/javascript" src="../js/imgzoom/jquery.artZoom.min.js"></script>
     <script type="text/javascript">
-    jQuery(function ($) {
-	    $('.artZoom').artZoom({
-		    path: './images',	// 设置artZoom图片文件夹路径
-		    preload: true,		// 设置是否提前缓存视野内的大图片
-		    blur: true,			// 设置加载大图是否有模糊变清晰的效果
-		
-		    // 语言设置
-		    left: '左旋转',		// 左旋转按钮文字
-		    right: '右旋转',		// 右旋转按钮文字
-		    source: '看原图'		// 查看原图按钮文字
-	    });
-    });
+        jQuery(function ($) {
+            $('.artZoom').artZoom({
+                path: './images', // 设置artZoom图片文件夹路径
+                preload: true, 	// 设置是否提前缓存视野内的大图片
+                blur: true, 		// 设置加载大图是否有模糊变清晰的效果
+
+                // 语言设置
+                left: '左旋转', 	// 左旋转按钮文字
+                right: '右旋转', 	// 右旋转按钮文字
+                source: '看原图'		// 查看原图按钮文字
+            });
+        });
     </script>
 
 }
@@ -42,6 +42,66 @@
         <!-- Main 开始 -->
         <div class="feed-list">
 
+            <article class="feed">
+                <div class="avatar">
+                    <a class="blog-avatar" href="http://foolin.diandian.com" style="background-image:url(http://m1.img.libdd.com/farm1/53/2FCCB335D03ADF18DE0340F650E6BB35_64_64.jpg)">Foolin</a>
+                </div>
+                <div class="box">
+                    <div class="box-triangle"></div>
+                    <div class="link-to-post-holder" style="display: block; ">
+                    </div>
+                    <div class="box-shadow-top"></div>
+                    <div class="box-content">
+                        <div class="feed-header">
+                            @*爱情状态：0=爱我吧,1=我在恋爱,2=失恋,3=已婚,4=请勿打扰*@
+                            @*<strong>恋爱状态：</strong>
+                            *@
+                            @switch (user.Love)
+                            {
+                                case (int)LoveState.Loving:
+                                    <span class="label label-warning">我在恋爱: @user.Sign</span>  
+                                    break;
+                                case (int)LoveState.Lost:
+                                    <span class="label label-important">失恋: @user.Sign</span>  
+                                    break;
+                                case (int)LoveState.Hide:
+                                    <span class="label">请勿打扰: @user.Sign</span>
+                                    break;
+                                case (int)LoveState.Marry:
+                                    <span class="label label-info">已婚: @user.Sign</span>  
+                                    break;
+                                case (int)LoveState.Waiting:
+                                default:
+                                    <span class="label label-success">爱我吧: @user.Sign</span>
+                                    break;
+                            }
+                            
+                            
+                        </div>
+                        <div class="feed-body">
+                            <h4 class="feed-title">@user.Nickname</h4>
+                            <div class="feed-content">
+                                <div class="font14"><strong>自我介绍：</strong>@user.Intro</div>
+                                <hr />
+                               <a class="btn">加为好友</a>
+                               <a class="btn">发送私信</a>
+                            </div>
+                            <div class="feed-tag">
+                                
+                            </div>
+                            <div class="feed-action">
+                                
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                    <!--box-content 结束-->
+                    <div class="box-shadow-bottom"></div>
+                </div>
+                <div class="clear"></div>
+            </article>
+            <!--feed-list-item 结束-->
+
            @foreach (var art in artlist)
            {
                 <article class="feed">
@@ -51,12 +111,12 @@
                     <div class="box">
                         <div class="box-triangle"></div>
                         <div class="link-to-post-holder" style="display: block; ">
-                            @Html.ActionLink("查看该文章","Detail", "Article", new { artid = art.ArtID }, new { target = "_blank", @class = "link-to-post", title="查看文章" })
+                            @Html.ActionLink("查看该文章", "Detail", "Article", new { artid = art.ArtID }, new { target = "_blank", @class = "link-to-post", title = "查看文章" })
                         </div>
                         <div class="box-shadow-top"></div>
                         <div class="box-content">
                         	<div class="feed-header">
-                                @Html.ActionLink(Html.GetUserNickname((int)art.UserID), "User", new {uid=art.UserID}, new {@class="feed-user"})
+                                @Html.ActionLink(Html.GetUserNickname((int)art.UserID), "User", new { UserID = art.UserID }, new { @class = "feed-user" })
                                 <span class="post-time">发布于 @art.PostTime</span>
                             </div>
                             <div class="feed-body">
@@ -118,7 +178,7 @@
                                 </div>*@
                                 </div>
                                 <div class="feed-tag">
-                                    @Html.ActionLink("[查看文章]","Detail", "Article", new { artid = art.ArtID }, new { target = "_blank",title="查看文章" })
+                                    @Html.ActionLink("[查看文章]", "Detail", "Article", new { artid = art.ArtID }, new { target = "_blank", title = "查看文章" })
                                 </div>
                                 <div class="feed-action">
                                     <a title="评论" href="#" class="feed-comments">评论(20)</a>
@@ -246,7 +306,7 @@
           <div class="well sidebar-nav"> 
             <ul class="nav nav-list"> 
               <li class="nav-header">@user.Nickname，欢迎您！</li> 
-              <li class="active">@Html.ActionLink("最新动态","Index","Home")</li> 
+              <li class="active">@Html.ActionLink("最新动态", "Index", "Home")</li> 
               <li>@Html.ActionLink("发表日志", "PostText", "Article")</li> 
               <li>@Html.ActionLink("上传照片", "PostImage", "Article")</li> 
               <li><a href="#">发表唠叨</a></li> 
