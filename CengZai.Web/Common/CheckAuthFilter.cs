@@ -7,7 +7,7 @@ using System.Web.Routing;
 using System.Web.Security;
 
 
-namespace CengZai.Web.Code
+namespace CengZai.Web.Common
 {
 
     public class CheckAuthFilter : ActionFilterAttribute
