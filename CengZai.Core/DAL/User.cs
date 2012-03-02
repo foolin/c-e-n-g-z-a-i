@@ -152,7 +152,7 @@ namespace CengZai.DAL
             strSql.Append("Credit=@Credit,");
             strSql.Append("Vip=@Vip,");
             strSql.Append("Money=@Money,");
-            strSql.Append("Config=@Config");
+            strSql.Append("Config=@Config,");
             strSql.Append("Avatar=@Avatar");
             strSql.Append(" where UserID=@UserID");
             SqlParameter[] parameters = {
