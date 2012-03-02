@@ -61,18 +61,13 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Code\WebHelper.cs" />
-    <Compile Include="Code\CheckAuthFilter.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Code\ErrorFilter.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Common\VerifyCode.aspx.cs">
+    <Compile Include="Common\CheckAuthFilter.cs" />
+    <Compile Include="Common\ErrorFilter.cs" />
+    <Compile Include="Pages\VerifyCode.aspx.cs">
       <DependentUpon>VerifyCode.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Common\VerifyCode.aspx.designer.cs">
+    <Compile Include="Pages\VerifyCode.aspx.designer.cs">
       <DependentUpon>VerifyCode.aspx</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AboutController.cs" />
@@ -94,25 +89,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Common\VerifyCode.aspx" />
-    <Content Include="Content\css\article.css" />
-    <Content Include="Content\css\ui-lightness\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
-    <Content Include="Content\css\ui-lightness\images\ui-bg_diagonals-thick_20_666666_40x40.png" />
-    <Content Include="Content\css\ui-lightness\images\ui-bg_flat_10_000000_40x100.png" />
-    <Content Include="Content\css\ui-lightness\images\ui-bg_glass_100_f6f6f6_1x400.png" />
-    <Content Include="Content\css\ui-lightness\images\ui-bg_glass_100_fdf5ce_1x400.png" />
-    <Content Include="Content\css\ui-lightness\images\ui-bg_glass_65_ffffff_1x400.png" />
-    <Content Include="Content\css\ui-lightness\images\ui-bg_gloss-wave_35_f6a828_500x100.png" />
-    <Content Include="Content\css\ui-lightness\images\ui-bg_highlight-soft_100_eeeeee_1x100.png" />
-    <Content Include="Content\css\ui-lightness\images\ui-bg_highlight-soft_75_ffe45c_1x100.png" />
-    <Content Include="Content\css\ui-lightness\images\ui-icons_222222_256x240.png" />
-    <Content Include="Content\css\ui-lightness\images\ui-icons_228ef1_256x240.png" />
-    <Content Include="Content\css\ui-lightness\images\ui-icons_ef8c08_256x240.png" />
-    <Content Include="Content\css\ui-lightness\images\ui-icons_ffd27a_256x240.png" />
-    <Content Include="Content\css\ui-lightness\images\ui-icons_ffffff_256x240.png" />
-    <Content Include="Content\css\ui-lightness\jquery-ui-1.8.17.custom.css" />
-    <Content Include="Content\js\jquery-1.7.1.min.js" />
-    <Content Include="Content\js\jquery-ui-1.8.17.custom.min.js" />
+    <Content Include="Pages\VerifyCode.aspx" />
     <Content Include="css\bootstrap.css" />
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\login.css" />
@@ -366,7 +343,6 @@
     <Content Include="js\swfupload\swfupload_fp9.swf" />
     <Content Include="Test.aspx" />
     <Content Include="Global.asax" />
-    <Content Include="Content\css\base.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

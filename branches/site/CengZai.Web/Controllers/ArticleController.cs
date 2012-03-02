@@ -7,7 +7,7 @@ using CengZai;
 using System.Data;
 using System.IO;
 using CengZai.Helper;
-using CengZai.Web.Code;
+using CengZai.Web.Common;
 
 namespace CengZai.Web.Controllers
 {

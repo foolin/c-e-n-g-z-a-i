@@ -38,14 +38,14 @@
         <p>
             <label for="confirmPassword">验证码：</label>
             @Html.TextBox("verifyCode")
-            <img id="imgVerifyCode" src="../../Common/VerifyCode.aspx?t=@DateTime.Now" alt="刷新验证码" style="cursor:pointer;" onclick="refreshCode('imgVerifyCode')" />
+            <img id="imgVerifyCode" src="../../pages/verifycode.aspx?t=@DateTime.Now" alt="刷新验证码" style="cursor:pointer;" onclick="refreshCode('imgVerifyCode')" />
           	<a href="javascript:refreshCode('imgVerifyCode')">看不清？</a>
             @Html.ValidationMessage("verifyCode")
             <script type="text/javascript">
                 //刷新
                 function refreshCode(id) {
                     var img = document.getElementById(id);
-                    img.src = "../../Common/VerifyCode.aspx?t=" + new Date().getTime();
+                    img.src = "../../pages/verifycode.aspx?t=" + new Date().getTime();
                 }
             </script>
         </p>
