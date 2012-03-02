@@ -63,6 +63,8 @@
   <ItemGroup>
     <Compile Include="Common\CheckAuthFilter.cs" />
     <Compile Include="Common\ErrorFilter.cs" />
+    <Compile Include="Common\LowerCaseUrlRoute.cs" />
+    <Compile Include="Common\LowerCaseUrlRouteMapHelper.cs" />
     <Compile Include="Pages\VerifyCode.aspx.cs">
       <DependentUpon>VerifyCode.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
