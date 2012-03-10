@@ -45,7 +45,7 @@ namespace CengZai.Web.Controllers
             nickname = (nickname + "").Trim();
             if (string.IsNullOrEmpty(nickname))
             {
-                return Json(new AjaxError("nickname", "用户名不能为空！"));
+                return Json(new AjaxReturn("nickname", "用户名不能为空！"));
             }
 
             //文件大小不为0
@@ -55,14 +55,14 @@ namespace CengZai.Web.Controllers
                 HttpPostedFileBase file = Request.Files["avatar"];
                 if (file == null)
                 {
-                    return Json(new AjaxError("avatar", "请选择上传文件！"));
+                    return Json(new AjaxReturn("avatar", "请选择上传文件！"));
                 }
                 avatar = System.Drawing.Image.FromStream(file.InputStream);
             }
             catch { }
             if (avatar == null)
             {
-                return Json(new AjaxError("avatar", "请选择图片文件！"));
+                return Json(new AjaxReturn("avatar", "请选择图片文件！"));
             }
             
             //保存成自己的文件全路径,newfile就是你上传后保存的文件,
@@ -84,6 +84,10 @@ namespace CengZai.Web.Controllers
         [HttpPost]
         public ActionResult UploadImage()
         {
+            string fileName = string.Format("{0}{1}.jpg", DateTime.Now.ToString("yyyyMMddmmss"), new Random().Next(100, 999));
+            //保存成自己的文件全路径,newfile就是你上传后保存的文件,
+            //服务器上的UpLoadFile文件夹必须有读写权限
+
             //文件大小不为0
             System.Drawing.Image avatar = null;
             try
@@ -91,22 +95,42 @@ namespace CengZai.Web.Controllers
                 HttpPostedFileBase file = Request.Files["fileAvatar"];
                 if (file == null)
                 {
-                    return Json(new AjaxError("avatar", "请选择上传文件！"));
+                    return JsonReturn("1", "请选择上传文件！");
                 }
                 avatar = System.Drawing.Image.FromStream(file.InputStream);
+                if (avatar == null)
+                {
+                    return JsonReturn("2", "请选择图片文件！");
+                }
+                avatar.Save(Server.MapPath(Config.UploadMapPath + "/" + fileName));
+                avatar.Dispose();
             }
-            catch { }
-            if (avatar == null)
+            catch(Exception ex)
             {
-                return Json(new AjaxError("avatar", "请选择图片文件！"));
+                Log.AddErrorInfo("LoverController.UploadImage上传文件出错",  ex);
+                return JsonReturn("3", "上传图片出错，请确定您上传的是图片！");
+            }
+            
+            
+            //删除旧文件
+            if (!string.IsNullOrEmpty(Request["avatar"]))
+            {
+                try
+                {
+                    string oldImage = Server.MapPath(Config.UploadMapPath + "/" + Request["avatar"]);
+                    if (System.IO.File.Exists(oldImage))
+                    {
+                        System.IO.File.Delete(oldImage);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Log.AddErrorInfo("删除文件出错：" + ex.Message);
+                }
             }
 
-            //保存成自己的文件全路径,newfile就是你上传后保存的文件,
-            //服务器上的UpLoadFile文件夹必须有读写权限
-            string fileName = string.Format("{0}{1}.jpg", DateTime.Now.ToString("yyyyMMddmmss"), new Random().Next(100,999));
-            avatar.Save(Server.MapPath( Config.UploadMapPath + "/" + fileName));
             //return Content("nickname=" + nickname);
-            return Content(fileName);
+            return JsonReturn("0", fileName);
         }
 
 
