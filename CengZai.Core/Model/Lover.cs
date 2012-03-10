@@ -16,17 +16,11 @@ namespace CengZai.Model
 		private int? _girluserid;
 		private string _boyoath;
 		private string _girloath;
-		private int? _lovestate;
-		private DateTime? _metdate;
-		private DateTime? _lovedate;
-		private DateTime? _marrydate;
+		private int? _certificate;
+		private DateTime? _joindate;
 		private int? _applyuserid;
 		private DateTime? _applytime;
-		private int? _isconfirm;
-		private int? _confirmuserid;
-		private DateTime? _confirmtime;
-		private int? _currstate;
-		private int? _curruserid;
+		private int? _state;
 		/// <summary>
 		/// 
 		/// </summary>
@@ -78,34 +72,18 @@ namespace CengZai.Model
 		/// <summary>
 		/// 0=等待确立关系，1=恋爱，2=结婚
 		/// </summary>
-		public int? LoveState
+		public int? Certificate
 		{
-			set{ _lovestate=value;}
-			get{return _lovestate;}
-		}
-		/// <summary>
-		/// 相识日期
-		/// </summary>
-		public DateTime? MetDate
-		{
-			set{ _metdate=value;}
-			get{return _metdate;}
-		}
-		/// <summary>
-		/// 恋爱日期，不可更改
-		/// </summary>
-		public DateTime? LoveDate
-		{
-			set{ _lovedate=value;}
-			get{return _lovedate;}
+			set{ _certificate=value;}
+			get{return _certificate;}
 		}
 		/// <summary>
 		/// 结婚时间
 		/// </summary>
-		public DateTime? MarryDate
+		public DateTime? JoinDate
 		{
-			set{ _marrydate=value;}
-			get{return _marrydate;}
+			set{ _joindate=value;}
+			get{return _joindate;}
 		}
 		/// <summary>
 		/// 申请人/男方/女方的UserID
@@ -124,44 +102,12 @@ namespace CengZai.Model
 			get{return _applytime;}
 		}
 		/// <summary>
-		/// 是否已经公证人
+		/// 当前状态：0=证书作废,1=已提出申请,-1=撤销申请,2=对方确认,-2=对方拒绝,3=已审核通过颁发证书。-3=确认不通过
 		/// </summary>
-		public int? IsConfirm
+		public int? State
 		{
-			set{ _isconfirm=value;}
-			get{return _isconfirm;}
-		}
-		/// <summary>
-		/// 公证人：0=系统，大于1表示用户
-		/// </summary>
-		public int? ConfirmUserID
-		{
-			set{ _confirmuserid=value;}
-			get{return _confirmuserid;}
-		}
-		/// <summary>
-		/// 
-		/// </summary>
-		public DateTime? ConfirmTime
-		{
-			set{ _confirmtime=value;}
-			get{return _confirmtime;}
-		}
-		/// <summary>
-		/// 当前状态：1=已提出申请,2=对方确认,3=已审核通过颁发证书。-3=确认不通过
-		/// </summary>
-		public int? CurrState
-		{
-			set{ _currstate=value;}
-			get{return _currstate;}
-		}
-		/// <summary>
-		/// 当前用户ID，系统为10000
-		/// </summary>
-		public int? CurrUserID
-		{
-			set{ _curruserid=value;}
-			get{return _curruserid;}
+			set{ _state=value;}
+			get{return _state;}
 		}
 		#endregion Model
 
