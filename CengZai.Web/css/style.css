@@ -7,6 +7,7 @@ body {
     padding-top: 60px;
     padding-bottom: 40px;
 	background:#dde1e5;
+	background: url(../img/bg.jpg) repeat;
 }
 .bg-white{
 	background:#ffffff;
@@ -67,6 +68,7 @@ body {
     color:#999;
     cursor:default;
 }
+/*
 .form-horizontal .control-group > label 
 {
     width:80px;
@@ -74,6 +76,7 @@ body {
 .form-horizontal .controls {
     margin-left: 100px;
 }
+*/
 .my-input-xxlarge {
   width: 400px;
 }

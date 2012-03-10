@@ -103,5 +103,33 @@ namespace CengZai.Web.Controllers
             return pageIndex;
         }
 
+
+
+
+        /// <summary>
+        /// 错误信息实体
+        /// </summary>
+        public class AjaxError
+        {
+            public AjaxError(string id, string msg, int code)
+            {
+                this.id = id;
+                this.msg = msg;
+                this.code = code;
+            }
+            public AjaxError(string id, string msg)
+            {
+                this.id = id;
+                this.msg = msg;
+                this.code = 0;
+            }
+            public AjaxError()
+            {
+            }
+            public int code;
+            public string id;
+            public string msg;
+        }
+
     }
 }

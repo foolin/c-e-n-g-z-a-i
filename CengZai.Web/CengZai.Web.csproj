@@ -65,6 +65,7 @@
     <Compile Include="Common\ErrorFilter.cs" />
     <Compile Include="Common\LowerCaseUrlRoute.cs" />
     <Compile Include="Common\LowerCaseUrlRouteMapHelper.cs" />
+    <Compile Include="Controllers\LoverController.cs" />
     <Compile Include="Pages\VerifyCode.aspx.cs">
       <DependentUpon>VerifyCode.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -91,6 +92,32 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="js\calendar\calendar.css" />
+    <Content Include="js\calendar\calendar_day.png" />
+    <Content Include="js\calendar\jquery.calendar.js" />
+    <Content Include="js\mvc\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="js\mvc\jquery.validate.min.js" />
+    <Content Include="js\mvc\jquery.validate.unobtrusive.min.js" />
+    <Content Include="js\mvc\MicrosoftAjax.js" />
+    <Content Include="js\mvc\MicrosoftMvcAjax.js" />
+    <Content Include="js\jcrop\css\Jcrop.gif" />
+    <Content Include="js\jcrop\css\jquery.Jcrop.css" />
+    <Content Include="js\jcrop\demos\demo_files\demos.css" />
+    <Content Include="js\jcrop\demos\demo_files\flowers.jpg" />
+    <Content Include="js\jcrop\demos\demo_files\sago.jpg" />
+    <Content Include="js\jcrop\demos\demo_files\sagomod.jpg" />
+    <Content Include="js\jcrop\demos\demo_files\sagomod.png" />
+    <Content Include="js\jcrop\demos\tutorial1.html" />
+    <Content Include="js\jcrop\demos\tutorial2.html" />
+    <Content Include="js\jcrop\demos\tutorial3.html" />
+    <Content Include="js\jcrop\demos\tutorial4.html" />
+    <Content Include="js\jcrop\demos\tutorial5.html" />
+    <Content Include="js\jcrop\index.html" />
+    <Content Include="js\jcrop\js\jquery.color.js" />
+    <Content Include="js\jcrop\js\jquery.Jcrop.js" />
+    <Content Include="js\jcrop\js\jquery.Jcrop.min.js" />
+    <Content Include="js\jcrop\MIT-LICENSE.txt" />
+    <Content Include="js\swfupload\handlers.js" />
     <Content Include="Pages\VerifyCode.aspx" />
     <Content Include="css\bootstrap.css" />
     <Content Include="css\bootstrap.min.css" />
@@ -335,7 +362,6 @@
     <Content Include="js\kindeditor\themes\default\default.css" />
     <Content Include="js\kindeditor\themes\default\default.png" />
     <Content Include="js\kindeditor\themes\simple\simple.css" />
-    <Content Include="js\swfupload\handlers.js" />
     <Content Include="js\swfupload\swfupload.cookies.js" />
     <Content Include="js\swfupload\swfupload.js" />
     <Content Include="js\swfupload\swfupload.proxy.js" />
@@ -411,6 +437,11 @@
   <ItemGroup>
     <Content Include="js\kindeditor\asp.net\file_manager_json.ashx" />
     <Content Include="js\kindeditor\asp.net\upload_json.ashx" />
+    <None Include="js\jcrop\build\LICENSE" />
+    <None Include="js\jcrop\build\minimize.bash" />
+    <None Include="js\jcrop\build\pre-commit.bash" />
+    <None Include="js\jcrop\build\README" />
+    <None Include="js\jcrop\demos\crop.php" />
     <None Include="psd\CengZai_Ico.psd" />
     <None Include="psd\logo_topbar.psd" />
     <Content Include="Views\User\_LoginLayout.cshtml" />
@@ -421,6 +452,7 @@
     <Content Include="Views\About\_NavList.cshtml" />
     <Content Include="Views\User\ResendActivate.cshtml" />
     <Content Include="Views\Home\User.cshtml" />
+    <Content Include="Views\Lover\Apply.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

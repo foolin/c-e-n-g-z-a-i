@@ -64,6 +64,8 @@
     <Compile Include="BLL\Friend.cs" />
     <Compile Include="BLL\Inbox.cs" />
     <Compile Include="BLL\InviteCode.cs" />
+    <Compile Include="BLL\Lover.cs" />
+    <Compile Include="BLL\LoverComment.cs" />
     <Compile Include="BLL\Message.cs" />
     <Compile Include="BLL\MessageReply.cs" />
     <Compile Include="BLL\User.cs" />
@@ -76,6 +78,8 @@
     <Compile Include="DAL\Friend.cs" />
     <Compile Include="DAL\Inbox.cs" />
     <Compile Include="DAL\InviteCode.cs" />
+    <Compile Include="DAL\Lover.cs" />
+    <Compile Include="DAL\LoverComment.cs" />
     <Compile Include="DAL\Message.cs" />
     <Compile Include="DAL\MessageReply.cs" />
     <Compile Include="DAL\User.cs" />
@@ -98,6 +102,8 @@
     <Compile Include="Model\Friend.cs" />
     <Compile Include="Model\Inbox.cs" />
     <Compile Include="Model\InviteCode.cs" />
+    <Compile Include="Model\Lover.cs" />
+    <Compile Include="Model\LoverComment.cs" />
     <Compile Include="Model\Message.cs" />
     <Compile Include="Model\MessageReply.cs" />
     <Compile Include="Model\User.cs" />
