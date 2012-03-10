@@ -138,15 +138,23 @@
             file_queue_error_handler: uploadError,
 			upload_success_handler :  function(file, serverData) {
 	            try {
-                    if(serverData != ""){
-                        $("#avatar").val(serverData);
-                        var showUrl =  '@CengZai.Helper.Config.UploadHttpPath/' + serverData;
+                    var data = eval('(' + serverData + ')');
+                    if(data.id == 0){
+                        $("#avatar").val(data.msg);
+                        var showUrl =  '@CengZai.Helper.Config.UploadHttpPath/' + data.msg;
                         $("#imgAvatar").attr("src",  showUrl);
                         $("#imgAvatar").css("display","block");
                         $("#tips-avatar").html("上传完毕");;
                     }
+                    else
+                    {
+                        $("#tips-avatar").html(data.msg);;
+                        alert(data.msg);
+                    }
                     
 	            } catch (ex) {
+                    alert('上传图片出现异常，请稍后再试');
+                    console.log(ex);
 		            this.debug(ex);
 	            }
             },
@@ -162,7 +170,6 @@
 
         swfu = new SWFUpload(settings);
     }
-    
 </script>
 
 }
@@ -222,13 +229,13 @@
                             </p>
                             <div id="divUploadAvatar"></div>
                             <span class="field-validation-error" data-valmsg-for="avatar" id="tips-avatar" data-valmsg-replace="true"></span>
-                            <p class="help-block">请上传一张你们的合影照片（不可更改）</p>
+                            <p class="help-block">请上传一张你们的合影照片，建议比例是200px×180px，大小不能超过1MB（不可更改）</p>
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label" for="mobile">我的手机号：</label>
                         <div class="controls">
-                            <input type="text" class="input-middle" name="mobile" id="mobile">
+                            <input type="text" class="input-middle" value="13" name="mobile" id="mobile">
                             <span class="field-validation-error" data-valmsg-for="mobile" id="tips-mobile" data-valmsg-replace="true"></span>
                             <p class="help-block">用手机号代替身份证号，我们会保护您的隐私，手机号会加密显示</p>
                         </div>
@@ -238,7 +245,7 @@
                         <div class="controls">
                             <input type="text" class="input-middle" name="birth" id="birth">
                             <span class="field-validation-error" data-valmsg-for="birth" id="tips-birth" data-valmsg-replace="true"></span>
-                            <p class="help-block">请填写真实生日，会显示在证件上（不可更改）</p>
+                            <p class="help-block">请填写真实生日，会显示在证件上</p>
                         </div>
                     </div>
                     <div class="control-group">

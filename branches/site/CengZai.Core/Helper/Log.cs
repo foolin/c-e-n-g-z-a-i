@@ -15,6 +15,20 @@ namespace CengZai.Helper
         private static readonly log4net.ILog logger = LogManager.GetLogger(typeof(Log));
         private static readonly log4net.ILog debuglogger = LogManager.GetLogger("DebugLogger");
 
+        /// <summary>
+        /// 打印错误信息
+        /// </summary>
+        /// <param name="info"></param>
+        /// <param name="ex"></param>
+        public static void AddErrorInfo(string info, Exception ex)
+        {
+            AddErrorInfo(info + "\n" + ex.Message + "\n" + ex.StackTrace);
+        }
+
+        /// <summary>
+        /// 打印错误信息
+        /// </summary>
+        /// <param name="info"></param>
         public static void AddErrorInfo(string info)
         {
             string logFilePath = AppDomain.CurrentDomain.BaseDirectory + "\\Log\\Error.txt";
@@ -39,6 +53,10 @@ namespace CengZai.Helper
         }
 
 
+        /// <summary>
+        /// 打印调试信息
+        /// </summary>
+        /// <param name="info"></param>
         public static void AddDebugInfo(string info)
         {
             string logFilePath = AppDomain.CurrentDomain.BaseDirectory + "\\Log\\DebugLog\\Error.txt";

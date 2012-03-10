@@ -78,10 +78,10 @@ namespace CengZai.Web
                     UpdateCookie(session_cookie_name, HttpContext.Current.Request.QueryString[session_param_name]);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                Response.StatusCode = 500;
-                Response.Write("Error Initializing Session");
+                //Response.StatusCode = 500;
+                //Response.Write("Error Initializing Session" + ex.Message);
             }
 
             try
@@ -99,10 +99,10 @@ namespace CengZai.Web
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                Response.StatusCode = 500;
-                Response.Write("Error Initializing Forms Authentication");
+                //Response.StatusCode = 500;
+                //Response.Write("Error Initializing Forms Authentication" + ex.Message);
             }
         }
         void UpdateCookie(string cookie_name, string cookie_value)

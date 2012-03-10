@@ -103,30 +103,33 @@ namespace CengZai.Web.Controllers
             return pageIndex;
         }
 
+        /// <summary>
+        /// Joson返回
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="msg"></param>
+        /// <returns></returns>
+        protected JsonResult JsonReturn(string id, string msg)
+        {
+            return Json(new AjaxReturn(id, msg));
+        }
 
 
 
         /// <summary>
         /// 错误信息实体
         /// </summary>
-        public class AjaxError
+        public class AjaxReturn
         {
-            public AjaxError(string id, string msg, int code)
+            public AjaxReturn(string id, string msg)
             {
                 this.id = id;
                 this.msg = msg;
-                this.code = code;
+                
             }
-            public AjaxError(string id, string msg)
-            {
-                this.id = id;
-                this.msg = msg;
-                this.code = 0;
-            }
-            public AjaxError()
+            public AjaxReturn()
             {
             }
-            public int code;
             public string id;
             public string msg;
         }
