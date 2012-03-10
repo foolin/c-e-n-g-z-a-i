@@ -20,26 +20,9 @@
 
         $(document).ready(function () {
             $("#birth").calendar();
-            $("#metdate").calendar();
-            $("#lovedate").calendar();
-            $("#marrydate").calendar();
-            $("#selectoath").change(function () {
+            $("#joinDate").calendar();
+            $("#selectOath").change(function () {
                 $("#oath").val(oathTplData[$(this).val()]);
-            });
-            $("#loveState").change(function () {
-                var val = parseInt($(this).val());
-                if (val == 0) {
-                    $("#control-lovedate").hide();
-                    $("#control-marrydate").hide();
-                }
-                else if (val == 1) {
-                    $("#control-lovedate").show();
-                    $("#control-marrydate").hide();
-                }
-                else {
-                    $("#control-lovedate").show();
-                    $("#control-marrydate").show();
-                }
             });
             $("#error").hide();
 
@@ -188,13 +171,17 @@
             {
             <fieldset>
             <legend>请填写申请表单</legend>
-                    <div class="control-group">
-                        <label class="control-label" for="girlUserID">我的姓名：</label>
-                            <div class="controls">
-                                @Html.TextBox("nickname", user.Nickname, new {@class="input-middle"})
-                                <span class="field-validation-error" data-valmsg-for="nickname" id="tips-nickname" data-valmsg-replace="true"></span>
-                                <p class="help-block">这里是你帐号的昵称，建议用真实名字</p>
-                            </div>
+                <div class="control-group">
+                        <label class="control-label" for="certificate">申请证件类型：</label>
+                        <div class="controls">
+                            <select name="certificate" id="certificate">
+                                <option value="2">结婚证（已经结婚）</option>
+                                <option value="1">恋爱证（正在恋爱）</option>
+                                <option value="0">追求证（正在相处）</option>
+                            </select>
+                            <span class="field-validation-error" data-valmsg-for="certificate" id="tips-certificate" data-valmsg-replace="true"></span>
+                            <p class="help-block">相爱是一件严肃而神圣的事，请根据现实生活中的恋爱状态选择</p>
+                        </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label" for="honeyuserid">对方帐号：</label>
@@ -209,16 +196,12 @@
                             </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label" for="lovestate">申请证件类型：</label>
-                        <div class="controls">
-                            <select name="loveState" id="lovestate">
-                                <option value="2">结婚证（已经结婚）</option>
-                                <option value="1">恋爱证（正在恋爱）</option>
-                                <option value="0">追求证（正在相处）</option>
-                            </select>
-                            <span class="field-validation-error" data-valmsg-for="lovestate" id="tips-lovestate" data-valmsg-replace="true"></span>
-                            <p class="help-block">相爱是一件严肃而神圣的事，请填写现实生活中的恋爱状态</p>
-                        </div>
+                        <label class="control-label" for="girlUserID">我的姓名：</label>
+                            <div class="controls">
+                                @Html.TextBox("nickname", user.Nickname, new {@class="input-middle"})
+                                <span class="field-validation-error" data-valmsg-for="nickname" id="tips-nickname" data-valmsg-replace="true"></span>
+                                <p class="help-block">这里是你帐号的昵称，建议用真实名字</p>
+                            </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label" for="birth">我们的合照：</label>
@@ -235,7 +218,7 @@
                         <div class="controls">
                             <input type="text" class="input-middle" name="mobile" id="mobile">
                             <span class="field-validation-error" data-valmsg-for="mobile" id="tips-mobile" data-valmsg-replace="true"></span>
-                            <p class="help-block">用手机号代替身份证号，会加密显示</p>
+                            <p class="help-block">用手机号代替身份证号，我们会保护您的隐私，手机号会加密显示</p>
                         </div>
                     </div>
                     <div class="control-group">
@@ -247,34 +230,18 @@
                         </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label" for="metDate">我们相识日期：</label>
+                        <label class="control-label" for="metDate">登记日期：</label>
                         <div class="controls">
-                            <input type="text" class="input-middle" name="metDate" id="metDate">
-                             <span class="field-validation-error" data-valmsg-for="metdate" id="tips-metdate" data-valmsg-replace="true"></span>
+                            <input type="text" class="input-middle" name="joinDate" id="joinDate">
+                             <span class="field-validation-error" data-valmsg-for="joinDate" id="tips-joinDate" data-valmsg-replace="true"></span>
                             <p class="help-block">请如实填写，不可更改，如：2012-02-14</p>
-                        </div>
-                    </div>
-                    <div class="control-group" id="control-lovedate">
-                        <label class="control-label" for="lovedate">我们相恋日期：</label>
-                        <div class="controls">
-                            <input type="text" class="input-middle" name="lovedate" id="lovedate">
-                            <span class="field-validation-error" data-valmsg-for="lovedate" id="tips-lovedate" data-valmsg-replace="true"></span>
-                            <p class="help-block">请如实填写，不可更改，如：2012-02-14</p>
-                        </div>
-                    </div>
-                    <div class="control-group" id="control-marryDate">
-                        <label class="control-label" for="marryDate">我们结婚日期：</label>
-                        <div class="controls">
-                            <input type="text" class="input-middle" id="marrydate">
-                            <span class="field-validation-error" data-valmsg-for="marrydate" id="tips-marrydate" data-valmsg-replace="true"></span>
-                            <p class="help-block">请如实填写，不可更改，如：2012-12-12</p>
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label" for="birth">我的宣誓：</label>
                         <div class="controls">
                             <p>
-                                <select name="selectoath" id="selectoath">
+                                <select name="selectOath" id="selectOath">
                                     <option value="0">自己写</option>
                                     <option value="1">男生宣誓1</option>
                                     <option value="2">男生宣誓2</option>
@@ -284,8 +251,8 @@
                                     <option value="6">女生宣誓3</option>
                                 </select>
                             </p>
-                            <textarea name="oath" id="oath" class="input-xlarge" rows="5"></textarea>
-                            <p class="help-block">请填写您对对方的誓言，大胆说出您的爱~</p>
+                            <textarea name="oath" id="oath" class="input-xlarge" style="width:400px;" rows="8"></textarea>
+                            <p class="help-block">请填写您对对方的誓言，大胆说出您的爱~（500字以内，不可更改）</p>
                         </div>
                     </div>
                     <div class="form-actions"> 

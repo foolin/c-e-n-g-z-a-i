@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Collections.Generic;
+using CengZai.Helper;
 using CengZai.Model;
 namespace CengZai.BLL
 {
@@ -13,6 +14,15 @@ namespace CengZai.BLL
 		public Lover()
 		{}
 		#region  Method
+
+		/// <summary>
+		/// 得到最大ID
+		/// </summary>
+		public int GetMaxId()
+		{
+			return dal.GetMaxId();
+		}
+
 		/// <summary>
 		/// 是否存在该记录
 		/// </summary>
@@ -61,7 +71,6 @@ namespace CengZai.BLL
 			
 			return dal.GetModel(LoverID);
 		}
-
 		/// <summary>
 		/// 获得数据列表
 		/// </summary>
@@ -121,21 +130,13 @@ namespace CengZai.BLL
 					{
 					model.GirlOath=dt.Rows[n]["GirlOath"].ToString();
 					}
-					if(dt.Rows[n]["LoveState"]!=null && dt.Rows[n]["LoveState"].ToString()!="")
+					if(dt.Rows[n]["Certificate"]!=null && dt.Rows[n]["Certificate"].ToString()!="")
 					{
-						model.LoveState=int.Parse(dt.Rows[n]["LoveState"].ToString());
+						model.Certificate=int.Parse(dt.Rows[n]["Certificate"].ToString());
 					}
-					if(dt.Rows[n]["MetDate"]!=null && dt.Rows[n]["MetDate"].ToString()!="")
+					if(dt.Rows[n]["JoinDate"]!=null && dt.Rows[n]["JoinDate"].ToString()!="")
 					{
-						model.MetDate=DateTime.Parse(dt.Rows[n]["MetDate"].ToString());
-					}
-					if(dt.Rows[n]["LoveDate"]!=null && dt.Rows[n]["LoveDate"].ToString()!="")
-					{
-						model.LoveDate=DateTime.Parse(dt.Rows[n]["LoveDate"].ToString());
-					}
-					if(dt.Rows[n]["MarryDate"]!=null && dt.Rows[n]["MarryDate"].ToString()!="")
-					{
-						model.MarryDate=DateTime.Parse(dt.Rows[n]["MarryDate"].ToString());
+						model.JoinDate=DateTime.Parse(dt.Rows[n]["JoinDate"].ToString());
 					}
 					if(dt.Rows[n]["ApplyUserID"]!=null && dt.Rows[n]["ApplyUserID"].ToString()!="")
 					{
@@ -145,25 +146,9 @@ namespace CengZai.BLL
 					{
 						model.ApplyTime=DateTime.Parse(dt.Rows[n]["ApplyTime"].ToString());
 					}
-					if(dt.Rows[n]["IsConfirm"]!=null && dt.Rows[n]["IsConfirm"].ToString()!="")
+					if(dt.Rows[n]["State"]!=null && dt.Rows[n]["State"].ToString()!="")
 					{
-						model.IsConfirm=int.Parse(dt.Rows[n]["IsConfirm"].ToString());
-					}
-					if(dt.Rows[n]["ConfirmUserID"]!=null && dt.Rows[n]["ConfirmUserID"].ToString()!="")
-					{
-						model.ConfirmUserID=int.Parse(dt.Rows[n]["ConfirmUserID"].ToString());
-					}
-					if(dt.Rows[n]["ConfirmTime"]!=null && dt.Rows[n]["ConfirmTime"].ToString()!="")
-					{
-						model.ConfirmTime=DateTime.Parse(dt.Rows[n]["ConfirmTime"].ToString());
-					}
-					if(dt.Rows[n]["CurrState"]!=null && dt.Rows[n]["CurrState"].ToString()!="")
-					{
-						model.CurrState=int.Parse(dt.Rows[n]["CurrState"].ToString());
-					}
-					if(dt.Rows[n]["CurrUserID"]!=null && dt.Rows[n]["CurrUserID"].ToString()!="")
-					{
-						model.CurrUserID=int.Parse(dt.Rows[n]["CurrUserID"].ToString());
+						model.State=int.Parse(dt.Rows[n]["State"].ToString());
 					}
 					modelList.Add(model);
 				}
@@ -171,28 +156,35 @@ namespace CengZai.BLL
 			return modelList;
 		}
 
+		/// <summary>
+		/// 获得数据列表
+		/// </summary>
+		public DataSet GetAllList()
+		{
+			return GetList("");
+		}
 
-        /// <summary>
-        /// 分页获取数据列表
-        /// </summary>
-        public int GetRecordCount(string strWhere)
-        {
-            return dal.GetRecordCount(strWhere);
-        }
-        /// <summary>
-        /// 分页获取数据列表
-        /// </summary>
-        public DataSet GetListByPage(string strWhere, string orderby, int startIndex, int endIndex)
-        {
-            return dal.GetListByPage(strWhere, orderby, startIndex, endIndex);
-        }
-        /// <summary>
-        /// 分页获取数据列表
-        /// </summary>
-        //public DataSet GetList(int PageSize,int PageIndex,string strWhere)
-        //{
-        //return dal.GetList(PageSize,PageIndex,strWhere);
-        //}
+		/// <summary>
+		/// 分页获取数据列表
+		/// </summary>
+		public int GetRecordCount(string strWhere)
+		{
+			return dal.GetRecordCount(strWhere);
+		}
+		/// <summary>
+		/// 分页获取数据列表
+		/// </summary>
+		public DataSet GetListByPage(string strWhere, string orderby, int startIndex, int endIndex)
+		{
+			return dal.GetListByPage( strWhere,  orderby,  startIndex,  endIndex);
+		}
+		/// <summary>
+		/// 分页获取数据列表
+		/// </summary>
+		//public DataSet GetList(int PageSize,int PageIndex,string strWhere)
+		//{
+			//return dal.GetList(PageSize,PageIndex,strWhere);
+		//}
 
 		#endregion  Method
 	}

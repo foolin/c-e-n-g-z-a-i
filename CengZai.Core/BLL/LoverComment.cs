@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Collections.Generic;
+using CengZai.Helper;
 using CengZai.Model;
 namespace CengZai.BLL
 {
@@ -13,6 +14,15 @@ namespace CengZai.BLL
 		public LoverComment()
 		{}
 		#region  Method
+
+		/// <summary>
+		/// 得到最大ID
+		/// </summary>
+		public int GetMaxId()
+		{
+			return dal.GetMaxId();
+		}
+
 		/// <summary>
 		/// 是否存在该记录
 		/// </summary>
@@ -61,7 +71,6 @@ namespace CengZai.BLL
 			
 			return dal.GetModel(CommentID);
 		}
-
 		/// <summary>
 		/// 获得数据列表
 		/// </summary>
@@ -135,28 +144,35 @@ namespace CengZai.BLL
 			return modelList;
 		}
 
+		/// <summary>
+		/// 获得数据列表
+		/// </summary>
+		public DataSet GetAllList()
+		{
+			return GetList("");
+		}
 
-        /// <summary>
-        /// 分页获取数据列表
-        /// </summary>
-        public int GetRecordCount(string strWhere)
-        {
-            return dal.GetRecordCount(strWhere);
-        }
-        /// <summary>
-        /// 分页获取数据列表
-        /// </summary>
-        public DataSet GetListByPage(string strWhere, string orderby, int startIndex, int endIndex)
-        {
-            return dal.GetListByPage(strWhere, orderby, startIndex, endIndex);
-        }
-        /// <summary>
-        /// 分页获取数据列表
-        /// </summary>
-        //public DataSet GetList(int PageSize,int PageIndex,string strWhere)
-        //{
-        //return dal.GetList(PageSize,PageIndex,strWhere);
-        //}
+		/// <summary>
+		/// 分页获取数据列表
+		/// </summary>
+		public int GetRecordCount(string strWhere)
+		{
+			return dal.GetRecordCount(strWhere);
+		}
+		/// <summary>
+		/// 分页获取数据列表
+		/// </summary>
+		public DataSet GetListByPage(string strWhere, string orderby, int startIndex, int endIndex)
+		{
+			return dal.GetListByPage( strWhere,  orderby,  startIndex,  endIndex);
+		}
+		/// <summary>
+		/// 分页获取数据列表
+		/// </summary>
+		//public DataSet GetList(int PageSize,int PageIndex,string strWhere)
+		//{
+			//return dal.GetList(PageSize,PageIndex,strWhere);
+		//}
 
 		#endregion  Method
 	}

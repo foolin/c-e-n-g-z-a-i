@@ -71,7 +71,6 @@ namespace CengZai.BLL
 			
 			return dal.GetModel(AttachID);
 		}
-
 		/// <summary>
 		/// 获得数据列表
 		/// </summary>
@@ -111,17 +110,37 @@ namespace CengZai.BLL
 					{
 						model.AttachID=int.Parse(dt.Rows[n]["AttachID"].ToString());
 					}
-					if(dt.Rows[n]["ArtID"]!=null && dt.Rows[n]["ArtID"].ToString()!="")
+					if(dt.Rows[n]["Source"]!=null && dt.Rows[n]["Source"].ToString()!="")
 					{
-						model.ArtID=int.Parse(dt.Rows[n]["ArtID"].ToString());
+						model.Source=int.Parse(dt.Rows[n]["Source"].ToString());
 					}
-					if(dt.Rows[n]["File"]!=null && dt.Rows[n]["File"].ToString()!="")
+					if(dt.Rows[n]["SourceID"]!=null && dt.Rows[n]["SourceID"].ToString()!="")
 					{
-					model.File=dt.Rows[n]["File"].ToString();
+						model.SourceID=int.Parse(dt.Rows[n]["SourceID"].ToString());
 					}
-					if(dt.Rows[n]["SubFile"]!=null && dt.Rows[n]["SubFile"].ToString()!="")
+					if(dt.Rows[n]["FilePath"]!=null && dt.Rows[n]["FilePath"].ToString()!="")
 					{
-					model.SubFile=dt.Rows[n]["SubFile"].ToString();
+					model.FilePath=dt.Rows[n]["FilePath"].ToString();
+					}
+					if(dt.Rows[n]["FileExt"]!=null && dt.Rows[n]["FileExt"].ToString()!="")
+					{
+					model.FileExt=dt.Rows[n]["FileExt"].ToString();
+					}
+					if(dt.Rows[n]["FieSize"]!=null && dt.Rows[n]["FieSize"].ToString()!="")
+					{
+						model.FieSize=int.Parse(dt.Rows[n]["FieSize"].ToString());
+					}
+					if(dt.Rows[n]["FileData"]!=null && dt.Rows[n]["FileData"].ToString()!="")
+					{
+					model.FileData=dt.Rows[n]["FileData"].ToString();
+					}
+					if(dt.Rows[n]["UserID"]!=null && dt.Rows[n]["UserID"].ToString()!="")
+					{
+						model.UserID=int.Parse(dt.Rows[n]["UserID"].ToString());
+					}
+					if(dt.Rows[n]["UploadTime"]!=null && dt.Rows[n]["UploadTime"].ToString()!="")
+					{
+						model.UploadTime=DateTime.Parse(dt.Rows[n]["UploadTime"].ToString());
 					}
 					modelList.Add(model);
 				}

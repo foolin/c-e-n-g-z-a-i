@@ -46,9 +46,9 @@ namespace CengZai.DAL
 		{
 			StringBuilder strSql=new StringBuilder();
 			strSql.Append("insert into T_Lover(");
-			strSql.Append("Avatar,BoyUserID,GirlUserID,BoyOath,GirlOath,LoveState,MetDate,LoveDate,MarryDate,ApplyUserID,ApplyTime,IsConfirm,ConfirmUserID,ConfirmTime,CurrState,CurrUserID)");
+			strSql.Append("Avatar,BoyUserID,GirlUserID,BoyOath,GirlOath,Certificate,JoinDate,ApplyUserID,ApplyTime,State)");
 			strSql.Append(" values (");
-			strSql.Append("@Avatar,@BoyUserID,@GirlUserID,@BoyOath,@GirlOath,@LoveState,@MetDate,@LoveDate,@MarryDate,@ApplyUserID,@ApplyTime,@IsConfirm,@ConfirmUserID,@ConfirmTime,@CurrState,@CurrUserID)");
+			strSql.Append("@Avatar,@BoyUserID,@GirlUserID,@BoyOath,@GirlOath,@Certificate,@JoinDate,@ApplyUserID,@ApplyTime,@State)");
 			strSql.Append(";select @@IDENTITY");
 			SqlParameter[] parameters = {
 					new SqlParameter("@Avatar", SqlDbType.NVarChar,500),
@@ -56,33 +56,21 @@ namespace CengZai.DAL
 					new SqlParameter("@GirlUserID", SqlDbType.Int,4),
 					new SqlParameter("@BoyOath", SqlDbType.NVarChar,500),
 					new SqlParameter("@GirlOath", SqlDbType.NVarChar,500),
-					new SqlParameter("@LoveState", SqlDbType.Int,4),
-					new SqlParameter("@MetDate", SqlDbType.DateTime),
-					new SqlParameter("@LoveDate", SqlDbType.DateTime),
-					new SqlParameter("@MarryDate", SqlDbType.DateTime),
+					new SqlParameter("@Certificate", SqlDbType.Int,4),
+					new SqlParameter("@JoinDate", SqlDbType.DateTime),
 					new SqlParameter("@ApplyUserID", SqlDbType.Int,4),
 					new SqlParameter("@ApplyTime", SqlDbType.DateTime),
-					new SqlParameter("@IsConfirm", SqlDbType.Int,4),
-					new SqlParameter("@ConfirmUserID", SqlDbType.Int,4),
-					new SqlParameter("@ConfirmTime", SqlDbType.DateTime),
-					new SqlParameter("@CurrState", SqlDbType.Int,4),
-					new SqlParameter("@CurrUserID", SqlDbType.Int,4)};
+					new SqlParameter("@State", SqlDbType.Int,4)};
 			parameters[0].Value = model.Avatar;
 			parameters[1].Value = model.BoyUserID;
 			parameters[2].Value = model.GirlUserID;
 			parameters[3].Value = model.BoyOath;
 			parameters[4].Value = model.GirlOath;
-			parameters[5].Value = model.LoveState;
-			parameters[6].Value = model.MetDate;
-			parameters[7].Value = model.LoveDate;
-			parameters[8].Value = model.MarryDate;
-			parameters[9].Value = model.ApplyUserID;
-			parameters[10].Value = model.ApplyTime;
-			parameters[11].Value = model.IsConfirm;
-			parameters[12].Value = model.ConfirmUserID;
-			parameters[13].Value = model.ConfirmTime;
-			parameters[14].Value = model.CurrState;
-			parameters[15].Value = model.CurrUserID;
+			parameters[5].Value = model.Certificate;
+			parameters[6].Value = model.JoinDate;
+			parameters[7].Value = model.ApplyUserID;
+			parameters[8].Value = model.ApplyTime;
+			parameters[9].Value = model.State;
 
 			object obj = DbHelperSQL.GetSingle(strSql.ToString(),parameters);
 			if (obj == null)
@@ -106,17 +94,11 @@ namespace CengZai.DAL
 			strSql.Append("GirlUserID=@GirlUserID,");
 			strSql.Append("BoyOath=@BoyOath,");
 			strSql.Append("GirlOath=@GirlOath,");
-			strSql.Append("LoveState=@LoveState,");
-			strSql.Append("MetDate=@MetDate,");
-			strSql.Append("LoveDate=@LoveDate,");
-			strSql.Append("MarryDate=@MarryDate,");
+			strSql.Append("Certificate=@Certificate,");
+			strSql.Append("JoinDate=@JoinDate,");
 			strSql.Append("ApplyUserID=@ApplyUserID,");
 			strSql.Append("ApplyTime=@ApplyTime,");
-			strSql.Append("IsConfirm=@IsConfirm,");
-			strSql.Append("ConfirmUserID=@ConfirmUserID,");
-			strSql.Append("ConfirmTime=@ConfirmTime,");
-			strSql.Append("CurrState=@CurrState,");
-			strSql.Append("CurrUserID=@CurrUserID");
+			strSql.Append("State=@State");
 			strSql.Append(" where LoverID=@LoverID");
 			SqlParameter[] parameters = {
 					new SqlParameter("@Avatar", SqlDbType.NVarChar,500),
@@ -124,35 +106,23 @@ namespace CengZai.DAL
 					new SqlParameter("@GirlUserID", SqlDbType.Int,4),
 					new SqlParameter("@BoyOath", SqlDbType.NVarChar,500),
 					new SqlParameter("@GirlOath", SqlDbType.NVarChar,500),
-					new SqlParameter("@LoveState", SqlDbType.Int,4),
-					new SqlParameter("@MetDate", SqlDbType.DateTime),
-					new SqlParameter("@LoveDate", SqlDbType.DateTime),
-					new SqlParameter("@MarryDate", SqlDbType.DateTime),
+					new SqlParameter("@Certificate", SqlDbType.Int,4),
+					new SqlParameter("@JoinDate", SqlDbType.DateTime),
 					new SqlParameter("@ApplyUserID", SqlDbType.Int,4),
 					new SqlParameter("@ApplyTime", SqlDbType.DateTime),
-					new SqlParameter("@IsConfirm", SqlDbType.Int,4),
-					new SqlParameter("@ConfirmUserID", SqlDbType.Int,4),
-					new SqlParameter("@ConfirmTime", SqlDbType.DateTime),
-					new SqlParameter("@CurrState", SqlDbType.Int,4),
-					new SqlParameter("@CurrUserID", SqlDbType.Int,4),
+					new SqlParameter("@State", SqlDbType.Int,4),
 					new SqlParameter("@LoverID", SqlDbType.Int,4)};
 			parameters[0].Value = model.Avatar;
 			parameters[1].Value = model.BoyUserID;
 			parameters[2].Value = model.GirlUserID;
 			parameters[3].Value = model.BoyOath;
 			parameters[4].Value = model.GirlOath;
-			parameters[5].Value = model.LoveState;
-			parameters[6].Value = model.MetDate;
-			parameters[7].Value = model.LoveDate;
-			parameters[8].Value = model.MarryDate;
-			parameters[9].Value = model.ApplyUserID;
-			parameters[10].Value = model.ApplyTime;
-			parameters[11].Value = model.IsConfirm;
-			parameters[12].Value = model.ConfirmUserID;
-			parameters[13].Value = model.ConfirmTime;
-			parameters[14].Value = model.CurrState;
-			parameters[15].Value = model.CurrUserID;
-			parameters[16].Value = model.LoverID;
+			parameters[5].Value = model.Certificate;
+			parameters[6].Value = model.JoinDate;
+			parameters[7].Value = model.ApplyUserID;
+			parameters[8].Value = model.ApplyTime;
+			parameters[9].Value = model.State;
+			parameters[10].Value = model.LoverID;
 
 			int rows=DbHelperSQL.ExecuteSql(strSql.ToString(),parameters);
 			if (rows > 0)
@@ -216,7 +186,7 @@ namespace CengZai.DAL
 		{
 			
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select  top 1 LoverID,Avatar,BoyUserID,GirlUserID,BoyOath,GirlOath,LoveState,MetDate,LoveDate,MarryDate,ApplyUserID,ApplyTime,IsConfirm,ConfirmUserID,ConfirmTime,CurrState,CurrUserID from T_Lover ");
+			strSql.Append("select  top 1 LoverID,Avatar,BoyUserID,GirlUserID,BoyOath,GirlOath,Certificate,JoinDate,ApplyUserID,ApplyTime,State from T_Lover ");
 			strSql.Append(" where LoverID=@LoverID");
 			SqlParameter[] parameters = {
 					new SqlParameter("@LoverID", SqlDbType.Int,4)
@@ -251,21 +221,13 @@ namespace CengZai.DAL
 				{
 					model.GirlOath=ds.Tables[0].Rows[0]["GirlOath"].ToString();
 				}
-				if(ds.Tables[0].Rows[0]["LoveState"]!=null && ds.Tables[0].Rows[0]["LoveState"].ToString()!="")
+				if(ds.Tables[0].Rows[0]["Certificate"]!=null && ds.Tables[0].Rows[0]["Certificate"].ToString()!="")
 				{
-					model.LoveState=int.Parse(ds.Tables[0].Rows[0]["LoveState"].ToString());
+					model.Certificate=int.Parse(ds.Tables[0].Rows[0]["Certificate"].ToString());
 				}
-				if(ds.Tables[0].Rows[0]["MetDate"]!=null && ds.Tables[0].Rows[0]["MetDate"].ToString()!="")
+				if(ds.Tables[0].Rows[0]["JoinDate"]!=null && ds.Tables[0].Rows[0]["JoinDate"].ToString()!="")
 				{
-					model.MetDate=DateTime.Parse(ds.Tables[0].Rows[0]["MetDate"].ToString());
-				}
-				if(ds.Tables[0].Rows[0]["LoveDate"]!=null && ds.Tables[0].Rows[0]["LoveDate"].ToString()!="")
-				{
-					model.LoveDate=DateTime.Parse(ds.Tables[0].Rows[0]["LoveDate"].ToString());
-				}
-				if(ds.Tables[0].Rows[0]["MarryDate"]!=null && ds.Tables[0].Rows[0]["MarryDate"].ToString()!="")
-				{
-					model.MarryDate=DateTime.Parse(ds.Tables[0].Rows[0]["MarryDate"].ToString());
+					model.JoinDate=DateTime.Parse(ds.Tables[0].Rows[0]["JoinDate"].ToString());
 				}
 				if(ds.Tables[0].Rows[0]["ApplyUserID"]!=null && ds.Tables[0].Rows[0]["ApplyUserID"].ToString()!="")
 				{
@@ -275,25 +237,9 @@ namespace CengZai.DAL
 				{
 					model.ApplyTime=DateTime.Parse(ds.Tables[0].Rows[0]["ApplyTime"].ToString());
 				}
-				if(ds.Tables[0].Rows[0]["IsConfirm"]!=null && ds.Tables[0].Rows[0]["IsConfirm"].ToString()!="")
+				if(ds.Tables[0].Rows[0]["State"]!=null && ds.Tables[0].Rows[0]["State"].ToString()!="")
 				{
-					model.IsConfirm=int.Parse(ds.Tables[0].Rows[0]["IsConfirm"].ToString());
-				}
-				if(ds.Tables[0].Rows[0]["ConfirmUserID"]!=null && ds.Tables[0].Rows[0]["ConfirmUserID"].ToString()!="")
-				{
-					model.ConfirmUserID=int.Parse(ds.Tables[0].Rows[0]["ConfirmUserID"].ToString());
-				}
-				if(ds.Tables[0].Rows[0]["ConfirmTime"]!=null && ds.Tables[0].Rows[0]["ConfirmTime"].ToString()!="")
-				{
-					model.ConfirmTime=DateTime.Parse(ds.Tables[0].Rows[0]["ConfirmTime"].ToString());
-				}
-				if(ds.Tables[0].Rows[0]["CurrState"]!=null && ds.Tables[0].Rows[0]["CurrState"].ToString()!="")
-				{
-					model.CurrState=int.Parse(ds.Tables[0].Rows[0]["CurrState"].ToString());
-				}
-				if(ds.Tables[0].Rows[0]["CurrUserID"]!=null && ds.Tables[0].Rows[0]["CurrUserID"].ToString()!="")
-				{
-					model.CurrUserID=int.Parse(ds.Tables[0].Rows[0]["CurrUserID"].ToString());
+					model.State=int.Parse(ds.Tables[0].Rows[0]["State"].ToString());
 				}
 				return model;
 			}
@@ -309,7 +255,7 @@ namespace CengZai.DAL
 		public DataSet GetList(string strWhere)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select LoverID,Avatar,BoyUserID,GirlUserID,BoyOath,GirlOath,LoveState,MetDate,LoveDate,MarryDate,ApplyUserID,ApplyTime,IsConfirm,ConfirmUserID,ConfirmTime,CurrState,CurrUserID ");
+			strSql.Append("select LoverID,Avatar,BoyUserID,GirlUserID,BoyOath,GirlOath,Certificate,JoinDate,ApplyUserID,ApplyTime,State ");
 			strSql.Append(" FROM T_Lover ");
 			if(strWhere.Trim()!="")
 			{
@@ -329,7 +275,7 @@ namespace CengZai.DAL
 			{
 				strSql.Append(" top "+Top.ToString());
 			}
-			strSql.Append(" LoverID,Avatar,BoyUserID,GirlUserID,BoyOath,GirlOath,LoveState,MetDate,LoveDate,MarryDate,ApplyUserID,ApplyTime,IsConfirm,ConfirmUserID,ConfirmTime,CurrState,CurrUserID ");
+			strSql.Append(" LoverID,Avatar,BoyUserID,GirlUserID,BoyOath,GirlOath,Certificate,JoinDate,ApplyUserID,ApplyTime,State ");
 			strSql.Append(" FROM T_Lover ");
 			if(strWhere.Trim()!="")
 			{
