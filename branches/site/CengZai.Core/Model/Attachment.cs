@@ -11,9 +11,14 @@ namespace CengZai.Model
 		{}
 		#region Model
 		private int _attachid;
-		private int? _artid;
-		private string _file;
-		private string _subfile;
+		private int? _source;
+		private int? _sourceid;
+		private string _filepath;
+		private string _fileext;
+		private int? _fiesize;
+		private string _filedata;
+		private int? _userid;
+		private DateTime? _uploadtime;
 		/// <summary>
 		/// 
 		/// </summary>
@@ -23,28 +28,68 @@ namespace CengZai.Model
 			get{return _attachid;}
 		}
 		/// <summary>
-		/// 
+		/// 来源：Article（文章）=1,Lover（证书）=2
 		/// </summary>
-		public int? ArtID
+		public int? Source
 		{
-			set{ _artid=value;}
-			get{return _artid;}
+			set{ _source=value;}
+			get{return _source;}
 		}
 		/// <summary>
 		/// 
 		/// </summary>
-		public string File
+		public int? SourceID
 		{
-			set{ _file=value;}
-			get{return _file;}
+			set{ _sourceid=value;}
+			get{return _sourceid;}
 		}
 		/// <summary>
 		/// 
 		/// </summary>
-		public string SubFile
+		public string FilePath
 		{
-			set{ _subfile=value;}
-			get{return _subfile;}
+			set{ _filepath=value;}
+			get{return _filepath;}
+		}
+		/// <summary>
+		/// 文件扩展名，如jpg/png/gif
+		/// </summary>
+		public string FileExt
+		{
+			set{ _fileext=value;}
+			get{return _fileext;}
+		}
+		/// <summary>
+		/// 文件大小
+		/// </summary>
+		public int? FieSize
+		{
+			set{ _fiesize=value;}
+			get{return _fiesize;}
+		}
+		/// <summary>
+		/// 
+		/// </summary>
+		public string FileData
+		{
+			set{ _filedata=value;}
+			get{return _filedata;}
+		}
+		/// <summary>
+		/// 
+		/// </summary>
+		public int? UserID
+		{
+			set{ _userid=value;}
+			get{return _userid;}
+		}
+		/// <summary>
+		/// 
+		/// </summary>
+		public DateTime? UploadTime
+		{
+			set{ _uploadtime=value;}
+			get{return _uploadtime;}
 		}
 		#endregion Model
 

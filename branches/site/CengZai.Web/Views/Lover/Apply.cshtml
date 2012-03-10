@@ -101,14 +101,15 @@
             upload_url: "/Lover/UploadImage",
             file_post_name: "fileAvatar",
             post_params: {
-                "ASPSESSID": "@Session.SessionID"
+                "ASPSESSID": "@Session.SessionID",
             },
 
             // File Upload Settings
             file_size_limit: "1 MB",
             file_types: "*.jpg",
             file_types_description: "JPG Images",
-            file_upload_limit: 1,    // Zero means unlimited
+            file_upload_limit: 0,    // Zero means unlimited
+            file_queue_limit: 1,
             debug: true,
 
             // Button Settings
@@ -121,10 +122,13 @@
             button_text_top_padding: 1,
             button_text_left_padding: 5,
 
+            //点击上传
             file_dialog_complete_handler: function (numFilesSelected, numFilesQueued) {
                 try {
                     if (numFilesQueued > 0) {
+                        this.addPostParam("avatar",$("#avatar").val());
                         this.startUpload();
+                        $("#tips-avatar").html("正在上传...");
                     }
                 } catch (ex) {
                     this.debug(ex);
@@ -134,7 +138,14 @@
             file_queue_error_handler: uploadError,
 			upload_success_handler :  function(file, serverData) {
 	            try {
-                    alert(serverData);
+                    if(serverData != ""){
+                        $("#avatar").val(serverData);
+                        var showUrl =  '@CengZai.Helper.Config.UploadHttpPath/' + serverData;
+                        $("#imgAvatar").attr("src",  showUrl);
+                        $("#imgAvatar").css("display","block");
+                        $("#tips-avatar").html("上传完毕");;
+                    }
+                    
 	            } catch (ex) {
 		            this.debug(ex);
 	            }
@@ -151,9 +162,8 @@
 
         swfu = new SWFUpload(settings);
     }
-
+    
 </script>
-
 
 }
 
@@ -206,8 +216,10 @@
                     <div class="control-group">
                         <label class="control-label" for="birth">我们的合照：</label>
                         <div class="controls">
-                            <img id="imgAvatar" alt="" />
-                            <input type="hidden" value="" name="avatar" id="avatar" />
+                            <p>
+                                <img id="imgAvatar"  width="200" height="180" alt="" style="display:none" />
+                                <input type="hidden" value="" name="avatar" id="avatar" />
+                            </p>
                             <div id="divUploadAvatar"></div>
                             <span class="field-validation-error" data-valmsg-for="avatar" id="tips-avatar" data-valmsg-replace="true"></span>
                             <p class="help-block">请上传一张你们的合影照片（不可更改）</p>
