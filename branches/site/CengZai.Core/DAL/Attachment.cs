@@ -46,17 +46,27 @@ namespace CengZai.DAL
 		{
 			StringBuilder strSql=new StringBuilder();
 			strSql.Append("insert into T_Attachment(");
-			strSql.Append("ArtID,File,SubFile)");
+			strSql.Append("Source,SourceID,FilePath,FileExt,FieSize,FileData,UserID,UploadTime)");
 			strSql.Append(" values (");
-			strSql.Append("@ArtID,@File,@SubFile)");
+			strSql.Append("@Source,@SourceID,@FilePath,@FileExt,@FieSize,@FileData,@UserID,@UploadTime)");
 			strSql.Append(";select @@IDENTITY");
 			SqlParameter[] parameters = {
-					new SqlParameter("@ArtID", SqlDbType.Int,4),
-					new SqlParameter("@File", SqlDbType.NVarChar,1000),
-					new SqlParameter("@SubFile", SqlDbType.NVarChar,1000)};
-			parameters[0].Value = model.ArtID;
-			parameters[1].Value = model.File;
-			parameters[2].Value = model.SubFile;
+					new SqlParameter("@Source", SqlDbType.Int,4),
+					new SqlParameter("@SourceID", SqlDbType.Int,4),
+					new SqlParameter("@FilePath", SqlDbType.NVarChar,1000),
+					new SqlParameter("@FileExt", SqlDbType.NVarChar,20),
+					new SqlParameter("@FieSize", SqlDbType.Int,4),
+					new SqlParameter("@FileData", SqlDbType.NVarChar,2000),
+					new SqlParameter("@UserID", SqlDbType.Int,4),
+					new SqlParameter("@UploadTime", SqlDbType.DateTime)};
+			parameters[0].Value = model.Source;
+			parameters[1].Value = model.SourceID;
+			parameters[2].Value = model.FilePath;
+			parameters[3].Value = model.FileExt;
+			parameters[4].Value = model.FieSize;
+			parameters[5].Value = model.FileData;
+			parameters[6].Value = model.UserID;
+			parameters[7].Value = model.UploadTime;
 
 			object obj = DbHelperSQL.GetSingle(strSql.ToString(),parameters);
 			if (obj == null)
@@ -75,19 +85,34 @@ namespace CengZai.DAL
 		{
 			StringBuilder strSql=new StringBuilder();
 			strSql.Append("update T_Attachment set ");
-			strSql.Append("ArtID=@ArtID,");
-			strSql.Append("File=@File,");
-			strSql.Append("SubFile=@SubFile");
+			strSql.Append("Source=@Source,");
+			strSql.Append("SourceID=@SourceID,");
+			strSql.Append("FilePath=@FilePath,");
+			strSql.Append("FileExt=@FileExt,");
+			strSql.Append("FieSize=@FieSize,");
+			strSql.Append("FileData=@FileData,");
+			strSql.Append("UserID=@UserID,");
+			strSql.Append("UploadTime=@UploadTime");
 			strSql.Append(" where AttachID=@AttachID");
 			SqlParameter[] parameters = {
-					new SqlParameter("@ArtID", SqlDbType.Int,4),
-					new SqlParameter("@File", SqlDbType.NVarChar,1000),
-					new SqlParameter("@SubFile", SqlDbType.NVarChar,1000),
+					new SqlParameter("@Source", SqlDbType.Int,4),
+					new SqlParameter("@SourceID", SqlDbType.Int,4),
+					new SqlParameter("@FilePath", SqlDbType.NVarChar,1000),
+					new SqlParameter("@FileExt", SqlDbType.NVarChar,20),
+					new SqlParameter("@FieSize", SqlDbType.Int,4),
+					new SqlParameter("@FileData", SqlDbType.NVarChar,2000),
+					new SqlParameter("@UserID", SqlDbType.Int,4),
+					new SqlParameter("@UploadTime", SqlDbType.DateTime),
 					new SqlParameter("@AttachID", SqlDbType.Int,4)};
-			parameters[0].Value = model.ArtID;
-			parameters[1].Value = model.File;
-			parameters[2].Value = model.SubFile;
-			parameters[3].Value = model.AttachID;
+			parameters[0].Value = model.Source;
+			parameters[1].Value = model.SourceID;
+			parameters[2].Value = model.FilePath;
+			parameters[3].Value = model.FileExt;
+			parameters[4].Value = model.FieSize;
+			parameters[5].Value = model.FileData;
+			parameters[6].Value = model.UserID;
+			parameters[7].Value = model.UploadTime;
+			parameters[8].Value = model.AttachID;
 
 			int rows=DbHelperSQL.ExecuteSql(strSql.ToString(),parameters);
 			if (rows > 0)
@@ -151,7 +176,7 @@ namespace CengZai.DAL
 		{
 			
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select  top 1 AttachID,ArtID,File,SubFile from T_Attachment ");
+			strSql.Append("select  top 1 AttachID,Source,SourceID,FilePath,FileExt,FieSize,FileData,UserID,UploadTime from T_Attachment ");
 			strSql.Append(" where AttachID=@AttachID");
 			SqlParameter[] parameters = {
 					new SqlParameter("@AttachID", SqlDbType.Int,4)
@@ -166,17 +191,37 @@ namespace CengZai.DAL
 				{
 					model.AttachID=int.Parse(ds.Tables[0].Rows[0]["AttachID"].ToString());
 				}
-				if(ds.Tables[0].Rows[0]["ArtID"]!=null && ds.Tables[0].Rows[0]["ArtID"].ToString()!="")
+				if(ds.Tables[0].Rows[0]["Source"]!=null && ds.Tables[0].Rows[0]["Source"].ToString()!="")
 				{
-					model.ArtID=int.Parse(ds.Tables[0].Rows[0]["ArtID"].ToString());
+					model.Source=int.Parse(ds.Tables[0].Rows[0]["Source"].ToString());
 				}
-				if(ds.Tables[0].Rows[0]["File"]!=null && ds.Tables[0].Rows[0]["File"].ToString()!="")
+				if(ds.Tables[0].Rows[0]["SourceID"]!=null && ds.Tables[0].Rows[0]["SourceID"].ToString()!="")
 				{
-					model.File=ds.Tables[0].Rows[0]["File"].ToString();
+					model.SourceID=int.Parse(ds.Tables[0].Rows[0]["SourceID"].ToString());
 				}
-				if(ds.Tables[0].Rows[0]["SubFile"]!=null && ds.Tables[0].Rows[0]["SubFile"].ToString()!="")
+				if(ds.Tables[0].Rows[0]["FilePath"]!=null && ds.Tables[0].Rows[0]["FilePath"].ToString()!="")
 				{
-					model.SubFile=ds.Tables[0].Rows[0]["SubFile"].ToString();
+					model.FilePath=ds.Tables[0].Rows[0]["FilePath"].ToString();
+				}
+				if(ds.Tables[0].Rows[0]["FileExt"]!=null && ds.Tables[0].Rows[0]["FileExt"].ToString()!="")
+				{
+					model.FileExt=ds.Tables[0].Rows[0]["FileExt"].ToString();
+				}
+				if(ds.Tables[0].Rows[0]["FieSize"]!=null && ds.Tables[0].Rows[0]["FieSize"].ToString()!="")
+				{
+					model.FieSize=int.Parse(ds.Tables[0].Rows[0]["FieSize"].ToString());
+				}
+				if(ds.Tables[0].Rows[0]["FileData"]!=null && ds.Tables[0].Rows[0]["FileData"].ToString()!="")
+				{
+					model.FileData=ds.Tables[0].Rows[0]["FileData"].ToString();
+				}
+				if(ds.Tables[0].Rows[0]["UserID"]!=null && ds.Tables[0].Rows[0]["UserID"].ToString()!="")
+				{
+					model.UserID=int.Parse(ds.Tables[0].Rows[0]["UserID"].ToString());
+				}
+				if(ds.Tables[0].Rows[0]["UploadTime"]!=null && ds.Tables[0].Rows[0]["UploadTime"].ToString()!="")
+				{
+					model.UploadTime=DateTime.Parse(ds.Tables[0].Rows[0]["UploadTime"].ToString());
 				}
 				return model;
 			}
@@ -192,7 +237,7 @@ namespace CengZai.DAL
 		public DataSet GetList(string strWhere)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select AttachID,ArtID,File,SubFile ");
+			strSql.Append("select AttachID,Source,SourceID,FilePath,FileExt,FieSize,FileData,UserID,UploadTime ");
 			strSql.Append(" FROM T_Attachment ");
 			if(strWhere.Trim()!="")
 			{
@@ -212,7 +257,7 @@ namespace CengZai.DAL
 			{
 				strSql.Append(" top "+Top.ToString());
 			}
-			strSql.Append(" AttachID,ArtID,File,SubFile ");
+			strSql.Append(" AttachID,Source,SourceID,FilePath,FileExt,FieSize,FileData,UserID,UploadTime ");
 			strSql.Append(" FROM T_Attachment ");
 			if(strWhere.Trim()!="")
 			{
