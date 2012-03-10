@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Configuration;
+using System.IO;
+using System.Web;
 
 namespace CengZai.Helper
 {
@@ -144,6 +146,43 @@ namespace CengZai.Helper
             get
             {
                 return ConfigurationManager.AppSettings["CacheKeyPrefix"] + "";
+            }
+        }
+
+
+        /// <summary>
+        /// 上传文件路径~
+        /// </summary>
+        public static string UploadMapPath
+        {
+            get
+            {
+                string path = ConfigurationManager.AppSettings["UploadMapPath"] + "";
+                if (!Directory.Exists(HttpContext.Current.Server.MapPath(path)))
+                {
+                    try
+                    {
+                        Directory.CreateDirectory(HttpContext.Current.Server.MapPath(path));
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.AddErrorInfo("创建上传文件目录MapUploadPath：" + path + "出错，异常：" + ex.Message);
+                    }
+                }
+
+                return path;
+            }
+        }
+
+
+        /// <summary>
+        /// 显示文件路径~
+        /// </summary>
+        public static string UploadHttpPath
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["UploadHttpPath"] + "";
             }
         }
 
