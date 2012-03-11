@@ -225,7 +225,7 @@ namespace CengZai.Web.Controllers
         /// <returns></returns>
         [CheckAuthFilter]
         [HttpPost]
-        public ActionResult Accept()
+        public ActionResult Accept(int? loverID)
         {
             return View();
         }

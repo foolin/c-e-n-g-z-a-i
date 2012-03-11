@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "登记注册-" + ViewBag.SiteName;
+    ViewBag.Title = "确认注册-" + ViewBag.SiteName;
     var user = ViewBag.User as CengZai.Model.User;
 }
 @section head{
@@ -8,9 +8,9 @@
     <script src="../../js/swfupload/swfupload.js" type="text/javascript"></script>
     <script src="../../js/swfupload/handlers.js" type="text/javascript"></script>
     <script type="text/javascript">
-        
+
         var oathTplData = [""
-            ,"我娶你，做我的妻子。我愿对你承诺，从今天开始，无论是顺境或是逆境，富有或贫穷，健康或疾病，我将永远爱你、珍惜你直到地老天长。我承诺我将对你永远忠实。"
+            , "我娶你，做我的妻子。我愿对你承诺，从今天开始，无论是顺境或是逆境，富有或贫穷，健康或疾病，我将永远爱你、珍惜你直到地老天长。我承诺我将对你永远忠实。"
             , "我爱你。今天是一个特别的日子。长久以来，你是我的梦想，也是我祷告的内容，如今我的梦已经实现，上帝也亲自垂听了我的祷告。在这个特别的日子，你不单是我的喜乐，也是我头上的冠冕。我感谢耶稣，让我有这样的荣幸与你白头偕老。我谢谢你，愿意接纳我的爱。愿我们的未来，如同上帝的应许，永远光辉灿烂，从今以後，我将照顾你、尊敬你、保护你。我将我的生命交给你，我的朋友、我的爱人。今日，我将自己交给你。"
             , "说得好不如做得好，我不在意你认为我说的好不好，但我相信，你会看到我会做的很好。这里，请在座的各位见证，也请你相信，我会珍惜我们的爱情。今天，你将是我的新娘了，我只想说：我爱你，永远。"
             , "我，嫁给你，做我的丈夫。我愿对你承诺，从今天开始，无论是顺境或是逆境，富有或贫穷，健康或疾病，我将永远爱你、珍惜你直到地老天长。我承诺我将对你永远忠实。"
@@ -189,6 +189,20 @@
                 , new AjaxOptions { UpdateTargetId = "errmsg", OnBegin = "beginSubmit", OnSuccess = "succ", OnFailure = "fail" }
                 , new { @class = "form-horizontal"}))
             {
+                <fieldset>
+            <legend>登记注册申请表</legend>
+                <table>
+                    <tr>
+                        <td>申请人：</td>
+                        <td>负卐零</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </fieldset>
+                
             <fieldset>
             <legend>请填写申请表单</legend>
                 <div class="control-group">
