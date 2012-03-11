@@ -25,18 +25,23 @@
                 $("#oath").val(oathTplData[$(this).val()]);
             });
             $("#error").hide();
-
         });
 
         function beginSubmit() {
             $('.input-validation-error').removeClass('input-validation-error');
             $('.field-validation-error').html('');
             $('#save').button('loading');
+            $("#error").hide();
         }
         function succ(err) {
             err = eval(err);
-            if (err == null) {
-                this.location.href = "~/Lover";
+            if (!err) {
+                alert("操作异常！");
+            }
+            if (err.id == "success") {
+                alert(err.msg);
+                top.location.href = "/Lover";
+                return;
             }
             showErr(err);
         }
@@ -55,8 +60,6 @@
             $("#error").show();
             $('#save').button('reset');
         }
-
-       
     </script>
 
 
@@ -192,44 +195,44 @@
                         <label class="control-label" for="certificate">申请证件类型：</label>
                         <div class="controls">
                             <select name="certificate" id="certificate">
-                                <option value="2">结婚证（已经结婚）</option>
-                                <option value="1">恋爱证（正在恋爱）</option>
-                                <option value="0">追求证（正在相处）</option>
+                                <option value="3">结婚证（已经结婚）</option>
+                                <option value="2">恋爱证（正在恋爱）</option>
+                                <option value="1">追求证（正在相处）</option>
                             </select>
                             <span class="field-validation-error" data-valmsg-for="certificate" id="tips-certificate" data-valmsg-replace="true"></span>
                             <p class="help-block">相爱是一件严肃而神圣的事，请根据现实生活中的恋爱状态选择</p>
                         </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label" for="honeyuserid">对方帐号：</label>
+                        <label class="control-label" for="honeyUserID">对方帐号：</label>
                             <div class="controls">
-                                <select name="girlUserID" id="honeyuserid">
+                                <select name="honeyUserID" id="honeyUserID">
                                     <option value="1">对方</option>
                                     <option value="2">亲艾</option>
                                     <option value="3">闺蜜</option>
                                 </select>
-                                <span class="field-validation-error" data-valmsg-for="honeyuserid" id="tips-honeyuserid" data-valmsg-replace="true"></span>
-                                <p class="help-block">请选择您的爱人</p>
+                                <span class="field-validation-error" data-valmsg-for="honeyUserID" id="tips-honeyUserID" data-valmsg-replace="true"></span>
+                                <p class="help-block">请选择您的爱人（对方不在？请<a href="">邀请</a>或<a href="">查找</a>好友）</p>
                             </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label" for="girlUserID">我的姓名：</label>
+                        <label class="control-label" for="myName">我的名字：</label>
                             <div class="controls">
-                                @Html.TextBox("nickname", user.Nickname, new {@class="input-middle"})
-                                <span class="field-validation-error" data-valmsg-for="nickname" id="tips-nickname" data-valmsg-replace="true"></span>
+                                @Html.TextBox("myName", user.Nickname, new { @class = "input-middle" })
+                                <span class="field-validation-error" data-valmsg-for="myName" id="tips-myName" data-valmsg-replace="true"></span>
                                 <p class="help-block">这里是你帐号的昵称，建议用真实名字</p>
                             </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label" for="birth">我们的合照：</label>
+                        <label class="control-label" for="birth">我们的合照头像：</label>
                         <div class="controls">
                             <p>
-                                <img id="imgAvatar"  width="200" height="180" alt="" style="display:none" />
+                                <img id="imgAvatar"  width="196" height="136" alt="" style="display:none" />
                                 <input type="hidden" value="" name="avatar" id="avatar" />
                             </p>
                             <div id="divUploadAvatar"></div>
                             <span class="field-validation-error" data-valmsg-for="avatar" id="tips-avatar" data-valmsg-replace="true"></span>
-                            <p class="help-block">请上传一张你们的合影照片，建议比例是200px×180px，大小不能超过1MB（不可更改）</p>
+                            <p class="help-block">请上传一张你们的合影照片，建议比例是196px×136px，大小不能超过1MB（不可更改）</p>
                         </div>
                     </div>
                     <div class="control-group">
@@ -271,7 +274,8 @@
                                 </select>
                             </p>
                             <textarea name="oath" id="oath" class="input-xlarge" style="width:400px;" rows="8"></textarea>
-                            <p class="help-block">请填写您对对方的誓言，大胆说出您的爱~（500字以内，不可更改）</p>
+                            <span class="field-validation-error" data-valmsg-for="oath" id="tips-oath" data-valmsg-replace="true"></span>
+                            <p class="help-block">请填写您对对方的誓言，大胆说出您的爱~（1000个字符以内，不可更改）</p>
                         </div>
                     </div>
                     <div class="form-actions"> 
