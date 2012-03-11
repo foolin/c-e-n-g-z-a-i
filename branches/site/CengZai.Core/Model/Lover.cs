@@ -112,5 +112,40 @@ namespace CengZai.Model
 		#endregion Model
 
 	}
+
+    /// <summary>
+    /// Lover状态
+    /// </summary>
+    public enum LoverState
+    {
+        /// <summary>
+        /// 废除
+        /// </summary>
+        Abolish = 0,
+        /// <summary>
+        /// 申请
+        /// </summary>
+        Apply = 1,
+        /// <summary>
+        /// 取消申请
+        /// </summary>
+        UnApply = -1,
+        /// <summary>
+        /// 对方接受
+        /// </summary>
+        Accept =2,
+        /// <summary>
+        /// 对方拒绝
+        /// </summary>
+        UnAccept = -2,
+        /// <summary>
+        /// 授予证书
+        /// </summary>
+        Award = 3,
+        /// <summary>
+        /// 不授予证书
+        /// </summary>
+        UnAward = -3,
+    }
 }
 

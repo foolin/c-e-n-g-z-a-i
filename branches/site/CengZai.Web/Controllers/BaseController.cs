@@ -109,9 +109,9 @@ namespace CengZai.Web.Controllers
         /// <param name="code"></param>
         /// <param name="msg"></param>
         /// <returns></returns>
-        protected JsonResult JsonReturn(string id, string msg)
+        protected JsonResult AjaxReturn(string id, string msg)
         {
-            return Json(new AjaxReturn(id, msg));
+            return Json(new _AjaxReturn(id, msg));
         }
 
 
@@ -119,15 +119,15 @@ namespace CengZai.Web.Controllers
         /// <summary>
         /// 错误信息实体
         /// </summary>
-        public class AjaxReturn
+        protected class _AjaxReturn
         {
-            public AjaxReturn(string id, string msg)
+            public _AjaxReturn(string id, string msg)
             {
                 this.id = id;
                 this.msg = msg;
                 
             }
-            public AjaxReturn()
+            public _AjaxReturn()
             {
             }
             public string id;
