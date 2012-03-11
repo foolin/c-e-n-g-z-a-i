@@ -32,7 +32,7 @@ namespace CengZai.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(string email, string password)
+        public ActionResult Login(string email, string password, int? remember)
         {
             try
             {
@@ -113,7 +113,23 @@ namespace CengZai.Web.Controllers
                 }
                 bll.Update(user);
 
-                //登记登录
+                
+                /******* 写入Cookies ********/
+                //算法：
+                //1.首先得到明文Val：用户ID|时间戳|“用户ID|时间戳”的MD5校验码
+                //2.把明文经过DESEncrypt加密得到密文SecrectVal
+                //3.把密文SecrectVal写入Cookies
+                string cookieVal = user.UserID + "|" + DateTime.Now.Ticks.ToString();
+                string cryptVal = cookieVal + "|" + System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(cookieVal, "MD5");
+                HttpCookie cookie = new HttpCookie("LOGIN_USER");
+                cookie.Value = DESEncrypt.Encrypt(cryptVal, Config.SecrectKey);    //加密存储
+                if (remember == 1)
+                {
+                    cookie.Expires = DateTime.Now.AddDays(30);  //30天不过期
+                }
+                Response.Cookies.Add(cookie);
+
+                //写入Session登录
                 Session["LOGIN_USER"] = user;
 
                 if (Request["ReturnUrl"] == null || Request["ReturnUrl"].Length == 0)
@@ -132,6 +148,10 @@ namespace CengZai.Web.Controllers
 
         public ActionResult Logout()
         {
+            if (Response.Cookies["LOGIN_USER"] != null)
+            {
+                Response.Cookies["LOGIN_USER"].Expires = DateTime.Now.AddDays(-9999);
+            }
             Session["LOGIN_USER"]  = null;
             return RedirectToAction("Login", "User");
         }
