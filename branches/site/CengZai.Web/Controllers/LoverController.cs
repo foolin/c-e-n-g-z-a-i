@@ -32,12 +32,12 @@ namespace CengZai.Web.Controllers
             {
                 return AlertAndBack("您的性别未知，请完善资料再来申请！");
             }
-            BLL.Lover bllLover = new BLL.Lover();
-            DataSet dsMyLovers = bllLover.GetList(string.Format("(BoyUserID={0} Or GirlUserID={0}) And State<>{1}", user.UserID, (int)Model.LoverState.Abolish));
-            if (dsMyLovers != null && dsMyLovers.Tables.Count > 0 && dsMyLovers.Tables[0].Rows.Count > 0)
-            {
-                return AlertAndBack("您已经申请过了，爱情是神圣的，切勿当儿戏！");
-            }
+            //BLL.Lover bllLover = new BLL.Lover();
+            //DataSet dsMyLovers = bllLover.GetList(string.Format("(BoyUserID={0} Or GirlUserID={0}) And State<>{1}", user.UserID, (int)Model.LoverState.Abolish));
+            //if (dsMyLovers != null && dsMyLovers.Tables.Count > 0 && dsMyLovers.Tables[0].Rows.Count > 0)
+            //{
+            //    return AlertAndBack("您已经申请过了，爱情是神圣的，切勿当儿戏！");
+            //}
             return View();
         }
 
@@ -208,6 +208,7 @@ namespace CengZai.Web.Controllers
         }
 
 
+
         /// <summary>
         /// 接收
         /// </summary>
@@ -232,12 +233,25 @@ namespace CengZai.Web.Controllers
 
 
         /// <summary>
+        /// 拒绝对方
+        /// </summary>
+        /// <returns></returns>
+        [CheckAuthFilter]
+        public ActionResult UnAccept(int? loverID)
+        {
+            return View();
+        }
+
+
+        /// <summary>
         /// 详细
         /// </summary>
         /// <returns></returns>
         [CheckAuthFilter]
-        public ActionResult Detail(int? loverid)
+        public ActionResult Preview(int? loverID)
         {
+            Model.User user = GetLoginUser();
+            ViewBag.User = user;
             return View();
         }
 
