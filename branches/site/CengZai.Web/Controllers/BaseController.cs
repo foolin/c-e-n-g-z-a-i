@@ -67,6 +67,17 @@ namespace CengZai.Web.Controllers
         }
 
         /// <summary>
+        /// 跳转页面到Url
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        protected ViewResult JumpTo(string msg, string url)
+        {
+            return JumpTo("正在跳转", msg, url, 5);
+        }
+
+        /// <summary>
         /// 跳转到其它页面
         /// </summary>
         /// <param name="title"></param>
@@ -78,9 +89,81 @@ namespace CengZai.Web.Controllers
         {
             ViewBag.Title = title;
             ViewBag.Message = msg;
+
+            if (url != null && url=="BACK")
+            {
+                if (Request.UrlReferrer != null)
+                {
+                    url = Request.UrlReferrer.PathAndQuery;
+                }
+            }
+            else if (url == "REFRESH")
+            {
+                url = Request.Url.PathAndQuery;
+            }
             ViewBag.Url = url;
             ViewBag.Time = 5;
             return View("JumpTo");
+        }
+
+        /// <summary>
+        /// 跳转到其它页面
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="msg"></param>
+        /// <param name="url"></param>
+        /// <param name="time">时间：单位秒</param>
+        /// <returns></returns>
+        protected ViewResult JumpToAction(string title, string msg, string actionName, string controller, object routerValues, int time)
+        {
+            ViewBag.Title = title;
+            ViewBag.Message = msg;
+            ViewBag.Url = Url.Action(actionName, controller, routerValues) ;
+            ViewBag.Time = time;
+            return View("JumpTo");
+        }
+
+        /// <summary>
+        /// 跳转到Action
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="msg"></param>
+        /// <param name="actionName"></param>
+        /// <param name="controller"></param>
+        /// <returns></returns>
+        protected ViewResult JumpToAction(string title, string msg, string actionName, string controller)
+        {
+            return JumpToAction(title, msg, actionName, controller, null, 5);
+        }
+
+        /// <summary>
+        /// 跳转到Action
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="msg"></param>
+        /// <param name="actionName"></param>
+        /// <param name="routerValues"></param>
+        /// <param name="time"></param>
+        /// <returns></returns>
+        protected ViewResult JumpToAction(string title, string msg, string actionName, object routerValues, int time)
+        {
+            ViewBag.Title = title;
+            ViewBag.Message = msg;
+            ViewBag.Url = Url.Action(actionName, routerValues);
+            ViewBag.Time = 5;
+            return View("JumpTo");
+        }
+
+        /// <summary>
+        /// 跳转到Action
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="msg"></param>
+        /// <param name="actionName"></param>
+        /// <returns></returns>
+        protected ViewResult JumpToAction(string title, string msg, string actionName)
+        {
+            return JumpToAction(title, msg, actionName, null, 5);
         }
 
         /// <summary>
