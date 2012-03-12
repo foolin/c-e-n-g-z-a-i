@@ -72,15 +72,15 @@ namespace CengZai.Web.Controllers
         /// <param name="title"></param>
         /// <param name="msg"></param>
         /// <param name="url"></param>
+        /// <param name="time">时间：单位秒</param>
         /// <returns></returns>
-        protected ContentResult JumpTo(string title, string msg, string url, int time)
+        protected ViewResult JumpTo(string title, string msg, string url, int time)
         {
             ViewBag.Title = title;
             ViewBag.Message = msg;
             ViewBag.Url = url;
             ViewBag.Time = 5;
-            string viewContent = View("JumpTo").ToString();
-            return Content(viewContent);
+            return View("JumpTo");
         }
 
         /// <summary>

@@ -162,6 +162,10 @@ namespace CengZai.Web.Controllers
         /// <returns></returns>
         public ActionResult Register()
         {
+            if (GetLoginUser() != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             ViewBag.RegisterLimit = Config.RegisterLimit;
             if (Config.RegisterLimit == 2)
             {
