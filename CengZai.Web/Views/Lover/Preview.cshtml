@@ -36,7 +36,7 @@
                         <th style="width:10%">证件类型</th>
                         <td style="width:40%">恋爱证</td>
                         <th style="width:10%">登记日期</th>
-                        <td style="width:40%">恋爱证</td>
+                        <td style="width:40%">2012年3月12日</td>
                     </tr>
                     <tr>
                         <th>男方</th>
@@ -70,9 +70,9 @@
                     </tr>
                     </tbody>
                 </table>
-                <div>
-                    <a href="#" class="btn btn-primary">我同意</a>
-                    <a href="#" class="btn btn-danger">我拒绝</a>
+                <div id="acceptCtrl">
+                    @Html.ActionLink("我接受并完善资料", "Accept", new {LoverID=Request["LoverID"]}, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("我不接受", "UnAccept", new { LoverID = Request["LoverID"] }, new { @class = "btn btn-danger" })
                 </div>
             </fieldset>
       </div>

@@ -68,6 +68,10 @@ body {
     color:#999;
     cursor:default;
 }
+fieldset legend
+{
+	font-weight:bold;
+}
 /*
 .form-horizontal .control-group > label 
 {

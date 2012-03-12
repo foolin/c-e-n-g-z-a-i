@@ -214,8 +214,28 @@ namespace CengZai.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [CheckAuthFilter]
-        public ActionResult Accept()
+        public ActionResult Accept(int? loverID)
         {
+            Model.User user = GetLoginUser();
+            ViewBag.User = user;
+
+            BLL.Lover bllLover = new BLL.Lover();
+            Model.Lover mLover = null;
+            if (loverID != null)
+            {
+                mLover = bllLover.GetModel((int)loverID);
+            }
+            if (mLover == null)
+            {
+                return JumpTo("参数错误", "对不起，找不到该记录", "", 30);
+            }
+
+            List<Model.Lover> list = bllLover.GetModelList("(BoyUserID={0} OR GirlUserID={0}) And State<>0");
+            if (list.Count > 0)
+            {
+                return JumpTo("非法操作", "不能同时与多名人员进行操作", "", 30);
+            }
+
             return View();
         }
 
@@ -226,7 +246,7 @@ namespace CengZai.Web.Controllers
         /// <returns></returns>
         [CheckAuthFilter]
         [HttpPost]
-        public ActionResult Accept(int? loverID)
+        public ActionResult Accept(int? loverID, int myName)
         {
             return View();
         }
@@ -239,6 +259,9 @@ namespace CengZai.Web.Controllers
         [CheckAuthFilter]
         public ActionResult UnAccept(int? loverID)
         {
+            Model.User user = GetLoginUser();
+            ViewBag.User = user;
+
             return View();
         }
 

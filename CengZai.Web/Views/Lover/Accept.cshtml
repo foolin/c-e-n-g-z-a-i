@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "确认注册-" + ViewBag.SiteName;
+    ViewBag.Title = "我接受并完善资料-" + ViewBag.SiteName;
     var user = ViewBag.User as CengZai.Model.User;
 }
 @section head{
@@ -116,10 +116,11 @@
             debug: true,
 
             // Button Settings
-            button_image_url: "/img/upload-photo.png",
+            //button_image_url: "/img/upload-photo.png",
             button_placeholder_id: "divUploadAvatar",
             button_width: 160,
             button_height: 38,
+            button_text: '<span>我要重新上传</span>',
             //button_text: '<span class="button">上传图片 <span class="buttonSmall"></span></span>',
             //button_text_style: '.button { font-family: Helvetica, Arial, sans-serif; font-size: 14pt; } .buttonSmall { font-size: 10pt; }',
             button_text_top_padding: 1,
@@ -189,60 +190,22 @@
                 , new AjaxOptions { UpdateTargetId = "errmsg", OnBegin = "beginSubmit", OnSuccess = "succ", OnFailure = "fail" }
                 , new { @class = "form-horizontal"}))
             {
-                <fieldset>
-            <legend>登记注册申请表</legend>
-                <table>
-                    <tr>
-                        <td>证件类型：</td>
-                        <td>恋爱证</td>
-                    </tr>
-                    <tr>
-                        <td>男方：</td>
-                        <td>女方：</td>
-                    </tr>
-                    <tr>
-                        <td>生日：</td>
-                        <td>生日：</td>
-                    </tr>
-                    <tr>
-                        <td>手机：</td>
-                        <td>手机：</td>
-                    </tr>
-                    <tr>
-                        <td>宣誓：</td>
-                        <td>宣誓：</td>
-                    </tr>
-                    <tr>
-                        <td>申请人：</td>
-                        <td>申请时间：</td>
-                    </tr>
-                </table>
-            </fieldset>
-                
             <fieldset>
             <legend>请填写申请表单</legend>
                 <div class="control-group">
                         <label class="control-label" for="certificate">申请证件类型：</label>
                         <div class="controls">
-                            <select name="certificate" id="certificate">
-                                <option value="3">结婚证（已经结婚）</option>
-                                <option value="2">恋爱证（正在恋爱）</option>
-                                <option value="1">追求证（正在相处）</option>
-                            </select>
+                            恋爱证
                             <span class="field-validation-error" data-valmsg-for="certificate" id="tips-certificate" data-valmsg-replace="true"></span>
-                            <p class="help-block">相爱是一件严肃而神圣的事，请根据现实生活中的恋爱状态选择</p>
+                            <p class="help-block">这是申请的恋爱证</p>
                         </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label" for="honeyUserID">对方帐号：</label>
+                        <label class="control-label" for="honeyUserID">申请人：</label>
                             <div class="controls">
-                                <select name="honeyUserID" id="honeyUserID">
-                                    <option value="1">对方</option>
-                                    <option value="2">亲艾</option>
-                                    <option value="3">闺蜜</option>
-                                </select>
+                                负卐零
                                 <span class="field-validation-error" data-valmsg-for="honeyUserID" id="tips-honeyUserID" data-valmsg-replace="true"></span>
-                                <p class="help-block">请选择您的爱人（对方不在？请<a href="">邀请</a>或<a href="">查找</a>好友）</p>
+                                <p class="help-block">这是对方（申请人）名字</p>
                             </div>
                     </div>
                     <div class="control-group">
@@ -284,7 +247,7 @@
                     <div class="control-group">
                         <label class="control-label" for="metDate">登记日期：</label>
                         <div class="controls">
-                            <input type="text" class="input-middle" name="joinDate" id="joinDate">
+                            <input type="text" class="input-middle" name="joinDate" id="joinDate" value="@ViewBag.Lover.">
                              <span class="field-validation-error" data-valmsg-for="joinDate" id="tips-joinDate" data-valmsg-replace="true"></span>
                             <p class="help-block">请如实填写，不可更改，如：2012-02-14</p>
                         </div>
