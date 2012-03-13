@@ -46,9 +46,9 @@ namespace CengZai.DAL
 		{
 			StringBuilder strSql=new StringBuilder();
 			strSql.Append("insert into T_Lover(");
-			strSql.Append("Avatar,BoyUserID,GirlUserID,BoyOath,GirlOath,Certificate,JoinDate,ApplyUserID,ApplyTime,State)");
+			strSql.Append("Avatar,BoyUserID,GirlUserID,BoyOath,GirlOath,Certificate,JoinDate,ApplyUserID,ApplyTime,Flow,State)");
 			strSql.Append(" values (");
-			strSql.Append("@Avatar,@BoyUserID,@GirlUserID,@BoyOath,@GirlOath,@Certificate,@JoinDate,@ApplyUserID,@ApplyTime,@State)");
+            strSql.Append("@Avatar,@BoyUserID,@GirlUserID,@BoyOath,@GirlOath,@Certificate,@JoinDate,@ApplyUserID,@ApplyTime,@Flow,@State)");
 			strSql.Append(";select @@IDENTITY");
 			SqlParameter[] parameters = {
 					new SqlParameter("@Avatar", SqlDbType.NVarChar,500),
@@ -60,7 +60,8 @@ namespace CengZai.DAL
 					new SqlParameter("@JoinDate", SqlDbType.DateTime),
 					new SqlParameter("@ApplyUserID", SqlDbType.Int,4),
 					new SqlParameter("@ApplyTime", SqlDbType.DateTime),
-					new SqlParameter("@State", SqlDbType.Int,4)};
+					new SqlParameter("@Flow", SqlDbType.Int,4),
+                    new SqlParameter("@State", SqlDbType.Int,4)};
 			parameters[0].Value = model.Avatar;
 			parameters[1].Value = model.BoyUserID;
 			parameters[2].Value = model.GirlUserID;
@@ -70,7 +71,8 @@ namespace CengZai.DAL
 			parameters[6].Value = model.JoinDate;
 			parameters[7].Value = model.ApplyUserID;
 			parameters[8].Value = model.ApplyTime;
-			parameters[9].Value = model.State;
+			parameters[9].Value = model.Flow;
+            parameters[10].Value = model.State;
 
 			object obj = DbHelperSQL.GetSingle(strSql.ToString(),parameters);
 			if (obj == null)
@@ -98,7 +100,7 @@ namespace CengZai.DAL
 			strSql.Append("JoinDate=@JoinDate,");
 			strSql.Append("ApplyUserID=@ApplyUserID,");
 			strSql.Append("ApplyTime=@ApplyTime,");
-			strSql.Append("State=@State");
+			strSql.Append("Flow=@Flow");
 			strSql.Append(" where LoverID=@LoverID");
 			SqlParameter[] parameters = {
 					new SqlParameter("@Avatar", SqlDbType.NVarChar,500),
@@ -110,8 +112,9 @@ namespace CengZai.DAL
 					new SqlParameter("@JoinDate", SqlDbType.DateTime),
 					new SqlParameter("@ApplyUserID", SqlDbType.Int,4),
 					new SqlParameter("@ApplyTime", SqlDbType.DateTime),
+					new SqlParameter("@Flow", SqlDbType.Int,4),
 					new SqlParameter("@State", SqlDbType.Int,4),
-					new SqlParameter("@LoverID", SqlDbType.Int,4)};
+                    new SqlParameter("@LoverID", SqlDbType.Int,4)};
 			parameters[0].Value = model.Avatar;
 			parameters[1].Value = model.BoyUserID;
 			parameters[2].Value = model.GirlUserID;
@@ -121,8 +124,9 @@ namespace CengZai.DAL
 			parameters[6].Value = model.JoinDate;
 			parameters[7].Value = model.ApplyUserID;
 			parameters[8].Value = model.ApplyTime;
-			parameters[9].Value = model.State;
-			parameters[10].Value = model.LoverID;
+			parameters[9].Value = model.Flow;
+            parameters[10].Value = model.State;
+			parameters[11].Value = model.LoverID;
 
 			int rows=DbHelperSQL.ExecuteSql(strSql.ToString(),parameters);
 			if (rows > 0)
@@ -186,7 +190,7 @@ namespace CengZai.DAL
 		{
 			
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select  top 1 LoverID,Avatar,BoyUserID,GirlUserID,BoyOath,GirlOath,Certificate,JoinDate,ApplyUserID,ApplyTime,State from T_Lover ");
+			strSql.Append("select  top 1 LoverID,Avatar,BoyUserID,GirlUserID,BoyOath,GirlOath,Certificate,JoinDate,ApplyUserID,ApplyTime,Flow,State from T_Lover ");
 			strSql.Append(" where LoverID=@LoverID");
 			SqlParameter[] parameters = {
 					new SqlParameter("@LoverID", SqlDbType.Int,4)
@@ -237,10 +241,14 @@ namespace CengZai.DAL
 				{
 					model.ApplyTime=DateTime.Parse(ds.Tables[0].Rows[0]["ApplyTime"].ToString());
 				}
-				if(ds.Tables[0].Rows[0]["State"]!=null && ds.Tables[0].Rows[0]["State"].ToString()!="")
+				if(ds.Tables[0].Rows[0]["Flow"]!=null && ds.Tables[0].Rows[0]["Flow"].ToString()!="")
 				{
-					model.State=int.Parse(ds.Tables[0].Rows[0]["State"].ToString());
+					model.Flow=int.Parse(ds.Tables[0].Rows[0]["Flow"].ToString());
 				}
+                if (ds.Tables[0].Rows[0]["State"] != null && ds.Tables[0].Rows[0]["State"].ToString() != "")
+                {
+                    model.State = int.Parse(ds.Tables[0].Rows[0]["State"].ToString());
+                }
 				return model;
 			}
 			else
@@ -255,7 +263,7 @@ namespace CengZai.DAL
 		public DataSet GetList(string strWhere)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select LoverID,Avatar,BoyUserID,GirlUserID,BoyOath,GirlOath,Certificate,JoinDate,ApplyUserID,ApplyTime,State ");
+            strSql.Append("select LoverID,Avatar,BoyUserID,GirlUserID,BoyOath,GirlOath,Certificate,JoinDate,ApplyUserID,ApplyTime,Flow,State ");
 			strSql.Append(" FROM T_Lover ");
 			if(strWhere.Trim()!="")
 			{
@@ -275,7 +283,7 @@ namespace CengZai.DAL
 			{
 				strSql.Append(" top "+Top.ToString());
 			}
-			strSql.Append(" LoverID,Avatar,BoyUserID,GirlUserID,BoyOath,GirlOath,Certificate,JoinDate,ApplyUserID,ApplyTime,State ");
+            strSql.Append(" LoverID,Avatar,BoyUserID,GirlUserID,BoyOath,GirlOath,Certificate,JoinDate,ApplyUserID,ApplyTime,Flow,State ");
 			strSql.Append(" FROM T_Lover ");
 			if(strWhere.Trim()!="")
 			{
