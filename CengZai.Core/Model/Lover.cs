@@ -20,7 +20,8 @@ namespace CengZai.Model
 		private DateTime? _joindate;
 		private int? _applyuserid;
 		private DateTime? _applytime;
-		private int? _state;
+		private int? _flow;
+        private int? _state;
 		/// <summary>
 		/// 
 		/// </summary>
@@ -104,11 +105,19 @@ namespace CengZai.Model
 		/// <summary>
 		/// 当前状态：0=证书作废,1=已提出申请,-1=撤销申请,2=对方确认,-2=对方拒绝,3=已审核通过颁发证书。-3=确认不通过
 		/// </summary>
-		public int? State
+		public int? Flow
 		{
-			set{ _state=value;}
-			get{return _state;}
+			set{ _flow=value;}
+			get{return _flow;}
 		}
+        /// <summary>
+        /// 状态：-1=已作废,0=处理中,1=已经颁发
+        /// </summary>
+        public int? State
+        {
+            set { _state = value; }
+            get { return _state; }
+        }
 		#endregion Model
 
 	}
@@ -116,12 +125,12 @@ namespace CengZai.Model
     /// <summary>
     /// Lover状态
     /// </summary>
-    public enum LoverState
+    public enum LoverFlow
     {
         /// <summary>
         /// 废除
         /// </summary>
-        Abolish = 0,
+        Unknow = 0,
         /// <summary>
         /// 申请
         /// </summary>

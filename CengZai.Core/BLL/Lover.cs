@@ -146,10 +146,14 @@ namespace CengZai.BLL
 					{
 						model.ApplyTime=DateTime.Parse(dt.Rows[n]["ApplyTime"].ToString());
 					}
-					if(dt.Rows[n]["State"]!=null && dt.Rows[n]["State"].ToString()!="")
+					if(dt.Rows[n]["Flow"]!=null && dt.Rows[n]["Flow"].ToString()!="")
 					{
-						model.State=int.Parse(dt.Rows[n]["State"].ToString());
+						model.Flow=int.Parse(dt.Rows[n]["Flow"].ToString());
 					}
+                    if (dt.Rows[n]["State"] != null && dt.Rows[n]["State"].ToString() != "")
+                    {
+                        model.State = int.Parse(dt.Rows[n]["State"].ToString());
+                    }
 					modelList.Add(model);
 				}
 			}
