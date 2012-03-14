@@ -23,7 +23,7 @@
 
             <!--登记表单-->
             <fieldset>
-            <legend>付灵和常春的恋爱证信息[预览]</legend>
+            <legend>付灵和常春的【恋爱证】<span class="help-block">信息预览</span></legend>
                 <table class="table">
                     <thead> 
                     <tr>
@@ -70,12 +70,39 @@
                         <th>申请时间</th>
                         <td>@Html.GetDateFormat(lover.ApplyTime, "yyyy年MM月dd日")</td>
                     </tr>
+                    <tr>
+                        <th>状态</th>
+                        <td>
+                            @if (lover.State == 1)
+                            {
+                                <span class="label label-success">已通过</span>
+                            }
+                            else
+                            {
+                                <span class="label label-info">正在处理</span>
+                            }
+                        </td>
+                        <th>状态说明</th>
+                        <td><span class="label label-inverse">@Html.GetLoverFlowName(lover.Flow)</span></td>
+                    </tr>
                     </tbody>
                 </table>
+                @if (lover.ApplyUserID != user.UserID && lover.Flow == (int)CengZai.Model.LoverFlow.Apply)
+                {
                 <div id="acceptCtrl">
-                    @Html.ActionLink("我接受并完善资料", "Accept", new {LoverID=lover.LoverID}, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("我接受并完善资料", "Accept", new { LoverID = lover.LoverID }, new { @class = "btn btn-primary" })
                     @Html.ActionLink("我不接受", "UnAccept", new { LoverID = lover.LoverID }, new { @class = "btn btn-danger" })
                 </div>
+                }
+                else if (lover.Flow == (int)CengZai.Model.LoverFlow.UnAward)
+                {
+                    @Html.ActionLink("完善资料并重新提交审批", "ReAward", new { LoverID = lover.LoverID }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("注销申请", "Abolish", new { LoverID = lover.LoverID }, new { @class = "btn btn-danger" })
+                }
+                else
+                {
+                    @Html.ActionLink("我要注销", "Abolish", new { LoverID = lover.LoverID }, new { @class = "btn btn-danger" })
+                }
             </fieldset>
       </div>
 </div>

@@ -255,11 +255,11 @@ namespace CengZai.Web.Controllers
                 Model.Lover lover = new BLL.Lover().GetModel((int)loverID);
                 if (lover == null || lover.State != 0)
                 {
-                    return JumpToHome("对不起，操作错误！", "您访问的登记申请不存在或已过期！");
+                    return JumpToHome("对不起，操作错误！", "您访问的登记申请不存在或已经失效！");
                 }
                 if (lover.State == 1 || lover.Flow != (int)Model.LoverFlow.Apply)
                 {
-                    return JumpToHome("对不起，操作错误！", "您访问的登记申请已过期！");
+                    return JumpToHome("对不起，操作错误！", "您访问的申请已经失效！");
                 }
                 if (lover.BoyUserID != user.UserID && lover.GirlUserID != user.UserID)
                 {
@@ -319,7 +319,7 @@ namespace CengZai.Web.Controllers
                 }
                 if (lover.State == 1 || lover.Flow != (int)Model.LoverFlow.Apply)
                 {
-                    return AjaxReturn("error", "您访问的登记申请已过期！");
+                    return AjaxReturn("error", "您访问的登记已经失效！");
                 }
 
                 if (new BLL.User().GetModel(user.UserID) == null)
@@ -339,7 +339,7 @@ namespace CengZai.Web.Controllers
                 }
                 if (string.IsNullOrEmpty(mobile) || !System.Text.RegularExpressions.Regex.IsMatch(mobile, @"1[0-9]{10}"))
                 {
-                    return AjaxReturn("mobile", "请正确填写您的手机作为身份证号，我们会加密显示！");
+                    return AjaxReturn("mobile", "请正确填写您的手机作为身份证号！");
                 }
                 if (birth == null)
                 {
@@ -352,11 +352,11 @@ namespace CengZai.Web.Controllers
                 oath = Helper.Util.RemoveHtml(oath);
                 if (string.IsNullOrEmpty(oath) || oath.Length < 10)
                 {
-                    return AjaxReturn("oath", "你的誓言也太短了吧？难道你就没话对对方的说？");
+                    return AjaxReturn("oath", "誓言十个字符也不到？难道你就没话对对方的说？");
                 }
                 if (oath.Length > 1000)
                 {
-                    return AjaxReturn("oath", "誓言这么长啊？都超过1000个字符了！精简点吧，记得说重点哦...");
+                    return AjaxReturn("oath", "誓言这么长超过1000字啊？精简点吧，记得说重点哦...");
                 }
 
                 //更新申请者信息
@@ -451,7 +451,7 @@ namespace CengZai.Web.Controllers
                 Model.Lover lover = new BLL.Lover().GetModel((int)loverID);
                 if (lover == null)
                 {
-                    return JumpToHome("对不起，操作错误！", "您访问的登记申请不存在！");
+                    return JumpToHome("对不起，操作错误！", "您访问的申请不存在！");
                 }
                 if (lover.BoyUserID != user.UserID && lover.GirlUserID != user.UserID)     
                 {
