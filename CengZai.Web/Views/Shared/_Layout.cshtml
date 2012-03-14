@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var user = Html.GetLoginUser() as CengZai.Model.User;
+}
+<!DOCTYPE html>
 <html>
 <head>
     <title>@ViewBag.Title - @ViewBag.SiteName</title>
@@ -29,7 +32,7 @@
 		</a>
 		<a class="brand logo" href="#">@ViewBag.SiteName</a>
 		<div class="nav-collapse">
-        @if (Html.IsLogin())
+        @if (user != null)
         {
 		    <ul class="nav">
 			    <li class="active">@Html.ActionLink("首页","Index","Home")</li>
@@ -43,7 +46,7 @@
                     </ul> 
                 </li>
                 @*<li><a href="#message">唠叨<sup class="label label-important">2</sup></a></li>*@
-                <li>@Html.ActionLink("姻缘", "Apply", "Lover")</li>
+                <li>@Html.ActionLink("登记", "Index", "Lover")</li>
 			    <li><a href="#friend">好友</a></li>
 		    </ul>
             <form class="navbar-form pull-left" action="">
@@ -52,10 +55,10 @@
             </form>
             <ul class="nav pull-right nav-mini-link">
                 <li class="dropdown"> 
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">负卐零 <b class="caret"></b></a> 
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">@user.Nickname <b class="caret"></b></a> 
                     <ul class="dropdown-menu"> 
-                    <li><a href="#">修改密码</a></li> 
-                    <li><a href="#">修改资料</a></li> 
+                    <li>@Html.ActionLink("修改密码", "EditPassword","Settings")</li> 
+                    <li>@Html.ActionLink("修改资料", "EditProfile", "Settings")</li> 
                     <li class="divider"></li> 
                     <li>@Html.ActionLink("退出", "Logout", "User")</li> 
                     </ul> 

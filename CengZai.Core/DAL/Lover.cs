@@ -197,59 +197,10 @@ namespace CengZai.DAL
 			};
 			parameters[0].Value = LoverID;
 
-			CengZai.Model.Lover model=new CengZai.Model.Lover();
 			DataSet ds=DbHelperSQL.Query(strSql.ToString(),parameters);
 			if(ds.Tables[0].Rows.Count>0)
 			{
-				if(ds.Tables[0].Rows[0]["LoverID"]!=null && ds.Tables[0].Rows[0]["LoverID"].ToString()!="")
-				{
-					model.LoverID=int.Parse(ds.Tables[0].Rows[0]["LoverID"].ToString());
-				}
-				if(ds.Tables[0].Rows[0]["Avatar"]!=null && ds.Tables[0].Rows[0]["Avatar"].ToString()!="")
-				{
-					model.Avatar=ds.Tables[0].Rows[0]["Avatar"].ToString();
-				}
-				if(ds.Tables[0].Rows[0]["BoyUserID"]!=null && ds.Tables[0].Rows[0]["BoyUserID"].ToString()!="")
-				{
-					model.BoyUserID=int.Parse(ds.Tables[0].Rows[0]["BoyUserID"].ToString());
-				}
-				if(ds.Tables[0].Rows[0]["GirlUserID"]!=null && ds.Tables[0].Rows[0]["GirlUserID"].ToString()!="")
-				{
-					model.GirlUserID=int.Parse(ds.Tables[0].Rows[0]["GirlUserID"].ToString());
-				}
-				if(ds.Tables[0].Rows[0]["BoyOath"]!=null && ds.Tables[0].Rows[0]["BoyOath"].ToString()!="")
-				{
-					model.BoyOath=ds.Tables[0].Rows[0]["BoyOath"].ToString();
-				}
-				if(ds.Tables[0].Rows[0]["GirlOath"]!=null && ds.Tables[0].Rows[0]["GirlOath"].ToString()!="")
-				{
-					model.GirlOath=ds.Tables[0].Rows[0]["GirlOath"].ToString();
-				}
-				if(ds.Tables[0].Rows[0]["Certificate"]!=null && ds.Tables[0].Rows[0]["Certificate"].ToString()!="")
-				{
-					model.Certificate=int.Parse(ds.Tables[0].Rows[0]["Certificate"].ToString());
-				}
-				if(ds.Tables[0].Rows[0]["JoinDate"]!=null && ds.Tables[0].Rows[0]["JoinDate"].ToString()!="")
-				{
-					model.JoinDate=DateTime.Parse(ds.Tables[0].Rows[0]["JoinDate"].ToString());
-				}
-				if(ds.Tables[0].Rows[0]["ApplyUserID"]!=null && ds.Tables[0].Rows[0]["ApplyUserID"].ToString()!="")
-				{
-					model.ApplyUserID=int.Parse(ds.Tables[0].Rows[0]["ApplyUserID"].ToString());
-				}
-				if(ds.Tables[0].Rows[0]["ApplyTime"]!=null && ds.Tables[0].Rows[0]["ApplyTime"].ToString()!="")
-				{
-					model.ApplyTime=DateTime.Parse(ds.Tables[0].Rows[0]["ApplyTime"].ToString());
-				}
-				if(ds.Tables[0].Rows[0]["Flow"]!=null && ds.Tables[0].Rows[0]["Flow"].ToString()!="")
-				{
-					model.Flow=int.Parse(ds.Tables[0].Rows[0]["Flow"].ToString());
-				}
-                if (ds.Tables[0].Rows[0]["State"] != null && ds.Tables[0].Rows[0]["State"].ToString() != "")
-                {
-                    model.State = int.Parse(ds.Tables[0].Rows[0]["State"].ToString());
-                }
-				return model;
+                return ToModel(ds.Tables[0].Rows[0]);
 			}
 			else
 			{
@@ -366,6 +317,69 @@ namespace CengZai.DAL
 		}*/
 
 		#endregion  Method
+
+
+        /// <summary>
+        /// 转实体
+        /// </summary>
+        /// <param name="row"></param>
+        /// <returns></returns>
+        public Model.Lover ToModel(DataRow row)
+        {
+            if (row == null) return null;
+
+            CengZai.Model.Lover model = new CengZai.Model.Lover();
+
+            if (row["LoverID"] != null && row["LoverID"].ToString() != "")
+            {
+                model.LoverID = int.Parse(row["LoverID"].ToString());
+            }
+            if (row["Avatar"] != null && row["Avatar"].ToString() != "")
+            {
+                model.Avatar = row["Avatar"].ToString();
+            }
+            if (row["BoyUserID"] != null && row["BoyUserID"].ToString() != "")
+            {
+                model.BoyUserID = int.Parse(row["BoyUserID"].ToString());
+            }
+            if (row["GirlUserID"] != null && row["GirlUserID"].ToString() != "")
+            {
+                model.GirlUserID = int.Parse(row["GirlUserID"].ToString());
+            }
+            if (row["BoyOath"] != null && row["BoyOath"].ToString() != "")
+            {
+                model.BoyOath = row["BoyOath"].ToString();
+            }
+            if (row["GirlOath"] != null && row["GirlOath"].ToString() != "")
+            {
+                model.GirlOath = row["GirlOath"].ToString();
+            }
+            if (row["Certificate"] != null && row["Certificate"].ToString() != "")
+            {
+                model.Certificate = int.Parse(row["Certificate"].ToString());
+            }
+            if (row["JoinDate"] != null && row["JoinDate"].ToString() != "")
+            {
+                model.JoinDate = DateTime.Parse(row["JoinDate"].ToString());
+            }
+            if (row["ApplyUserID"] != null && row["ApplyUserID"].ToString() != "")
+            {
+                model.ApplyUserID = int.Parse(row["ApplyUserID"].ToString());
+            }
+            if (row["ApplyTime"] != null && row["ApplyTime"].ToString() != "")
+            {
+                model.ApplyTime = DateTime.Parse(row["ApplyTime"].ToString());
+            }
+            if (row["Flow"] != null && row["Flow"].ToString() != "")
+            {
+                model.Flow = int.Parse(row["Flow"].ToString());
+            }
+            if (row["State"] != null && row["State"].ToString() != "")
+            {
+                model.State = int.Parse(row["State"].ToString());
+            }
+            return model;
+        }
 	}
 }
 

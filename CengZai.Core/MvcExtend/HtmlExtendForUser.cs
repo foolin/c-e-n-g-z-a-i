@@ -78,6 +78,21 @@ namespace System.Web.Mvc
             return (user != null);
         }
 
+        /// <summary>
+        /// 取登录用户
+        /// </summary>
+        /// <returns></returns>
+        public static CengZai.Model.User GetLoginUser(this HtmlHelper helper)
+        {
+            CengZai.Model.User user = null;
+            try
+            {
+                user = System.Web.HttpContext.Current.Session["LOGIN_USER"] as CengZai.Model.User;
+            }
+            catch { }
+            return user;
+        }
+
 
     }
 }

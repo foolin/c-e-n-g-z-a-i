@@ -253,7 +253,7 @@
                     <div class="control-group">
                         <label class="control-label" for="metDate">登记日期：</label>
                         <div class="controls">
-                            <input type="text" class="input-middle" name="joinDate" id="joinDate" value="@lover.JoinDate">
+                            <input type="text" class="input-middle" name="joinDate" id="joinDate" value="@Html.GetDateFormat(lover.JoinDate, "yyyy-MM-dd")">
                              <span class="field-validation-error" data-valmsg-for="joinDate" id="tips-joinDate" data-valmsg-replace="true"></span>
                             <p class="help-block">请如实填写，不可更改，如：2012-02-14</p>
                         </div>
@@ -273,6 +273,7 @@
                                 </select>
                             </p>
                             <textarea name="oath" id="oath" class="input-xlarge" style="width:400px;" rows="8"></textarea>
+                            <br />
                             <span class="field-validation-error" data-valmsg-for="oath" id="tips-oath" data-valmsg-replace="true"></span>
                             <p class="help-block">请填写您对对方的誓言，大胆说出您的爱~（1000个字符以内，不可更改）</p>
                         </div>
