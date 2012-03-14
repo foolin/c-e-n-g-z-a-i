@@ -1,12 +1,17 @@
 ﻿@{
-    ViewBag.Title = "我接受并完善资料-" + ViewBag.SiteName;
+    ViewBag.Title = "我接受申请并完善资料-" + ViewBag.SiteName;
     var user = ViewBag.User as CengZai.Model.User;
+    var lover = ViewBag.Lover as CengZai.Model.Lover;
+    var avatarUrl = CengZai.Helper.Config.UploadHttpPath + "/" + lover.Avatar;
 }
 @section head{
-    <link href="../../js/calendar/calendar.css" rel="stylesheet" type="text/css" />
-    <script src="../../js/calendar/jquery.calendar.js" type="text/javascript"></script>
-    <script src="../../js/swfupload/swfupload.js" type="text/javascript"></script>
-    <script src="../../js/swfupload/handlers.js" type="text/javascript"></script>
+    <link href="@Url.Content("~/js/calendar/calendar.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/js/calendar/jquery.calendar.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/js/swfupload/swfupload.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/js/swfupload/handlers.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/js/mvc/MicrosoftAjax.js")" type="text/javascript"></script> 
+    <script src="@Url.Content("~/js/mvc/MicrosoftMvcAjax.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/js/mvc/jquery.unobtrusive-ajax.min.js")" type="text/javascript"></script>
     <script type="text/javascript">
 
         var oathTplData = [""
@@ -113,7 +118,7 @@
             file_types_description: "JPG Images",
             file_upload_limit: 0,    // Zero means unlimited
             file_queue_limit: 1,
-            debug: true,
+            debug: false,
 
             // Button Settings
             //button_image_url: "/img/upload-photo.png",
@@ -186,16 +191,17 @@
 
             <!--登记表单-->
             @*@using (Html.BeginForm("Apply", "Lover", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))*@
-            @using (Ajax.BeginForm("Apply", null
+            @using (Ajax.BeginForm("Accept", null
                 , new AjaxOptions { UpdateTargetId = "errmsg", OnBegin = "beginSubmit", OnSuccess = "succ", OnFailure = "fail" }
                 , new { @class = "form-horizontal"}))
             {
             <fieldset>
-            <legend>请填写申请表单</legend>
+            <legend>我接受申请并完善资料</legend>
                 <div class="control-group">
                         <label class="control-label" for="certificate">申请证件类型：</label>
                         <div class="controls">
-                            恋爱证
+                            <input type="hidden" name="loverID" value="@lover.LoverID" />
+                            @Html.GetCertificateName(@lover.Certificate)
                             <span class="field-validation-error" data-valmsg-for="certificate" id="tips-certificate" data-valmsg-replace="true"></span>
                             <p class="help-block">这是申请的恋爱证</p>
                         </div>
@@ -203,16 +209,16 @@
                     <div class="control-group">
                         <label class="control-label" for="honeyUserID">申请人：</label>
                             <div class="controls">
-                                负卐零
+                                @Html.GetUserNickname(lover.ApplyUserID)
                                 <span class="field-validation-error" data-valmsg-for="honeyUserID" id="tips-honeyUserID" data-valmsg-replace="true"></span>
                                 <p class="help-block">这是对方（申请人）名字</p>
                             </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label" for="myName">我的名字：</label>
+                        <label class="control-label" for="nickname">我的名字：</label>
                             <div class="controls">
-                                @Html.TextBox("myName", user.Nickname, new { @class = "input-middle" })
-                                <span class="field-validation-error" data-valmsg-for="myName" id="tips-myName" data-valmsg-replace="true"></span>
+                                @Html.TextBox("nickname", user.Nickname, new { @class = "input-middle" })
+                                <span class="field-validation-error" data-valmsg-for="nickname" id="tips-nickname" data-valmsg-replace="true"></span>
                                 <p class="help-block">这里是你帐号的昵称，建议用真实名字</p>
                             </div>
                     </div>
@@ -220,8 +226,8 @@
                         <label class="control-label" for="birth">我们的合照头像：</label>
                         <div class="controls">
                             <p>
-                                <img id="imgAvatar"  width="196" height="136" alt="" style="display:none" />
-                                <input type="hidden" value="" name="avatar" id="avatar" />
+                                <img id="imgAvatar"  width="196" height="136" alt="" src="@avatarUrl" />
+                                <input type="hidden" value="@lover.Avatar" name="avatar" id="avatar" />
                             </p>
                             <div id="divUploadAvatar"></div>
                             <span class="field-validation-error" data-valmsg-for="avatar" id="tips-avatar" data-valmsg-replace="true"></span>
@@ -231,7 +237,7 @@
                     <div class="control-group">
                         <label class="control-label" for="mobile">我的手机号：</label>
                         <div class="controls">
-                            <input type="text" class="input-middle" value="13" name="mobile" id="mobile">
+                            <input type="text" class="input-middle" value="@user.Mobile" name="mobile" id="mobile">
                             <span class="field-validation-error" data-valmsg-for="mobile" id="tips-mobile" data-valmsg-replace="true"></span>
                             <p class="help-block">用手机号代替身份证号，我们会保护您的隐私，手机号会加密显示</p>
                         </div>
@@ -239,7 +245,7 @@
                     <div class="control-group">
                         <label class="control-label" for="birth">我的生日：</label>
                         <div class="controls">
-                            <input type="text" class="input-middle" name="birth" id="birth">
+                            <input type="text" class="input-middle" value="@Html.GetDateFormat(user.Birth,"yyyy-MM-dd")" name="birth" id="birth">
                             <span class="field-validation-error" data-valmsg-for="birth" id="tips-birth" data-valmsg-replace="true"></span>
                             <p class="help-block">请填写真实生日，会显示在证件上</p>
                         </div>
@@ -247,7 +253,7 @@
                     <div class="control-group">
                         <label class="control-label" for="metDate">登记日期：</label>
                         <div class="controls">
-                            <input type="text" class="input-middle" name="joinDate" id="joinDate" value="@ViewBag.Lover.">
+                            <input type="text" class="input-middle" name="joinDate" id="joinDate" value="@lover.JoinDate">
                              <span class="field-validation-error" data-valmsg-for="joinDate" id="tips-joinDate" data-valmsg-replace="true"></span>
                             <p class="help-block">请如实填写，不可更改，如：2012-02-14</p>
                         </div>

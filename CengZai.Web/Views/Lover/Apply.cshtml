@@ -219,15 +219,15 @@
                             </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label" for="myName">我的名字：</label>
+                        <label class="control-label" for="nickname">我的名字：</label>
                             <div class="controls">
-                                @Html.TextBox("myName", user.Nickname, new { @class = "input-middle" })
-                                <span class="field-validation-error" data-valmsg-for="myName" id="tips-myName" data-valmsg-replace="true"></span>
+                                @Html.TextBox("nickname", user.Nickname, new { @class = "input-middle" })
+                                <span class="field-validation-error" data-valmsg-for="nickname" id="tips-nickname" data-valmsg-replace="true"></span>
                                 <p class="help-block">这里是你帐号的昵称，建议用真实名字</p>
                             </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label" for="birth">我们的合照头像：</label>
+                        <label class="control-label" for="avatar">我们的合照头像：</label>
                         <div class="controls">
                             <p>
                                 <img id="imgAvatar"  width="196" height="136" alt="" style="display:none" />
