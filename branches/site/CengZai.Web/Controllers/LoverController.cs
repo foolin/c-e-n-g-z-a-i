@@ -13,9 +13,23 @@ namespace CengZai.Web.Controllers
     {
         //
         // GET: /Lover/
-
-        public ActionResult Index(int? loverID)
+        [CheckAuthFilter]
+        public ActionResult Index()
         {
+            try
+            {
+                Model.User user = GetLoginUser();
+                ViewBag.User = user;
+
+                BLL.Lover bllLover = new BLL.Lover();
+                ViewBag.MyLover =  bllLover.GetMyLover(user.UserID);
+                ViewBag.ReceiveLoverList = bllLover.GetReceiveList(user.UserID);
+            }
+            catch (Exception ex)
+            {
+                Log.AddErrorInfo("Lover/Index异常", ex);
+                return JumpTo("对不起，出错了", "哎呀，对不起！出错了，请刷新或者稍后访问！", "", 0);
+            }
             return View();
         }
 
@@ -30,7 +44,7 @@ namespace CengZai.Web.Controllers
             ViewBag.User = user;
 
             BLL.Lover bllLover = new BLL.Lover();
-            Model.Lover lover = bllLover.GetLover(user.UserID);
+            Model.Lover lover = bllLover.GetMyLover(user.UserID);
             if (lover != null)
             {
                 if (lover.State == 1)
@@ -75,6 +89,10 @@ namespace CengZai.Web.Controllers
                     return AjaxReturn("honeyUserID", "亲，你没事吧？自己和自己搞？");
                 }
                 if (new BLL.User().GetModel((int)honeyUserID) == null)
+                {
+                    return AjaxReturn("honeyUserID", "唉哟，对方帐号怎么不存在呢？");
+                }
+                if (new BLL.Lover().GetMyLover((int)honeyUserID) != null)
                 {
                     return AjaxReturn("honeyUserID", "唉哟，对方帐号怎么不存在呢？");
                 }
@@ -125,6 +143,7 @@ namespace CengZai.Web.Controllers
                 lover.Certificate = certificate;
                 lover.JoinDate = joinDate;
                 lover.Flow = (int)Model.LoverFlow.Apply;
+                lover.State = 0;
                 if (user.Sex == 2)
                 {
                     lover.BoyOath = "";
@@ -154,7 +173,6 @@ namespace CengZai.Web.Controllers
                 Log.AddErrorInfo("LoverController.Apply()出现异常", ex);
                 return AjaxReturn("error", "操作异常，请检查输入或者稍后重试");
             }
-            return Json(null);
         }
 
 
@@ -358,7 +376,7 @@ namespace CengZai.Web.Controllers
                 }
                 else if (lover.GirlUserID == user.UserID)
                 {
-                    lover.GirlOath = "";
+                    lover.GirlOath = oath;
                 }
                 else
                 {
@@ -433,7 +451,11 @@ namespace CengZai.Web.Controllers
                 Model.Lover lover = new BLL.Lover().GetModel((int)loverID);
                 if (lover == null)
                 {
-                    JumpToHome("对不起，操作错误！", "您访问的登记申请不存在！");
+                    return JumpToHome("对不起，操作错误！", "您访问的登记申请不存在！");
+                }
+                if (lover.BoyUserID != user.UserID && lover.GirlUserID != user.UserID)     
+                {
+                    return JumpToHome("对不起", "您访问无权访问！");
                 }
                 ViewBag.Lover = lover;
             }

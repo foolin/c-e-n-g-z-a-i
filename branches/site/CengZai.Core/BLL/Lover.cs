@@ -106,55 +106,7 @@ namespace CengZai.BLL
 				CengZai.Model.Lover model;
 				for (int n = 0; n < rowsCount; n++)
 				{
-					model = new CengZai.Model.Lover();
-					if(dt.Rows[n]["LoverID"]!=null && dt.Rows[n]["LoverID"].ToString()!="")
-					{
-						model.LoverID=int.Parse(dt.Rows[n]["LoverID"].ToString());
-					}
-					if(dt.Rows[n]["Avatar"]!=null && dt.Rows[n]["Avatar"].ToString()!="")
-					{
-					model.Avatar=dt.Rows[n]["Avatar"].ToString();
-					}
-					if(dt.Rows[n]["BoyUserID"]!=null && dt.Rows[n]["BoyUserID"].ToString()!="")
-					{
-						model.BoyUserID=int.Parse(dt.Rows[n]["BoyUserID"].ToString());
-					}
-					if(dt.Rows[n]["GirlUserID"]!=null && dt.Rows[n]["GirlUserID"].ToString()!="")
-					{
-						model.GirlUserID=int.Parse(dt.Rows[n]["GirlUserID"].ToString());
-					}
-					if(dt.Rows[n]["BoyOath"]!=null && dt.Rows[n]["BoyOath"].ToString()!="")
-					{
-					model.BoyOath=dt.Rows[n]["BoyOath"].ToString();
-					}
-					if(dt.Rows[n]["GirlOath"]!=null && dt.Rows[n]["GirlOath"].ToString()!="")
-					{
-					model.GirlOath=dt.Rows[n]["GirlOath"].ToString();
-					}
-					if(dt.Rows[n]["Certificate"]!=null && dt.Rows[n]["Certificate"].ToString()!="")
-					{
-						model.Certificate=int.Parse(dt.Rows[n]["Certificate"].ToString());
-					}
-					if(dt.Rows[n]["JoinDate"]!=null && dt.Rows[n]["JoinDate"].ToString()!="")
-					{
-						model.JoinDate=DateTime.Parse(dt.Rows[n]["JoinDate"].ToString());
-					}
-					if(dt.Rows[n]["ApplyUserID"]!=null && dt.Rows[n]["ApplyUserID"].ToString()!="")
-					{
-						model.ApplyUserID=int.Parse(dt.Rows[n]["ApplyUserID"].ToString());
-					}
-					if(dt.Rows[n]["ApplyTime"]!=null && dt.Rows[n]["ApplyTime"].ToString()!="")
-					{
-						model.ApplyTime=DateTime.Parse(dt.Rows[n]["ApplyTime"].ToString());
-					}
-					if(dt.Rows[n]["Flow"]!=null && dt.Rows[n]["Flow"].ToString()!="")
-					{
-						model.Flow=int.Parse(dt.Rows[n]["Flow"].ToString());
-					}
-                    if (dt.Rows[n]["State"] != null && dt.Rows[n]["State"].ToString() != "")
-                    {
-                        model.State = int.Parse(dt.Rows[n]["State"].ToString());
-                    }
+                    model = dal.ToModel(dt.Rows[n]);
 					modelList.Add(model);
 				}
 			}
@@ -194,21 +146,16 @@ namespace CengZai.BLL
 		#endregion  Method
 
         /// <summary>
-        /// 获取用户的爱巢
+        /// 取发送给我的单
         /// </summary>
-        /// <param name="userID">用户ID</param>
-        /// <param name="isUse">是否正在使用：false=已经失效，true=正在使用</param>
+        /// <param name="userID"></param>
         /// <returns></returns>
-        public List<Model.Lover> GetLoverList(int userID, bool isUse)
+        public List<Model.Lover> GetReceiveList(int userID)
         {
             List<Model.Lover> list = null;
             StringBuilder strWhere = new StringBuilder();
-            strWhere.AppendFormat("(BoyUserID={0} OR GirlUserID={0})", userID);
-            if (isUse)
-            {
-                strWhere.AppendFormat(" And State in (0,1)");
-            }
-            DataSet dsList = GetList(strWhere.ToString());
+            strWhere.AppendFormat("(BoyUserID={0} OR GirlUserID={0}) And State=0 And Flow IN ({1})", userID, (int)LoverFlow.Apply);
+            DataSet dsList = GetList(0, strWhere.ToString(), "State DESC");
             if (dsList != null && dsList.Tables.Count > 0 && dsList.Tables[0].Rows.Count > 0)
             {
                 list = DataTableToList(dsList.Tables[0]);
@@ -221,40 +168,103 @@ namespace CengZai.BLL
         /// </summary>
         /// <param name="userID"></param>
         /// <returns></returns>
-        public Model.Lover GetLover(int userID)
+        public Model.Lover GetMyLover(int userID)
         {
             Model.Lover myLover = null;
-            List<Model.Lover> myList = GetLoverList(userID, true);   //找出未失效的单
-            if (myList.Count > 0)
+            StringBuilder strWhere = new StringBuilder();
+            strWhere.AppendFormat("(BoyUserID={0} OR GirlUserID={0})", userID);
+            strWhere.AppendFormat(" And State in (0,1)");
+            DataSet dsList = GetList(0, strWhere.ToString(), "State DESC");
+            if(dsList == null || dsList.Tables.Count == 0 || dsList.Tables[0].Rows.Count == 0)
             {
-                //判断是否有申请权限：
-                //1.作为申请者：如果已经有申请了
-                //2.作为接受者：如果已经有接受
-                myLover = myList.Find(delegate(Model.Lover m)
-                 {
-                     //申请者
-                     if (m.ApplyUserID == userID)
-                     {  
-                         return true;
-                     }
-                     //被接收者
-                     if (m.ApplyUserID != userID
-                         && (m.Flow == (int)Model.LoverFlow.Accept
-                             || m.Flow == (int)Model.LoverFlow.Award
-                             || m.Flow == (int)Model.LoverFlow.UnAward
-                         )
-                         )
-                     {
-                         return true;
-                     }
-                     return false;
-                 });
+                return null;
             }
+            List<Model.Lover> myList = DataTableToList(dsList.Tables[0]);
+            //判断是否有申请权限：
+            //1.作为申请者：如果已经有申请了
+            //2.作为接受者：如果已经有接受
+            myLover = myList.Find(delegate(Model.Lover m)
+                {
+                    //申请者
+                    if (m.ApplyUserID == userID)
+                    {  
+                        return true;
+                    }
+                    //被接收者
+                    if (m.ApplyUserID != userID
+                        && ( m.Flow == (int)Model.LoverFlow.Accept   //已经接受
+                            || m.Flow == (int)Model.LoverFlow.Award    //已审核并颁发
+                            || m.Flow == (int)Model.LoverFlow.UnAward  //未审核颁发
+                        )
+                        )
+                    {
+                        return true;
+                    }
+                    return false;
+                });
 
             return myLover;
         }
 
-        
+
+        /// <summary>
+        /// 取证件类型名字
+        /// </summary>
+        /// <param name="certificate"></param>
+        /// <returns></returns>
+        public string GetCertificateName(int? certificate)
+        {
+            if (certificate == (int)CengZai.Model.LoverCertificate.Love)
+            {
+                return "恋爱证";
+            }
+            if (certificate == (int)CengZai.Model.LoverCertificate.Marry)
+            {
+                return "结婚证";
+            }
+
+            return "";
+        }
+
+
+
+        /// <summary>
+        /// 取状态名
+        /// </summary>
+        /// <param name="certificate"></param>
+        /// <returns></returns>
+        public string GetFlowName(int? flow)
+        {
+            if (flow == (int)CengZai.Model.LoverFlow.Accept)
+            {
+                return "接受";
+            }
+            if (flow == (int)CengZai.Model.LoverFlow.Apply)
+            {
+                return "申请";
+            }
+            if (flow == (int)CengZai.Model.LoverFlow.Award)
+            {
+                return "颁发";
+            }
+            if (flow == (int)CengZai.Model.LoverFlow.UnAccept)
+            {
+                return "拒绝";
+            }
+            if (flow == (int)CengZai.Model.LoverFlow.UnApply)
+            {
+                return "取消申请";
+            }
+            if (flow == (int)CengZai.Model.LoverFlow.UnAward)
+            {
+                return "不授予";
+            }
+            if (flow == (int)CengZai.Model.LoverFlow.Unknow)
+            {
+                return "未知";
+            }
+            return "未知";
+        }
 	}
 }
 

@@ -11,16 +11,7 @@ namespace System.Web.Mvc
     {
         public static string GetCertificateName(this HtmlHelper helper, int? certificate)
         {
-            if (certificate == (int)CengZai.Model.LoverCertificate.Love)
-            {
-                return "恋爱证";
-            }
-            if (certificate == (int)CengZai.Model.LoverCertificate.Marry)
-            {
-                return "结婚证";
-            }
-
-            return "";
+            return new CengZai.BLL.Lover().GetCertificateName(certificate);
         }
     }
 }
