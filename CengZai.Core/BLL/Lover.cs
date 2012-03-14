@@ -237,27 +237,27 @@ namespace CengZai.BLL
         {
             if (flow == (int)CengZai.Model.LoverFlow.Accept)
             {
-                return "接受";
+                return "系统审核中";
             }
             if (flow == (int)CengZai.Model.LoverFlow.Apply)
             {
-                return "申请";
+                return "等待对方接受";
             }
             if (flow == (int)CengZai.Model.LoverFlow.Award)
             {
-                return "颁发";
+                return "审核已通过";
             }
             if (flow == (int)CengZai.Model.LoverFlow.UnAccept)
             {
-                return "拒绝";
+                return "对方已拒绝";
             }
             if (flow == (int)CengZai.Model.LoverFlow.UnApply)
             {
-                return "取消申请";
+                return "申请者取消申请";
             }
             if (flow == (int)CengZai.Model.LoverFlow.UnAward)
             {
-                return "不授予";
+                return "系统退回";
             }
             if (flow == (int)CengZai.Model.LoverFlow.Unknow)
             {
