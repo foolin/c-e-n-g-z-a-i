@@ -3,6 +3,7 @@ using System.Data;
 using System.Collections.Generic;
 using CengZai.Helper;
 using CengZai.Model;
+using System.Text;
 namespace CengZai.BLL
 {
 	/// <summary>
@@ -191,6 +192,69 @@ namespace CengZai.BLL
 		//}
 
 		#endregion  Method
+
+        /// <summary>
+        /// 获取用户的爱巢
+        /// </summary>
+        /// <param name="userID">用户ID</param>
+        /// <param name="isUse">是否正在使用：false=已经失效，true=正在使用</param>
+        /// <returns></returns>
+        public List<Model.Lover> GetLoverList(int userID, bool isUse)
+        {
+            List<Model.Lover> list = null;
+            StringBuilder strWhere = new StringBuilder();
+            strWhere.AppendFormat("(BoyUserID={0} OR GirlUserID={0})", userID);
+            if (isUse)
+            {
+                strWhere.AppendFormat(" And State in (0,1)");
+            }
+            DataSet dsList = GetList(strWhere.ToString());
+            if (dsList != null && dsList.Tables.Count > 0 && dsList.Tables[0].Rows.Count > 0)
+            {
+                list = DataTableToList(dsList.Tables[0]);
+            }
+            return list;
+        }
+
+        /// <summary>
+        /// 获取我的爱人
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <returns></returns>
+        public Model.Lover GetLover(int userID)
+        {
+            Model.Lover myLover = null;
+            List<Model.Lover> myList = GetLoverList(userID, true);   //找出未失效的单
+            if (myList.Count > 0)
+            {
+                //判断是否有申请权限：
+                //1.作为申请者：如果已经有申请了
+                //2.作为接受者：如果已经有接受
+                myLover = myList.Find(delegate(Model.Lover m)
+                 {
+                     //申请者
+                     if (m.ApplyUserID == userID)
+                     {  
+                         return true;
+                     }
+                     //被接收者
+                     if (m.ApplyUserID != userID
+                         && (m.Flow == (int)Model.LoverFlow.Accept
+                             || m.Flow == (int)Model.LoverFlow.Award
+                             || m.Flow == (int)Model.LoverFlow.UnAward
+                         )
+                         )
+                     {
+                         return true;
+                     }
+                     return false;
+                 });
+            }
+
+            return myLover;
+        }
+
+        
 	}
 }
 

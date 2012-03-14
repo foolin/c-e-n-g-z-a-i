@@ -2,6 +2,16 @@
     ViewBag.Title = "预览申请信息-" + ViewBag.SiteName;
     var user = ViewBag.User as CengZai.Model.User;
     var lover = ViewBag.Lover as CengZai.Model.Lover;
+    var boy = Html.GetUser(lover.BoyUserID);
+    var girl = Html.GetUser(lover.GirlUserID);
+    if (boy == null) 
+    {
+        boy = new CengZai.Model.User();
+    }
+    if (girl == null) 
+    {
+        girl = new CengZai.Model.User();
+    }
 }
 @section head{
     <link href="../../js/calendar/calendar.css" rel="stylesheet" type="text/css" />
@@ -41,21 +51,21 @@
                     </tr>
                     <tr>
                         <th>男方</th>
-                        <td>@Html.GetUserNickname(lover.BoyUserID)</td>
+                        <td>@boy.Nickname</td>
                         <th>女方</th>
-                        <td>@Html.GetUserNickname(lover.GirlUserID)</td>
+                        <td>@girl.Nickname</td>
                     </tr>
                     <tr>
                         <th>生日</th>
-                        <td>@Html.GetDateFormat(Html.GetUser(lover.BoyUserID).Birth, "yyyy年MM月dd日")</td>
+                        <td>@Html.GetDateFormat(boy.Birth, "yyyy年MM月dd日")</td>
                         <th>生日</th>
-                        <td>@Html.GetDateFormat(Html.GetUser(lover.GirlUserID).Birth, "yyyy年MM月dd日")</td>
+                        <td>@Html.GetDateFormat(girl.Birth, "yyyy年MM月dd日")</td>
                     </tr>
                     <tr>
                         <th>手机</th>
-                        <td>@Html.GetUser(lover.BoyUserID).Mobile</td>
+                        <td>@boy.Mobile</td>
                         <th>手机</th>
-                        <td>@Html.GetUser(lover.GirlUserID).Mobile</td>
+                        <td>@girl.Mobile</td>
                     </tr>
                     <tr>
                         <th>宣誓</th>
@@ -78,4 +88,3 @@
             </fieldset>
       </div>
 </div>
-
