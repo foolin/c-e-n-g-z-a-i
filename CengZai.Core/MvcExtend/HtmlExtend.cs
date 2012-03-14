@@ -172,6 +172,29 @@ namespace System.Web.Mvc
             return content;
         }
 
+
+        /// <summary>
+        /// 格式化日期
+        /// </summary>
+        /// <param name="helper"></param>
+        /// <param name="date"></param>
+        /// <param name="format"></param>
+        /// <returns></returns>
+        public static string GetDateFormat(this HtmlHelper helper, DateTime? date, string format)
+        {
+            string val = date + "";
+            try
+            {
+                if (date != null && !string.IsNullOrEmpty(format))
+                {
+                    val = Convert.ToDateTime(date).ToString(format);
+                }
+            }
+            catch { }
+            return val;
+        }
+        
+
     }
 }
 

@@ -28,16 +28,24 @@ namespace CengZai.Web.Controllers
         {
             Model.User user = GetLoginUser();
             ViewBag.User = user;
+
+            BLL.Lover bllLover = new BLL.Lover();
+            Model.Lover lover = bllLover.GetLover(user.UserID);
+            if (lover != null)
+            {
+                if (lover.State == 1)
+                {
+                    return JumpToAction("对不起，您无权申请！", "您已经领了证书，不可以再申请证书，如果需要申请，请注销原来的证书！", "Detail", new { LoverID = lover.LoverID });
+                }
+                else
+                {
+                     return JumpToAction("对不起，您无权申请！", "您已经有证书在处理中，不可以再申请其它证书，请注销原来的证书！", "Detail", new { LoverID = lover.LoverID });
+                }
+            }
             if (user.Sex == 0)
             {
                 return AlertAndBack("您的性别未知，请完善资料再来申请！");
             }
-            //BLL.Lover bllLover = new BLL.Lover();
-            //DataSet dsMyLovers = bllLover.GetList(string.Format("(BoyUserID={0} Or GirlUserID={0}) And State<>{1}", user.UserID, (int)Model.LoverState.Abolish));
-            //if (dsMyLovers != null && dsMyLovers.Tables.Count > 0 && dsMyLovers.Tables[0].Rows.Count > 0)
-            //{
-            //    return AlertAndBack("您已经申请过了，爱情是神圣的，切勿当儿戏！");
-            //}
             return View();
         }
 
@@ -116,7 +124,7 @@ namespace CengZai.Web.Controllers
                 lover.Avatar = avatar;
                 lover.Certificate = certificate;
                 lover.JoinDate = joinDate;
-                lover.State = (int)Model.LoverState.Apply;
+                lover.Flow = (int)Model.LoverFlow.Apply;
                 if (user.Sex == 2)
                 {
                     lover.BoyOath = "";
@@ -259,8 +267,27 @@ namespace CengZai.Web.Controllers
         [CheckAuthFilter]
         public ActionResult UnAccept(int? loverID)
         {
-            Model.User user = GetLoginUser();
-            ViewBag.User = user;
+            if (loverID == null)
+            {
+                JumpToHome("对不起，操作错误！", "您访问的登记申请不存在！");
+            }
+            try
+            {
+                Model.User user = GetLoginUser();
+                ViewBag.User = user;
+
+                Model.Lover lover = new BLL.Lover().GetModel((int)loverID);
+                if (lover == null)
+                {
+                    JumpToHome("对不起，操作错误！", "您访问的登记申请不存在！");
+                }
+                ViewBag.Lover = lover;
+            }
+            catch (Exception ex)
+            {
+                Log.AddErrorInfo("Lover/UnAccept出现异常：", ex);
+                return JumpToHome("对不起，操作错误！", "您访问的登记申请出现点异常！");
+            }
 
             return View();
         }
@@ -273,8 +300,54 @@ namespace CengZai.Web.Controllers
         [CheckAuthFilter]
         public ActionResult Preview(int? loverID)
         {
-            Model.User user = GetLoginUser();
-            ViewBag.User = user;
+            if (loverID == null)
+            {
+                JumpToHome("对不起，操作错误！", "您访问的登记申请不存在！");
+            }
+            try
+            {
+                Model.User user = GetLoginUser();
+                ViewBag.User = user;
+
+                Model.Lover lover = new BLL.Lover().GetModel((int)loverID);
+                if (lover == null)
+                {
+                    JumpToHome("对不起，操作错误！", "您访问的登记申请不存在！");
+                }
+                ViewBag.Lover = lover;
+            }
+            catch (Exception ex)
+            {
+                Log.AddErrorInfo("Lover/UnAccept出现异常：", ex);
+                return JumpToHome("对不起，操作错误！", "您访问的登记申请出现点异常！");
+            }
+            return View();
+        }
+
+
+        public ActionResult Detail(int? loverID)
+        {
+            if (loverID == null)
+            {
+                JumpToHome("对不起，操作错误！", "您访问的登记申请不存在！");
+            }
+            try
+            {
+                Model.User user = GetLoginUser();
+                ViewBag.User = user;
+
+                Model.Lover lover = new BLL.Lover().GetModel((int)loverID);
+                if (lover == null)
+                {
+                    JumpToHome("对不起，操作错误！", "您访问的登记申请不存在！");
+                }
+                ViewBag.Lover = lover;
+            }
+            catch (Exception ex)
+            {
+                Log.AddErrorInfo("Lover/UnAccept出现异常：", ex);
+                return JumpToHome("对不起，操作错误！", "您访问的登记申请出现点异常！");
+            }
             return View();
         }
 

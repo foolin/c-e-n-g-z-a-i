@@ -118,9 +118,38 @@ namespace CengZai.Web.Controllers
         {
             ViewBag.Title = title;
             ViewBag.Message = msg;
-            ViewBag.Url = Url.Action(actionName, controller, routerValues) ;
+            if (routerValues == null && string.IsNullOrEmpty(controller))
+            {
+                ViewBag.Url = Url.Action(actionName);
+            }
+            else if (routerValues == null)
+            {
+                ViewBag.Url = Url.Action(actionName, controller);
+            }
+            else if (string.IsNullOrEmpty(controller))
+            {
+                ViewBag.Url = Url.Action(actionName, routerValues);
+            }
+            else
+            {
+                ViewBag.Url = Url.Action(actionName, controller, routerValues);
+            }
+            
             ViewBag.Time = time;
             return View("JumpTo");
+        }
+
+        /// <summary>
+        /// 跳转到Action
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="msg"></param>
+        /// <param name="actionName"></param>
+        /// <param name="controller"></param>
+        /// <returns></returns>
+        protected ViewResult JumpToAction(string title, string msg, string actionName, object routerValues)
+        {
+            return JumpToAction(title, msg, actionName, "", routerValues, 5);
         }
 
         /// <summary>
@@ -164,6 +193,18 @@ namespace CengZai.Web.Controllers
         protected ViewResult JumpToAction(string title, string msg, string actionName)
         {
             return JumpToAction(title, msg, actionName, null, 5);
+        }
+
+        /// <summary>
+        /// 跳转到Action
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="msg"></param>
+        /// <param name="actionName"></param>
+        /// <returns></returns>
+        protected ViewResult JumpToHome(string title, string msg)
+        {
+            return JumpToAction(title, msg, "Index", "Home", null, 5);
         }
 
         /// <summary>

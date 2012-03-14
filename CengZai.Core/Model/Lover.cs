@@ -156,5 +156,21 @@ namespace CengZai.Model
         /// </summary>
         UnAward = -3,
     }
+
+    public enum LoverCertificate
+    {
+        /// <summary>
+        /// 未知
+        /// </summary>
+        Unkown = 0,
+        /// <summary>
+        /// 恋爱证
+        /// </summary>
+        Love = 1,
+        /// <summary>
+        /// 结婚证
+        /// </summary>
+        Marry= 2,
+    }
 }
 
