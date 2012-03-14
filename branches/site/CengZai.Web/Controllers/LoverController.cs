@@ -55,7 +55,7 @@ namespace CengZai.Web.Controllers
         /// <returns></returns>
         [HttpPost]
         [CheckAuthFilter]
-        public ActionResult Apply(int? certificate, int? honeyUserID, string myName, string avatar, string mobile, DateTime? birth, DateTime? joinDate, string oath)
+        public ActionResult Apply(int? certificate, int? honeyUserID, string nickname, string avatar, string mobile, DateTime? birth, DateTime? joinDate, string oath)
         {
             try
             {
@@ -74,14 +74,14 @@ namespace CengZai.Web.Controllers
                 {
                     return AjaxReturn("honeyUserID", "亲，你没事吧？自己和自己搞？");
                 }
-                if (new BLL.User().GetModel(user.UserID) == null)
+                if (new BLL.User().GetModel((int)honeyUserID) == null)
                 {
                     return AjaxReturn("honeyUserID", "唉哟，对方帐号怎么不存在呢？");
                 }
-                myName = (myName + "").Trim();
-                if (myName.Length == 0 || myName.Length > 20)
+                nickname = (nickname + "").Trim();
+                if (nickname.Length == 0 || nickname.Length > 20)
                 {
-                    return AjaxReturn("myName", "请输入您的名字");
+                    return AjaxReturn("nickname", "请输入您的名字");
                 }
                 if (string.IsNullOrEmpty(avatar) ||
                     !System.IO.File.Exists(Server.MapPath(Config.UploadMapPath + "/" + avatar))
@@ -224,24 +224,46 @@ namespace CengZai.Web.Controllers
         [CheckAuthFilter]
         public ActionResult Accept(int? loverID)
         {
-            Model.User user = GetLoginUser();
-            ViewBag.User = user;
+            try
+            {
+                if (loverID == null)
+                {
+                    JumpToHome("对不起，操作错误！", "您访问的登记申请不存在！");
+                }
 
-            BLL.Lover bllLover = new BLL.Lover();
-            Model.Lover mLover = null;
-            if (loverID != null)
-            {
-                mLover = bllLover.GetModel((int)loverID);
-            }
-            if (mLover == null)
-            {
-                return JumpTo("参数错误", "对不起，找不到该记录", "", 30);
-            }
+                Model.User user = GetLoginUser();
+                ViewBag.User = user;
 
-            List<Model.Lover> list = bllLover.GetModelList("(BoyUserID={0} OR GirlUserID={0}) And State<>0");
-            if (list.Count > 0)
+                Model.Lover lover = new BLL.Lover().GetModel((int)loverID);
+                if (lover == null || lover.State != 0)
+                {
+                    return JumpToHome("对不起，操作错误！", "您访问的登记申请不存在或已过期！");
+                }
+                if (lover.State == 1 || lover.Flow != (int)Model.LoverFlow.Apply)
+                {
+                    return JumpToHome("对不起，操作错误！", "您访问的登记申请已过期！");
+                }
+                if (lover.BoyUserID != user.UserID && lover.GirlUserID != user.UserID)
+                {
+                    return JumpToHome("对不起，操作错误！", "您访问无权操作，我们不支持第三者！");
+                }
+                if (lover.ApplyUserID == user.UserID)
+                {
+                    if (lover.State >= 0)
+                    {
+                        return JumpToAction("您无权操作！", "您访问无权操作，这个申请是您提出的！", "Preview", new { LoverID = loverID });
+                    }
+                    else
+                    {
+                        return JumpToHome("您无权操作！", "您访问无权操作，这个申请是您提出的！");
+                    }
+                }
+                ViewBag.Lover = lover;
+            }
+            catch (Exception ex)
             {
-                return JumpTo("非法操作", "不能同时与多名人员进行操作", "", 30);
+                Log.AddErrorInfo("Lover/UnAccept出现异常：", ex);
+                return JumpToHome("对不起，操作错误！", "您访问的登记申请出现点异常！");
             }
 
             return View();
@@ -254,9 +276,108 @@ namespace CengZai.Web.Controllers
         /// <returns></returns>
         [CheckAuthFilter]
         [HttpPost]
-        public ActionResult Accept(int? loverID, int myName)
+        public ActionResult Accept(int? loverID, string nickname, string avatar, string mobile, DateTime? birth, DateTime? joinDate, string oath)
         {
-            return View();
+            try
+            {
+                if (loverID == null)
+                {
+                    return AjaxReturn("error", "您访问的登记申请不存在！");
+                }
+
+                Model.User user = GetLoginUser();
+                ViewBag.User = user;
+
+                Model.Lover lover = new BLL.Lover().GetModel((int)loverID);
+                if (lover == null || lover.State != 0)
+                {
+                    return AjaxReturn("error", "您访问的登记申请不存在！");
+                }
+                if ((lover.BoyUserID != user.UserID && lover.GirlUserID != user.UserID)
+                    || lover.ApplyUserID == user.UserID
+                    )
+                {
+                    return AjaxReturn("error", "您访问无权操作！");
+                }
+                if (lover.State == 1 || lover.Flow != (int)Model.LoverFlow.Apply)
+                {
+                    return AjaxReturn("error", "您访问的登记申请已过期！");
+                }
+
+                if (new BLL.User().GetModel(user.UserID) == null)
+                {
+                    return AjaxReturn("honeyUserID", "唉哟，对方帐号怎么不存在呢？");
+                }
+                nickname = (nickname + "").Trim();
+                if (nickname.Length == 0 || nickname.Length > 20)
+                {
+                    return AjaxReturn("nickname", "请输入您的名字");
+                }
+                if (string.IsNullOrEmpty(avatar) ||
+                    !System.IO.File.Exists(Server.MapPath(Config.UploadMapPath + "/" + avatar))
+                    )
+                {
+                    return AjaxReturn("avatar", "请上传你们的合照头像");
+                }
+                if (string.IsNullOrEmpty(mobile) || !System.Text.RegularExpressions.Regex.IsMatch(mobile, @"1[0-9]{10}"))
+                {
+                    return AjaxReturn("mobile", "请正确填写您的手机作为身份证号，我们会加密显示！");
+                }
+                if (birth == null)
+                {
+                    return AjaxReturn("birth", "请输入正确的生日");
+                }
+                if (joinDate == null)
+                {
+                    return AjaxReturn("joinDate", "请输入正确的登记日期，注意，不可更改噢！");
+                }
+                oath = Helper.Util.RemoveHtml(oath);
+                if (string.IsNullOrEmpty(oath) || oath.Length < 10)
+                {
+                    return AjaxReturn("oath", "你的誓言也太短了吧？难道你就没话对对方的说？");
+                }
+                if (oath.Length > 1000)
+                {
+                    return AjaxReturn("oath", "誓言这么长啊？都超过1000个字符了！精简点吧，记得说重点哦...");
+                }
+
+                //更新申请者信息
+                BLL.User bllUser = new BLL.User();
+                user.Username = user.Nickname;
+                user.Mobile = mobile;
+                user.Birth = birth;
+                bllUser.Update(user);
+
+                //更新资料
+                lover.Avatar = avatar;
+                lover.JoinDate = joinDate;
+                lover.Flow = (int)Model.LoverFlow.Accept;
+                if (lover.BoyUserID == user.UserID)
+                {
+                    lover.BoyOath = oath;
+                }
+                else if (lover.GirlUserID == user.UserID)
+                {
+                    lover.GirlOath = "";
+                }
+                else
+                {
+                    return AjaxReturn("error", "严重鄙视你！原来你不是男方，也不是女方，传说中的第三者？");
+                }
+                if (new BLL.Lover().Update(lover))
+                {
+                    return AjaxReturn("success", "接受成功！请耐心等待系统审核...");
+                }
+                else
+                {
+                    return AjaxReturn("error", "申请失败，请检查输入或者稍后重试！");
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.AddErrorInfo("LoverController.Accept()出现异常", ex);
+                return AjaxReturn("error", "操作异常，请检查输入或者稍后重试");
+            }
         }
 
 
@@ -269,7 +390,7 @@ namespace CengZai.Web.Controllers
         {
             if (loverID == null)
             {
-                JumpToHome("对不起，操作错误！", "您访问的登记申请不存在！");
+                return JumpToHome("对不起，操作错误！", "您访问的登记申请不存在！");
             }
             try
             {
@@ -279,7 +400,7 @@ namespace CengZai.Web.Controllers
                 Model.Lover lover = new BLL.Lover().GetModel((int)loverID);
                 if (lover == null)
                 {
-                    JumpToHome("对不起，操作错误！", "您访问的登记申请不存在！");
+                    return JumpToHome("对不起，操作错误！", "您访问的登记申请不存在！");
                 }
                 ViewBag.Lover = lover;
             }
@@ -302,7 +423,7 @@ namespace CengZai.Web.Controllers
         {
             if (loverID == null)
             {
-                JumpToHome("对不起，操作错误！", "您访问的登记申请不存在！");
+                return JumpToHome("对不起，操作错误！", "您访问的登记申请不存在！");
             }
             try
             {
@@ -329,7 +450,7 @@ namespace CengZai.Web.Controllers
         {
             if (loverID == null)
             {
-                JumpToHome("对不起，操作错误！", "您访问的登记申请不存在！");
+                return JumpToHome("对不起，操作错误！", "您访问的登记申请不存在！");
             }
             try
             {
@@ -339,7 +460,7 @@ namespace CengZai.Web.Controllers
                 Model.Lover lover = new BLL.Lover().GetModel((int)loverID);
                 if (lover == null)
                 {
-                    JumpToHome("对不起，操作错误！", "您访问的登记申请不存在！");
+                    return JumpToHome("对不起，操作错误！", "您访问的登记申请不存在！");
                 }
                 ViewBag.Lover = lover;
             }
