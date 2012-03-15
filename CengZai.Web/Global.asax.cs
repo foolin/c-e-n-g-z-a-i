@@ -36,6 +36,13 @@ namespace CengZai.Web
             //);
 
             routes.MapLowerCaseUrlRoute(
+                "Lover", // Route name
+                "{controller}/{loverid}/{action}/{id}", // URL with parameters
+                new { controller = "Lover", action = "Detail", loverid = @"[0-9]{7,30}", id = UrlParameter.Optional } // Parameter defaults
+                , new { loverid = @"[0-9]{7,30}" }
+            );
+
+            routes.MapLowerCaseUrlRoute(
                 "Default", // Route name
                 "{controller}/{action}/{id}", // URL with parameters
                 new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults

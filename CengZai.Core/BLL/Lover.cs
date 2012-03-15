@@ -145,6 +145,16 @@ namespace CengZai.BLL
 
 		#endregion  Method
 
+
+        /// <summary>
+        /// 获得数据列表
+        /// </summary>
+        public List<CengZai.Model.Lover> GetModelList(int top, string strWhere, string fieldOrder)
+        {
+            DataSet ds = dal.GetList(top, strWhere, fieldOrder);
+            return DataTableToList(ds.Tables[0]);
+        }
+
         /// <summary>
         /// 取发送给我的单
         /// </summary>
