@@ -39,18 +39,16 @@
         
         <fieldset> 
           <legend>发表日志</legend>
-          <div class="my-control-group"> 
-            <label class="control-label" for="title">标题 <span class="help-block">（可不填）</span></label> 
-            <div> 
+          <div class="control-group">
+              <label for="title">标题</label> 
               @Html.TextBox("title", "", new { @class = "input-xxlarge" }) 
-            </div> 
+              <span class="muted">（可不填）</span>
           </div>
-          <div class="my-control-group"> 
-            <label class="control-label" for="title">内容</label> 
-            <div> 
-              @Html.TextArea("content", "", 15, 20, new { @class = "input-xxlarge editor" })
-            </div> 
+          <div class="control-group">
+            <label for="content">内容</label>
+            @Html.TextArea("content", "", 15, 20, new { @class = "input-xxlarge editor" })
           </div>
+
           <div class="form-actions">
             <button type="submit" class="btn btn-primary">保存</button> 
             @Html.ActionLink("取消", "Index", "Home", new { @class = "btn" })
