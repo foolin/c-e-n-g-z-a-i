@@ -154,7 +154,7 @@ namespace CengZai.BLL
         {
             List<Model.Lover> list = null;
             StringBuilder strWhere = new StringBuilder();
-            strWhere.AppendFormat("(BoyUserID={0} OR GirlUserID={0}) And State=0 And Flow IN ({1})", userID, (int)LoverFlow.Apply);
+            strWhere.AppendFormat("(BoyUserID={0} OR GirlUserID={0}) And State=0 And ApplyUserID<>{0} And Flow IN ({1})", userID, (int)LoverFlow.Apply);
             DataSet dsList = GetList(0, strWhere.ToString(), "State DESC");
             if (dsList != null && dsList.Tables.Count > 0 && dsList.Tables[0].Rows.Count > 0)
             {
@@ -237,31 +237,31 @@ namespace CengZai.BLL
         {
             if (flow == (int)CengZai.Model.LoverFlow.Accept)
             {
-                return "系统审核中";
+                return "等待审核";
             }
             if (flow == (int)CengZai.Model.LoverFlow.Apply)
             {
-                return "等待对方接受";
+                return "等待接受";
             }
             if (flow == (int)CengZai.Model.LoverFlow.Award)
             {
-                return "审核已通过";
+                return "审核通过";
             }
             if (flow == (int)CengZai.Model.LoverFlow.UnAccept)
             {
-                return "对方已拒绝";
+                return "已经拒绝";
             }
             if (flow == (int)CengZai.Model.LoverFlow.UnApply)
             {
-                return "申请者取消申请";
+                return "取消申请";
             }
             if (flow == (int)CengZai.Model.LoverFlow.UnAward)
             {
                 return "系统退回";
             }
-            if (flow == (int)CengZai.Model.LoverFlow.Unknow)
+            if (flow == (int)CengZai.Model.LoverFlow.Abolish)
             {
-                return "未知";
+                return "已注销";
             }
             return "未知";
         }

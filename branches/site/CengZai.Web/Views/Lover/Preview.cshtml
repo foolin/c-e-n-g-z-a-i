@@ -4,10 +4,6 @@
     var lover = ViewBag.Lover as CengZai.Model.Lover;
 }
 @section head{
-    <link href="../../js/calendar/calendar.css" rel="stylesheet" type="text/css" />
-    <script src="../../js/calendar/jquery.calendar.js" type="text/javascript"></script>
-    <script src="../../js/swfupload/swfupload.js" type="text/javascript"></script>
-    <script src="../../js/swfupload/handlers.js" type="text/javascript"></script>
     <style type="text/css">
         .table th
         {
@@ -23,86 +19,28 @@
 
             <!--登记表单-->
             <fieldset>
-            <legend>付灵和常春的【恋爱证】<span class="help-block">信息预览</span></legend>
-                <table class="table">
-                    <thead> 
-                    <tr>
-                        <th style="width:10%">合照头像</th>
-                        <td style="width:40%"><img id="imgAvatar" src="@CengZai.Helper.Config.UploadHttpPath/@lover.Avatar"  width="196" height="136" alt=""/></td>
-                        <th style="width:10%"></th>
-                        <td style="width:40%"></td>
-                    </tr>
-                    </thead> 
-                    <tbody>
-                    <tr>
-                        <th style="width:10%">证件类型</th>
-                        <td style="width:40%">@Html.GetCertificateName(lover.Certificate)</td>
-                        <th style="width:10%">登记日期</th>
-                        <td style="width:40%">@Html.GetDateFormat(lover.JoinDate, "yyyy年MM月dd日")</td>
-                    </tr>
-                    <tr>
-                        <th>男方</th>
-                        <td>@Html.GetUserNickname(lover.BoyUserID)</td>
-                        <th>女方</th>
-                        <td>@Html.GetUserNickname(lover.GirlUserID)</td>
-                    </tr>
-                    <tr>
-                        <th>生日</th>
-                        <td>@Html.GetDateFormat(Html.GetUser(lover.BoyUserID).Birth, "yyyy年MM月dd日")</td>
-                        <th>生日</th>
-                        <td>@Html.GetDateFormat(Html.GetUser(lover.GirlUserID).Birth, "yyyy年MM月dd日")</td>
-                    </tr>
-                    <tr>
-                        <th>手机</th>
-                        <td>@Html.GetUser(lover.BoyUserID).Mobile</td>
-                        <th>手机</th>
-                        <td>@Html.GetUser(lover.GirlUserID).Mobile</td>
-                    </tr>
-                    <tr>
-                        <th>宣誓</th>
-                        <td>@lover.BoyOath</td>
-                        <th>宣誓</th>
-                        <td>@lover.GirlOath</td>
-                    </tr>
-                    <tr>
-                        <th>申请人</th>
-                        <td>@Html.GetUserNickname(lover.ApplyUserID)</td>
-                        <th>申请时间</th>
-                        <td>@Html.GetDateFormat(lover.ApplyTime, "yyyy年MM月dd日")</td>
-                    </tr>
-                    <tr>
-                        <th>状态</th>
-                        <td>
-                            @if (lover.State == 1)
-                            {
-                                <span class="label label-success">已通过</span>
-                            }
-                            else
-                            {
-                                <span class="label label-info">正在处理</span>
-                            }
-                        </td>
-                        <th>状态说明</th>
-                        <td><span class="label label-inverse">@Html.GetLoverFlowName(lover.Flow)</span></td>
-                    </tr>
-                    </tbody>
-                </table>
+            <legend>申请【@Html.GetCertificateName(@lover.Certificate)】 <span class="help-block font14">信息预览</span></legend>
+                @RenderPage("_MyLoverInfo.cshtml", new { Lover = lover })
+                <div id="acceptCtrl">
                 @if (lover.ApplyUserID != user.UserID && lover.Flow == (int)CengZai.Model.LoverFlow.Apply)
                 {
-                <div id="acceptCtrl">
-                    @Html.ActionLink("我接受并完善资料", "Accept", new { LoverID = lover.LoverID }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("我接受并完善资料", "Accept", new { LoverID = lover.LoverID }, new { @class = "btn btn-primary" }) 
+                    <text>&nbsp;</text>
                     @Html.ActionLink("我不接受", "UnAccept", new { LoverID = lover.LoverID }, new { @class = "btn btn-danger" })
-                </div>
                 }
                 else if (lover.Flow == (int)CengZai.Model.LoverFlow.UnAward)
                 {
-                    @Html.ActionLink("完善资料并重新提交审批", "ReAward", new { LoverID = lover.LoverID }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("完善资料并重新提交审批", "ReAward", new { LoverID = lover.LoverID }, new { @class = "btn btn-primary" }) 
+                    <text>&nbsp;</text>
                     @Html.ActionLink("注销申请", "Abolish", new { LoverID = lover.LoverID }, new { @class = "btn btn-danger" })
                 }
                 else
                 {
-                    @Html.ActionLink("我要注销", "Abolish", new { LoverID = lover.LoverID }, new { @class = "btn btn-danger" })
+                    <span class="pull-right">
+                        @Html.ActionLink("我要注销", "Abolish", new { LoverID = lover.LoverID }, new { @class = "" })
+                    </span>
                 }
+                </div>
             </fieldset>
       </div>
 </div>
