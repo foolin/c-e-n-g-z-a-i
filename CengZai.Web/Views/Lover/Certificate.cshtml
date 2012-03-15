@@ -23,68 +23,58 @@
         {
             vertical-align:top;
         }
+        .certificate .cover {
+            width: 522px;
+            height: 348px;
+            background: url(http://statics.xiaoenai.com/assets/marry/jiehun_positive-10abf0b6757420ab5c6e5898a15d047e.png) no-repeat;
+        }
+        .certificate .cert_right {
+            float: right;
+            position: relative;
+            width: 421px;
+            height: 522px;
+            background: url(http://statics.xiaoenai.com/assets/marry/seal_demo-dd3ac72d18d942e7848ba44fe4f11f7f.jpg) no-repeat;
+        }
     </style>
 }
 
-<div class="container  bg-white">
+<div class="container">
 
         <div class="padding">
 
             <!--登记表单-->
             <fieldset>
             <legend>付灵和常春的恋爱证信息[预览]</legend>
-                <table class="table">
-                    <thead> 
-                    <tr>
-                        <th style="width:10%">合照头像</th>
-                        <td style="width:40%"><img id="imgAvatar" src="@CengZai.Helper.Config.UploadHttpPath/@lover.Avatar"  width="196" height="136" alt=""/></td>
-                        <th style="width:10%"></th>
-                        <td style="width:40%"></td>
-                    </tr>
-                    </thead> 
-                    <tbody>
-                    <tr>
-                        <th style="width:10%">证件类型</th>
-                        <td style="width:40%">@Html.GetCertificateName(lover.Certificate)</td>
-                        <th style="width:10%">登记日期</th>
-                        <td style="width:40%">@Html.GetDateFormat(lover.JoinDate, "yyyy年MM月dd日")</td>
-                    </tr>
-                    <tr>
-                        <th>男方</th>
-                        <td>@boy.Nickname</td>
-                        <th>女方</th>
-                        <td>@girl.Nickname</td>
-                    </tr>
-                    <tr>
-                        <th>生日</th>
-                        <td>@Html.GetDateFormat(boy.Birth, "yyyy年MM月dd日")</td>
-                        <th>生日</th>
-                        <td>@Html.GetDateFormat(girl.Birth, "yyyy年MM月dd日")</td>
-                    </tr>
-                    <tr>
-                        <th>手机</th>
-                        <td>@boy.Mobile</td>
-                        <th>手机</th>
-                        <td>@girl.Mobile</td>
-                    </tr>
-                    <tr>
-                        <th>宣誓</th>
-                        <td>@lover.BoyOath</td>
-                        <th>宣誓</th>
-                        <td>@lover.GirlOath</td>
-                    </tr>
-                    <tr>
-                        <th>申请人</th>
-                        <td>@Html.GetUserNickname(lover.ApplyUserID)</td>
-                        <th>申请时间</th>
-                        <td>@Html.GetDateFormat(lover.ApplyTime, "yyyy年MM月dd日")</td>
-                    </tr>
-                    </tbody>
-                </table>
-                <div id="acceptCtrl">
-                    @Html.ActionLink("我接受并完善资料", "Accept", new {LoverID=lover.LoverID}, new { @class = "btn btn-primary" })
-                    @Html.ActionLink("我不接受", "UnAccept", new { LoverID = lover.LoverID }, new { @class = "btn btn-danger" })
-                </div>
+                <div class="certificate" onselectstart="return false">
+        	        <div class="cert_left">
+            	        <div class="cover"></div>
+                        <div id="wishes">
+                            <!--
+                            <div class="flower"><p><a href="javascript:void(0);">祝福</a><span>(102)</span></p></div>
+                            <div class="envy"><p><a href="javascript:void(0);">羡慕嫉妒恨</a><span>(102)</span></p></div>
+                            -->
+                        </div>
+                
+                    </div>
+                    <div class="cert_right">
+                        <span class="info001">夫妻俩</span>
+                        <span class="info002">2012年06月06日</span>
+                        <span class="info003">CN天结字6370061008</span>
+                        <span class="info004">石宗亮</span>
+                        <span class="info005">男</span>
+                        <span class="info006">中国</span>
+                        <span class="info007">24</span>
+                        <span class="info008">1533331****</span>
+                        <span class="info009">赫晓贾</span>
+                        <span class="info010">女</span>
+                        <span class="info011">中国</span>
+                        <span class="info012">24</span>
+                        <span class="info013">1583392****</span>
+            	        <img class="marry_photo" style="width:160px; height:111px;" src="http://img.xiaoenai.com/avatar_img/2012/02/17/c77fcb0b3b2a2693b29da38cc83170f3.jpg">
+                        <div class="seal"></div>
+                    </div>
+            
+            </div>
             </fieldset>
       </div>
 </div>
