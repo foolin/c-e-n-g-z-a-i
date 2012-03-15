@@ -122,7 +122,7 @@ namespace CengZai.Web.Controllers
                 oath = Helper.Util.RemoveHtml(oath);
                 if (string.IsNullOrEmpty(oath) || oath.Length < 10)
                 {
-                    return AjaxReturn("oath", "你的誓言也太短了吧？难道你就没话对对方的说？");
+                    return AjaxReturn("oath", "你的誓言10个字符都不到？没话跟对方的说？");
                 }
                 if (oath.Length > 1000)
                 {
@@ -163,7 +163,7 @@ namespace CengZai.Web.Controllers
                 int loverID = new BLL.Lover().Add(lover);
                 if (loverID > 0)
                 {
-                    return AjaxReturn("success", "申请成功！");
+                    return AjaxReturn("success", "申请成功，请耐心等待对方的答案！");
                 }
                 else
                 {

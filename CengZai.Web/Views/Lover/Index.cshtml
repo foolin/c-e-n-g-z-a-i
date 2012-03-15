@@ -6,54 +6,51 @@
 }
 
 
-<div class="container">
-    @if (myLover != null)
-    {
-        if (myLover.State == 1)
-        {
-        <div class="alert alert-block fade in"> 
-            <p>
-                @Html.ActionLink("查看我的" + Html.GetCertificateName(myLover.Certificate), "Detail", "Lover", new {LoverID=@myLover.LoverID }, new { @class = "btn btn-large btn-primary" })
-            </p> 
-        </div>
-        }
-        else
-        {
-            <div class="alert alert-block fade in"> 
-            <p>
-                @Html.ActionLink("查看我的" + Html.GetCertificateName(myLover.Certificate) + "状态", "Preview", "Lover", new { LoverID = @myLover.LoverID }, new { @class = "btn btn-large btn-primary" })
-            </p> 
-        </div>
-        }
-    }
-    else
-    {
-        <div class="alert alert-block fade in"> 
-            <a class="close" data-dismiss="alert" href="#">&times;</a> 
-            <h4 class="alert-heading">@ViewBag.User.Nickname，您尚未申请姻缘登录注册!</h4> 
-            <p>登记注册是爱情的见证，是承诺的表示，快快和自己的另一半登记注册吧！与其被动地等待还不如主动抓住幸福!</p> 
-            <p>
-                @Html.ActionLink("我要申请登记注册", "Apply", "Lover", null, new { @class = "btn btn-large btn-primary" })
-            </p> 
-        </div>
-    }
+<div class="container  bg-white">
+<div class="padding">
+
+        
     @if (receiveLoverList != null && receiveLoverList.Count > 0)
     {
-        <div class="alert alert-block fade in"> 
+        <div class="alert alert-block"> 
             <a class="close" data-dismiss="alert" href="#">&times;</a> 
-            <h4 class="alert-heading">@ViewBag.User.Nickname，您收到 @receiveLoverList.Count 个好友的登记注册申请!</h4> 
+            <h4 class="alert-heading">@ViewBag.User.Nickname，您收到 @receiveLoverList.Count 个好友的登记申请!</h4> 
             <ul>
                 @foreach(CengZai.Model.Lover m in receiveLoverList){
-                <li>@Html.ActionLink("" + Html.GetUserNickname(m.ApplyUserID) + "向您提交" + Html.GetCertificateName(m.Certificate) + "申请","Preview",new {LoverID=m.LoverID})</li>
+                <li>@Html.ActionLink("" + Html.GetUserNickname(m.ApplyUserID) + "向您提交【" + Html.GetCertificateName(m.Certificate) + "】登记申请","Preview",new {LoverID=m.LoverID})</li>
                 }
             </ul>
         </div>
     }
 
+    <div class="well"> 
+    @if (myLover != null)
+    {
+        if (myLover.State == 1)
+        {
+            @Html.ActionLink("查看我的" + Html.GetCertificateName(myLover.Certificate), "Detail", "Lover", new {LoverID=@myLover.LoverID }, new { @class = "btn btn-large btn-primary" })
+        }
+        else
+        {
+            @Html.ActionLink("查看我的" + Html.GetCertificateName(myLover.Certificate) + "状态", "Preview", "Lover", new { LoverID = @myLover.LoverID }, new { @class = "btn btn-large btn-primary" })
+        }
+    }
+    else
+    {
+        <h4 class="alert-heading">@ViewBag.User.Nickname，您尚未申请登记!</h4> 
+        <p>登记是爱情的见证，是承诺的表示方式，不管是正在恋爱还是已经结婚，都可以！快快和自己的另一半登记吧，与其被动地等待还不如主动抓住幸福!</p> 
+        <p>
+            @Html.ActionLink("我要申请登记注册", "Apply", "Lover", null, new { @class = "btn btn-large btn-success" })
+        </p> 
+    }
+    </div>
+
+
      <div class="row-fluid">
         
     </div>
 
+</div>
 </div>
 
 

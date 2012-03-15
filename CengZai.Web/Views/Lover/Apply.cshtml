@@ -241,7 +241,7 @@
                     <div class="control-group">
                         <label class="control-label" for="mobile">我的手机号：</label>
                         <div class="controls">
-                            <input type="text" class="input-middle" value="13" name="mobile" id="mobile">
+                            <input type="text" class="input-middle" value="@user.Mobile" name="mobile" id="mobile">
                             <span class="field-validation-error" data-valmsg-for="mobile" id="tips-mobile" data-valmsg-replace="true"></span>
                             <p class="help-block">用手机号代替身份证号，我们会保护您的隐私，手机号会加密显示</p>
                         </div>
@@ -249,7 +249,7 @@
                     <div class="control-group">
                         <label class="control-label" for="birth">我的生日：</label>
                         <div class="controls">
-                            <input type="text" class="input-middle" name="birth" id="birth">
+                            <input type="text" class="input-middle" value="@Html.GetDateFormat(user.Birth, "yyyy-MM-dd")" name="birth" id="birth">
                             <span class="field-validation-error" data-valmsg-for="birth" id="tips-birth" data-valmsg-replace="true"></span>
                             <p class="help-block">请填写真实生日，会显示在证件上</p>
                         </div>
@@ -277,13 +277,13 @@
                                 </select>
                             </p>
                             <textarea name="oath" id="oath" class="input-xlarge" style="width:400px;" rows="8"></textarea>
-                            <span class="field-validation-error" data-valmsg-for="oath" id="tips-oath" data-valmsg-replace="true"></span>
+                            <p class="field-validation-error" data-valmsg-for="oath" id="tips-oath" data-valmsg-replace="true"></p>
                             <p class="help-block">请填写您对对方的誓言，大胆说出您的爱~（1000个字符以内，不可更改）</p>
                         </div>
                     </div>
                     <div class="form-actions"> 
-                        <button type="submit" id="save" class="btn btn-primary" data-loading-text="正在保存..." onclick="return confirm('请确保资料真实！确定提交？');">提交</button> 
-                        <button class="btn">取消</button> 
+                        <button type="submit" id="save" class="btn btn-primary" data-loading-text="正在保存..." onclick="return confirm('请确保资料真实！确定提交？');">提交</button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;@Html.ActionLink("取消", "Index")
                     </div>
                     <div class="alert alert-block alert-error" id="error">
                         <a class="close" href="#" onclick="$('#error').hide(); return false;">&times;</a>
