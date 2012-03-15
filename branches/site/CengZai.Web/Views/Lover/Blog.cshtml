@@ -3,8 +3,6 @@
     var user = ViewBag.User as CengZai.Model.User;
     var myLover = ViewBag.MyLover as CengZai.Model.Lover;
     var receiveLoverList = ViewBag.ReceiveLoverList as List<CengZai.Model.Lover>;
-    var topLoverList = ViewBag.TopLoverList as List<CengZai.Model.Lover>;
-    var imgPath = "";
 }
 @section head{
 <style type="text/css">
@@ -18,17 +16,17 @@
 }
 </style>
 <script type="text/javascript">
-//    $(document).ready(function () {
-//        $('.thumbnail .caption p').slideUp();
-//        $('.thumbnail').hover(
-//		function () {
-//		    $(this).find(".caption p").slideDown();
-//		},
-//		 function () {
-//		     $(this).find(".caption p").slideUp();
-//		 }
-//        );
-//    });
+    //    $(document).ready(function () {
+    //        $('.thumbnail .caption p').slideUp();
+    //        $('.thumbnail').hover(
+    //		function () {
+    //		    $(this).find(".caption p").slideDown();
+    //		},
+    //		 function () {
+    //		     $(this).find(".caption p").slideUp();
+    //		 }
+    //        );
+    //    });
 </script>
 }
 
@@ -72,42 +70,16 @@
     </div>
     
     <!--内容区域-->
-    <ul class="thumbnails">
-        @if (topLoverList == null || topLoverList.Count == 0)
-        {
-        }
-        else
-        {
-            for(var i=0; i < topLoverList.Count; i++)
-            {
-                imgPath = CengZai.Helper.Config.UploadHttpPath + "/" + @topLoverList[i].Avatar;
-            <li class="span3">
-              <div class="thumbnail">
-                <img src="@imgPath" alt="合影">
-                <div class="caption">
-                  <h5>@Html.GetUserNickname(topLoverList[i].BoyUserID)&@Html.GetUserNickname(topLoverList[i].GirlUserID)</h5>
-                  <p>申请日期：2012年3月15日</p>
-                  <p>申请年龄：360天</p>
-                  <p><a href="#" class="btn">关注他们</a> @Html.ActionLink("访问主页", "Blog", new { @LoverID = topLoverList[i].LoverID}, new { @class = "btn" })</p>
-                </div>
-              </div>
-            </li>
-            }
-        }
-        <!--
-        <li class="span3">
-          <div class="thumbnail">
-            <img src="http://placehold.it/260x180" alt="">
-            <div class="caption">
-              <h5>负卐零&卢常春</h5>
-              <p>登记时间：2012年3月15日</p>
-              <p>登记年龄：360天</p>
-              <p><a href="#" class="btn">关注他们</a> <a href="#" class="btn">访问主页</a></p>
-            </div>
-          </div>
-        </li>
-        -->
-    </ul>
+    <div class="row-fluid">
+    <div class="span6">
+      <!--Sidebar content-->
+        heihei
+    </div>
+    <div class="span6">
+      <!--Body content-->
+      aaaa
+    </div>
+  </div>
     <!--/内容区域-->
 
 </div>

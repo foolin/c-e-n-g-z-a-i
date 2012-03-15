@@ -1,5 +1,4 @@
 ﻿@{
-    ViewBag.Title = "预览申请信息-" + ViewBag.SiteName;
     var user = ViewBag.User as CengZai.Model.User;
     var lover = ViewBag.Lover as CengZai.Model.Lover;
     var boy = Html.GetUser(lover.BoyUserID);
@@ -12,6 +11,7 @@
     {
         girl = new CengZai.Model.User();
     }
+    ViewBag.Title = boy.Nickname + "&" + girl.Nickname + "的证件-" + ViewBag.SiteName;
 }
 @section head{
     <link href="../../js/calendar/calendar.css" rel="stylesheet" type="text/css" />

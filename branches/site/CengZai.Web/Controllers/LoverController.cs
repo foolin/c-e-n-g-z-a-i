@@ -22,7 +22,35 @@ namespace CengZai.Web.Controllers
                 ViewBag.User = user;
 
                 BLL.Lover bllLover = new BLL.Lover();
+                //取我的Lover
                 ViewBag.MyLover =  bllLover.GetMyLover(user.UserID);
+                //取我收到的Receive
+                ViewBag.ReceiveLoverList = bllLover.GetReceiveList(user.UserID);
+                //取最新列表
+                ViewBag.TopLoverList = bllLover.GetModelList(200,"State=1", "ApplyTime ASC,JoinDate ASC");
+
+
+            }
+            catch (Exception ex)
+            {
+                Log.AddErrorInfo("Lover/Index异常", ex);
+                return JumpTo("对不起，出错了", "哎呀，对不起！出错了，请刷新或者稍后访问！", "", 0);
+            }
+            return View();
+        }
+
+        //
+        // GET: /Lover/
+        [CheckAuthFilter]
+        public ActionResult Blog(int loverID)
+        {
+            try
+            {
+                Model.User user = GetLoginUser();
+                ViewBag.User = user;
+
+                BLL.Lover bllLover = new BLL.Lover();
+                ViewBag.MyLover = bllLover.GetMyLover(user.UserID);
                 ViewBag.ReceiveLoverList = bllLover.GetReceiveList(user.UserID);
             }
             catch (Exception ex)
