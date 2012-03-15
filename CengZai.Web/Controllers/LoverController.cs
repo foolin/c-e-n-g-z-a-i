@@ -77,11 +77,11 @@ namespace CengZai.Web.Controllers
             {
                 if (lover.State == 1)
                 {
-                    return JumpToAction("对不起，您无权申请！", "您已经领了证书，不可以再申请证书，如果需要申请，请注销原来的证书！", "Detail", new { LoverID = lover.LoverID });
+                    return JumpToAction("对不起，您无权申请！", "您已经领了证书，不可以再申请证书，如果需要申请，请注销原来的证书！", "Certificate", new { LoverID = lover.LoverID });
                 }
                 else
                 {
-                     return JumpToAction("对不起，您无权申请！", "您已经有证书在处理中，不可以再申请其它证书，请注销原来的证书！", "Detail", new { LoverID = lover.LoverID });
+                    return JumpToAction("对不起，您无权申请！", "您已经有证书在处理中，不可以再申请其它证书，请注销原来的证书！", "Certificate", new { LoverID = lover.LoverID });
                 }
             }
             if (user.Sex == 0)
@@ -560,11 +560,11 @@ namespace CengZai.Web.Controllers
 
 
         /// <summary>
-        /// 明细
+        /// 证书
         /// </summary>
         /// <param name="loverID"></param>
         /// <returns></returns>
-        public ActionResult Detail(int? loverID)
+        public ActionResult Certificate(int? loverID)
         {
             if (loverID == null)
             {
