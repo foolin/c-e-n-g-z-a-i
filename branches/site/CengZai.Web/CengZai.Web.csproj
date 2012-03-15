@@ -92,6 +92,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="css\bootstrap-responsive.css" />
+    <Content Include="css\bootstrap-responsive.min.css" />
     <Content Include="js\calendar\calendar.css" />
     <Content Include="js\calendar\calendar_day.png" />
     <Content Include="js\calendar\jquery.calendar.js" />
