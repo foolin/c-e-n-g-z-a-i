@@ -109,7 +109,7 @@ namespace CengZai.Web.Controllers
                 }
                 if (string.IsNullOrEmpty(mobile) || !System.Text.RegularExpressions.Regex.IsMatch(mobile, @"1[0-9]{10}"))
                 {
-                    return AjaxReturn("mobile", "请正确填写您的手机作为身份证号，我们会加密显示！");
+                    return AjaxReturn("mobile", "请正确填写您的手机号(代替身份证)");
                 }
                 if (birth == null)
                 {
@@ -144,6 +144,8 @@ namespace CengZai.Web.Controllers
                 lover.JoinDate = joinDate;
                 lover.Flow = (int)Model.LoverFlow.Apply;
                 lover.State = 0;
+                lover.UpdateUserID = user.UserID;
+                lover.UpdateTime = DateTime.Now;
                 if (user.Sex == 2)
                 {
                     lover.BoyOath = "";
@@ -246,7 +248,7 @@ namespace CengZai.Web.Controllers
             {
                 if (loverID == null)
                 {
-                    JumpToHome("对不起，操作错误！", "您访问的登记申请不存在！");
+                    return JumpToHome("对不起，操作错误！", "您访问的页面不存在！");
                 }
 
                 Model.User user = GetLoginUser();
@@ -255,7 +257,7 @@ namespace CengZai.Web.Controllers
                 Model.Lover lover = new BLL.Lover().GetModel((int)loverID);
                 if (lover == null || lover.State != 0)
                 {
-                    return JumpToHome("对不起，操作错误！", "您访问的登记申请不存在或已经失效！");
+                    return JumpToHome("对不起，操作错误！", "您访问的页面不存在或已经失效！");
                 }
                 if (lover.State == 1 || lover.Flow != (int)Model.LoverFlow.Apply)
                 {
@@ -281,7 +283,7 @@ namespace CengZai.Web.Controllers
             catch (Exception ex)
             {
                 Log.AddErrorInfo("Lover/UnAccept出现异常：", ex);
-                return JumpToHome("对不起，操作错误！", "您访问的登记申请出现点异常！");
+                return JumpToHome("对不起，操作错误！", "您访问的页面出现点异常！");
             }
 
             return View();
@@ -300,7 +302,7 @@ namespace CengZai.Web.Controllers
             {
                 if (loverID == null)
                 {
-                    return AjaxReturn("error", "您访问的登记申请不存在！");
+                    return AjaxReturn("error", "您访问的页面不存在！");
                 }
 
                 Model.User user = GetLoginUser();
@@ -309,7 +311,7 @@ namespace CengZai.Web.Controllers
                 Model.Lover lover = new BLL.Lover().GetModel((int)loverID);
                 if (lover == null || lover.State != 0)
                 {
-                    return AjaxReturn("error", "您访问的登记申请不存在！");
+                    return AjaxReturn("error", "您访问的页面不存在！");
                 }
                 if ((lover.BoyUserID != user.UserID && lover.GirlUserID != user.UserID)
                     || lover.ApplyUserID == user.UserID
@@ -370,6 +372,8 @@ namespace CengZai.Web.Controllers
                 lover.Avatar = avatar;
                 lover.JoinDate = joinDate;
                 lover.Flow = (int)Model.LoverFlow.Accept;
+                lover.UpdateUserID = user.UserID;
+                lover.UpdateTime = DateTime.Now;
                 if (lover.BoyUserID == user.UserID)
                 {
                     lover.BoyOath = oath;
@@ -408,7 +412,7 @@ namespace CengZai.Web.Controllers
         {
             if (loverID == null)
             {
-                return JumpToHome("对不起，操作错误！", "您访问的登记申请不存在！");
+                return JumpToHome("对不起，操作错误！", "您访问的页面不存在！");
             }
             try
             {
@@ -418,17 +422,76 @@ namespace CengZai.Web.Controllers
                 Model.Lover lover = new BLL.Lover().GetModel((int)loverID);
                 if (lover == null)
                 {
-                    return JumpToHome("对不起，操作错误！", "您访问的登记申请不存在！");
+                    return JumpToHome("对不起，操作错误！", "您访问的页面不存在！");
+                }
+                if (lover.BoyUserID != user.UserID && lover.GirlUserID != user.UserID)
+                {
+                    return JumpToHome("对不起，操作错误！", "您无权限访问和操作！");
+                }
+                if (lover.ApplyUserID != user.UserID && lover.State == 0 && lover.Flow == (int)Model.LoverFlow.Apply)
+                {
+                    //如果还生效
+                }
+                else
+                {
+                    return JumpToHome("对不起，操作错误！", "您访问页面已失效！");
                 }
                 ViewBag.Lover = lover;
             }
             catch (Exception ex)
             {
                 Log.AddErrorInfo("Lover/UnAccept出现异常：", ex);
-                return JumpToHome("对不起，操作错误！", "您访问的登记申请出现点异常！");
+                return JumpToHome("对不起，操作错误！", "您访问的页面出现点异常！");
             }
 
             return View();
+        }
+
+        [CheckAuthFilter]
+        [HttpPost]
+        public ActionResult UnAccept(int? loverID, string why)
+        {
+            try
+            {
+                if (loverID == null)
+                {
+                    JumpToHome("对不起，操作错误！", "您访问的操作页面不存在！");
+                }
+
+                Model.User user = GetLoginUser();
+                ViewBag.User = user;
+
+                BLL.Lover bllLover = new BLL.Lover();
+                Model.Lover lover = bllLover.GetModel((int)loverID);
+                if (lover == null)
+                {
+                    return JumpToHome("对不起，操作错误！", "您访问的页面不存在！");
+                }
+                if (lover.BoyUserID != user.UserID && lover.GirlUserID != user.UserID)
+                {
+                    return JumpToHome("对不起，操作错误！", "您无权限访问和操作！");
+                }
+                if (lover.ApplyUserID != user.UserID && lover.State == 0 && lover.Flow == (int)Model.LoverFlow.Apply)
+                {
+                    //如果还生效
+                }
+                else
+                {
+                    return JumpToHome("对不起，操作错误！", "您访问页面已失效！");
+                }
+
+                lover.State = -1;   //注销
+                lover.Flow = (int)Model.LoverFlow.UnAccept;
+                lover.UpdateUserID = user.UserID;
+                lover.UpdateTime = DateTime.Now;
+                bllLover.Update(lover);
+                return JumpToHome("操作成功！", "您好，您的操作已经成功！您拒绝了对方！");
+            }
+            catch (Exception ex)
+            {
+                Log.AddErrorInfo("Lover/UnAccept出现异常：", ex);
+                return JumpToHome("对不起，操作错误！", "您访问的页面出现点异常！");
+            }
         }
 
 
@@ -441,7 +504,7 @@ namespace CengZai.Web.Controllers
         {
             if (loverID == null)
             {
-                return JumpToHome("对不起，操作错误！", "您访问的登记申请不存在！");
+                return JumpToHome("对不起，操作错误！", "您访问的页面不存在！");
             }
             try
             {
@@ -462,17 +525,22 @@ namespace CengZai.Web.Controllers
             catch (Exception ex)
             {
                 Log.AddErrorInfo("Lover/UnAccept出现异常：", ex);
-                return JumpToHome("对不起，操作错误！", "您访问的登记申请出现点异常！");
+                return JumpToHome("对不起，操作错误！", "您访问的页面出现点异常！");
             }
             return View();
         }
 
 
+        /// <summary>
+        /// 明细
+        /// </summary>
+        /// <param name="loverID"></param>
+        /// <returns></returns>
         public ActionResult Detail(int? loverID)
         {
             if (loverID == null)
             {
-                return JumpToHome("对不起，操作错误！", "您访问的登记申请不存在！");
+                return JumpToHome("对不起，操作错误！", "您访问的页面不存在！");
             }
             try
             {
@@ -482,16 +550,97 @@ namespace CengZai.Web.Controllers
                 Model.Lover lover = new BLL.Lover().GetModel((int)loverID);
                 if (lover == null)
                 {
-                    return JumpToHome("对不起，操作错误！", "您访问的登记申请不存在！");
+                    return JumpToHome("对不起，操作错误！", "您访问的页面不存在！");
                 }
                 ViewBag.Lover = lover;
             }
             catch (Exception ex)
             {
                 Log.AddErrorInfo("Lover/UnAccept出现异常：", ex);
-                return JumpToHome("对不起，操作错误！", "您访问的登记申请出现点异常！");
+                return JumpToHome("对不起，操作错误！", "您访问的页面出现点异常！");
             }
             return View();
+        }
+
+        /// <summary>
+        /// 删除数据
+        /// </summary>
+        /// <param name="loverID"></param>
+        /// <returns></returns>
+        [CheckAuthFilter]
+        public ActionResult Abolish(int? loverID)
+        {
+            try
+            {
+                if (loverID == null)
+                {
+                    return JumpToHome("对不起，操作错误！", "您访问的操作页面不存在！");
+                }
+
+                Model.User user = GetLoginUser();
+                ViewBag.User = user;
+
+                Model.Lover lover = new BLL.Lover().GetModel((int)loverID);
+                if (lover == null)
+                {
+                    return JumpToHome("对不起，操作错误！", "您访问的页面不存在或已经失效！");
+                }
+                if (lover.BoyUserID != user.UserID && lover.GirlUserID != user.UserID)
+                {
+                    return JumpToHome("对不起，操作错误！", "对不起，该记录不属于您的，您无权操作！");
+                }
+                ViewBag.Lover = lover;
+            }
+            catch (Exception ex)
+            {
+                Log.AddErrorInfo("Lover/UnAccept出现异常：", ex);
+                return JumpToHome("对不起，操作错误！", "您访问的页面出现点异常！");
+            }
+            return View();
+        }
+
+        /// <summary>
+        /// 删除数据
+        /// </summary>
+        /// <param name="loverID"></param>
+        /// <returns></returns>
+        [CheckAuthFilter]
+        [HttpPost]
+        public ActionResult Abolish(int? loverID, string why)
+        {
+            try
+            {
+                if (loverID == null)
+                {
+                    JumpToHome("对不起，操作错误！", "您访问的操作页面不存在！");
+                }
+
+                Model.User user = GetLoginUser();
+                ViewBag.User = user;
+
+                BLL.Lover bllLover = new BLL.Lover();
+                Model.Lover lover = bllLover.GetModel((int)loverID);
+                if (lover == null)
+                {
+                    return JumpToHome("对不起，操作错误！", "您访问的页面不存在或已经失效！");
+                }
+                if (lover.BoyUserID != user.UserID && lover.GirlUserID != user.UserID)
+                {
+                    return JumpToHome("对不起，操作错误！", "对不起，您无权访问和操作！");
+                }
+
+                lover.State = -1;   //注销
+                lover.Flow = (int)Model.LoverFlow.Abolish;
+                lover.UpdateUserID = user.UserID;
+                lover.UpdateTime = DateTime.Now;
+                bllLover.Update(lover);
+                return JumpToHome("操作成功！", "您好，您的操作已经成功！您已经解除了关系！");
+            }
+            catch (Exception ex)
+            {
+                Log.AddErrorInfo("Lover/Abolish出现异常：", ex);
+                return JumpToHome("对不起，操作错误！", "您访问的页面出现点异常！");
+            }
         }
 
     }

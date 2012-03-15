@@ -457,6 +457,9 @@
     <Content Include="Views\Lover\Preview.cshtml" />
     <Content Include="Views\Lover\Detail.cshtml" />
     <Content Include="Views\Lover\Index.cshtml" />
+    <Content Include="Views\Lover\Abolish.cshtml" />
+    <Content Include="Views\Lover\_MyLoverInfo.cshtml" />
+    <Content Include="Views\Lover\UnAccept.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

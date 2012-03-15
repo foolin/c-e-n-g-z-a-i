@@ -22,6 +22,8 @@ namespace CengZai.Model
 		private DateTime? _applytime;
 		private int? _flow;
         private int? _state;
+        private int? _updateuserid;
+        private DateTime? _updatetime;
 		/// <summary>
 		/// 
 		/// </summary>
@@ -118,6 +120,22 @@ namespace CengZai.Model
             set { _state = value; }
             get { return _state; }
         }
+        /// <summary>
+        /// 最后操作人
+        /// </summary>
+        public int? UpdateUserID
+        {
+            set { _updateuserid = value; }
+            get { return _updateuserid; }
+        }
+        /// <summary>
+        /// 最后
+        /// </summary>
+        public DateTime? UpdateTime
+        {
+            set { _updatetime = value; }
+            get { return _updatetime; }
+        }
 		#endregion Model
 
 	}
@@ -130,7 +148,7 @@ namespace CengZai.Model
         /// <summary>
         /// 废除
         /// </summary>
-        Unknow = 0,
+        Abolish = 0,
         /// <summary>
         /// 申请
         /// </summary>

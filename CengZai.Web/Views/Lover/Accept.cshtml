@@ -190,7 +190,6 @@
         <div class="padding">
 
             <!--登记表单-->
-            @*@using (Html.BeginForm("Apply", "Lover", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))*@
             @using (Ajax.BeginForm("Accept", null
                 , new AjaxOptions { UpdateTargetId = "errmsg", OnBegin = "beginSubmit", OnSuccess = "succ", OnFailure = "fail" }
                 , new { @class = "form-horizontal"}))

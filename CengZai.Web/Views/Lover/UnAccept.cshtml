@@ -1,0 +1,52 @@
+﻿@{
+    ViewBag.Title = "我要注销-" + ViewBag.SiteName;
+    var user = ViewBag.User as CengZai.Model.User;
+    var lover = ViewBag.Lover as CengZai.Model.Lover;
+}
+@section head{
+    <style type="text/css">
+        .table th
+        {
+            vertical-align:top;
+        }
+    </style>
+}
+
+
+<div class="container  bg-white">
+
+        <div class="padding">
+           @using (Html.BeginForm("UnAccept", "Lover", FormMethod.Post, new { @class = "form-horizontal"}))
+           {
+            <!--登记表单-->
+            <fieldset>
+            <legend>您收到的【@Html.GetCertificateName(@lover.Certificate)】申请 <span class="help-block font12">信息预览</span></legend>
+                @RenderPage("_MyLoverInfo.cshtml", new { Lover = lover })
+                <hr />
+                <div class="alert alert-error">
+                  <p class="font14">如果你觉得对方不错，缘分不容易！真珍惜！
+                  </p>
+                </div>
+                <input type="hidden" name="loverID" value="@lover.LoverID" />
+                <div class="control-group">
+                    <label class="control-label" for="why">拒绝原因：</label>
+                    <div class="controls">
+                        <textarea name="why" id="why" class="input-xlarge" style="width:400px;" rows="8"></textarea>
+                        <span class="field-validation-error" data-valmsg-for="why" id="tips-why" data-valmsg-replace="true"></span>
+                        <p class="help-block"></p>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">&nbsp;</label>
+                    <div class="controls">
+                    <input type="submit" class="btn btn-danger" value="立刻拒绝" onclick="return confirm('\n确定拒绝该申请？？？');" />
+                    &nbsp;
+                    @Html.ActionLink("我点击错了", "Preview", "Lover", new {@LoverID=lover.LoverID }, new { @class = "btn btn-primary" })
+                    </div>
+                </div>
+                
+                
+            </fieldset>
+           }
+      </div>
+</div>
