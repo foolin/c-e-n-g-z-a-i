@@ -54,7 +54,7 @@
     {
         if (myLover.State == 1)
         {
-            @Html.ActionLink("查看我的" + Html.GetCertificateName(myLover.Certificate), "Detail", "Lover", new {LoverID=@myLover.LoverID }, new { @class = "btn btn-large btn-primary" })
+            @Html.ActionLink("查看我的" + Html.GetCertificateName(myLover.Certificate), "Certificate", "Lover", new { LoverID = @myLover.LoverID }, new { @class = "btn btn-large btn-primary" })
         }
         else
         {

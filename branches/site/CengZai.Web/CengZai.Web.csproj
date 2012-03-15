@@ -457,7 +457,7 @@
     <Content Include="Views\Lover\Apply.cshtml" />
     <Content Include="Views\Lover\Accept.cshtml" />
     <Content Include="Views\Lover\Preview.cshtml" />
-    <Content Include="Views\Lover\Detail.cshtml" />
+    <Content Include="Views\Lover\Certificate.cshtml" />
     <Content Include="Views\Lover\Index.cshtml" />
     <Content Include="Views\Lover\Abolish.cshtml" />
     <Content Include="Views\Lover\_MyLoverInfo.cshtml" />
