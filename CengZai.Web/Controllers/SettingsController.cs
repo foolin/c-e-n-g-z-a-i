@@ -147,5 +147,86 @@ namespace CengZai.Web.Controllers
             return View();
         }
 
+
+        /// <summary>
+        /// 接收
+        /// </summary>
+        /// <returns></returns>
+        [CheckAuthFilter]
+        [HttpPost]
+        public ActionResult UploadAvatar()
+        {
+
+            Model.User user = GetLoginUser();
+            if (user == null)
+            {
+                return AjaxReturn("0", "您尚未登录！");
+            }
+
+            string fileName = string.Format("{0}{1}.jpg", DateTime.Now.ToString("yyyyMMddmmss"), new Random().Next(100, 999));
+            //保存成自己的文件全路径,newfile就是你上传后保存的文件,
+            //服务器上的UpLoadFile文件夹必须有读写权限
+
+
+            //文件大小不为0
+            System.Drawing.Image avatar = null;
+            try
+            {
+                HttpPostedFileBase file = Request.Files["fileAvatar"];
+                if (file == null)
+                {
+                    return AjaxReturn("0", "请选择上传文件！");
+                }
+                avatar = System.Drawing.Image.FromStream(file.InputStream);
+                if (avatar == null)
+                {
+                    return AjaxReturn("0", "请选择图片文件！");
+                }
+                avatar.Save(Server.MapPath(Config.UploadMapPath + "/" + fileName));
+                avatar.Dispose();
+
+
+                string oldAvatar = user.Avatar;
+                user.Avatar = fileName;
+                bool isSuccess = new BLL.User().Update(user);
+
+                //删除旧文件
+                if (isSuccess && !string.IsNullOrEmpty(oldAvatar))
+                {
+                    try
+                    {
+                        string oldImage = Server.MapPath(Config.UploadMapPath + "/" + oldAvatar);
+                        if (System.IO.File.Exists(oldImage))
+                        {
+                            System.IO.File.Delete(oldImage);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.AddErrorInfo("删除文件出错：" + ex.Message);
+                    }
+                }
+                if (isSuccess)
+                {
+                    return AjaxReturn("1", fileName);
+                }
+                else
+                {
+                    return AjaxReturn("1", "上传图片失败！");
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.AddErrorInfo("SettingsController.UploadAvatar上传文件出错", ex);
+                return AjaxReturn("0", "上传图片出错，请确定您上传的是图片！");
+            }
+
+            
+            
+
+            //return Content("nickname=" + nickname);
+            return AjaxReturn("0", fileName);
+        }
+
     }
 }
