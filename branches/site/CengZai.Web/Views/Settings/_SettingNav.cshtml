@@ -1,0 +1,13 @@
+﻿@{
+    Layout = null;
+    var active = Model.Active;
+}
+
+<ul class="nav nav-tabs">
+    <li @if (active == "Profile")
+        {<text>class="active"</text>}>@Html.ActionLink("修改资料", "Profile")</li>
+    <li @if (active == "Avatar")
+        {<text>class="active"</text>}>@Html.ActionLink("上传头像", "Avatar")</li>
+    <li @if (active == "Password")
+        {<text>class="active"</text>}>@Html.ActionLink("修改密码", "Password")</li>
+</ul>
