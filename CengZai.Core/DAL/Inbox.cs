@@ -52,7 +52,7 @@ namespace CengZai.DAL
 			strSql.Append(";select @@IDENTITY");
 			SqlParameter[] parameters = {
 					new SqlParameter("@Title", SqlDbType.NVarChar,50),
-					new SqlParameter("@Content", SqlDbType.NVarChar,300),
+					new SqlParameter("@Content", SqlDbType.NVarChar,500),
 					new SqlParameter("@ToUserID", SqlDbType.Int,4),
 					new SqlParameter("@FromUserID", SqlDbType.Int,4),
 					new SqlParameter("@SendTime", SqlDbType.DateTime),
@@ -96,7 +96,7 @@ namespace CengZai.DAL
 			strSql.Append(" where MsgID=@MsgID");
 			SqlParameter[] parameters = {
 					new SqlParameter("@Title", SqlDbType.NVarChar,50),
-					new SqlParameter("@Content", SqlDbType.NVarChar,300),
+					new SqlParameter("@Content", SqlDbType.NVarChar,500),
 					new SqlParameter("@ToUserID", SqlDbType.Int,4),
 					new SqlParameter("@FromUserID", SqlDbType.Int,4),
 					new SqlParameter("@SendTime", SqlDbType.DateTime),
