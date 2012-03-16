@@ -65,6 +65,8 @@
     <Compile Include="Common\ErrorFilter.cs" />
     <Compile Include="Common\LowerCaseUrlRoute.cs" />
     <Compile Include="Common\LowerCaseUrlRouteMapHelper.cs" />
+    <Compile Include="Controllers\BlogController.cs" />
+    <Compile Include="Controllers\InboxController.cs" />
     <Compile Include="Controllers\LoverController.cs" />
     <Compile Include="Pages\VerifyCode.aspx.cs">
       <DependentUpon>VerifyCode.aspx</DependentUpon>
@@ -77,7 +79,6 @@
     <Compile Include="Controllers\ArticleController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\SharedController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Test.aspx.cs">
       <DependentUpon>Test.aspx</DependentUpon>
@@ -467,6 +468,9 @@
     <Content Include="Views\Lover\UnAccept.cshtml" />
     <Content Include="Views\Lover\Blog.cshtml" />
     <Content Include="Views\Lover\_BlogHeader.cshtml" />
+    <Content Include="Views\Inbox\Send.cshtml" />
+    <Content Include="Views\Inbox\Read.cshtml" />
+    <Content Include="Views\Inbox\Index.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "发送私信";
+}
+
+<div class="container">
+    <div class="row-fluid">
+      <div class="span8 bg-white">
+      <div class="padding">
+        
+            <div class="page-header">
+            <h2>发送私信</h2> 
+            </div>
+
+            @using (Html.BeginForm("Send", "Inbox", FormMethod.Post, new {@class="form-horizontal"}))
+            {
+                <p>
+                    <label>选择用户</label>
+                    <select name="toUserID">
+                        <option value="0">--请选择--</option>
+                        <option value="1">蜗居</option>
+                        <option value="2">小明</option>
+                    </select>
+                </p>
+                <p><label>发送内容</label>
+                <textarea name="content" class="input-xlarge" rows="6"></textarea>
+                </p>
+    
+                <p>
+                    <input type="submit" value="发送" class="btn btn-primary" />
+                </p>
+            }
+
+      </div>
+      </div>
+      <!--.span8-->
+      <div class="span4">
+          <div class="well">
+            @Html.ActionLink("返回私信", "Index", null, new { @class = "btn" })
+            <hr />
+          </div><!--/.well -->
+      </div>
+      <!--/.span4 -->
+
+    </div>
+</div>   
+<!--/.container -->
+
+
