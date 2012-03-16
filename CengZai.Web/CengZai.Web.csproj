@@ -475,6 +475,7 @@
     <Content Include="Views\Settings\Profile.cshtml" />
     <Content Include="Views\Settings\Password.cshtml" />
     <Content Include="Views\Settings\Avatar.cshtml" />
+    <Content Include="Views\Settings\_SettingNav.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
