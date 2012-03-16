@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "上传头像-";
+    var user = Html.GetLoginUser();
+    var imgPath = CengZai.Helper.Config.UploadHttpPath + "/" + user.Avatar;
+}
+
+
+<div class="container bg-white">
+<div class="padding">
+    <h2>上传新头像</h2>
+    <br />
+    <ul class="nav nav-tabs">
+        <li>@Html.ActionLink("修改资料", "Profile")</li>
+        <li class="active">@Html.ActionLink("上传头像", "Avatar")</li>
+        <li>@Html.ActionLink("修改密码", "Password")</li>
+    </ul>
+ 
+    <div class="tab-content">
+        <div class="tab-pane active">
+            @using (Ajax.BeginForm("Apply", null
+                , new AjaxOptions { UpdateTargetId = "errmsg", OnBegin = "beginSubmit", OnSuccess = "succ", OnFailure = "fail" }
+                , new { @class = "form-horizontal" }))
+            {
+            <div class="control-group">
+                <label class="control-label" for="oldpassword">当前密码：</label>
+                <div class="controls">
+                    <img id="imgAvatar" src="@imgPath" alt="当前头像" />
+                    @Html.Hidden("avartar", @user.Avatar)
+                    <div id="divUploadAvatar"></div>
+                     <span class="field-validation-error" data-valmsg-for="avatar" id="tips-avatar" data-valmsg-replace="true"></span>
+                    <p class="help-block">请上传一张图像</p>
+
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+
+</div>
+</div>   
+<!--/.container -->

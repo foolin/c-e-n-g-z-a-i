@@ -1,0 +1,103 @@
+﻿@{
+    ViewBag.Title = "完善个人资料-";
+    var user = Html.GetLoginUser();
+}
+
+
+<div class="container bg-white">
+<div class="padding">
+    <h2>完善个人资料</h2>
+    <br />
+    <ul class="nav nav-tabs">
+        <li class="active">@Html.ActionLink("修改资料", "Profile")</li>
+        <li>@Html.ActionLink("上传头像", "Avatar")</li>
+        <li>@Html.ActionLink("修改密码", "Password")</li>
+    </ul>
+ 
+    <div class="tab-content">
+        <div class="tab-pane active">
+            @using (Ajax.BeginForm("Apply", null
+                , new AjaxOptions { UpdateTargetId = "errmsg", OnBegin = "beginSubmit", OnSuccess = "succ", OnFailure = "fail" }
+                , new { @class = "form-horizontal" }))
+            {
+            <div class="control-group">
+                <label class="control-label" for="nickname">我的名字：</label>
+                <div class="controls">
+                    @Html.TextBox("nickname", user.Nickname, new { @class = "input-middle" })
+                    <span class="field-validation-error" data-valmsg-for="nickname" id="tips-nickname" data-valmsg-replace="true"></span>
+                    <p class="help-block">这里是你帐号的昵称，建议用真实名字</p>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">性别：</label>
+                <div class="controls">
+                    @Html.DropDownList("sex", new List<SelectListItem>()  
+                    {  
+                      (new SelectListItem() {Text = "帅哥", Value = "1", Selected = (user.Sex == 1)}),  
+                      (new SelectListItem() {Text = "美女", Value = "2", Selected = (user.Sex == 2)})  
+
+                    })
+                    <span class="field-validation-error" data-valmsg-for="nickname" id="tips-nickname" data-valmsg-replace="true"></span>
+                    <p class="help-block">这里是你帐号的昵称，建议用真实名字</p>
+                </div>
+            </div>
+@*            <div class="control-group">
+                <label class="control-label">地区：</label>
+                <div class="controls">
+                    <select name="provinceID">
+                    </select>
+                    <select name="cityID">
+
+                    </select>
+                    <span class="field-validation-error" data-valmsg-for="nickname" id="tips-nickname" data-valmsg-replace="true"></span>
+                    <p class="help-block">这里是你帐号的昵称，建议用真实名字</p>
+                </div>
+            </div>*@
+            <div class="control-group">
+                <label class="control-label" for="mobile">我的手机号：</label>
+                <div class="controls">
+                    @Html.TextBox("mobile", user.Mobile, new { @class = "input-middle" })
+                    <span class="field-validation-error" data-valmsg-for="mobile" id="tips-mobile" data-valmsg-replace="true"></span>
+                    <p class="help-block">用手机号代替身份证号（供申请证件用），我们会保护您的隐私</p>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="birth">我的生日：</label>
+                <div class="controls">
+                    @Html.TextBox("birth", Html.GetDateFormat(user.Birth, "yyyy-MM-dd"), new { @class = "input-middle" })
+                    <span class="field-validation-error" data-valmsg-for="birth" id="tips-birth" data-valmsg-replace="true"></span>
+                    <p class="help-block">请填写真实生日，供找回密码或证件显示用</p>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="sign">个性签名：</label>
+                <div class="controls">
+                    @Html.TextBox("sign", user.Sign, new { @class = "input-middle" })
+                    <span class="field-validation-error" data-valmsg-for="sign" id="tips-sign" data-valmsg-replace="true"></span>
+                    <p class="help-block">这里是你帐号的昵称，建议用真实名字</p>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="intro">我的介绍：</label>
+                <div class="controls">
+                    <textarea name="intro" id="intro" class="input-xlarge" style="width:400px;" rows="8">@user.Intro</textarea>
+                    <p class="field-validation-error" data-valmsg-for="oath" id="tips-oath" data-valmsg-replace="true"></p>
+                    <p class="help-block">请填写您对对方的誓言，大胆说出您的爱~（1000个字符以内，不可更改）</p>
+                </div>
+            </div>
+            <div class="form-actions"> 
+                <button type="submit" id="save" class="btn btn-primary" data-loading-text="正在保存..." onclick="return confirm('请确保资料真实！确定提交？');">提交</button>
+                &nbsp;&nbsp;&nbsp;&nbsp;@Html.ActionLink("取消", "Index")
+            </div>
+            <div class="alert alert-block alert-error" id="error">
+                <a class="close" href="#" onclick="$('#error').hide(); return false;">&times;</a>
+                <h4 class="alert-heading">唉哟，出错了！</h4>
+                <p id="errmsg"></p>
+                </div>
+            }
+        </div>
+    </div>
+
+</div>
+</div>   
+<!--/.container -->
