@@ -18,73 +18,172 @@
     <script src="../../js/calendar/jquery.calendar.js" type="text/javascript"></script>
     <script src="../../js/swfupload/swfupload.js" type="text/javascript"></script>
     <script src="../../js/swfupload/handlers.js" type="text/javascript"></script>
+    <script src="../../js/turn.min.js" type="text/javascript"></script>
     <style type="text/css">
-        .table th
+        #certificate{
+	        width:522px;
+	        height:421px;
+	        overflow:hidden;
+        }
+        #certificate .turn-page{
+	        width:260px;
+	        height:421px;
+	        overflow:hidden;
+        }
+        #certificate .info-left
         {
-            vertical-align:top;
+            background:url(../../img/certificate_left.png) no-repeat;
         }
-        .certificate .cover {
-            width: 522px;
-            height: 348px;
-            background: url(http://statics.xiaoenai.com/assets/marry/jiehun_positive-10abf0b6757420ab5c6e5898a15d047e.png) no-repeat;
+        #certificate .info-left span
+        {
+            position:absolute;
         }
-        .certificate .cert_right {
-            float: right;
-            position: relative;
-            width: 421px;
-            height: 522px;
-            background: url(http://statics.xiaoenai.com/assets/marry/seal_demo-dd3ac72d18d942e7848ba44fe4f11f7f.jpg) no-repeat;
+        #certificate .info-right
+        {
+            background:url(../../img/certificate_right.png) no-repeat;
         }
-        .certificate .cert_right .seal {
-        position: absolute;
-        top: 124px;
-        right: 47px;
-        width: 94px;
-        height: 92px;
-        background: url(http://statics.xiaoenai.com/assets/marry/seal_img-43e461b5c2c967909718753e02a36576.png) no-repeat;
+        #certificate .info-right span
+        {
+            position:absolute;
+        }
+        #certificate .avatar
+        {
+            margin-left:40px;
+            margin-top:40px;
+        }
+        #certificate .avatar img
+        {
+            width:180px;
+            height:120px;
+        }
+        #certificate .owner
+        {
+            margin-left:116px;
+            margin-top:184px;
+        }
+        #certificate .date
+        {
+            margin-left:116px;
+            margin-top:226px;
+        }
+        #certificate .loverid
+        {
+            margin-left:116px;
+            margin-top:268px;
+        }
+        #certificate .note
+        {
+            margin-left:116px;
+            margin-top:309px;
+        }
+        #certificate .boy-name
+        {
+            margin-left:62px;
+            margin-top:48px;
+        }
+        #certificate .boy-sex
+        {
+            margin-left:155px;
+            margin-top:48px;
+        }
+        #certificate .boy-nation
+        {
+            margin-left:62px;
+            margin-top:86px;
+        }
+        #certificate .boy-age
+        {
+            margin-left:155px;
+            margin-top:86px;
+        }
+        #certificate .boy-mobile
+        {
+            margin-left:80px;
+            margin-top:122px;
+        }
+        #certificate .girl-name
+        {
+            margin-left:62px;
+            margin-top:236px;
+        }
+        #certificate .girl-sex
+        {
+            margin-left:155px;
+            margin-top:236px;
+        }
+        #certificate .girl-nation
+        {
+            margin-left:62px;
+            margin-top:274px;
+        }
+        #certificate .girl-age
+        {
+            margin-left:155px;
+            margin-top:274px;
+        }
+        #certificate .girl-mobile
+        {
+            margin-left:80px;
+            margin-top:310px;
         }
     </style>
 }
 
-<div class="container bg-white">
+<div class="container">
+ <div class="padding">
+    
+    <div class="page-header">
+        <div class="row-fluid">
+        <div class="span4">
+            <h2>刘帅哥与卢美女的结婚证</h2>
+            <div class="muted">http://www.cengzai.com/lover/00000011111</div>
+        </div>
+        <div class="span6">
+            <a href="/Lover/10000000" class="btn">访问我们的主页</a>
+        </div>
+        </div>
+    </div>
 
-    @RenderPage("_BlogHeader.cshtml", new { Lover = lover })
+    
+    <div id='certificate'>
+        <div class="conver-start"><img src="../../img/certificate_cover_start.png" /></div>
+	    <div class="info-left">
+            <span class="avatar"><img class="thumbnail" src="http://img.xiaoenai.com/avatar_img/2012/03/08/7bf2a9cdd5761069b3718756bfdbfe00.jpg" /></span>
+            <span class="owner">夫妻俩</span>
+            <span class="date">2012年3月17日</span>
+            <span class="loverid">CZ-20120317-1000000</span>
+            <span class="note"></span>
+        </div>
+        <div class="info-right">
+            <span class="boy-name">刘帅哥</span>
+            <span class="boy-sex">男</span>
+            <span class="boy-nation">中国</span>
+            <span class="boy-age">26</span>
+            <span class="boy-mobile">1341618****</span>
+            <span class="girl-name">卢美女</span>
+            <span class="girl-sex">女</span>
+            <span class="girl-nation">中国</span>
+            <span class="girl-age">24</span>
+            <span class="girl-mobile">1341618****</span>
+        </div>
+	    <div class="conver-end"><img src="../../img/certificate_cover_end.png" /></div>
+    </div>
 
-        <div class="padding">
 
-            <!--登记表单-->
-            <fieldset>
-            <legend>付灵和常春的恋爱证信息[预览]</legend>
-                <div class="certificate" onselectstart="return false">
-        	        <div class="cert_left">
-            	        <div class="cover"></div>
-                        <div id="wishes">
-                            <!--
-                            <div class="flower"><p><a href="javascript:void(0);">祝福</a><span>(102)</span></p></div>
-                            <div class="envy"><p><a href="javascript:void(0);">羡慕嫉妒恨</a><span>(102)</span></p></div>
-                            -->
-                        </div>
-                
-                    </div>
-                    <div class="cert_right">
-                        <span class="info001">夫妻俩</span>
-                        <span class="info002">2012年06月06日</span>
-                        <span class="info003">CN天结字6370061008</span>
-                        <span class="info004">石宗亮</span>
-                        <span class="info005">男</span>
-                        <span class="info006">中国</span>
-                        <span class="info007">24</span>
-                        <span class="info008">1533331****</span>
-                        <span class="info009">赫晓贾</span>
-                        <span class="info010">女</span>
-                        <span class="info011">中国</span>
-                        <span class="info012">24</span>
-                        <span class="info013">1583392****</span>
-            	        <img class="marry_photo" style="width:160px; height:111px;" src="http://img.xiaoenai.com/avatar_img/2012/02/17/c77fcb0b3b2a2693b29da38cc83170f3.jpg">
-                        <div class="seal"></div>
-                    </div>
-            
-            </div>
-            </fieldset>
-      </div>
+ </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#certificate-conver").slideDown();
+        $("#certificate-info").slideUp();
+        $("#certificate-conver").click(function () {
+            $("#certificate-conver").slideUp();
+            $("#certificate-info").slideDown();
+        });
+        $("#certificate-info").click(function () {
+            $("#certificate-conver").slideDown();
+            $("#certificate-info").slideUp();
+        });
+        $('#certificate').turn({ page: 2 });
+    });
+</script>
