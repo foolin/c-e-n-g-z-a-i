@@ -125,6 +125,7 @@
     <Content Include="js\jcrop\js\jquery.Jcrop.min.js" />
     <Content Include="js\jcrop\MIT-LICENSE.txt" />
     <Content Include="js\swfupload\handlers.js" />
+    <Content Include="js\turn.min.js" />
     <Content Include="Pages\VerifyCode.aspx" />
     <Content Include="css\bootstrap.css" />
     <Content Include="css\bootstrap.min.css" />
