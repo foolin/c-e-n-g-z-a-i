@@ -35,12 +35,20 @@ namespace CengZai.Web
             //    new { controller = "Article", action = "Index", domain = @"[a-zA-Z0-9_-]{5,30}", } // Parameter defaults
             //);
 
+            //博客{BlogController.Blog}
             routes.MapLowerCaseUrlRoute(
-                "Lover", // Route name
-                "{controller}/{loverid}/{action}/{id}", // URL with parameters
-                new { controller = "Lover", action = "Blog", loverid = @"[0-9]{7,30}", id = UrlParameter.Optional } // Parameter defaults
-                , new { loverid = @"[0-9]{7,30}" }
+                "Blog", // Route name
+                "blog/{userid}/{id}", // URL with parameters
+                new { controller = "Blog", action = "Blog", userid = @"[1-9][0-9]*", id = UrlParameter.Optional } // Parameter defaults
+                , new { userid = @"[1-9][0-9]*" }
             );
+
+            //routes.MapLowerCaseUrlRoute(
+            //    "Lover", // Route name
+            //    "{controller}/{loverid}/{action}/{id}", // URL with parameters
+            //    new { controller = "Lover", action = "Blog", loverid = @"[0-9]{7,30}", id = UrlParameter.Optional } // Parameter defaults
+            //    , new { loverid = @"[0-9]{7,30}" }
+            //);
 
             routes.MapLowerCaseUrlRoute(
                 "Default", // Route name
