@@ -3,16 +3,10 @@
     var blogUser = ViewBag.BlogUser as CengZai.Model.User;
     var blogLover = ViewBag.BlogLover as CengZai.Model.Lover;
     var loverUser = ViewBag.LoverUser as CengZai.Model.User;
-    var boy = null as CengZai.Model.User;
-    var girl = null as CengZai.Model.User;
-    if(blogUser.Sex == 2){
-        girl = blogUser;
-        boy = loverUser;
-    }
-    else{
-        girl = loverUser;
-        boy = blogUser;
-    }
+    var boy = ViewBag.Boy as CengZai.Model.User;
+    var girl = ViewBag.Girl as CengZai.Model.User;
+    var boyArtList = ViewBag.BoyArtList as List<CengZai.Model.Article>;
+    var girlArtList = ViewBag.GirlArtList as List<CengZai.Model.Article>;
 }
 @section head{
 <style type="text/css">
@@ -125,7 +119,7 @@
             <!--boy info-->
             <div class="row-fluid boy">
                 <div class="span10 text-right">
-                    <h4><span class="muted font12">男主人</span> @boy.Nickname</h4>
+                    <h4><span class="muted font12">男主人</span> @Html.ActionLink(@boy.Nickname, "Blog", new { username = boy.Username })</h4>
                     <p class="sign">@boy.Sign</p>
                     <p>@Html.ActionLink("关注他","FeedID", "Feed")</p>
                 </div>
@@ -141,9 +135,9 @@
                     <span class="thumbnail"><img class="avartar" src="@Html.GetHttpPath(girl.Avatar)" alt="" /></span>
                 </div>
                 <div class="span10">
-                    <h4>@girl.Nickname <span class="muted font12">女主人</span></h4>
+                    <h4>@Html.ActionLink(girl.Nickname, "Blog", new { username = girl.Username }) <span class="muted font12">女主人</span></h4>
                     <p class="sign">@girl.Sign</p>
-                    <p>@Html.ActionLink("关注她","FeedID", "Feed")</p>
+                    <p>@Html.ActionLink("关注她", "FeedID", "Feed")</p>
                 </div>
             </div>
         </div>
@@ -152,14 +146,12 @@
     <div class="lover-info">博客地址：http://@ViewBag.SiteDomain@Url.Action("Blog", "Blog")</div>
     
     <!--/顶部区域-->
-    <div class="subnav">
+    <div class="subnav @(blogUser.Sex == 2 ? "girl" : "boy")">
     <ul class="nav nav-pills">
-        <li><a href="#labels">情侣首页</a></li>
-        <li><a href="#badges">先锋官</a></li>
-        <li><a href="#typography">唔嫒</a></li>
-        <li><a href="#thumbnails">证书</a></li>
-        <li><a href="#alerts">留言</a></li>
-        <li><a href="#manage">管理</a></li>
+        <li>@Html.ActionLink("首页", "Blog")</li>
+        <li>@Html.ActionLink(boy.Nickname, "Blog", new { username = boy.Username })</li>
+        <li>@Html.ActionLink(girl.Nickname, "Blog", new { username = girl.Username })</li>
+        <li>@Html.ActionLink("证书", "Certificate")</li>
     </ul>
     </div>
 
@@ -168,7 +160,29 @@
         <!--boy content-->
         <div class="span6 boy">
         <div class="padding">
-          <dl>
+        @if (boyArtList != null)
+        {
+            for (int i = 0; i < boyArtList.Count; i++)
+            {
+              <dl class="thumbnail">
+                <dt class="title">@Html.ActionLink(boyArtList[i].Title + "aa", "Article", new { username=boy.Username, artid=boyArtList[i].ArtID })</dt>
+                <dd class="content">@Html.GetRemoveHtmlContent(boyArtList[i].Content, 500)@*@MvcHtmlString.Create(boyArtList[i].Content)*@</dd>
+                <dd class="info">
+                    <div class="row-fluid">
+                        <span class="span6">@Html.GetDateFormat(boyArtList[i].PostTime, "yyyy年M月d日")</span>
+                        <span class="span6">@boyArtList[i].ViewCount 次浏览</span>
+                    </div>
+                </dd>
+                @*<dd class="comment"></dd>*@
+              </dl>
+                if (i < (boyArtList.Count - 1))
+                {
+                    <hr />
+                }
+            }
+        }
+
+@*          <dl>
             <dt class="title"><a href="#" rel="bookmark">男性妊娠反应原因及表现</a></dt>
             <dd class="content">一提起妊娠反应，人们都以为这是孕妇的事儿，其实，有些孕妇的丈夫，也可能发和“妊娠反应”。
     他们的反应与其妻子不同，不是恶心、呕吐和嗅觉异常敏感…</dd>
@@ -178,7 +192,7 @@
                     <span class="span6">2003次浏览/8条评论</span>
                 </div>
             </dd>
-            @*<dd class="comment"></dd>*@
+            @*<dd class="comment"></dd>* @
           </dl>
           <hr />
 
@@ -192,22 +206,8 @@
                     <span class="span6">2003次浏览/8条评论</span>
                 </div>
             </dd>
-            @*<dd class="comment"></dd>*@
-          </dl>
-          <hr />
-
-          <dl>
-            <dt class="title"><a href="#" rel="bookmark">男性妊娠反应原因及表现</a></dt>
-            <dd class="content">一提起妊娠反应，人们都以为这是孕妇的事儿，其实，有些孕妇的丈夫，也可能发和“妊娠反应”。
-    他们的反应与其妻子不同，不是恶心、呕吐和嗅觉异常敏感…</dd>
-            <dd class="info">
-                <div class="row-fluid">
-                    <span class="span6">2012年3月16日</span>
-                    <span class="span6">2003次浏览/8条评论</span>
-                </div>
-            </dd>
-            @*<dd class="comment"></dd>*@
-          </dl>
+            @*<dd class="comment"></dd>* @
+          </dl>*@
 
         </div>
         </div>
@@ -217,31 +217,27 @@
         <div class="span6 girl">
         <div class="padding">
 
-          <dl>
-            <dt class="title"><a href="#" rel="bookmark">男性妊娠反应原因及表现</a></dt>
-            <dd class="content">一提起妊娠反应，人们都以为这是孕妇的事儿，其实，有些孕妇的丈夫，也可能发和“妊娠反应”。
-    他们的反应与其妻子不同，不是恶心、呕吐和嗅觉异常敏感…</dd>
-            <dd class="info">
-                <div class="row-fluid">
-                    <span class="span6">2012年3月16日</span>
-                    <span class="span6">2003次浏览/8条评论</span>
-                </div>
-            </dd>
-            @*<dd class="comment"></dd>*@
-          </dl>
-          <hr />
-
-          <dl>
-            <dt class="title"><a href="#" rel="bookmark">男性妊娠反应原因及表现</a></dt>
-            <dd class="content">2011年是个忙碌的一年，我人生的最重要的决定已经在这年完成。自己即将面对的是自己越来越忙碌的生活和歪歪越来越忙碌的工作。 上次有个同事问我，结…</dd>
-            <dd class="info">
-                <div class="row-fluid">
-                    <span class="span6">2012年3月16日</span>
-                    <span class="span6">2003次浏览/8条评论</span>
-                </div>
-            </dd>
-            @*<dd class="comment"></dd>*@
-          </dl>
+          @if (girlArtList != null)
+        {
+            for (int i = 0; i < girlArtList.Count; i++)
+            {
+              <dl>
+                <dt class="title"><a href="#" rel="bookmark">@girlArtList[i].Title</a></dt>
+                <dd class="content">@Html.GetRemoveHtmlContent(girlArtList[i].Content, 300)</dd>
+                <dd class="info">
+                    <div class="row-fluid">
+                        <span class="span6">@Html.GetDateFormat(girlArtList[i].PostTime, "yyyy年M月d日")</span>
+                        <span class="span6">@girlArtList[i].ViewCount 次浏览</span>
+                    </div>
+                </dd>
+                @*<dd class="comment"></dd>*@
+              </dl>
+                if (i < (girlArtList.Count - 1))
+                {
+                    <hr />
+                }
+            }
+        }
 
 
         </div>

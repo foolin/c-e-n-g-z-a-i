@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using CengZai.Helper;
 
 namespace CengZai.Web.Controllers
 {
@@ -44,10 +45,31 @@ namespace CengZai.Web.Controllers
             {
                 return View("BlogSingle");
             }
+            CengZai.Model.User boy = null;
+            CengZai.Model.User girl = null;
+            if (blogUser.Sex == 2)
+            {
+                girl = blogUser;
+                boy = loverUser;
+            }
+            else
+            {
+                girl = loverUser;
+                boy = blogUser;
+            }
+            BLL.Article bllArt = new BLL.Article();
+            int boyTotalCount = 0;
+            int girlTotalCount = 0;
+            int page = GetPageNum("page");
+            List<Model.Article> boyArtList = bllArt.GetUserPublicListByPage(boy.UserID, "IsTop DESC,PostTime DESC", Config.PageSize, page, out boyTotalCount);
+            List<Model.Article> girlArtList = bllArt.GetUserPublicListByPage(girl.UserID, "IsTop DESC,PostTime DESC", Config.PageSize, page, out girlTotalCount);
             ViewBag.BlogUser = blogUser;
             ViewBag.BlogLover = blogLover;
             ViewBag.LoverUser = loverUser;
-
+            ViewBag.Boy = boy;
+            ViewBag.Girl = girl;
+            ViewBag.BoyArtList = boyArtList;
+            ViewBag.GirlArtList = girlArtList;
             return View();
         }
 

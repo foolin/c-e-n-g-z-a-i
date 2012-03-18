@@ -187,6 +187,30 @@ namespace CengZai.Helper
         }
 
 
+        /// <summary>
+        /// 分页条数
+        /// </summary>
+        public static int PageSize
+        {
+            get
+            {
+                int pageSize = 0;
+                try
+                {
+                    pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["PageSize"] + "");
+                }
+                catch (Exception ex)
+                {
+                    Log.AddErrorInfo("Config.PageSize异常", ex);
+                }
+                if (pageSize <= 0)
+                {
+                    pageSize = 20;
+                }
+                return pageSize;
+            }
+        }
+
         /************ 邮箱相关配置 ***********/
 
         //From
