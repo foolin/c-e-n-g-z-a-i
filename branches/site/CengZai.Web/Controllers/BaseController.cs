@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using CengZai.Helper;
+using CengZai.Web.Common;
 
 namespace CengZai.Web.Controllers
 {
@@ -11,10 +12,20 @@ namespace CengZai.Web.Controllers
     {
         public BaseController()
         {
+            
+        }
+
+        /// <summary>
+        /// 代码
+        /// </summary>
+        /// <param name="filterContext"></param>
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
             //初始化
             ViewData["SiteName"] = Config.SiteName;
             ViewData["SiteDomain"] = Config.SiteDomain;
             ViewData["SiteSlogan"] = Config.SiteSlogan;
+            WebHelper.LoadLoginUserFromSessionOrCookies(filterContext.HttpContext);
         }
 
         /// <summary>

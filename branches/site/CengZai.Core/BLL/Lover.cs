@@ -218,6 +218,26 @@ namespace CengZai.BLL
 
 
         /// <summary>
+        /// 获取已经正式颁布证书的关系
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <returns></returns>
+        public Model.Lover GetAwardLover(int userID)
+        {
+            Model.Lover myLover = null;
+            StringBuilder strWhere = new StringBuilder();
+            strWhere.AppendFormat("(BoyUserID={0} OR GirlUserID={0})", userID);
+            strWhere.AppendFormat(" And State = 1 And Flow={0}", (int)LoverFlow.Award);
+            DataSet dsList = GetList(0, strWhere.ToString(), "State DESC");
+            if (dsList == null || dsList.Tables.Count == 0 || dsList.Tables[0].Rows.Count == 0)
+            {
+                return null;
+            }
+            myLover = dal.ToModel(dsList.Tables[0].Rows[0]);
+            return myLover;
+        }
+
+        /// <summary>
         /// 取证件类型名字
         /// </summary>
         /// <param name="certificate"></param>

@@ -30,5 +30,16 @@ namespace System.Web.Mvc
         {
             return new CengZai.BLL.Lover().GetFlowName(flow);
         }
+
+        /// <summary>
+        /// 取Http路径
+        /// </summary>
+        /// <param name="helper"></param>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static string GetHttpPath(this HtmlHelper helper, string path)
+        {
+            return (CengZai.Helper.Config.UploadHttpPath + "/" + path).Replace("//", "/");
+        }
     }
 }

@@ -73,7 +73,6 @@ namespace CengZai.Web.Controllers
                 user.Intro = intro;
                 bllUser.Update(user);
                 Session["LOGIN_USER"] = user;   //更新Session
-
                 return AjaxReturn("success", "更新成功！");
             }
             catch (Exception ex)
