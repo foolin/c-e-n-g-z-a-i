@@ -16,7 +16,7 @@ namespace System.Web.Mvc
         /// <param name="helper"></param>
         /// <param name="userID"></param>
         /// <returns></returns>
-        public static CengZai.Model.User GetUser(this HtmlHelper helper, object userID)
+        public static CengZai.Model.User GetUser(this HtmlHelper helper, int? userID)
         {
             CengZai.Model.User user = null;
             if (userID == null)
@@ -36,12 +36,37 @@ namespace System.Web.Mvc
 
 
         /// <summary>
+        /// 取用户实体
+        /// </summary>
+        /// <param name="helper"></param>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        public static CengZai.Model.User GetUser(this HtmlHelper helper, string username)
+        {
+            CengZai.Model.User user = null;
+            if (string.IsNullOrEmpty(username))
+            {
+                return null;
+            }
+            try
+            {
+                user = new CengZai.BLL.User().GetModelByCache(username);
+            }
+            catch (Exception ex)
+            {
+                Log.AddErrorInfo("HtmlExtendForUser.GetUser()异常：" + ex.Message);
+            }
+            return user;
+        }
+
+
+        /// <summary>
         /// 取用户名
         /// </summary>
         /// <param name="helper"></param>
         /// <param name="userID"></param>
         /// <returns></returns>
-        public static string GetUserNickname(this HtmlHelper helper, object userID)
+        public static string GetUserNickname(this HtmlHelper helper, int? userID)
         {
             string nickname = "";
             if (userID == null)
@@ -51,6 +76,35 @@ namespace System.Web.Mvc
             try
             {
                 CengZai.Model.User user = new CengZai.BLL.User().GetModelByCache((int)userID);
+                if (user != null)
+                {
+                    nickname = user.Nickname;
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.AddErrorInfo("HtmlExtendForUser.GetUserNickname()异常：" + ex.Message);
+            }
+            return nickname;
+        }
+
+
+        /// <summary>
+        /// 取用户名
+        /// </summary>
+        /// <param name="helper"></param>
+        /// <param name="userID"></param>
+        /// <returns></returns>
+        public static string GetUserNickname(this HtmlHelper helper, string username)
+        {
+            string nickname = "";
+            if (string.IsNullOrEmpty(username))
+            {
+                return null;
+            }
+            try
+            {
+                CengZai.Model.User user = new CengZai.BLL.User().GetModelByCache(username);
                 if (user != null)
                 {
                     nickname = user.Nickname;

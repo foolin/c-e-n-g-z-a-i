@@ -3,6 +3,7 @@ using System.Data;
 using System.Collections.Generic;
 using CengZai.Helper;
 using CengZai.Model;
+using System.Threading;
 namespace CengZai.BLL
 {
 	/// <summary>
@@ -43,7 +44,14 @@ namespace CengZai.BLL
 		/// </summary>
 		public int  Add(CengZai.Model.User model)
 		{
-			return dal.Add(model);
+			int ret =  dal.Add(model);
+            //启动现场更新缓存
+            Thread thread = new Thread(delegate()
+            {
+                UpdateCache();
+            });
+            thread.Start();
+            return ret;
 		}
 
 		/// <summary>
@@ -51,7 +59,13 @@ namespace CengZai.BLL
 		/// </summary>
 		public bool Update(CengZai.Model.User model)
 		{
-			return dal.Update(model);
+			bool ret =  dal.Update(model);
+            Thread thread = new Thread(delegate()
+            {
+                UpdateCache();
+            });
+            thread.Start();
+            return ret;
 		}
 
 		/// <summary>
@@ -59,15 +73,26 @@ namespace CengZai.BLL
 		/// </summary>
 		public bool Delete(int UserID)
 		{
-			
-			return dal.Delete(UserID);
+			bool ret =  dal.Delete(UserID);
+            Thread thread = new Thread(delegate()
+            {
+                UpdateCache();
+            });
+            thread.Start();
+            return ret;
 		}
 		/// <summary>
 		/// 删除一条数据
 		/// </summary>
 		public bool DeleteList(string UserIDlist )
 		{
-			return dal.DeleteList(UserIDlist );
+			bool ret =  dal.DeleteList(UserIDlist );
+            Thread thread = new Thread(delegate()
+            {
+                UpdateCache();
+            });
+            thread.Start();
+            return ret;
 		}
 
 		/// <summary>
@@ -181,6 +206,25 @@ namespace CengZai.BLL
             }
             return dsList;
         }
+
+        /// <summary>
+        /// 更新缓存
+        /// </summary>
+        /// <returns></returns>
+        public bool UpdateCache()
+        {
+            DataSet dsList = null;
+            try
+            {
+                dsList = GetListByCache(true);
+            }
+            catch (Exception ex)
+            {
+                Log.AddErrorInfo("BLL.User.Update()异常", ex);
+            }
+            return dsList != null;
+        }
+
         /// <summary>
         /// 取缓存
         /// </summary>
@@ -214,6 +258,40 @@ namespace CengZai.BLL
                 if (dsUserList != null)
                 {
                     DataRow[] rows = dsUserList.Tables[0].Select("UserID=" + userID);
+                    if (rows.Length > 0)
+                    {
+                        model = dal.RowToModel(rows[0]);
+                    }
+                }
+            }
+            return model;
+        }
+
+
+        /// <summary>
+        /// 取用户名
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <returns></returns>
+        public Model.User GetModelByCache(string username)
+        {
+            Model.User model = null;
+            DataSet dsUserList = new CengZai.BLL.User().GetListByCache();
+            if (dsUserList != null)
+            {
+                DataRow[] rows = dsUserList.Tables[0].Select("Username='" + username + "'");
+                if (rows.Length > 0)
+                {
+                    model = dal.RowToModel(rows[0]);
+                }
+            }
+            //如果不存在用户，则取最新的且更新缓存
+            if (model == null)
+            {
+                dsUserList = new CengZai.BLL.User().GetListByCache(true);
+                if (dsUserList != null)
+                {
+                    DataRow[] rows = dsUserList.Tables[0].Select("Username='" + username + "'");
                     if (rows.Length > 0)
                     {
                         model = dal.RowToModel(rows[0]);
