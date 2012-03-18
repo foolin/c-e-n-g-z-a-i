@@ -7,18 +7,18 @@
     <link type="text/css" href="../js/imgzoom/jquery.artZoom.css" rel="stylesheet">
     <script type="text/javascript" src="../js/imgzoom/jquery.artZoom.min.js"></script>
     <script type="text/javascript">
-    jQuery(function ($) {
-	    $('.artZoom').artZoom({
-		    path: './images',	// 设置artZoom图片文件夹路径
-		    preload: true,		// 设置是否提前缓存视野内的大图片
-		    blur: true,			// 设置加载大图是否有模糊变清晰的效果
-		
-		    // 语言设置
-		    left: '左旋转',		// 左旋转按钮文字
-		    right: '右旋转',		// 右旋转按钮文字
-		    source: '看原图'		// 查看原图按钮文字
-	    });
-    });
+        jQuery(function ($) {
+            $('.artZoom').artZoom({
+                path: './images', // 设置artZoom图片文件夹路径
+                preload: true, 	// 设置是否提前缓存视野内的大图片
+                blur: true, 		// 设置加载大图是否有模糊变清晰的效果
+
+                // 语言设置
+                left: '左旋转', 	// 左旋转按钮文字
+                right: '右旋转', 	// 右旋转按钮文字
+                source: '看原图'		// 查看原图按钮文字
+            });
+        });
     </script>
 
 }
@@ -137,7 +137,100 @@
                 <!--feed-list-item 结束-->
            }
 
-
+           @* Feed模板
+                <article class="feed">
+                    <div class="avatar">
+                        <a class="blog-avatar" href="http://foolin.diandian.com" style="background-image:url(http://m1.img.libdd.com/farm1/53/2FCCB335D03ADF18DE0340F650E6BB35_64_64.jpg)">Foolin</a>
+                    </div>
+                    <div class="box">
+                        <div class="box-triangle"></div>
+                        <div class="link-to-post-holder" style="display: block; ">
+<a href="http://iam.diandian.com/post/2012-02-06/16830309" target="_blank" class="link-to-post" title="查看文章 - 昨天">查看文章</a>
+</div>
+                        <div class="box-shadow-top"></div>
+                        <div class="box-content">
+                        	<div class="feed-header">
+                            	<a href="http://www.cengzai.com" class="feed-user">曾在网官方</a>
+                                <span class="post-time">发布于2012-02-19 22:22:09</span>
+                            </div>
+                            <div class="feed-body">
+                            	<h4 class="feed-title"><a href="#">Hello,这里是标题啊</a></h4>
+                                <div class="feed-content">
+                                	<a href="http://www.planeart.cn/demo/artZoom/_demo/01.jpg" rel="http://www.planeart.cn/demo/artZoom/_demo/01.jpg"><img class="artZoom" src="http://www.planeart.cn/demo/artZoom/_demo/01m.jpg" /></a> 			
+                                    <img class="artZoom" src="http://www.planeart.cn/demo/artZoom/_demo/03m.jpg" data-artZoom-show="http://www.planeart.cn/demo/artZoom/_demo/03.jpg" data-artZoom-source="http://www.planeart.cn/demo/artZoom/_demo/03m.jpg" />
+                                    <a href="http://www.planeart.cn/demo/artZoom/_demo/04.jpg" data-artZoom-source="http://www.planeart.cn/demo/artZoom/_demo/04.jpg"> <img class="artZoom" src="http://www.planeart.cn/demo/artZoom/_demo/04m.jpg" data-artZoom-source="http://www.planeart.cn/demo/artZoom/_demo/01m.jpg" /> </a>
+                                    <a href="http://www.planeart.cn/demo/artZoom/_demo/05.jpg" rel="http://www.planeart.cn/demo/artZoom/_demo/05.jpg"><img class="artZoom" src="http://www.planeart.cn/demo/artZoom/_demo/05m.jpg" />
+                                    </a>
+                                    
+                                	<p>“桂花香馅裹胡桃，江米如珠井水淘”。</p><p>正月十五，元宵节。各位吃货，吃元宵了吗？</p><p>两只可爱的吃货，祝大家元宵节快乐。</p><p>——来自<a href="http://lost7.diandian.com/post/2012-02-05/16672423" target="_blank">《LOST7》</a><br></p>
+                                </div>
+                                <ul class="feed-comment">
+                                    <li class="row">
+                                        <div class="comment-avatar">
+                                            <span>
+                                                <a class="blog-mini-avatar" href="http://foolin.diandian.com" style="background-image:url(http://m1.img.libdd.com/farm1/53/2FCCB335D03ADF18DE0340F650E6BB35_64_64.jpg)">Foolin</a>
+                                            </span>
+                                            
+                                        </div>
+                                        <div class="comment-content">
+                                            <span class="comment-user"><a href="#User">笨猪猪</a></span>
+                                            “桂花香馅裹胡桃，江米如珠井水淘”。正月十五，元宵节。各位吃货，吃元宵了吗？两只可爱的吃货，祝大家元宵节快乐。
+                                            <div class="comment-info">2012-02-20 10:38:27</div>
+                                        </div>
+                                    </li>
+                                    <li class="row">
+                                        <div class="comment-avatar">
+                                            <span>
+                                                <a class="blog-mini-avatar" href="http://foolin.diandian.com" style="background-image:url(http://m1.img.libdd.com/farm1/53/2FCCB335D03ADF18DE0340F650E6BB35_64_64.jpg)">Foolin</a>
+                                            </span>
+                                            
+                                        </div>
+                                        <div class="comment-content">
+                                            <span class="comment-user"><a href="#User">笨猪猪</a></span>
+                                            “桂花香馅裹胡桃，江米如珠井水淘”。正月十五，元宵节。各位吃货，吃元宵了吗？两只可爱的吃货，祝大家元宵节快乐。
+                                            <div class="comment-info">2012-02-20 10:38:27</div>
+                                        </div>
+                                    </li>
+                                    <li class="row">
+                                        <div class="comment-avatar">
+                                            <span>
+                                                <a class="blog-mini-avatar" href="http://foolin.diandian.com" style="background-image:url(http://m1.img.libdd.com/farm1/53/2FCCB335D03ADF18DE0340F650E6BB35_64_64.jpg)">Foolin</a>
+                                            </span>
+                                            
+                                        </div>
+                                        <div class="comment-content">
+                                            <span class="comment-user"><a href="#User">笨猪猪</a></span>
+                                            “桂花香馅裹胡桃，江米如珠井水淘”。正月十五，元宵节。各位吃货，吃元宵了吗？两只可爱的吃货，祝大家元宵节快乐。
+                                            <div class="comment-info">2012-02-20 10:38:27</div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="comment-form">
+                                    <form action="/Comment/Post/12">
+                                        <textarea name="comment-12" class="span10" style="height:25px" placeholder="发表评论…"></textarea>
+                                        <button type="submit" class="btn" style="margin-top:5px;">发表</button> 
+                                    </form>
+                                </div>
+                                <div class="feed-tag">
+                                    <a href="http://www.diandian.com/tag/%E7%82%B9%E7%82%B9">#测试</a>
+                                    <a href="http://www.diandian.com/tag/%E7%82%B9%E7%82%B9%E7%BD%91">#测试</a>
+                                    <a href="http://www.diandian.com/tag/%E6%97%A9%E5%AE%89%202012" class="last">#测试 2012</a>
+                                </div>
+                                <div class="feed-action">
+                                    <a title="喜欢" class="feed-fav ">喜欢</a>
+                                    <a class="feed-rt" target="_blank" href="http://www.diandian.com/reblog/foolin/c078b050-52c7-11e1-a40e-782bcb3825eb">转载</a>
+                                    <a class="feed-cmt" data-nid="c078b050-52c7-11e1-a40e-782bcb3825eb">回应(4)</a><a data-type="photo" data-id="c078b050-52c7-11e1-a40e-782bcb3825eb" data-nid="c078b050-52c7-11e1-a40e-782bcb3825eb" data-url="iam" class="feed-nt">热度(142)</a>
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                        <!--box-content 结束-->
+                        <div class="box-shadow-bottom"></div>
+                    </div>
+                    <div class="clear"></div>
+                </article>
+                <!--feed-list-item 结束-->
+                *@
 
                 <div class="pager">@Html.Pager((int)ViewBag.PageSize, (int)ViewBag.TotalCount, "page", 3)</div>
 

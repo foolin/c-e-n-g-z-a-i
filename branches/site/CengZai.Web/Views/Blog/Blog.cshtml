@@ -1,0 +1,206 @@
+﻿@{
+    ViewBag.Title = "我的首页-" + ViewBag.SiteName;
+    var lover = ViewBag.MyLover as CengZai.Model.Lover;
+}
+@section head{
+<style type="text/css">
+
+.caption
+{
+	color:#666;
+}
+.caption h5
+{
+	padding:5px;
+}
+.text-right
+{
+	text-align:right;
+}
+.lover-info
+{
+	padding:5px 0px;
+	color:#999;
+	text-align:center;
+}
+.subnav
+{
+	margin-top:10px;
+}
+.boy a
+{
+	color:#2AB5DC;
+}
+.boy .thumbnail
+{
+	border-color:#D9ECFF;
+}
+.boy hr {
+    margin: 5px 0;
+    border: 0;
+    border-top: 1px dashed #A4D1FF;
+    border-bottom: 1px solid white;
+}
+.girl
+{
+}
+.girl a
+{
+	color:#FF006C;
+}
+.girl .thumbnail
+{
+	border-color:#FFC1FF;
+}
+.girl hr {
+    margin: 5px 0;
+    border: 0;
+    border-top: 1px dashed #FFC1FF;
+    border-bottom: 1px solid white;
+}
+.article
+{
+	margin-top:10px;
+}
+.article dl, dl dt, dl dd
+{
+	padding:0;
+	margin:0;
+}
+.article dl dt, dl dd
+{
+	padding:5px;
+}
+.article .title
+{
+	font-size:14px;
+}
+.article .content
+{
+	text-indent:2em;
+	font-size:14px;
+	line-height:1.5em;
+}
+.article .info
+{
+	font-size:12px;
+	line-height:22px;
+	color:#999;
+	
+}
+</style>
+<script type="text/javascript">
+    //    $(document).ready(function () {
+    //        $('.thumbnail .caption p').slideUp();
+    //        $('.thumbnail').hover(
+    //		function () {
+    //		    $(this).find(".caption p").slideDown();
+    //		},
+    //		 function () {
+    //		     $(this).find(".caption p").slideUp();
+    //		 }
+    //        );
+    //    });
+</script>
+}
+
+<div class="container  bg-white">
+<div class="padding">
+    
+    @RenderPage("_BlogHeader.cshtml", new { Lover = lover })
+
+    <!--内容区域-->
+    <div class="article row-fluid">
+        <!--boy content-->
+        <div class="span6 boy">
+        <div class="padding">
+          <dl>
+            <dt class="title"><a href="#" rel="bookmark">男性妊娠反应原因及表现</a></dt>
+            <dd class="content">一提起妊娠反应，人们都以为这是孕妇的事儿，其实，有些孕妇的丈夫，也可能发和“妊娠反应”。
+    他们的反应与其妻子不同，不是恶心、呕吐和嗅觉异常敏感…</dd>
+            <dd class="info">
+                <div class="row-fluid">
+                    <span class="span6">2012年3月16日</span>
+                    <span class="span6">2003次浏览/8条评论</span>
+                </div>
+            </dd>
+            @*<dd class="comment"></dd>*@
+          </dl>
+          <hr />
+
+          <dl>
+            <dt class="title"><a href="#" rel="bookmark">男性妊娠反应原因及表现</a></dt>
+            <dd class="content">一提起妊娠反应，人们都以为这是孕妇的事儿，其实，有些孕妇的丈夫，也可能发和“妊娠反应”。
+    他们的反应与其妻子不同，不是恶心、呕吐和嗅觉异常敏感…</dd>
+            <dd class="info">
+                <div class="row-fluid">
+                    <span class="span6">2012年3月16日</span>
+                    <span class="span6">2003次浏览/8条评论</span>
+                </div>
+            </dd>
+            @*<dd class="comment"></dd>*@
+          </dl>
+          <hr />
+
+          <dl>
+            <dt class="title"><a href="#" rel="bookmark">男性妊娠反应原因及表现</a></dt>
+            <dd class="content">一提起妊娠反应，人们都以为这是孕妇的事儿，其实，有些孕妇的丈夫，也可能发和“妊娠反应”。
+    他们的反应与其妻子不同，不是恶心、呕吐和嗅觉异常敏感…</dd>
+            <dd class="info">
+                <div class="row-fluid">
+                    <span class="span6">2012年3月16日</span>
+                    <span class="span6">2003次浏览/8条评论</span>
+                </div>
+            </dd>
+            @*<dd class="comment"></dd>*@
+          </dl>
+
+        </div>
+        </div>
+        <!--/boy content-->
+
+        <!--girl content-->
+        <div class="span6 girl">
+        <div class="padding">
+
+          <dl>
+            <dt class="title"><a href="#" rel="bookmark">男性妊娠反应原因及表现</a></dt>
+            <dd class="content">一提起妊娠反应，人们都以为这是孕妇的事儿，其实，有些孕妇的丈夫，也可能发和“妊娠反应”。
+    他们的反应与其妻子不同，不是恶心、呕吐和嗅觉异常敏感…</dd>
+            <dd class="info">
+                <div class="row-fluid">
+                    <span class="span6">2012年3月16日</span>
+                    <span class="span6">2003次浏览/8条评论</span>
+                </div>
+            </dd>
+            @*<dd class="comment"></dd>*@
+          </dl>
+          <hr />
+
+          <dl>
+            <dt class="title"><a href="#" rel="bookmark">男性妊娠反应原因及表现</a></dt>
+            <dd class="content">2011年是个忙碌的一年，我人生的最重要的决定已经在这年完成。自己即将面对的是自己越来越忙碌的生活和歪歪越来越忙碌的工作。 上次有个同事问我，结…</dd>
+            <dd class="info">
+                <div class="row-fluid">
+                    <span class="span6">2012年3月16日</span>
+                    <span class="span6">2003次浏览/8条评论</span>
+                </div>
+            </dd>
+            @*<dd class="comment"></dd>*@
+          </dl>
+
+
+        </div>
+        </div>
+        <!--/girl content-->
+  </div>
+    <!--/内容区域-->
+
+  <hr />
+  <div class="pager">@Html.Pager(20, 300, "page", 3)</div>
+
+</div>
+</div>
+
+
+
