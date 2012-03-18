@@ -157,6 +157,34 @@ namespace CengZai.BLL
         {
             return dal.GetListByPage(strWhere, fieldOrder, pageSize, pageIndex, out totalCount);
         }
+
+        /// <summary>
+        /// 取用户公开文章。
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="fieldOrder"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="totalCount"></param>
+        /// <returns></returns>
+        public List<Model.Article> GetUserPublicListByPage(int userID, string fieldOrder, int pageSize, int pageIndex, out int totalCount)
+        {
+            List<Model.Article> list = null;
+            totalCount = 0;
+            try
+            {
+                DataSet dsList = GetListByPage("Privacy=0 and State=1 and UserID=" + userID, fieldOrder, pageSize, pageIndex, out totalCount);
+                if (dsList != null && dsList.Tables.Count > 0)
+                {
+                    list = DataTableToList(dsList.Tables[0]);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.AddErrorInfo("BLL.Article.GetUserPublicListByPage()异常", ex);
+            }
+            return list;
+        }
 	}
 }
 
