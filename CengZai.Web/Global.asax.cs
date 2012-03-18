@@ -38,9 +38,9 @@ namespace CengZai.Web
             //博客{BlogController.Blog}
             routes.MapLowerCaseUrlRoute(
                 "Blog", // Route name
-                "blog/{userid}/{id}", // URL with parameters
-                new { controller = "Blog", action = "Blog", userid = @"[1-9][0-9]*", id = UrlParameter.Optional } // Parameter defaults
-                , new { userid = @"[1-9][0-9]*" }
+                "blog/{username}/{action}/{page}/{id}", // URL with parameters
+                new { controller = "Blog", action = "Blog", username = "",  page="0", @id = UrlParameter.Optional } // Parameter defaults
+                , new { userid = @"[\w]*",  page="[0-9]*" }
             );
 
             //routes.MapLowerCaseUrlRoute(
