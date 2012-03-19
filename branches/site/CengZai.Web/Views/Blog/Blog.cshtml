@@ -164,7 +164,7 @@
         {
             for (int i = 0; i < boyArtList.Count; i++)
             {
-              <dl class="thumbnail">
+              <dl>
                 <dt class="title">@Html.ActionLink(boyArtList[i].Title + "aa", "Article", new { username=boy.Username, artid=boyArtList[i].ArtID })</dt>
                 <dd class="content">@Html.GetRemoveHtmlContent(boyArtList[i].Content, 500)@*@MvcHtmlString.Create(boyArtList[i].Content)*@</dd>
                 <dd class="info">
