@@ -478,13 +478,17 @@
     <Content Include="Views\Settings\Password.cshtml" />
     <Content Include="Views\Settings\Avatar.cshtml" />
     <Content Include="Views\Settings\_SettingNav.cshtml" />
-    <Content Include="Views\Blog\Blog.cshtml" />
+    <Content Include="Views\Blog\Blog_bak.cshtml" />
     <Content Include="Views\Blog\Profile.cshtml" />
     <Content Include="Views\Blog\Certificate.cshtml" />
     <Content Include="Views\Blog\Article.cshtml" />
     <Content Include="Views\Home\IndexBak.cshtml" />
     <Content Include="Views\Blog\_BlogHeader.cshtml" />
     <Content Include="Views\Blog\BlogSingle.cshtml" />
+    <Content Include="Views\Blog\_HeadNav.cshtml" />
+    <Content Include="Views\Blog\_BlogLayout.cshtml" />
+    <Content Include="Views\Blog\Blog.cshtml" />
+    <Content Include="Views\Blog\test.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

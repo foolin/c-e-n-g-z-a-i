@@ -300,6 +300,27 @@ namespace CengZai.BLL
             }
             return model;
         }
+
+        /// <summary>
+        /// 取性别
+        /// </summary>
+        /// <param name="sex"></param>
+        /// <returns></returns>
+        public string GetSexName(int? sex)
+        {
+            if (sex == 2)
+            {
+                return "女生";
+            }
+            else if(sex == 1)
+            {
+                return "男生";
+            }
+            else
+            {
+                return "保密";
+            }
+        }
 	}
 }
 

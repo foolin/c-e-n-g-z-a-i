@@ -147,6 +147,9 @@ namespace System.Web.Mvc
             return user;
         }
 
-
+        public static string GetUserSexName(this HtmlHelper helper, int? sex)
+        {
+            return new CengZai.BLL.User().GetSexName(sex);
+        }
     }
 }
