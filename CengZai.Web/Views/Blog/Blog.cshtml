@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "Blog";
+    Layout = "~/Views/Blog/_BlogLayout.cshtml";
+    var boy = ViewBag.Boy as CengZai.Model.User;
+    var girl = ViewBag.Girl as CengZai.Model.User;
+    var boyArtList = ViewBag.BoyArtList as List<CengZai.Model.Article>;
+    var girlArtList = ViewBag.GirlArtList as List<CengZai.Model.Article>;
+}
+
+    <!--内容区域-->
+    <div class="article well">
+    <div class="row-fluid">
+        <!--boy content-->
+        <div class="span6 boy">
+        @if (boyArtList != null)
+        {
+            for (int i = 0; i < boyArtList.Count; i++)
+            {
+              <dl>
+                <dt class="title">@Html.ActionLink(boyArtList[i].Title + "aa", "Article", new { username=boy.Username, artid=boyArtList[i].ArtID })</dt>
+                <dd class="content">@Html.GetRemoveHtmlContent(boyArtList[i].Content, 500)@*@MvcHtmlString.Create(boyArtList[i].Content)*@</dd>
+                <dd class="info">
+                    <div class="row-fluid">
+                        <span class="span6">@Html.GetDateFormat(boyArtList[i].PostTime, "yyyy年M月d日")</span>
+                        <span class="span6">@boyArtList[i].ViewCount 次浏览</span>
+                    </div>
+                </dd>
+                @*<dd class="comment"></dd>*@
+              </dl>
+              <hr />
+            }
+        }
+        </div>
+        <!--/boy content-->
+
+        <!--girl content-->
+        <div class="span6 girl">
+          @if (girlArtList != null)
+          {
+              for (int i = 0; i < girlArtList.Count; i++)
+              {
+              <dl>
+                <dt class="title"><a href="#" rel="bookmark">@girlArtList[i].Title</a></dt>
+                <dd class="content">@Html.GetRemoveHtmlContent(girlArtList[i].Content, 300)</dd>
+                <dd class="info">
+                    <div class="row-fluid">
+                        <span class="span6">@Html.GetDateFormat(girlArtList[i].PostTime, "yyyy年M月d日")</span>
+                        <span class="span6">@girlArtList[i].ViewCount 次浏览</span>
+                    </div>
+                </dd>
+                @*<dd class="comment"></dd>*@
+              </dl>
+                <hr />
+              }
+          }
+        </div>
+        <!--/girl content-->
+
+    </div>
+    </div>
+    <!--/内容区域-->
+
+  <div class="pager">@Html.Pager(20, (int)ViewBag.TotalCount, "page", 3)</div>
+
