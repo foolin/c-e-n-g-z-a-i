@@ -18,7 +18,7 @@
             {
               <dl>
                 <dt class="title">@Html.ActionLink(boyArtList[i].Title + "aa", "Article", new { username=boy.Username, artid=boyArtList[i].ArtID })</dt>
-                <dd class="content">@Html.GetRemoveHtmlContent(boyArtList[i].Content, 500)@*@MvcHtmlString.Create(boyArtList[i].Content)*@</dd>
+                <dd class="content">@Html.GetHtmlSubstring(boyArtList[i].Content, 200)@*@MvcHtmlString.Create(boyArtList[i].Content)*@</dd>
                 <dd class="info">
                     <div class="row-fluid">
                         <span class="span6">@Html.GetDateFormat(boyArtList[i].PostTime, "yyyy年M月d日")</span>
@@ -32,7 +32,6 @@
         }
         </div>
         <!--/boy content-->
-
         <!--girl content-->
         <div class="span6 girl">
           @if (girlArtList != null)
@@ -41,7 +40,7 @@
               {
               <dl>
                 <dt class="title"><a href="#" rel="bookmark">@girlArtList[i].Title</a></dt>
-                <dd class="content">@Html.GetRemoveHtmlContent(girlArtList[i].Content, 300)</dd>
+                <dd class="content">@Html.GetAutoHtmlString(girlArtList[i].Content, 1000)</dd>
                 <dd class="info">
                     <div class="row-fluid">
                         <span class="span6">@Html.GetDateFormat(girlArtList[i].PostTime, "yyyy年M月d日")</span>
