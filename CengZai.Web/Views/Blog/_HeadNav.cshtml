@@ -7,9 +7,9 @@
 <!--/顶部区域-->
    <div class="subnav @(blogUser.Sex == 2 ? "girl" : "boy")">
     <ul class="nav nav-pills">
-        <li>@Html.ActionLink("首页", "Blog")</li>
-        <li>@Html.ActionLink("个人档案", "Profile", new { username = blogUser.Username })</li>
-        <li>@Html.ActionLink("证书", "Certificate")</li>
-        <li>@Html.ActionLink("" + girl.Nickname, "Profile", new { username = girl.Username })</li>
+        <li>@Html.ActionLink("我的首页", "Blog")</li>
+        <li>@Html.ActionLink("我的档案", "Profile", new { username = blogUser.Username })</li>
+        <li>@Html.ActionLink("我的证书", "Certificate")</li>
+        @*<li>@Html.ActionLink("" + girl.Nickname, "Profile", new { username = girl.Username })</li>*@
     </ul>
     </div>

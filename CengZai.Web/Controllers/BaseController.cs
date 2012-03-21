@@ -219,6 +219,18 @@ namespace CengZai.Web.Controllers
         }
 
         /// <summary>
+        /// 提示
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="msg"></param>
+        /// <param name="actionName"></param>
+        /// <returns></returns>
+        protected ViewResult TipsView(string title, string msg)
+        {
+            return JumpTo(title, msg, "", 0);
+        }
+
+        /// <summary>
         /// 取页码
         /// </summary>
         /// <param name="pageTag"></param>
