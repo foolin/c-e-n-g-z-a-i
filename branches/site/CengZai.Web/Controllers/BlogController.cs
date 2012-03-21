@@ -167,6 +167,30 @@ namespace CengZai.Web.Controllers
         //文章信息
         public ActionResult Article(string username, int? artid)
         {
+            if (artid == null)
+            {
+                return TipsView("对不起，网页不存在", "对不起，网页不存在！");
+            }
+            try
+            {
+                Model.Article art = new BLL.Article().GetModel((int)artid);
+                if (art == null)
+                {
+                    return TipsView("对不起，网页不存在", "对不起，网页不存在！");
+                }
+                Model.User user = new BLL.User().GetModel((int)art.UserID);
+                if (user.Username != username)
+                {
+                    //如果不是原作者的，则跳转
+                    return RedirectToAction("Article", new { username = user.Username, artid = art.ArtID });
+                }
+                ViewBag.Article = art;
+            }
+            catch (Exception ex)
+            {
+                Log.AddErrorInfo("BlogController.Article()读取文章异常", ex);
+                return TipsView("对不起，网页出现异常", "对不起，网页出现异常！");
+            }
             return View();
         }
 

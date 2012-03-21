@@ -17,7 +17,12 @@
             for (int i = 0; i < boyArtList.Count; i++)
             {
               <dl>
-                <dt class="title">@Html.ActionLink(boyArtList[i].Title + "aa", "Article", new { username=boy.Username, artid=boyArtList[i].ArtID })</dt>
+                <dt class="title">
+                    @if (!string.IsNullOrEmpty(boyArtList[i].Title))
+                    {
+                        @Html.ActionLink(boyArtList[i].Title, "Article", new { username=boy.Username, artid=boyArtList[i].ArtID });
+                    }
+                </dt>
                 <dd class="content">@Html.GetHtmlSubstring(boyArtList[i].Content, 200)@*@MvcHtmlString.Create(boyArtList[i].Content)*@</dd>
                 <dd class="info">
                     <div class="row-fluid">
@@ -39,7 +44,12 @@
               for (int i = 0; i < girlArtList.Count; i++)
               {
               <dl>
-                <dt class="title"><a href="#" rel="bookmark">@girlArtList[i].Title</a></dt>
+                <dt class="title">
+                    @if(!string.IsNullOrEmpty(girlArtList[i].Title))
+                    {
+                        @Html.ActionLink(girlArtList[i].Title, "Article", new { username = girl.Username, artid = girlArtList[i].ArtID });
+                    }
+                </dt>
                 <dd class="content">@Html.GetAutoHtmlString(girlArtList[i].Content, 1000)</dd>
                 <dd class="info">
                     <div class="row-fluid">

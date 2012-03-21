@@ -1,6 +1,204 @@
 ﻿@{
-    ViewBag.Title = "Certificate";
+    var blogUser = ViewBag.BlogUser as CengZai.Model.User;
+    var lover = ViewBag.BlogLover as CengZai.Model.Lover;
+    var boy = ViewBag.Boy as CengZai.Model.User;
+    var girl = ViewBag.Girl as CengZai.Model.User;
+    if (boy == null) 
+    {
+        boy = new CengZai.Model.User();
+    }
+    if (girl == null) 
+    {
+        girl = new CengZai.Model.User();
+    }
+    ViewBag.Title = boy.Nickname + "&" + girl.Nickname + "的证件-" + ViewBag.SiteName;
+}
+@section head{
+    <link href="../../js/calendar/calendar.css" rel="stylesheet" type="text/css" />
+    <script src="../../js/calendar/jquery.calendar.js" type="text/javascript"></script>
+    <script src="../../js/swfupload/swfupload.js" type="text/javascript"></script>
+    <script src="../../js/swfupload/handlers.js" type="text/javascript"></script>
+    <script src="../../js/turn.min.js" type="text/javascript"></script>
+    <style type="text/css">
+        #certificate{
+	        width:522px;
+	        height:421px;
+	        overflow:hidden;
+        }
+        #certificate .turn-page{
+	        width:260px;
+	        height:421px;
+	        overflow:hidden;
+        }
+        #certificate .info-left
+        {
+            background:url(../../img/certificate_left.png) no-repeat;
+        }
+        #certificate .info-left span
+        {
+            position:absolute;
+        }
+        #certificate .info-right
+        {
+            background:url(../../img/certificate_right.png) no-repeat;
+        }
+        #certificate .info-right span
+        {
+            position:absolute;
+        }
+        #certificate .avatar
+        {
+            margin-left:40px;
+            margin-top:40px;
+        }
+        #certificate .avatar img
+        {
+            width:180px;
+            height:120px;
+        }
+        #certificate .owner
+        {
+            margin-left:116px;
+            margin-top:184px;
+        }
+        #certificate .date
+        {
+            margin-left:116px;
+            margin-top:226px;
+        }
+        #certificate .loverid
+        {
+            margin-left:116px;
+            margin-top:268px;
+        }
+        #certificate .note
+        {
+            margin-left:116px;
+            margin-top:309px;
+        }
+        #certificate .boy-name
+        {
+            margin-left:62px;
+            margin-top:48px;
+        }
+        #certificate .boy-sex
+        {
+            margin-left:155px;
+            margin-top:48px;
+        }
+        #certificate .boy-nation
+        {
+            margin-left:62px;
+            margin-top:86px;
+        }
+        #certificate .boy-age
+        {
+            margin-left:155px;
+            margin-top:86px;
+        }
+        #certificate .boy-mobile
+        {
+            margin-left:80px;
+            margin-top:122px;
+        }
+        #certificate .girl-name
+        {
+            margin-left:62px;
+            margin-top:236px;
+        }
+        #certificate .girl-sex
+        {
+            margin-left:155px;
+            margin-top:236px;
+        }
+        #certificate .girl-nation
+        {
+            margin-left:62px;
+            margin-top:274px;
+        }
+        #certificate .girl-age
+        {
+            margin-left:155px;
+            margin-top:274px;
+        }
+        #certificate .girl-mobile
+        {
+            margin-left:80px;
+            margin-top:310px;
+        }
+    </style>
 }
 
-<h2>Certificate</h2>
+<div class="container">
+ <div class="padding">
+    
+    <div class="page-header">
+        <div class="row-fluid">
+        <div class="span6">
+            <h2>@boy.Nickname & @girl.Nickname <text>的</text>@Html.GetCertificateName(lover.Certificate) </h2>
+            <div class="muted">http://@ViewBag.SiteDomain@Url.Action("Certificate", new {username = blogUser.Username })</div>
+        </div>
+        <div class="span6">
+            <p>@Html.ActionLink(@boy.Nickname + "的博客", "Blog", new { username = boy.Username }, new { @class = "btn" })</p>
+            <p>@Html.ActionLink(@girl.Nickname + "的博客", "Blog", new { username = girl.Username }, new { @class = "btn" })</p>
+        </div>
+        </div>
+    </div>
 
+    
+    <div id="certificate">
+        <div class="conver-start"><img src="../../img/certificate_cover_start.png" /></div>
+	    <div class="info-left">
+            <span class="avatar"><img class="thumbnail" src="@Html.GetHttpPath(lover.Avatar)" /></span>
+            <span class="owner">@blogUser.Nickname</span>
+            <span class="date">@Html.GetDateFormat(lover.JoinDate, "yyyy年M月d日")</span>
+            <span class="loverid">CZ-@Html.GetDateFormat(lover.ApplyTime, "yyMMdd")-@lover.LoverID</span>
+            <span class="note"></span>
+        </div>
+        <div class="info-right">
+            <span class="boy-name">@boy.Nickname</span>
+            <span class="boy-sex">男</span>
+            <span class="boy-nation">中国</span>
+            <span class="boy-age">@if(boy.Birth == null)
+                                  {
+                                     <text>保密</text>
+                                  }
+                                  else{
+                                      @(DateTime.Now.Year - Convert.ToDateTime(boy.Birth).Year);
+                                  }
+                                  </span>
+            <span class="boy-mobile">@boy.Mobile.Substring(0, 7)****</span>
+            <span class="girl-name">@girl.Nickname</span>
+            <span class="girl-sex">女</span>
+            <span class="girl-nation">中国</span>
+            <span class="girl-age">@if (girl.Birth == null)
+                                  {
+                                     <text>保密</text>
+                                  }
+                                  else{
+                                      @(DateTime.Now.Year - Convert.ToDateTime(girl.Birth).Year);
+                                  }
+                                  </span>
+            <span class="girl-mobile">@girl.Mobile.Substring(0, 7)****</span>
+        </div>
+	    <div class="conver-end"><img src="../../img/certificate_cover_end.png" /></div>
+    </div>
+
+
+ </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#certificate-conver").slideDown();
+        $("#certificate-info").slideUp();
+        $("#certificate-conver").click(function () {
+            $("#certificate-conver").slideUp();
+            $("#certificate-info").slideDown();
+        });
+        $("#certificate-info").click(function () {
+            $("#certificate-conver").slideDown();
+            $("#certificate-info").slideUp();
+        });
+        $('#certificate').turn({ page: 2, acceleration: false });
+    });
+</script>
