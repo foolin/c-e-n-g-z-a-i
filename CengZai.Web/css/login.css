@@ -16,6 +16,12 @@
 	font-family:"Courier New", Courier, monospace;
 	line-height:30px;
 }
+.textcontent
+{
+    font-size:14px;
+    line-height:1.8em;
+    padding:5px;
+}
 /* Styles for validation helpers
 -----------------------------------------------------------*/
 .field-validation-error

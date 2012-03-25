@@ -3,15 +3,12 @@
     Layout = "_LoginLayout.cshtml";
 }
 
-
-    
     <div class="alert">
-        <h4 class="alert-heading">用户激活结果：</h4> 
-        <p>
-            @ViewData["Msg"] 
+        <h2 class="alert-heading">用户激活</h2> 
+        <p class="textcontent">
+            @MvcHtmlString.Create(ViewBag.Message)
         </p>
         <p>
             @Html.ActionLink("点击这里返回登录", "Login", "User")
         </p>
     </div>
-
