@@ -58,7 +58,12 @@ body {
 {
     font-size:12px;
 }
-
+.textcontent
+{
+    font-size:14px;
+    line-height:1.8em;
+    padding:5px;
+}
 /* Specific jumbotrons
 ------------------------- */
 /* supporting docs pages */

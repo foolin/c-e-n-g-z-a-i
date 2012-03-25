@@ -322,7 +322,9 @@ namespace CengZai.Web.Controllers
                 ViewBag.RegisterStatus = 1;
                 ViewBag.Message = string.Format(@"
                     恭喜你，你已经注册成功！我们已发送一封激活邮件到您邮箱：{0},
-                    为了您帐号的安全，请及时登录邮箱[{0}]进行激活！", email);
+                    为了您帐号的安全，请及时登录邮箱[{0}]进行激活！
+                    如果无法收到邮件，请检查邮箱是否正确，或者点击这里 {1}。"
+                    , email, Url.Action("ResendActivate"));
                 ViewData["Email"] = email;
                 return View("RegisterOk");
             }
@@ -340,7 +342,7 @@ namespace CengZai.Web.Controllers
         /// 重发激活码邮件
         /// </summary>
         /// <returns></returns>
-        public ActionResult ResendActivate()
+        public ActionResult ResendActivate(string email)
         {
             return View();
         }
@@ -356,7 +358,7 @@ namespace CengZai.Web.Controllers
             string activateCode = Request["ActivateCode"] + "";
             if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(activateCode))
             {
-                ViewData["Msg"] = "激活失败，连接不合法！";
+                ViewData["Message"] = "激活失败，连接不合法！";
                 return View();
             }
 
@@ -364,22 +366,22 @@ namespace CengZai.Web.Controllers
             Model.User user = bll.GetModel(email);
             if (user == null)
             {
-                ViewData["Msg"] = "激活失败，邮箱" + email + "尚未注册！";
+                ViewData["Message"] = "激活失败，邮箱" + email + "尚未注册！";
                 return View();
             }
             if (user.State == 1)
             {
-                ViewData["Msg"] = "您已经激活，无需再次激活！";
+                ViewData["Message"] = "您已经激活，无需再次激活！";
                 return View();
             }
 
-            ViewData["Msg"] = "激活失败，非法Url！";
+            ViewData["Message"] = "激活失败，非法Url！";
             string verifyActiveCode = FormsAuthentication.HashPasswordForStoringInConfigFile(email + "#" + user.RegTime, "MD5");
             if (verifyActiveCode.ToLower() == activateCode.Trim().ToLower())
             {
                 user.State = 1;
                 bll.Update(user);
-                ViewData["Msg"] = "恭喜您，激活帐号成功！";
+                ViewData["Message"] = "恭喜您，激活帐号成功！";
                 return View();
             }
 
