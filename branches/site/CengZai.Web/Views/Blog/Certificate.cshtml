@@ -1,6 +1,7 @@
 ﻿@{
     var blogUser = ViewBag.BlogUser as CengZai.Model.User;
     var lover = ViewBag.BlogLover as CengZai.Model.Lover;
+    var loverUser = ViewBag.LoverUser as CengZai.Model.User;
     var boy = ViewBag.Boy as CengZai.Model.User;
     var girl = ViewBag.Girl as CengZai.Model.User;
     if (boy == null) 
@@ -135,12 +136,13 @@
     <div class="page-header">
         <div class="row-fluid">
         <div class="span6">
-            <h2>@boy.Nickname & @girl.Nickname <text>的</text>@Html.GetCertificateName(lover.Certificate) </h2>
+            <h2>@blogUser.Nickname <text>的</text>@Html.GetCertificateName(lover.Certificate) </h2>
             <div class="muted">http://@ViewBag.SiteDomain@Url.Action("Certificate", new {username = blogUser.Username })</div>
         </div>
         <div class="span6">
-            <p>@Html.ActionLink(@boy.Nickname + "的博客", "Blog", new { username = boy.Username }, new { @class = "btn" })</p>
-            <p>@Html.ActionLink(@girl.Nickname + "的博客", "Blog", new { username = girl.Username }, new { @class = "btn" })</p>
+            <p>@Html.ActionLink("访问我的博客", "Blog", new { username = blogUser.Username }, new { @class = "btn btn-danger" })</p>
+            <p>@Html.ActionLink(@loverUser.Nickname + "的恋爱证", "Certificate", new { username = loverUser.Username }, new { @class = "btn" })</p>
+            @*<p>@Html.ActionLink(@girl.Nickname + "的恋爱证", "Certificate", new { username = loverUser.Username }, new { @class = "btn" })</p>*@
         </div>
         </div>
     </div>
