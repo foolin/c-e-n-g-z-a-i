@@ -56,13 +56,13 @@ namespace CengZai.Web.Controllers
                         return AjaxReturn("mobile", "请正确填写您的手机号码");
                     }
                 }
-                if (birth == null)
+                if (user.Birth != null && birth == null)
                 {
                     return AjaxReturn("birth", "请填写生日");
                 }
-                if (birth > DateTime.Now.AddYears(-14))
+                if (birth != null && birth > DateTime.Now.AddYears(-14))
                 {
-                    return AjaxReturn("birth", "请填写正确的生日，未满14岁周岁禁止恋爱！");
+                    return AjaxReturn("birth", "请填写正确的生日，未满14岁周岁禁止使用本站！");
                 }
                 BLL.User bllUser = new BLL.User();
                 user.Nickname = nickname;

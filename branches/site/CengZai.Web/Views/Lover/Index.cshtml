@@ -63,10 +63,10 @@
     }
     else
     {
-        <h4 class="alert-heading">@ViewBag.User.Nickname，您尚未申请登记!</h4> 
+        <p><h4 class="alert-heading">@ViewBag.User.Nickname，您尚未申请登记!</h4> </p>
         <p>登记是爱情的见证，是承诺的表示方式，不管是正在恋爱还是已经结婚，都可以！快快和自己的另一半登记吧，与其被动地等待还不如主动抓住幸福!</p> 
         <p>
-            @Html.ActionLink("我要申请登记注册", "Apply", "Lover", null, new { @class = "btn btn-large btn-success" })
+            @Html.ActionLink("我要申请登记", "Apply", "Lover", null, new { @class = "btn btn-large btn-success" })
         </p> 
     }
     </div>

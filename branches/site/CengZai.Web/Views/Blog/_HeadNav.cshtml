@@ -1,6 +1,7 @@
 ﻿@{
     Layout = null;
     var blogUser = Model.BlogUser as CengZai.Model.User;
+    var loverUser = Model.LoverUser as CengZai.Model.User;
     var boy = Model.Boy as CengZai.Model.User;
     var girl = Model.Girl as CengZai.Model.User;
 }
@@ -14,7 +15,8 @@
     </ul>
     </div>*@
 
-
+@if (loverUser != null)
+{
     <div class="subnav">
     <ul class="nav nav-pills pull-left boy">
         <li>@Html.ActionLink("首页", "Blog", new { username = boy.Username })</li>
@@ -27,3 +29,7 @@
         <li>@Html.ActionLink("首页", "Blog", new { username = girl.Username })</li>
     </ul>
     </div>
+}
+else
+{
+}

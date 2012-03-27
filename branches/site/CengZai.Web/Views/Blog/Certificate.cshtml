@@ -21,6 +21,20 @@
     <script src="../../js/swfupload/handlers.js" type="text/javascript"></script>
     <script src="../../js/turn.min.js" type="text/javascript"></script>
     <style type="text/css">
+        #ctrl-link
+        {
+            margin-top:10px;
+	        width:522px;
+	        padding:5px 0;
+        }
+        #ctrl-link pull-left
+        {
+            padding-left:20px;
+        }
+        #ctrl-link pull-right
+        {
+            padding-right:20px;
+        }
         #certificate{
 	        width:522px;
 	        height:421px;
@@ -140,9 +154,8 @@
             <div class="muted">http://@ViewBag.SiteDomain@Url.Action("Certificate", new {username = blogUser.Username })</div>
         </div>
         <div class="span6">
-            <p>@Html.ActionLink("访问我的博客", "Blog", new { username = blogUser.Username }, new { @class = "btn btn-danger" })</p>
-            <p>@Html.ActionLink(@loverUser.Nickname + "的恋爱证", "Certificate", new { username = loverUser.Username }, new { @class = "btn" })</p>
-            @*<p>@Html.ActionLink(@girl.Nickname + "的恋爱证", "Certificate", new { username = loverUser.Username }, new { @class = "btn" })</p>*@
+            <p>@Html.ActionLink("访问我们的博客", "Blog", new { username = blogUser.Username }, new { @class = "btn btn-danger" })</p>
+            
         </div>
         </div>
     </div>
@@ -186,6 +199,10 @@
 	    <div class="conver-end"><img src="../../img/certificate_cover_end.png" /></div>
     </div>
 
+    <div id="ctrl-link">
+        <span class="pull-left">@Html.ActionLink("男方证书", "Certificate", new { username = boy.Username }, new { @class = "link" })</span>
+        <span class="pull-right">@Html.ActionLink("女方证书", "Certificate", new { username = girl.Username }, new { @class = "link" })</span>
+    </div>
 
  </div>
 </div>
