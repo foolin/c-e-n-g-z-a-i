@@ -77,6 +77,25 @@ namespace CengZai.Web.Controllers
             return Content(string.Format("<script>alert('{0}');location.href='{1}';</script>", msg, Request.UrlReferrer.PathAndQuery));
         }
 
+
+        /// <summary>
+        /// 跳转页面到Url
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        protected ViewResult JumpBackAndRefresh(string title, string msg)
+        {
+            if (Request.UrlReferrer != null)
+            {
+                return JumpTo(title, msg, Request.UrlReferrer.PathAndQuery, 5);
+            }
+            else
+            {
+                return JumpToTips(title, msg);
+            }
+        }
+
         /// <summary>
         /// 跳转页面到Url
         /// </summary>
@@ -225,7 +244,7 @@ namespace CengZai.Web.Controllers
         /// <param name="msg"></param>
         /// <param name="actionName"></param>
         /// <returns></returns>
-        protected ViewResult TipsView(string title, string msg)
+        protected ViewResult JumpToTips(string title, string msg)
         {
             return JumpTo(title, msg, "", 0);
         }

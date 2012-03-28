@@ -119,14 +119,14 @@ namespace CengZai.Web.Controllers
         {
             if (artid == null)
             {
-                return TipsView("对不起，网页不存在", "对不起，网页不存在！");
+                return JumpToTips("对不起，网页不存在", "对不起，网页不存在！");
             }
             try
             {
                 Model.Article art = new BLL.Article().GetModel((int)artid);
                 if (art == null)
                 {
-                    return TipsView("对不起，网页不存在", "对不起，网页不存在！");
+                    return JumpToTips("对不起，网页不存在", "对不起，网页不存在！");
                 }
                 Model.User user = new BLL.User().GetModel((int)art.UserID);
                 if (user.Username != username)
@@ -139,7 +139,7 @@ namespace CengZai.Web.Controllers
             catch (Exception ex)
             {
                 Log.AddErrorInfo("BlogController.Article()读取文章异常", ex);
-                return TipsView("对不起，网页出现异常", "对不起，网页出现异常！");
+                return JumpToTips("对不起，网页出现异常", "对不起，网页出现异常！");
             }
             return View();
         }
