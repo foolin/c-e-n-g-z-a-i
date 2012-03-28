@@ -175,7 +175,7 @@ namespace CengZai.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(string email, string nickname, string password, string repassword, string verifyCode, string invite)
+        public ActionResult Register(string email, string username, string password, string repassword, string verifyCode, string invite, int? sex)
         {
             ViewBag.RegisterLimit = Config.RegisterLimit;
 
@@ -209,14 +209,24 @@ namespace CengZai.Web.Controllers
                     return View();
                 }
             }
-            if (string.IsNullOrEmpty(nickname))
+            if (string.IsNullOrEmpty(username))
             {
-                ModelState.AddModelError("NickName", "昵称不能为空！");
+                ModelState.AddModelError("Username", "用户名不能为空！");
                 return View();
             }
-            if (nickname.Length > 20)
+            if (username.Length < 4 || username.Length > 20)
             {
-                ModelState.AddModelError("NickName", "昵称必须20个字符以内！");
+                ModelState.AddModelError("Username", "用户名必须4到20个字符之间！");
+                return View();
+            }
+            if (!Regex.IsMatch(username, @"[a-z][a-z0-9_]{3, 19}", RegexOptions.IgnoreCase))
+            {
+                ModelState.AddModelError("Username", "用户名必须以字母开头，只能使用数字、字母、下划线（_）！");
+                return View();
+            }
+            if (new BLL.User().GetModelByUserName(username) != null)
+            {
+                ModelState.AddModelError("Username", "对不起，该用户名已经被注册，请用其它用户名！");
                 return View();
             }
             if (string.IsNullOrEmpty(password) || password.Length < 6)
@@ -267,14 +277,19 @@ namespace CengZai.Web.Controllers
                 user.LoginIp = "";
                 user.LoginTime = null;
                 user.Mobile = "";
-                user.Nickname = nickname;
+                user.Username = username;
+                user.Nickname = username;
                 user.Password = md5Password;
                 user.Privacy = 0;
                 user.RegIp = Helper.Util.GetIP();
                 user.RegTime = DateTime.Now;
-                user.Sex = 0;
-                user.Sign = "";
+                user.Sex = sex;
+                user.Sign = "此家伙不懒，就是什么也没留下";
                 user.State = 0;
+                user.Vip = 0;
+                user.Credit = 0;
+                user.Money = 0;
+                user.Config = "";
                 bll.Add(user);
 
                 try
@@ -287,7 +302,7 @@ namespace CengZai.Web.Controllers
                     string strActivateCodeURL = domainUrl + "/User/Activate?Email=" + email + "&ActivateCode=" + activeCode;
 
                     mailContent.Append("<div style=\"font-size:14px; line-height:25px;\">");
-                    mailContent.Append("尊敬的" + nickname + "：");
+                    mailContent.Append("尊敬的" + username + "：");
                     mailContent.Append("<br />&nbsp;&nbsp;&nbsp;&nbsp;");
 
                     mailContent.Append("恭喜您在<b>" + Config.SiteName + "</b>注册成功，你注册帐号是：" + email + "，请您妥善保管您的密码，如果忘记密码，请<a href=\"" +
@@ -423,6 +438,8 @@ namespace CengZai.Web.Controllers
 
             return View();
         }
+
+
 
     }
 }

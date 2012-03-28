@@ -18,12 +18,12 @@
         <p>
             <label for="username">邮 箱：</label>
             @Html.TextBox("email")
-            @Html.ValidationMessage("email")
+            @Html.ValidationMessage("email") 请真实填写，用来登录和找回密码
         </p>
         <p>
-            <label for="username">昵 称：</label>
-            @Html.TextBox("nickname")
-            @Html.ValidationMessage("nickname") 建议用真实名字
+            <label for="username">用户名：</label>
+            @Html.TextBox("username")
+            @Html.ValidationMessage("username") 4~20位字符，字母开头，只能是英文、数字、下划线组合（不能纯数字）
         </p>
         <p>
             <label for="password">密 码：</label>
@@ -34,6 +34,15 @@
             <label for="confirmPassword">确认密码：</label>
             @Html.Password("repassword")
             @Html.ValidationMessage("repassword")
+        </p>
+        <p>
+            <label for="confirmPassword">性 别：</label>
+            @Html.DropDownList("sex", new List<SelectListItem>()  
+            {  
+                (new SelectListItem() {Text = "帅哥", Value = "1", Selected = true}),  
+                (new SelectListItem() {Text = "美女", Value = "2"})  
+
+            })
         </p>
         <p>
             <label for="confirmPassword">验证码：</label>
