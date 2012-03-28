@@ -134,7 +134,7 @@
                 </div>
                 <div class="span2 text-right">
                     <p class="thumbnail"><img class="avartar" src="@Html.GetHttpPath(boy.Avatar)" alt="" /></p>
-                    <p>@Ajax.GetFriendAddLink(boy.UserID, new { test = "aaaaaa" })</p>
+                    <p>@Ajax.GetFriendAddLink(boy.UserID, "")</p>
                 </div>
             </div>
         </div>
@@ -144,7 +144,7 @@
                 <div class="span2">
                     <p class="thumbnail"><img class="avartar" src="@Html.GetHttpPath(girl.Avatar)" alt="" /></p>
                     <p>
-                        @Ajax.GetFriendAddLink(girl.UserID, new { test = "aaaaaa" })
+                        @Ajax.GetFriendAddLink(girl.UserID, "")
                     @*@Ajax.ActionLink("关注她", "FriendAdd", "Friend", new { friendUserID = girl.UserID, time = DateTime.Now.Ticks }, new AjaxOptions { OnSuccess = "$FR.addSuccess", OnFailure = "$FR.addFail" }, new { frienduserid = girl.UserID })*@
                     </p>
                 </div>

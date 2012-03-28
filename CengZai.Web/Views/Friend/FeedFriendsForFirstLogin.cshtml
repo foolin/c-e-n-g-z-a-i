@@ -32,6 +32,7 @@
             <th>昵称</th>
             <th>性别</th>
             <th>签名</th>
+            <th>关注</th>
         </tr>
         </thead>
         <tbody>
@@ -40,18 +41,19 @@
             foreach (CengZai.Model.User user in userList)
             {
                 <tr>
-                    <td><input name="userid" type="checkbox" value="@user.UserID" /></td>
+                    <td><input name="userid" checked="checked" type="checkbox" value="@user.UserID" /></td>
                     <td><img src="@imgPath/@user.Avatar" alt="" width="50" /></td>
                     <td>@user.Nickname</td>
                     <td>@Html.GetUserSexName(user.Sex)</td>
                     <td>@user.Sign</td>
+                    <td>@Ajax.GetFriendAddLink(user.UserID, null)</td>
                 </tr>
             }
         }
         </tbody>
     </table>
     <div>
-        <input type="submit" value="关注选中用户" class="btn btn-primary" /> &nbsp;&nbsp; @Html.ActionLink("取消", "Avatar", "Settings")
+        <input type="submit" value="关注选中用户" class="btn btn-primary" /> &nbsp;&nbsp; @Html.ActionLink("跳过", "Avatar", "Settings")
     </div>
     }
 </div>
