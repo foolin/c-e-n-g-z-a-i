@@ -52,7 +52,7 @@
                 @*<li><a href="#message">唠叨<sup class="label label-important">2</sup></a></li>*@
                 <li>@Html.ActionLink("主页", "Blog", "Blog", new { username=user.Username }, null)</li>
                 <li>@Html.ActionLink("登记", "Index", "Lover")</li>
-			    <li>@Html.ActionLink("朋友", "List", "Friend")</li>
+			    <li>@Html.ActionLink("好友", "List", "Friend")</li>
 		    </ul>
             <!--<form class="navbar-form pull-left" action="">-->
             using (Html.BeginForm("Find", "Friend", FormMethod.Get, new {@class="navbar-form pull-left" }))
