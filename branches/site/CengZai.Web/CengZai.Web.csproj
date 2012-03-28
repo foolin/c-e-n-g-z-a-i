@@ -67,6 +67,7 @@
     <Compile Include="Common\LowerCaseUrlRouteMapHelper.cs" />
     <Compile Include="Common\WebHelper.cs" />
     <Compile Include="Controllers\BlogController.cs" />
+    <Compile Include="Controllers\FriendController.cs" />
     <Compile Include="Controllers\InboxController.cs" />
     <Compile Include="Controllers\LoverController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
@@ -110,6 +111,7 @@
     <Content Include="js\calendar\calendar.css" />
     <Content Include="js\calendar\calendar_day.png" />
     <Content Include="js\calendar\jquery.calendar.js" />
+    <Content Include="js\core.js" />
     <Content Include="js\mvc\jquery.unobtrusive-ajax.min.js" />
     <Content Include="js\mvc\jquery.validate.min.js" />
     <Content Include="js\mvc\jquery.validate.unobtrusive.min.js" />

@@ -39,7 +39,7 @@ namespace CengZai.Model
 			get{return _frienduserid;}
 		}
 		/// <summary>
-		/// 朋友类型：0=申请，1=朋友，-1=黑名单
+		/// 朋友类型：0=关注，1=朋友，-1=黑名单
 		/// </summary>
 		public int? Type
 		{

@@ -26,8 +26,8 @@
                 <dd class="content">@Html.GetHtmlSubstring(boyArtList[i].Content, 200)@*@MvcHtmlString.Create(boyArtList[i].Content)*@</dd>
                 <dd class="info">
                     <div class="row-fluid">
-                        <span class="span6">@Html.GetDateFormat(boyArtList[i].PostTime, "yyyy年M月d日")</span>
-                        <span class="span6">@boyArtList[i].ViewCount 次浏览</span>
+                        <span class="span6">@Html.ActionLink("阅读全文", "Article", new { username=boy.Username, artid=boyArtList[i].ArtID })  | <b>@boyArtList[i].ViewCount</b>次浏览</span>
+                        <span class="span6" style="text-align:right; ">@Html.GetDateFormat(boyArtList[i].PostTime, "yyyy年M月d日")</span>
                     </div>
                 </dd>
                 @*<dd class="comment"></dd>*@
@@ -53,8 +53,8 @@
                 <dd class="content">@Html.GetAutoHtmlString(girlArtList[i].Content, 1000)</dd>
                 <dd class="info">
                     <div class="row-fluid">
-                        <span class="span6">@Html.GetDateFormat(girlArtList[i].PostTime, "yyyy年M月d日")</span>
-                        <span class="span6">@girlArtList[i].ViewCount 次浏览</span>
+                        <span class="span6">@Html.ActionLink("阅读全文", "Article", new { username = girl.Username, artid = girlArtList[i].ArtID })  | <b>@girlArtList[i].ViewCount</b>次浏览</span>
+                        <span class="span6" style="text-align:right; ">@Html.GetDateFormat(girlArtList[i].PostTime, "yyyy年M月d日") </span>
                     </div>
                 </dd>
                 @*<dd class="comment"></dd>*@
@@ -66,7 +66,7 @@
         <!--/girl content-->
 
     </div>
-    @*</div>*@
+    </div>
     <!--/内容区域-->
 
   <div class="pager">@Html.Pager(20, (int)ViewBag.TotalCount, "page", 3)</div>

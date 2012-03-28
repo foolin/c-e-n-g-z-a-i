@@ -107,6 +107,7 @@
     <Compile Include="Model\Message.cs" />
     <Compile Include="Model\MessageReply.cs" />
     <Compile Include="Model\User.cs" />
+    <Compile Include="MvcExtend\AjaxExtend.cs" />
     <Compile Include="MvcExtend\HtmlExtend.cs" />
     <Compile Include="MvcExtend\HtmlExtendForApp.cs" />
     <Compile Include="MvcExtend\HtmlExtendForUser.cs" />

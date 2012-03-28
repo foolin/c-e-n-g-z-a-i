@@ -258,7 +258,7 @@ namespace CengZai.Web.Controllers
         /// <returns></returns>
         protected JsonResult AjaxReturn(string id, string msg)
         {
-            return Json(new _AjaxReturn(id, msg));
+            return Json(new _AjaxReturn(id, msg),JsonRequestBehavior.AllowGet);
         }
 
 
