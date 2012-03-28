@@ -1,0 +1,90 @@
+﻿@{
+    ViewBag.Title = "关注朋友";
+    var imgPath = CengZai.Helper.Config.UploadHttpPath;
+    var userList = ViewBag.UserList as List<CengZai.Model.User>;
+    var type = Request["type"];
+}
+@section head{
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("input[name='selAll']").click(function () {
+            if ($(this).attr("checked")) {
+                $("input[name='userid']").attr("checked", true);
+            }
+            else {
+                $("input[name='userid']").attr("checked", false);
+            }
+        });
+    });
+</script>
+}
+
+<div class="container bg-white">
+<div class="padding">
+    <h2>@ViewBag.Title</h2>
+    <br />
+    <div>
+    <ul class="nav nav-tabs">
+        <li @if (type != "1" && type != "-1")
+            {<text>class="active"</text>}>@Html.ActionLink("我关注", "List", new {type=0 })</li>
+        <li @if (type == "1")
+            {<text>class="active"</text>}>@Html.ActionLink("关注我", "List", new { type = 1 })</li>
+        <li @if (type == "-1")
+            {<text>class="active"</text>}>@Html.ActionLink("黑名单", "List", new { type = -1 })</li>
+    </ul>
+    </div>
+
+
+
+    <!--用户列表-->
+    <div class="tab-content">
+        <div class="tab-pane active">
+        @using (Html.BeginForm("EditFriend", "Friend"))
+        {
+            <table class="table">
+                <thead>
+                <tr>
+                    <th><input name="selAll" type="checkbox" value="0" /></th>
+                    <th>头像</th>
+                    <th>昵称</th>
+                    <th>性别</th>
+                    <th>签名</th>
+                    <th>关注</th>
+                </tr>
+                </thead>
+                <tbody>
+                @if (userList != null)
+                {
+                    foreach (CengZai.Model.User user in userList)
+                    {
+                        <tr>
+                            <td><input name="userid" checked="checked" type="checkbox" value="@user.UserID" /></td>
+                            <td><img src="@imgPath/@user.Avatar" alt="" width="50" /></td>
+                            <td>@user.Nickname</td>
+                            <td>@Html.GetUserSexName(user.Sex)</td>
+                            <td>@user.Sign</td>
+                            <td>@Ajax.GetFriendAddLink(user.UserID, null)</td>
+                        </tr>
+                    }
+                }
+                </tbody>
+            </table>
+            <div>
+                <input type="hidden" name="type" value="@(type == "-1" ? "0" : "-1")" />
+                @if (type == "-1")
+                {
+                    <input type="submit" value="移除黑名单" class="btn btn-primary" />
+                }
+                else
+                {
+                    <input type="submit" value="加入黑名单" class="btn btn-danger" />
+                }
+            </div>
+            }
+        </div>
+    </div>
+    <!--/用户列表-->
+
+</div>
+</div>   
+<!--/.container -->

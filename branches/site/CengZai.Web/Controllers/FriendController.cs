@@ -20,6 +20,54 @@ namespace CengZai.Web.Controllers
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="type">0=我关注,1=关注我，-1=黑名单</param>
+        /// <returns></returns>
+        [CheckAuthFilter]
+        public ActionResult List(int? type)
+        {
+            try
+            {
+                Model.User loginUser = GetLoginUser();
+                if (loginUser == null)
+                {
+                    return RedirectToAction("Login", "User");
+                }
+                BLL.User bllUser = new BLL.User();
+                int pageSize = 20;
+                int totalCount = 0;
+                int pageIndex = GetPageNum("page");
+                DataSet dsList = null;
+                //处理
+                if (type == 1)
+                {
+                    dsList = bllUser.GetFriendListByPage(true, loginUser.UserID, 0, "", pageSize, pageIndex, out totalCount);
+                }
+                else if (type == -1)
+                {
+                    dsList = bllUser.GetFriendListByPage(false, loginUser.UserID, -1, "", pageSize, pageIndex, out totalCount);
+                }
+                else
+                {
+                    dsList = bllUser.GetFriendListByPage(false, loginUser.UserID, 0, "", pageSize, pageIndex, out totalCount);
+                }
+                if (dsList != null && dsList.Tables.Count > 0)
+                {
+                    List<Model.User> userList = bllUser.DataTableToList(dsList.Tables[0]);
+                    ViewBag.UserList = userList;
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.AddErrorInfo("批量关注朋友页面出现异常！", ex);
+                return JumpToAction("页面出现异常", "即将跳转到完善资料页面...", "Avatar", "Settings");
+            }
+            return View();
+        }
+
+
+        /// <summary>
         /// 查找朋友
         /// </summary>
         /// <returns></returns>
@@ -171,6 +219,55 @@ namespace CengZai.Web.Controllers
             {
                 Log.AddErrorInfo("FeedFriendsForFirstLogin(int[] userid)关注用户提交失败！", ex);
                 return JumpToAction("关注失败", "对不起，关注出现异常", "FeedFriendsForFirstLogin", null, 5);
+            }
+        }
+
+
+
+        /// <summary>
+        /// 关注朋友处理
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [CheckAuthFilter]
+        public ActionResult EditFriend(int[] userid, int? type)
+        {
+            try
+            {
+                if (type == null)
+                {
+                    return JumpToTips("操作失败", "出现异常，请正常操作");
+                }
+                int feedCount = 0;
+                Model.User loginUser = GetLoginUser();
+                if (loginUser == null)
+                {
+                    return JumpToAction("操作失败！", "您尚未登录或者登录超时", "Login", "User");
+                }
+                if (userid != null && userid.Length > 0)
+                {
+                    BLL.Friend bllFriend = new BLL.Friend();
+                    foreach (int friendUserID in userid)
+                    {
+                        if (bllFriend.Update(loginUser.UserID, friendUserID, (int)type))
+                        {
+                            feedCount++;
+                        }
+                    }
+                }
+                if (feedCount > 0)
+                {
+                    return JumpBackAndRefresh("操作成功", "一共对" + feedCount + "个好友进行操作！");
+                }
+                else
+                {
+                    return JumpBackAndRefresh("操作成功", "一共对" + feedCount + "个好友进行操作！");
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.AddErrorInfo("EditFriend(int[] userid, int? type)关注用户提交失败！", ex);
+                return JumpBackAndRefresh("操作失败", "对不起，操作出现异常");
             }
         }
 

@@ -567,6 +567,75 @@ namespace CengZai.DAL
             return DbHelperSQL.Query(strSql.ToString(), sqlParams);
         }
 
+
+
+        /// <summary>
+        /// 分页
+        /// </summary>
+        /// <param name="strWhere"></param>
+        /// <param name="fieldOrder"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="totalCount"></param>
+        /// <returns></returns>
+        public DataSet GetListByPage(string strWhere, string fieldOrder, int pageSize, int pageIndex, out int totalCount)
+        {
+
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("SELECT * ");
+            strSql.Append(" FROM T_User ");
+
+            if (!string.IsNullOrEmpty(strWhere))
+            {
+                strSql.Append(" Where " + strWhere);
+            }
+
+            if (string.IsNullOrEmpty(fieldOrder))
+            {
+                fieldOrder = "UserID DESC";
+            }
+
+            DataSet dsList = null;
+            dsList = SqlHelperEx.ExecuteDatasetByPage(Config.ConnString, strSql.ToString(), fieldOrder, pageSize, pageIndex, out totalCount);
+            return dsList;
+        }
+
+
+        /// <summary>
+        /// 取朋友关系
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="type">-1=黑名单, 0=我关注的人,1=关注我的人</param>
+        /// <param name="fieldOrder"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="totalCount"></param>
+        /// <returns></returns>
+        public DataSet GetFriendListByPage(bool isWhereFriendIDField, int whereUserID, int type, string fieldOrder, int pageSize, int pageIndex, out int totalCount)
+        {
+            totalCount = 0;
+            string sqlSelectUserID = string.Empty;
+            if (isWhereFriendIDField)
+            {
+                sqlSelectUserID = "select UserID from T_Friend where type=" + type + " and friendUserID=" + whereUserID;
+            }
+            else
+            {
+                sqlSelectUserID = "select FriendUserID from T_Friend where type=" + type + " and userid=" + whereUserID;
+            }
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("SELECT * ");
+            strSql.Append(" FROM T_User ");
+            strSql.Append(@" Where UserID IN ( " + sqlSelectUserID + ") ");
+            if (string.IsNullOrEmpty(fieldOrder))
+            {
+                fieldOrder = "Nickname ASC";
+            }
+            DataSet dsList = null;
+            dsList = SqlHelperEx.ExecuteDatasetByPage(Config.ConnString, strSql.ToString(), fieldOrder, pageSize, pageIndex, out totalCount);
+            return dsList;
+        }
+
 	}
 }
 

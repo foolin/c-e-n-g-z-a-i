@@ -321,6 +321,37 @@ namespace CengZai.BLL
             return dal.GetListBySearch(top, keyword, filedOrder);
         }
 
+
+
+        /// <summary>
+        /// 分页
+        /// </summary>
+        /// <param name="strWhere"></param>
+        /// <param name="fieldOrder"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="totalCount"></param>
+        /// <returns></returns>
+        public DataSet GetListByPage(string strWhere, string fieldOrder, int pageSize, int pageIndex, out int totalCount)
+        {
+            return dal.GetListByPage(strWhere, fieldOrder, pageSize, pageIndex, out totalCount);
+        }
+
+        /// <summary>
+        /// 取朋友关系
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="type">-1=黑名单, 0=我关注的人,1=关注我的人</param>
+        /// <param name="fieldOrder"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="totalCount"></param>
+        /// <returns></returns>
+        public DataSet GetFriendListByPage(bool isWhereFriendIDField, int whereUserID, int type, string fieldOrder, int pageSize, int pageIndex, out int totalCount)
+        {
+            return dal.GetFriendListByPage(isWhereFriendIDField, whereUserID, type, fieldOrder, pageSize, pageIndex, out totalCount);
+        }
+
         /// <summary>
         /// 取性别
         /// </summary>
