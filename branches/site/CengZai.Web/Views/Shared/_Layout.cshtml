@@ -54,11 +54,14 @@
                 <li>@Html.ActionLink("登记", "Index", "Lover")</li>
 			    <li><a href="#friend">好友</a></li>
 		    </ul>
-            <form class="navbar-form pull-left" action="">
+            <!--<form class="navbar-form pull-left" action="">-->
+            using (Html.BeginForm("Find", "Friend", FormMethod.Get, new {@class="navbar-form pull-left" }))
+            {
                 <div class="input-append">
-                    <input type="text" class="span2" id="appendedPrependedInput" size="16"  placeholder="搜索感兴趣的人或事"><input type="submit" class="btn" value="搜索" />
+                    <input type="text" name="keyword" class="span2" id="appendedPrependedInput" size="16"  placeholder="搜索感兴趣的人"><input type="submit" class="btn" value="搜索" />
                 </div>
-            </form>
+            }
+            <!--</form>-->
             <ul class="nav pull-right nav-mini-link">
                 <li class="dropdown"> 
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">@user.Nickname <b class="caret"></b></a> 

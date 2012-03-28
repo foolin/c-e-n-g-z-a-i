@@ -111,6 +111,15 @@ namespace CengZai.BLL
             return dal.GetModelByUserIDOrEmail(0, email);
         }
 
+
+        /// <summary>
+        /// 得到一个对象实体
+        /// </summary>
+        public CengZai.Model.User GetModelByUserName(string username)
+        {
+            return dal.GetModelByUsername(username);
+        }
+
 		/// <summary>
 		/// 获得数据列表
 		/// </summary>
@@ -267,7 +276,6 @@ namespace CengZai.BLL
             return model;
         }
 
-
         /// <summary>
         /// 取用户名
         /// </summary>
@@ -299,6 +307,18 @@ namespace CengZai.BLL
                 }
             }
             return model;
+        }
+
+        /// <summary>
+        /// 查找用户
+        /// </summary>
+        /// <param name="top"></param>
+        /// <param name="keyword"></param>
+        /// <param name="desc"></param>
+        /// <returns></returns>
+        public DataSet GetListBySearch(int top, string keyword, string filedOrder)
+        {
+            return dal.GetListBySearch(top, keyword, filedOrder);
         }
 
         /// <summary>
