@@ -31,6 +31,8 @@ namespace CengZai.BLL
 			return dal.Exists(ID);
 		}
 
+
+
 		/// <summary>
 		/// 增加一条数据
 		/// </summary>
@@ -160,6 +162,82 @@ namespace CengZai.BLL
 		//}
 
 		#endregion  Method
+
+
+        /// <summary>
+        /// 添加关注
+        /// </summary>
+        /// <param name="userID">我的ID</param>
+        /// <param name="friendUserID">对方ID</param>
+        public bool Add(int userID, int friendUserID)
+        {
+            if (userID == friendUserID)
+            {
+                return false;
+            }
+            Model.Friend model = GetModel(userID, friendUserID);
+            if (model != null)
+            {
+                return true;
+            }
+            model = new Model.Friend();
+            model.UserID = userID;
+            model.FriendUserID = friendUserID;
+            model.Type = 0;
+            return Add(model) > 0;
+        }
+
+        /// <summary>
+        /// 取关注
+        /// </summary>
+        /// <param name="userID">我的ID</param>
+        /// <param name="friendUserID">对方ID</param>
+        public Model.Friend GetModel(int userID, int friendUserID)
+        {
+            List<Model.Friend> list = GetModelList("UserID=" + userID + " and FriendUserID=" + friendUserID);
+            if (list == null || list.Count == 0)
+            {
+                return null;
+            }
+            return list[0];
+        }
+
+
+        /// <summary>
+        /// 更新状态
+        /// </summary>
+        /// <param name="userID">我的ID</param>
+        /// <param name="friendUserID">对方ID</param>
+        /// <param name="type">0=关注，1=朋友，-1=黑名单</param>
+        /// <returns></returns>
+        public bool Update(int userID, int friendUserID, int type)
+        {
+            Model.Friend model = GetModel(userID, friendUserID);
+            if (model == null)
+            {
+                return false;
+            }
+            model.Type = type;
+            return Update(model);
+        }
+
+
+        /// <summary>
+        /// 删除数据
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="friendUserID"></param>
+        /// <returns></returns>
+        public bool Delete(int userID, int friendUserID)
+        {
+            Model.Friend model = GetModel(userID, friendUserID);
+            if (model == null)
+            {
+                return true;
+            }
+            return Delete(model.ID);
+        }
+
 	}
 }
 

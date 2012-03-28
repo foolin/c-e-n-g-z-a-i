@@ -9,10 +9,11 @@
         @if (!string.IsNullOrEmpty(Article.Title))
         {
         <div class="page-header"> 
-            <h3>@Article.Title <small></small></h3> 
+            <h3>@Article.Title  <small class="font12" style="padding-left:50px">作者：@Html.GetUserNickname(Article.UserID) @Html.GetDateFormat(Article.PostTime, "yyyy-M-d HH:mm:ss") 阅读(@Article.ViewCount)</small></h3> 
         </div> 
         }
         <div class="art-content">@MvcHtmlString.Create(Article.Content)</div>
     </div>
     <!--/内容区域-->
 
+    @Ajax.ActionLink("", "", new AjaxOptions { });
