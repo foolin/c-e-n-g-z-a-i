@@ -37,7 +37,13 @@ namespace CengZai.Web.Controllers
                 DataSet dsList = bllUser.GetListBySearch(100, keyword, "RegTime DESC");
                 if (dsList != null && dsList.Tables.Count > 0)
                 {
-                    ViewBag.UserList = bllUser.DataTableToList(dsList.Tables[0]);
+                    List<Model.User> userList = bllUser.DataTableToList(dsList.Tables[0]);
+                    Model.User currUser = userList.Find(x => x.UserID == loginUser.UserID);
+                    if (currUser != null)
+                    {
+                        userList.Remove(currUser);  //移除自己
+                    }
+                    ViewBag.UserList = userList;
                 }
                 else
                 {
@@ -106,7 +112,7 @@ namespace CengZai.Web.Controllers
                     return RedirectToAction("Login", "User");
                 }
                 BLL.User bllUser = new BLL.User();
-                DataSet dsList = bllUser.GetList(100, "State=1", "Vip DESC, RegTime DESC");
+                DataSet dsList = bllUser.GetList(100, "State=1 and UserID<>" + loginUser.UserID, "Vip DESC, RegTime DESC");
                 if (dsList != null && dsList.Tables.Count > 0)
                 {
                     ViewBag.UserList = bllUser.DataTableToList(dsList.Tables[0]);

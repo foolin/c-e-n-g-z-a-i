@@ -132,10 +132,17 @@ namespace CengZai.Web.Controllers
                 //写入Session登录
                 Session["LOGIN_USER"] = user;
 
-                if (Request["ReturnUrl"] == null || Request["ReturnUrl"].Length == 0)
-                    return Content("<script>location.href='/';</script>");
+                if (user.LoginCount <= 1)
+                {
+                    return RedirectToAction("FeedFriendsForFirstLogin", "Friend");
+                }
                 else
-                    return Content("<script>location.href='" + Request["ReturnUrl"].ToString() + "';</script>");
+                {
+                    if (Request["ReturnUrl"] == null || Request["ReturnUrl"].Length == 0)
+                        return RedirectToAction("Index", "Home");
+                    else
+                        return Content("<script>location.href='" + Request["ReturnUrl"].ToString() + "';</script>");
+                }
             }
             catch (Exception ex)
             {
