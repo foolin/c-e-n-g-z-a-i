@@ -20,6 +20,39 @@ namespace CengZai.Web.Controllers
         }
 
         /// <summary>
+        /// 查找朋友
+        /// </summary>
+        /// <returns></returns>
+        [CheckAuthFilter]
+        public ActionResult Find(string keyword)
+        {
+            try
+            {
+                Model.User loginUser = GetLoginUser();
+                if (loginUser == null)
+                {
+                    return RedirectToAction("Login", "User");
+                }
+                BLL.User bllUser = new BLL.User();
+                DataSet dsList = bllUser.GetListBySearch(100, keyword, "RegTime DESC");
+                if (dsList != null && dsList.Tables.Count > 0)
+                {
+                    ViewBag.UserList = bllUser.DataTableToList(dsList.Tables[0]);
+                }
+                else
+                {
+                    return JumpToAction("暂无用户", "即将跳转到完善资料页面...", "Avatar", "Settings");
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.AddErrorInfo("批量关注朋友页面出现异常！", ex);
+                return JumpToAction("页面出现异常", "即将跳转到完善资料页面...", "Avatar", "Settings");
+            }
+            return View();
+        }
+
+        /// <summary>
         /// Ajax添加朋友
         /// </summary>
         /// <returns></returns>

@@ -34,7 +34,7 @@ namespace System.Web.Mvc
         /// <param name="helper"></param>
         /// <param name="feedUserID"></param>
         /// <returns></returns>
-        public static MvcHtmlString GetFriendAddLink(this AjaxHelper helper, int? friendUserID, object htmlAttributes)
+        public static MvcHtmlString GetFriendAddLink(this AjaxHelper helper, int? friendUserID, string cssClass)
         {
             int relative = -1;  //未关注
             CengZai.Model.User user = GetLoginUser(helper);
@@ -62,14 +62,13 @@ namespace System.Web.Mvc
             {
                 return MvcHtmlString.Create("");
             }
-            htmlAttributes = new { htmlAttributes,  frienduserid = friendUserID};
             return AjaxExtensions.ActionLink(helper
                 , "关注"
                 , "FriendAdd"
                 , "Friend"
                 , new { friendUserID = friendUserID, time = DateTime.Now.Ticks }
                 , new AjaxOptions { OnSuccess = "$FR.addSuccess", OnFailure = "$FR.addFail" }
-                , htmlAttributes);
+                , new { frienduserid = friendUserID, @class=cssClass });
                 //, new { frienduserid = friendUserID });
         }
     }

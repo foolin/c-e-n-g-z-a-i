@@ -298,6 +298,33 @@ namespace CengZai.DAL
 			}
 		}
 
+        /// <summary>
+        /// 得到一个对象实体
+        /// </summary>
+        public CengZai.Model.User GetModelByUsername(string username)
+        {
+
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("select  top 1 * from T_User ");
+            
+            strSql.Append(" where Username=@Username");
+            SqlParameter[] parameters = new SqlParameter[] {
+				new SqlParameter("@Username", SqlDbType.NVarChar,50)
+			};
+            parameters[0].Value = username;
+
+            CengZai.Model.User model = new CengZai.Model.User();
+            DataSet ds = DbHelperSQL.Query(strSql.ToString(), parameters);
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                return RowToModel(ds.Tables[0].Rows[0]);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
 		/// <summary>
 		/// 获得数据列表
 		/// </summary>
@@ -514,6 +541,30 @@ namespace CengZai.DAL
                 model.Avatar = row["Avatar"].ToString();
             }
             return model;
+        }
+
+
+
+        /// <summary>
+        /// 获得前几行数据
+        /// </summary>
+        public DataSet GetListBySearch(int Top, string keyword, string filedOrder)
+        {
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("select ");
+            if (Top > 0)
+            {
+                strSql.Append(" top " + Top.ToString());
+            }
+            strSql.Append(" * ");
+            strSql.Append(" FROM T_User ");
+            strSql.Append(" WHERE (Username like @Keyword or Email like @Keyword or Nickname like @Keyword) and State>=0 ");
+            strSql.Append(" order by " + filedOrder);
+            SqlParameter[] sqlParams = new SqlParameter[]{
+                new SqlParameter("@Keyword",  SqlDbType.NVarChar, 50)
+            };
+            sqlParams[0].Value = "%" +keyword + "%";
+            return DbHelperSQL.Query(strSql.ToString(), sqlParams);
         }
 
 	}
