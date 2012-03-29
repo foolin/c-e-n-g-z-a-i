@@ -1,6 +1,7 @@
 ﻿@{
     ViewBag.Title = "Index";
     var inboxList = ViewBag.InboxList as List<CengZai.Model.Inbox>;
+    var active = Request["Active"];
 }
 
 
@@ -9,13 +10,15 @@
       <div class="span8 bg-white">
       <div class="padding">
 
-            <h2>我的私信</h2> 
+            <h2>我的信箱</h2> 
 
             <ul class="nav nav-tabs">
-                <li class="active"><a href="#receive">收到私信</a></li>
-                <li><a href="#systen">系统通知</a></li>
-@*                <li><a href="#receive">收到</a></li>
-                <li><a href="#send">已发送</a></li>*@
+                <li @if (active == "all" || string.IsNullOrEmpty(active) )
+                    {<text>class="active"</text>}>@Html.ActionLink("全部", "Index", new { active="all" })</li>
+                <li @if (active == "privacy")
+                    {<text>class="active"</text>}>@Html.ActionLink("私信", "Index", new { active = "privacy" })</li>
+                <li @if (active == "notice")
+                    {<text>class="active"</text>}>@Html.ActionLink("通知", "Index", new { active = "notice" })</li>
             </ul>
  
             <div class="tab-content">
@@ -46,7 +49,7 @@
                             <td>@Html.GetUserNickname(inbox.FromUserID)</td>
                             <td>@inbox.Content</td>
                             <td>@Html.GetDateFormat(inbox.SendTime, "yyyy-MM-dd HH:mm:ss")</td>
-                            <td>@Html.ActionLink("回复","Send", new {touserid=inbox.FromUserID})</td>
+                            <td>@(inbox.FromUserID > 0 ? Html.ActionLink("回复", "Send", new { touserid = inbox.FromUserID }).ToHtmlString() : "")</td>
                           </tr>
                          }
                         </tbody>

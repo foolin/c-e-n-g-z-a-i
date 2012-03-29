@@ -13,8 +13,13 @@ namespace CengZai.Web.Controllers
     {
         //
         // GET: /Inbox/
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="type">0=全部，1=私信，2=系统</param>
+        /// <returns></returns>
         [CheckAuthFilter]
-        public ActionResult Index()
+        public ActionResult Index(string active)
         {
             try
             {
@@ -24,8 +29,17 @@ namespace CengZai.Web.Controllers
                     return JumpToTips("您尚未登录", "您尚未登录");
                 }
                 List<Model.Inbox> list = null;
+                
                 BLL.Inbox bllInbox = new BLL.Inbox();
                 string where = string.Format("ToUserID={0}", user.UserID);
+                if (active == "privacy")
+                {
+                    where += " and IsSystem=0 ";
+                }
+                else if (active == "system")
+                {
+                    where += " and IsSystem=1 ";
+                }
                 DataSet dsInboxList = bllInbox.GetList(0, where, "SendTime DESC");
                 if (dsInboxList != null && dsInboxList.Tables.Count > 0)
                 {
@@ -43,10 +57,7 @@ namespace CengZai.Web.Controllers
         [CheckAuthFilter]
         public ActionResult Send(int? toUserID)
         {
-            if (toUserID == null)
-            {
-                return JumpToTips("操作错误！", "请选择发送人");
-            }
+            
             try
             {
                 Model.User loginUser = GetLoginUser();
@@ -54,16 +65,21 @@ namespace CengZai.Web.Controllers
                 {
                     return JumpToTips("操作错误", "您尚未登录！");
                 }
-                Model.User toUser = new BLL.User().GetModel((int)toUserID);
-                if (toUser == null || toUser.State <= 0)
+                if (toUserID != null)
                 {
-                    return JumpToTips("操作错误！", "用户被锁定或者不存在！");
+                    Model.User toUser = new BLL.User().GetModel((int)toUserID);
+                    ViewBag.ToUser = toUser;
                 }
-                if (loginUser.UserID == toUserID)
-                {
-                    return JumpToTips("操作错误", "不能给自己发私信");
-                }
-                ViewBag.ToUser = toUser;
+                
+                //if (toUser == null || toUser.State <= 0)
+                //{
+                //    return JumpToTips("操作错误！", "用户被锁定或者不存在！");
+                //}
+                //if (loginUser.UserID == toUserID)
+                //{
+                //    return JumpToTips("操作错误", "不能给自己发私信");
+                //}
+                
             }
             catch (Exception ex)
             {
