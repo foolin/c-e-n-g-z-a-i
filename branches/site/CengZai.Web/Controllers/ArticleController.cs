@@ -81,7 +81,7 @@ namespace CengZai.Web.Controllers
                 BLL.Article bll = new BLL.Article();
                 bll.Add(model);
 
-                return RedirectToAction("User", "Home", new { ID = 1 });
+                return RedirectToAction("Account", "Home", new { ID = 1 });
             }
             catch (Exception ex)
             {

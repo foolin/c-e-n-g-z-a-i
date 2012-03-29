@@ -12,7 +12,7 @@ using System.Data;
 
 namespace CengZai.Web.Controllers
 {
-    public class UserController : BaseController
+    public class AccountController : BaseController
     {
         //
         // GET: /User/
@@ -160,7 +160,7 @@ namespace CengZai.Web.Controllers
                 Response.Cookies["LOGIN_USER"].Expires = DateTime.Now.AddDays(-9999);
             }
             Session["LOGIN_USER"]  = null;
-            return RedirectToAction("Login", "User");
+            return RedirectToAction("Login", "Account");
         }
 
         /// <summary>
@@ -182,13 +182,23 @@ namespace CengZai.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(string email, string username, string password, string repassword, string verifyCode, string invite, int? sex)
+        public ActionResult Register(string email, string username, string password, string repassword, string verifyCode, string invite, int? sex, int? chkTerms)
         {
             ViewBag.RegisterLimit = Config.RegisterLimit;
 
             if (Config.RegisterLimit == 2)
             {
                 ModelState.AddModelError("Error", "系统在升级，暂停开放注册！");
+                return View();
+            }
+            if (string.IsNullOrEmpty(verifyCode))
+            {
+                ModelState.AddModelError("VerifyCode", "请输入验证码！");
+                return View();
+            }
+            if (verifyCode.Trim().ToLower() != (Session["VerifyCode"] + "").Trim().ToLower())
+            {
+                ModelState.AddModelError("VerifyCode", "验证码不正确！");
                 return View();
             }
             if (string.IsNullOrEmpty(email) || !Regex.IsMatch(email, @"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$"))
@@ -226,14 +236,14 @@ namespace CengZai.Web.Controllers
                 ModelState.AddModelError("Username", "用户名必须4到20个字符之间！");
                 return View();
             }
-            if (!Regex.IsMatch(username, @"[a-z][a-z0-9_]{3, 19}", RegexOptions.IgnoreCase))
+            if (!Regex.IsMatch(username, @"^[a-z][a-z0-9_]{3,19}$", RegexOptions.IgnoreCase))
             {
-                ModelState.AddModelError("Username", "用户名必须以字母开头，只能使用数字、字母、下划线（_）！");
+                ModelState.AddModelError("Username", "用户名格式不正确！");
                 return View();
             }
             if (new BLL.User().GetModelByUserName(username) != null)
             {
-                ModelState.AddModelError("Username", "对不起，该用户名已经被注册，请用其它用户名！");
+                ModelState.AddModelError("Username", "该用户名已经被注册！");
                 return View();
             }
             if (string.IsNullOrEmpty(password) || password.Length < 6)
@@ -251,16 +261,7 @@ namespace CengZai.Web.Controllers
                 ModelState.AddModelError("Repassword", "两次密码输入不一致！");
                 return View();
             }
-            if (string.IsNullOrEmpty(verifyCode))
-            {
-                ModelState.AddModelError("VerifyCode", "请输入验证码！");
-                return View();
-            }
-            if (verifyCode.Trim().ToLower() != (Session["VerifyCode"] + "").Trim().ToLower())
-            {
-                ModelState.AddModelError("VerifyCode", "验证码不正确！");
-                return View();
-            }
+            
 
             //Md5密码
             string md5Password = FormsAuthentication.HashPasswordForStoringInConfigFile(password, "MD5");
@@ -306,7 +307,7 @@ namespace CengZai.Web.Controllers
                     string domainUrl = Request.Url.GetLeftPart(UriPartial.Authority);
 
                     StringBuilder mailContent = new StringBuilder();
-                    string strActivateCodeURL = domainUrl + "/User/Activate?Email=" + email + "&ActivateCode=" + activeCode;
+                    string strActivateCodeURL = domainUrl + Url.Action("Activate", "Account", new { Email = email, ActivateCode = activeCode });    // "/User/Activate?Email=" + email + "&ActivateCode=" + activeCode;
 
                     mailContent.Append("<div style=\"font-size:14px; line-height:25px;\">");
                     mailContent.Append("尊敬的" + username + "：");
@@ -345,7 +346,7 @@ namespace CengZai.Web.Controllers
                 ViewBag.Message = string.Format(@"
                     恭喜你，你已经注册成功！我们已发送一封激活邮件到您邮箱：{0},
                     为了您帐号的安全，请及时登录邮箱[{0}]进行激活！
-                    如果无法收到邮件，请检查邮箱是否正确，或者点击这里 {1}。"
+                    如果无法收到邮件，请检查邮箱是否正确，或者<a href='{1}'>点击这里重新发送邮件</a> 。"
                     , email, Url.Action("ResendActivate"));
                 ViewData["Email"] = email;
                 return View("RegisterOk");

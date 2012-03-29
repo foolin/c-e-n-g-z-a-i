@@ -70,13 +70,13 @@
                     <li>@Html.ActionLink("修改资料", "Profile", "Settings")</li> 
                     <li>@Html.ActionLink("修改密码", "Password","Settings")</li> 
                     <li class="divider"></li> 
-                    <li>@Html.ActionLink("退出", "Logout", "User")</li> 
+                    <li>@Html.ActionLink("退出", "Logout", "Account")</li> 
                     </ul> 
                 </li>
                 <li class="divider-vertical"></li> 
                 <li><a href="/Inbox">私信<sup class="label label-success">2</sup></a></li>
                 <li><a href="#">邀请</a></li> 
-                <li>@Html.ActionLink("退出", "Logout", "User")</li>
+                <li>@Html.ActionLink("退出", "Logout", "Account")</li>
             </ul>
         }
         else
@@ -84,7 +84,7 @@
             <ul class="nav">
                 <li>@Html.ActionLink("登录", "Index", "Home")</li>
 		    </ul>
-            <p class="navbar-text pull-right">还有没有注册曾在网？ @Html.ActionLink("立刻注册","Register","User")</p>
+            <p class="navbar-text pull-right">还有没有注册曾在网？ @Html.ActionLink("立刻注册","Register","Account")</p>
         }
 		</div><!--/.nav-collapse -->
 	</div>

@@ -16,19 +16,19 @@
         </p>
         }
         <p>
-            <label for="username">邮 箱：</label>
+            <label for="username">邮 箱： </label>
             @Html.TextBox("email")
-            @Html.ValidationMessage("email") 请真实填写，用来登录和找回密码
+            @Html.ValidationMessage("email") <span class="muted">请真实填写，用来登录和找回密码</span>
         </p>
         <p>
             <label for="username">用户名：</label>
             @Html.TextBox("username")
-            @Html.ValidationMessage("username") 4~20位字符，字母开头，只能是英文、数字、下划线组合（不能纯数字）
+            @Html.ValidationMessage("username") <span class="muted">4~20位字符，字母开头，只能是英文、数字、下划线组合，不分大小写</span>
         </p>
         <p>
             <label for="password">密 码：</label>
             @Html.Password("password")
-            @Html.ValidationMessage("password")
+            @Html.ValidationMessage("password") <span class="muted">6~20位字符</span>
         </p>
         <p>
             <label for="confirmPassword">确认密码：</label>
@@ -60,13 +60,24 @@
         </p>
         <p>
             <label class="checkbox inline"> 
-                <input type="checkbox" name="agreement" id="agreement" value="1"> 同意《@Html.ActionLink("用户协议", "Agreement", "About", null, new { target = "_blank" })》
+                @Html.CheckBox("chkTerms")
+                我已仔细阅读并同意《@Html.ActionLink("用户注册协议", "Agreement", "About", null, new { target = "_blank" })》
             </label> 
         </p>
         <p class="btn-group">
-            <input type="submit" class="btn btn-primary" value="注册" />
+            <input type="submit" class="btn btn-primary" value="注册" onclick="return onSubmit();" />
             @Html.ActionLink("已经有帐号？", "Login", null, new { @class = "btn btn-danger" })
         </p>
         <p>@Html.ValidationSummary()</p>
     }
     </div>
+    <script type="text/javascript">
+        function onSubmit() {
+            if ($("#chkTerms").attr("checked") != "checked") {
+                alert("必须同意《用户注册协议》方可注册");
+                return false;
+            }
+            return true;
+        }
+    
+    </script>

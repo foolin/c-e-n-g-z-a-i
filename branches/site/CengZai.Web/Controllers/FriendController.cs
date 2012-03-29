@@ -32,7 +32,7 @@ namespace CengZai.Web.Controllers
                 Model.User loginUser = GetLoginUser();
                 if (loginUser == null)
                 {
-                    return RedirectToAction("Login", "User");
+                    return RedirectToAction("Login", "Account");
                 }
                 BLL.User bllUser = new BLL.User();
                 int pageSize = 20;
@@ -79,7 +79,7 @@ namespace CengZai.Web.Controllers
                 Model.User loginUser = GetLoginUser();
                 if (loginUser == null)
                 {
-                    return RedirectToAction("Login", "User");
+                    return RedirectToAction("Login", "Account");
                 }
                 BLL.User bllUser = new BLL.User();
                 DataSet dsList = bllUser.GetListBySearch(100, keyword, "RegTime DESC");
@@ -157,7 +157,7 @@ namespace CengZai.Web.Controllers
                 Model.User loginUser = GetLoginUser();
                 if (loginUser == null)
                 {
-                    return RedirectToAction("Login", "User");
+                    return RedirectToAction("Login", "Account");
                 }
                 BLL.User bllUser = new BLL.User();
                 DataSet dsList = bllUser.GetList(100, "State=1 and UserID<>" + loginUser.UserID, "Vip DESC, RegTime DESC");
@@ -193,7 +193,7 @@ namespace CengZai.Web.Controllers
                 Model.User loginUser = GetLoginUser();
                 if (loginUser == null)
                 {
-                    return RedirectToAction("Login", "User");
+                    return RedirectToAction("Login", "Account");
                 }
                 if (userid != null && userid.Length > 0)
                 {
@@ -242,7 +242,7 @@ namespace CengZai.Web.Controllers
                 Model.User loginUser = GetLoginUser();
                 if (loginUser == null)
                 {
-                    return JumpToAction("操作失败！", "您尚未登录或者登录超时", "Login", "User");
+                    return JumpToAction("操作失败！", "您尚未登录或者登录超时", "Login", "Account");
                 }
                 if (userid != null && userid.Length > 0)
                 {
