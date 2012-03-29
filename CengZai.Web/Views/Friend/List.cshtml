@@ -50,6 +50,7 @@
                     <th>性别</th>
                     <th>签名</th>
                     <th>关注</th>
+                    <th>私信</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -64,6 +65,7 @@
                             <td>@Html.GetUserSexName(user.Sex)</td>
                             <td>@user.Sign</td>
                             <td>@Ajax.GetFriendAddLink(user.UserID, null)</td>
+                            <td>@Html.ActionLink("发送私信", "Send", "Inbox", new {touserid=user.UserID}, null)</td>
                         </tr>
                     }
                 }

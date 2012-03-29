@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using CengZai.Web.Common;
 using CengZai.Helper;
+using System.Data;
 
 namespace CengZai.Web.Controllers
 {
@@ -15,6 +16,27 @@ namespace CengZai.Web.Controllers
         [CheckAuthFilter]
         public ActionResult Index()
         {
+            try
+            {
+                Model.User user = GetLoginUser();
+                if (user == null)
+                {
+                    return JumpToTips("您尚未登录", "您尚未登录");
+                }
+                List<Model.Inbox> list = null;
+                BLL.Inbox bllInbox = new BLL.Inbox();
+                string where = string.Format("ToUserID={0}", user.UserID);
+                DataSet dsInboxList = bllInbox.GetList(0, where, "SendTime DESC");
+                if (dsInboxList != null && dsInboxList.Tables.Count > 0)
+                {
+                    list = bllInbox.DataTableToList(dsInboxList.Tables[0]);
+                }
+                ViewBag.InboxList = list;
+            }
+            catch (Exception ex)
+            {
+                Log.AddErrorInfo("私信异常", ex);
+            }
             return View();
         }
 
