@@ -4,12 +4,18 @@
     if(touser == null){
         touser = new CengZai.Model.User();
     }
+    var friendList = ViewBag.FriendList as List<CengZai.Model.User>;
 }
 
 @section head{
 <script type="text/javascript">
     $(document).ready(function () {
         $("#error").hide();
+        $("#friendList").change(function () {
+            $("#nickname").val($(this).find("option:selected").text());
+            $("#toUserID").val($(this).val());
+            
+        });
     });
 
     function beginSubmit() {
@@ -56,8 +62,28 @@
             {
                 <p>
                     <label>用户</label>
-                    @Html.Hidden("userid", touser.UserID)
-                    @Html.TextBox("nickname", touser.Username, new { disabled = "disabled" })
+                    @Html.Hidden("toUserID", touser.UserID)
+                    @if (touser != null && touser.UserID > 0)
+                    {
+                        @Html.TextBox("nickname", touser.Username, new { disabled = "disabled", @class = "input-middle" })
+                    }
+                    else
+                    {
+                        if (friendList != null && friendList.Count > 0)
+                        {
+                             <select id="friendList"class = "input-middle">
+                                <option value="0">通讯录</option>
+                                @foreach (CengZai.Model.User user in friendList)
+                                {
+                                    <option value="@user.UserID">@user.Nickname</option>
+                                }
+                            </select>
+                        }
+                        else if (touser == null)
+                        {
+                            <text>您尚未有关注的朋友</text>
+                        }
+                    }
                 </p>
                 <p><label>发送内容</label>
                 <textarea name="content" class="input-xlarge" rows="6"></textarea>

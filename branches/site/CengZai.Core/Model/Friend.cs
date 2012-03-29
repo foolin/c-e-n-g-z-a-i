@@ -39,7 +39,7 @@ namespace CengZai.Model
 			get{return _frienduserid;}
 		}
 		/// <summary>
-		/// 朋友类型：0=关注，1=朋友，-1=黑名单
+		/// 朋友类型：0=关注，1=密友（暂无效），-1=黑名单
 		/// </summary>
 		public int? Type
 		{
@@ -49,5 +49,46 @@ namespace CengZai.Model
 		#endregion Model
 
 	}
+
+    /// <summary>
+    /// 朋友类型
+    /// </summary>
+    public enum FriendType
+    {
+        /// <summary>
+        /// 我关注的人
+        /// </summary>
+        Follow = 0,
+        /// 黑名单
+        /// </summary>
+        Black = -1
+    }
+
+    /// <summary>
+    /// 朋友关系
+    /// </summary>
+    public enum FriendRelation
+    {
+        /// <summary>
+        /// 我关注的人
+        /// </summary>
+        Follow = 0,
+        /// <summary>
+        /// 关注我的人
+        /// </summary>
+        Fans = 1,
+        /// <summary>
+        /// 朋友，互相关注
+        /// </summary>
+        Friend = 2,
+        /// <summary>
+        /// 朋友，互相关注
+        /// </summary>
+        FollowOrFans = 3,
+        /// <summary>
+        /// 黑名单
+        /// </summary>
+        Black = -1
+    }
 }
 

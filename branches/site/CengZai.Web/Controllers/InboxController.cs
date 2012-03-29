@@ -36,7 +36,7 @@ namespace CengZai.Web.Controllers
                 {
                     where += " and IsSystem=0 ";
                 }
-                else if (active == "system")
+                else if (active == "notice")
                 {
                     where += " and IsSystem=1 ";
                 }
@@ -65,10 +65,25 @@ namespace CengZai.Web.Controllers
                 {
                     return JumpToTips("操作错误", "您尚未登录！");
                 }
+                Model.User toUser = null;
                 if (toUserID != null)
                 {
-                    Model.User toUser = new BLL.User().GetModel((int)toUserID);
-                    ViewBag.ToUser = toUser;
+                    toUser = new BLL.User().GetModel((int)toUserID);
+                    
+                }
+                ViewBag.ToUser = toUser;
+                if(toUser == null)
+                {
+                    //
+                    int totalCount = 0;
+                    DataSet dsList = new BLL.Friend().GetFriendUserListByPage(loginUser.UserID
+                        , Model.FriendRelation.FollowOrFans
+                        , ""
+                        , 500, 1, out totalCount);
+                    if (dsList != null && dsList.Tables.Count > 0)
+                    {
+                        ViewBag.FriendList = new BLL.User().DataTableToList(dsList.Tables[0]);
+                    }
                 }
                 
                 //if (toUser == null || toUser.State <= 0)
@@ -104,7 +119,7 @@ namespace CengZai.Web.Controllers
                     return AjaxReturn("error", "您尚未登录！");
                 }
                 Model.User toUser = new BLL.User().GetModel((int)toUserID);
-                if (toUser == null || toUser.State <= 0)
+                if (toUser == null || toUser.State < 0)
                 {
                     return AjaxReturn("error", "用户被锁定或者不存在！");
                 }

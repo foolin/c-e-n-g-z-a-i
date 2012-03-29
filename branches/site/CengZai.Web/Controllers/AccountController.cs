@@ -278,6 +278,7 @@ namespace CengZai.Web.Controllers
                 }
 
                 user.AreaID = 0;
+                user.Avatar = "img/noavatar.jpg";
                 user.Birth = null;
                 user.Email = email;
                 user.Intro = "";
