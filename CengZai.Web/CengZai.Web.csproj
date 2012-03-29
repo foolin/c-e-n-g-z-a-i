@@ -99,6 +99,7 @@
     <Content Include="css\bootstrap-responsive.css" />
     <Content Include="css\bootstrap-responsive.min.css" />
     <Content Include="img\bg.jpg" />
+    <Content Include="img\btn-background.jpg" />
     <Content Include="img\certificate_bg.jpg" />
     <Content Include="img\certificate_bg2.jpg" />
     <Content Include="img\certificate_cover.png" />
@@ -134,6 +135,7 @@
     <Content Include="js\jcrop\js\jquery.Jcrop.js" />
     <Content Include="js\jcrop\js\jquery.Jcrop.min.js" />
     <Content Include="js\jcrop\MIT-LICENSE.txt" />
+    <Content Include="js\swfupload\fileprogress.js" />
     <Content Include="js\swfupload\handlers.js" />
     <Content Include="js\turn.min.js" />
     <Content Include="Pages\VerifyCode.aspx" />
