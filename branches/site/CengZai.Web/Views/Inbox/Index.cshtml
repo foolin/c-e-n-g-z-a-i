@@ -1,5 +1,6 @@
 ﻿@{
     ViewBag.Title = "Index";
+    var inboxList = ViewBag.InboxList as List<CengZai.Model.Inbox>;
 }
 
 
@@ -11,46 +12,46 @@
             <h2>我的私信</h2> 
 
             <ul class="nav nav-tabs">
-                <li class="active"><a href="#all">全部</a></li>
-                <li><a href="#receive">收到</a></li>
-                <li><a href="#send">已发送</a></li>
+                <li class="active"><a href="#receive">收到私信</a></li>
+                <li><a href="#systen">系统通知</a></li>
+@*                <li><a href="#receive">收到</a></li>
+                <li><a href="#send">已发送</a></li>*@
             </ul>
  
             <div class="tab-content">
                 <div class="tab-pane active" id="all">
-                    <table class="table table-condensed">
-                    <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>发送人</th>
-                        <th>内容</th>
-                        <th>时间</th>
-                        <th>操作</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>xxx</td>
-                        <td>回复</td>
-                      </tr>
-                      <tr>
-                        <td>2</td>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@@fat</td>
-                        <td>回复</td>
-                      </tr>
-                      <tr>
-                        <td>3</td>
-                        <td colspan="2">Larry the Bird</td>
-                        <td>@@twitter</td>
-                        <td>回复</td>
-                      </tr>
-                    </tbody>
-                  </table>
+                    @if (inboxList == null)
+                    {
+                        <p>暂无任何私信</p>
+                    }
+                    else
+                    {
+                        <table class="table table-condensed">
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>发送人</th>
+                            <th>接收人</th>
+                            <th>内容</th>
+                            <th>时间</th>
+                            <th>操作</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                         @foreach(CengZai.Model.Inbox inbox in inboxList)
+                         {
+                          <tr>
+                            <td>@inbox.MsgID</td>
+                            <td>@Html.GetUserNickname(inbox.FromUserID)</td>
+                            <td>@Html.GetUserNickname(inbox.FromUserID)</td>
+                            <td>@inbox.Content</td>
+                            <td>@Html.GetDateFormat(inbox.SendTime, "yyyy-MM-dd HH:mm:ss")</td>
+                            <td>@Html.ActionLink("回复","Send", new {touserid=inbox.FromUserID})</td>
+                          </tr>
+                         }
+                        </tbody>
+                      </table>
+                    }
                 </div>
                 <div class="tab-pane" id="receive">...</div>
                 <div class="tab-pane" id="send">...</div>
