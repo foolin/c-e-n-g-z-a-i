@@ -32,7 +32,7 @@
         <p>您的邮箱尚未激活！邮箱是作为找回密码的重要方式，为了您的帐号安全，建议您立刻登录邮箱进行激活！</p> 
         <p> 
             <a class="btn btn-danger" href="http://mail.@Html.GetEmailDomain(user.Email)" target="_blank">登录邮箱进行激活</a> 
-            @Html.ActionLink("重新发送激活邮件", "ResendActivate", "User", null, new { @class = "btn" })
+            @Html.ActionLink("重新发送激活邮件", "ResendActivate", "Account", null, new { @class = "btn" })
         </p> 
     </div>
     }
@@ -116,7 +116,7 @@
                         <div class="box-shadow-top"></div>
                         <div class="box-content">
                         	<div class="feed-header">
-                                @Html.ActionLink(Html.GetUserNickname((int)art.UserID), "User", new { UserID = art.UserID }, new { @class = "feed-user" })
+                                @Html.ActionLink(Html.GetUserNickname((int)art.UserID), "Account", new { UserID = art.UserID }, new { @class = "feed-user" })
                                 <span class="post-time">发布于 @art.PostTime</span>
                             </div>
                             <div class="feed-body">

@@ -82,7 +82,7 @@
     <Compile Include="Controllers\ArticleController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Test.aspx.cs">
       <DependentUpon>Test.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -408,7 +408,7 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\User\Register.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CengZai.Core\CengZai.csproj">
@@ -420,13 +420,13 @@
     <Content Include="Views\Article\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\User\Login.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\User\RegisterOk.cshtml" />
+    <Content Include="Views\Account\RegisterOk.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\User\Activate.cshtml" />
+    <Content Include="Views\Account\Activate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\Master.cshtml" />
@@ -462,13 +462,13 @@
     <None Include="js\jcrop\demos\crop.php" />
     <None Include="psd\CengZai_Ico.psd" />
     <None Include="psd\logo_topbar.psd" />
-    <Content Include="Views\User\_LoginLayout.cshtml" />
+    <Content Include="Views\Account\_LoginLayout.cshtml" />
     <Content Include="Views\About\Us.cshtml" />
     <Content Include="Views\About\Agreement.cshtml" />
     <Content Include="Views\About\Privacy.cshtml" />
     <Content Include="Views\About\Join.cshtml" />
     <Content Include="Views\About\_NavList.cshtml" />
-    <Content Include="Views\User\ResendActivate.cshtml" />
+    <Content Include="Views\Account\ResendActivate.cshtml" />
     <Content Include="Views\Home\User.cshtml" />
     <Content Include="Views\Lover\Apply.cshtml" />
     <Content Include="Views\Lover\Accept.cshtml" />

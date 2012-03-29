@@ -20,7 +20,7 @@ namespace CengZai.Web.Common
             if (user == null)
             {
                 filterContext.Result = new RedirectToRouteResult("Default",
-                    new RouteValueDictionary(new { controller = "User", action = "Login" }));
+                    new RouteValueDictionary(new { controller = "Account", action = "Login" }));
             }
         }
     }
