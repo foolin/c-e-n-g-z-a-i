@@ -145,6 +145,47 @@ namespace CengZai.Web.Controllers
             }
         }
 
+
+        /// <summary>
+        /// Ajax添加朋友
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult FriendDel(int? friendUserID)
+        {
+            try
+            {
+                if (friendUserID == null)
+                {
+                    return AjaxReturn("-1", "对方ID为空");
+                }
+                Model.User user = GetLoginUser();
+                if (user == null)
+                {
+                    return AjaxReturn("-1", "您尚未登录，请先登录或者注册！");
+                }
+                BLL.Friend bllFriend = new BLL.Friend();
+                Model.Friend isExist = bllFriend.GetModel(user.UserID, (int)friendUserID);
+                if (isExist == null)
+                {
+                    return AjaxReturn("0", "您尚未关注！");
+                }
+                if (bllFriend.Delete(isExist.ID))
+                {
+                    return AjaxReturn(friendUserID.ToString(), "取消关注成功！");
+                }
+                else
+                {
+                    return AjaxReturn("0", "取消关注失败，请稍后重试！");
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.AddErrorInfo("取消关注异常", ex);
+                return AjaxReturn("-1", "出现异常！");
+            }
+        }
+
+
         /// <summary>
         /// 关注朋友
         /// </summary>
