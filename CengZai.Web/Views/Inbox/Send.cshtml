@@ -1,6 +1,9 @@
 ﻿@{
     ViewBag.Title = "发送私信";
     var touser = ViewBag.ToUser as CengZai.Model.User;
+    if(touser == null){
+        touser = new CengZai.Model.User();
+    }
 }
 
 @section head{
