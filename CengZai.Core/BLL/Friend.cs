@@ -238,6 +238,23 @@ namespace CengZai.BLL
             return Delete(model.ID);
         }
 
+
+
+        /// <summary>
+        /// 返回用户数据列表
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="relation"></param>
+        /// <param name="fieldOrder"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="totalCount"></param>
+        /// <returns></returns>
+        public DataSet GetFriendUserListByPage(int userID, FriendRelation relation, string fieldOrder, int pageSize, int pageIndex, out int totalCount)
+        {
+            return dal.GetFriendUserListByPage(userID, relation, fieldOrder, pageSize, pageIndex, out totalCount);
+        }
+
 	}
 }
 

@@ -5,12 +5,10 @@
 }
 
 
-<div class="container">
-    <div class="row-fluid">
-      <div class="span8 bg-white">
-      <div class="padding">
+<div class="container bg-white">
+<div class="padding">
 
-            <h2>我的信箱</h2> 
+            <h2>我的信箱 <span class="pull-right">@Html.ActionLink("发送私信", "Send", null, new { @class = "btn" })</span></h2> 
 
             <ul class="nav nav-tabs">
                 <li @if (active == "all" || string.IsNullOrEmpty(active) )
@@ -49,7 +47,7 @@
                             <td>@Html.GetUserNickname(inbox.FromUserID)</td>
                             <td>@inbox.Content</td>
                             <td>@Html.GetDateFormat(inbox.SendTime, "yyyy-MM-dd HH:mm:ss")</td>
-                            <td>@(inbox.FromUserID > 0 ? Html.ActionLink("回复", "Send", new { touserid = inbox.FromUserID }).ToHtmlString() : "")</td>
+                            <td>@MvcHtmlString.Create(inbox.FromUserID > 0 ? Html.ActionLink("回复", "Send", new { touserid = inbox.FromUserID }).ToHtmlString() : "")</td>
                           </tr>
                          }
                         </tbody>
@@ -66,17 +64,8 @@
                 })
             </script>
 
-      </div>
-      </div>
-      <!--.span8-->
-      <div class="span4">
-          <div class="well">
-            @Html.ActionLink("发送私信", "Send", null, new { @class = "btn" })
-            <hr />
-          </div><!--/.well -->
-      </div>
-    </div>
-    <!--/.span4 -->
 
+</div>
 </div>   
 <!--/.container -->
+
