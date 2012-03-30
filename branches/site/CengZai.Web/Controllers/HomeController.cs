@@ -17,7 +17,6 @@ namespace CengZai.Web.Controllers
         public ActionResult Index()
         {
             Model.User user = GetLoginUser();
-            ViewBag.User = user;
             BLL.Article bllArt = new BLL.Article();
             DataSet dsArtList = bllArt.GetListByPage("Privacy=0 And State=1", "ArtID DESC", mPageSize, mPageIndex, out mTotalCount);
             List<Model.Article> artList = null;

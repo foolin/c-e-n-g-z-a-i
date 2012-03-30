@@ -134,6 +134,15 @@ namespace CengZai.Web.Controllers
                     //如果不是原作者的，则跳转
                     return RedirectToAction("Article", new { username = user.Username, artid = art.ArtID });
                 }
+                try
+                {
+                    art.ViewCount = (art.ViewCount == null ? 1 : (art.ViewCount + 1));
+                    new BLL.Article().Update(art);
+                }
+                catch (Exception ex)
+                {
+                    Log.AddErrorInfo("BlogController.Article()更新阅读量异常", ex);
+                }
                 ViewBag.Article = art;
             }
             catch (Exception ex)

@@ -466,3 +466,72 @@ a.blog-mini-avatar{
 }
 
 
+/**** feed for new *****/
+.feed{
+	margin-bottom:15px;
+}
+.feed-avatar{
+	width:100px;
+	float:left;
+	text-align:left;
+	background:url(../img/left-corner.png) right center no-repeat;
+}
+.feed-avatar a img{
+	margin-top:10px;
+	padding:3px;
+	border:solid 1px #CCCCCC;
+	background:#FFFFFF;
+	
+	border-radius:5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius: 5px;
+}
+.feed-avatar a:hover img{
+	border:solid 1px #ff0000;
+	background:#FF97CB;
+}
+.feed-content{
+	margin-left:100px;
+	width:75%;
+	background:#FFFFFF;
+	border-radius:5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius: 5px;
+}
+.feed-content article{
+	padding:0;
+	font-size:14px;
+}
+.feed-content .art-body
+{
+    line-height:1.8em;
+    font-size:14px;
+}
+.feed-content cite{
+	margin-bottom:18px;
+	font-size:12px;
+	color:#999;
+}
+.feed-content cite a
+{
+    color:#950;
+}
+.feed-content h1{
+	font-size:14pt;
+	margin-top:10px;
+	margin-bottom:10px;
+}
+.feed-content h1 a
+{
+    color:#555;
+}
+.feed-content footer{
+	margin-bottom:5px;
+	margin-top:0px;
+	font-size:12px;
+}
+.feed-content hr
+{
+    margin-bottom:10px;
+}
+
