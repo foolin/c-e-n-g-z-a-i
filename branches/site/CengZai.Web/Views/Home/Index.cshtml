@@ -29,7 +29,7 @@
     {
     <div class="alert alert-block fade in"> 
         <a class="close" data-dismiss="alert" href="#">&times;</a> 
-        <h4 class="alert-heading">@ViewBag.User.Nickname，你的邮箱[@ViewBag.User.Email]尚未激活!</h4> 
+        <h4 class="alert-heading">@user.Nickname，你的邮箱[@user.Email]尚未激活!</h4> 
         <p>您的邮箱尚未激活！邮箱是作为找回密码的重要方式，为了您的帐号安全，建议您立刻登录邮箱进行激活！</p> 
         <p> 
             <a class="btn btn-danger" href="http://mail.@Html.GetEmailDomain(user.Email)" target="_blank">登录邮箱进行激活</a> 
