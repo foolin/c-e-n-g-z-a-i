@@ -8,8 +8,13 @@ using CengZai.Web.Common;
 
 namespace CengZai.Web.Controllers
 {
+
     public class BaseController : Controller
     {
+        protected int mPageIndex = 0;
+        protected int mPageSize = 0;
+        protected int mTotalCount = 0;
+
         public BaseController()
         {
             
@@ -21,6 +26,11 @@ namespace CengZai.Web.Controllers
         /// <param name="filterContext"></param>
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
+            //初始化分页
+            mPageSize = 20;
+            mPageIndex = GetPageIndex("page");   
+            mTotalCount = 0;
+
             //初始化
             ViewData["SiteName"] = Config.SiteName;
             ViewData["SiteDomain"] = Config.SiteDomain;
@@ -252,21 +262,30 @@ namespace CengZai.Web.Controllers
         /// <summary>
         /// 取页码
         /// </summary>
-        /// <param name="pageTag"></param>
+        /// <param name="page"></param>
         /// <returns></returns>
-        protected int GetPageNum(string pageTag)
+        protected int GetPageIndex(string page)
         {
-            if (string.IsNullOrEmpty(pageTag))
+            if (string.IsNullOrEmpty(page))
             {
-                pageTag = "page";
+                page = "page";
             }
             int pageIndex = 0;
-            int.TryParse(Request[pageTag], out pageIndex);
+            int.TryParse(Request[page], out pageIndex);
             if (pageIndex < 1)
             {
                 pageIndex = 1;
             }
             return pageIndex;
+        }
+
+        /// <summary>
+        /// 设置页面
+        /// </summary>
+        protected void SetPage()
+        {
+            ViewBag.PageSize = mPageSize;
+            ViewBag.TotalCount = mTotalCount;
         }
 
         /// <summary>

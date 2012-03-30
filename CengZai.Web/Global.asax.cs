@@ -60,8 +60,9 @@ namespace CengZai.Web
 
             routes.MapLowerCaseUrlRoute(
                 "Default", // Route name
-                "{controller}/{action}/{id}", // URL with parameters
-                new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
+                "{controller}/{action}/{page}/{id}", // URL with parameters
+                new { controller = "Home", action = "Index", page=1, id = UrlParameter.Optional } // Parameter defaults
+                , new { page = "[0-9]+" }
             );
 
         }

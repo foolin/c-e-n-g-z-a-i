@@ -37,7 +37,7 @@ namespace CengZai.Web.Controllers
                 BLL.Friend bllFriend = new BLL.Friend();
                 int pageSize = 20;
                 int totalCount = 0;
-                int pageIndex = GetPageNum("page");
+                int pageIndex = GetPageIndex("page");
                 DataSet dsList = null;
                 //处理
                 if (active == "follow")

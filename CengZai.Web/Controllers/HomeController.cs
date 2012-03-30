@@ -18,19 +18,15 @@ namespace CengZai.Web.Controllers
         {
             Model.User user = GetLoginUser();
             ViewBag.User = user;
-
-            int pageSize = 20;
-            int totalCount = 0;
             BLL.Article bllArt = new BLL.Article();
-            DataSet dsArtList = bllArt.GetListByPage("Privacy=0 And State=1", "ArtID DESC", pageSize, GetPageNum("page"), out totalCount);
+            DataSet dsArtList = bllArt.GetListByPage("Privacy=0 And State=1", "ArtID DESC", mPageSize, mPageIndex, out mTotalCount);
             List<Model.Article> artList = null;
             if (dsArtList != null && dsArtList.Tables.Count > 0)
             {
                 artList = bllArt.DataTableToList(dsArtList.Tables[0]);
             }
-            ViewBag.PageSize = pageSize;
-            ViewBag.TotalCount = totalCount;
             ViewBag.ArtList = artList;
+            SetPage();
             return View();
         }
 
@@ -51,7 +47,7 @@ namespace CengZai.Web.Controllers
             int pageSize = 20;
             int totalCount = 0;
             BLL.Article bllArt = new BLL.Article();
-            DataSet dsArtList = bllArt.GetListByPage("Privacy=0 And State=1", "ArtID DESC", pageSize, GetPageNum("page"), out totalCount);
+            DataSet dsArtList = bllArt.GetListByPage("Privacy=0 And State=1", "ArtID DESC", pageSize, GetPageIndex("page"), out totalCount);
             List<Model.Article> artList = null;
             if (dsArtList != null && dsArtList.Tables.Count > 0)
             {

@@ -41,9 +41,10 @@
       <div class="span8">
         <!-- Main 开始 -->
         <div class="feed-list">
-
-           @foreach (var art in artlist)
+           @if (artlist != null && artlist.Count > 0)
            {
+               foreach (var art in artlist)
+               {
                 <article class="feed">
                     <div class="avatar">
                         <a class="blog-avatar" href="http://foolin.diandian.com" style="background-image:url(http://m1.img.libdd.com/farm1/53/2FCCB335D03ADF18DE0340F650E6BB35_64_64.jpg)">Foolin</a>
@@ -51,12 +52,12 @@
                     <div class="box">
                         <div class="box-triangle"></div>
                         <div class="link-to-post-holder" style="display: block; ">
-                            @Html.ActionLink("查看该文章","Detail", "Article", new { artid = art.ArtID }, new { target = "_blank", @class = "link-to-post", title="查看文章" })
+                            @Html.ActionLink("查看该文章", "Detail", "Article", new { artid = art.ArtID }, new { target = "_blank", @class = "link-to-post", title = "查看文章" })
                         </div>
                         <div class="box-shadow-top"></div>
                         <div class="box-content">
                         	<div class="feed-header">
-                                @Html.ActionLink(Html.GetUserNickname((int)art.UserID), "Account", new {uid=art.UserID}, new {@class="feed-user"})
+                                @Html.ActionLink(Html.GetUserNickname((int)art.UserID), "Account", new { uid = art.UserID }, new { @class = "feed-user" })
                                 <span class="post-time">发布于 @art.PostTime</span>
                             </div>
                             <div class="feed-body">
@@ -118,7 +119,7 @@
                                 </div>*@
                                 </div>
                                 <div class="feed-tag">
-                                    @Html.ActionLink("[查看文章]","Detail", "Article", new { artid = art.ArtID }, new { target = "_blank",title="查看文章" })
+                                    @Html.ActionLink("[查看文章]", "Detail", "Article", new { artid = art.ArtID }, new { target = "_blank", title = "查看文章" })
                                 </div>
                                 <div class="feed-action">
                                     <a title="评论" href="#" class="feed-comments">评论(20)</a>
@@ -135,11 +136,12 @@
                     <div class="clear"></div>
                 </article>
                 <!--feed-list-item 结束-->
+               }
            }
 
 
 
-                <div class="pager">@Html.Pager((int)ViewBag.PageSize, (int)ViewBag.TotalCount, "page", 3)</div>
+                <div class="pager">@Html.Pager()</div>
 
           </div>
           <!-- feed-list end -->

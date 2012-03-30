@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
+using System.Web.Mvc.Html; 
 using System.Web.Routing;
 using System.Text.RegularExpressions;
 using System.Collections;
@@ -12,6 +13,30 @@ namespace System.Web.Mvc
 
     public static class HtmlExtend
     {
+
+        /// <summary>
+        /// 分页函数条：
+        /// 1.代码必须初始化ViewData["PageSize"]、ViewData["TotalCount"]的值
+        /// 2.以“page”作为分页标识
+        /// </summary>
+        /// <param name="helper"></param>
+        /// <param name="page"></param>
+        /// <returns></returns>
+        public static MvcHtmlString Pager(this HtmlHelper helper)
+        {
+            int pageSize = 20;
+            int totalCount = 0;
+            try
+            {
+                pageSize = Convert.ToInt32(helper.ViewData["PageSize"]);
+            }
+            catch{
+                pageSize = 20;
+            }
+            int.TryParse(helper.ViewData["TotalCount"] + "", out totalCount);
+            return Pager(helper, "page", pageSize, totalCount);
+        }
+
         /// <summary>
         /// 扩展Html
         /// </summary>
@@ -20,25 +45,35 @@ namespace System.Web.Mvc
         /// <param name="totalCount"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public static MvcHtmlString Pager(this HtmlHelper helper, int pageSize, int totalCount, string pageTag, int perSideNum)
+        public static MvcHtmlString Pager(this HtmlHelper helper, string page, int pageSize, int totalCount)
         {
-            var queryString = helper.ViewContext.HttpContext.Request.QueryString;
-
-            pageTag = string.IsNullOrEmpty(pageTag) ? "page" : pageTag;
+            page = string.IsNullOrEmpty(page) ? "page" : page;  //页标识
             int pageIndex = 1; //当前页
-            int.TryParse(queryString[pageTag], out pageIndex); //与相应的QueryString绑定
-            int pageCount = Math.Max((totalCount + pageSize - 1) / pageSize, 1); //总页数
-            StringBuilder str = new StringBuilder();
+            int pageCount = 0;  //总页数
+
+            var queryString = helper.ViewContext.HttpContext.Request.QueryString;
+            var dicRoutValues = new System.Web.Routing.RouteValueDictionary(helper.ViewContext.RouteData.Values);
+            if (!string.IsNullOrEmpty(queryString[page]))
+            {
+                //与相应的QueryString绑定 
+                foreach (string key in queryString.Keys)
+                    if (queryString[key] != null && !string.IsNullOrEmpty(key))
+                        dicRoutValues[key] = queryString[key];
+                int.TryParse(queryString[page], out pageIndex);
+            }
+            else
+            {
+                //获取 ～/Page/{page number} 的页号参数
+                if (dicRoutValues.ContainsKey(page))
+                {
+                    int.TryParse(dicRoutValues[page].ToString(), out pageIndex);
+                }
+            }
             pageIndex = (pageIndex < 1 || pageIndex > pageCount) ? 1 : pageIndex;
             pageSize = pageSize < 1 ? 20 : pageSize;
+            pageCount = Math.Max((totalCount + pageSize - 1) / pageSize, 1); //总页数
 
-            RouteData routeData = helper.ViewContext.RouteData;
-            //你可能还要获取action
-            string url = helper.ViewContext.HttpContext.Request.Url.PathAndQuery;
-            url = System.Text.RegularExpressions.Regex.Replace(url, ("&{0,1}" + pageTag + "=\\d*").ToString(), ""
-                , System.Text.RegularExpressions.RegexOptions.IgnoreCase);
-            //string action = routeData.Values["action"].ToString();
-            //string controller = routeData.Values["controller"].ToString();
+
             StringBuilder html = new StringBuilder();
             html.Append("<ul>");
             //首页、上一页
@@ -49,9 +84,12 @@ namespace System.Web.Mvc
             }
             else
             {
-                html.AppendFormat("<li>{0}</li>", ParsePageLink(url, pageTag, "|<", 1));
-                html.AppendFormat("<li>{0}</li>", ParsePageLink(url, pageTag, "<", pageIndex - 1));
+                dicRoutValues[page] = 1;
+                html.AppendFormat("<li>{0}</li>", helper.RouteLink("|<", dicRoutValues));
+                dicRoutValues[page] = pageIndex - 1;
+                html.AppendFormat("<li>{0}</li>", helper.RouteLink("<", dicRoutValues));
             }
+            int perSideNum = 3;
             int margin = pageIndex - (perSideNum + 1);  //数字左边偏移，如果为负，则右边相应加差额
             if (margin > 0)
             {
@@ -78,7 +116,8 @@ namespace System.Web.Mvc
                     {
                         if (i > 0)
                         {
-                            html.AppendFormat("<li>{0}</li>", ParsePageLink(url, pageTag, i.ToString(), i));
+                            dicRoutValues[page] = i;
+                            html.AppendFormat("<li>{0}</li>", helper.RouteLink(i.ToString(), dicRoutValues));
                         }
                     }
                 }
@@ -94,7 +133,8 @@ namespace System.Web.Mvc
                     }
                     for (int j = pageIndex + 1; (j <= pageCount) && j <= (pageIndex + perSideNum + mar); j++)
                     {
-                        html.AppendFormat("<li>{0}</li>", ParsePageLink(url, pageTag, j.ToString(), j));
+                        dicRoutValues[page] = j;
+                        html.AppendFormat("<li>{0}</li>", helper.RouteLink(j.ToString(), dicRoutValues));
                     }
                 }
             }
@@ -106,8 +146,10 @@ namespace System.Web.Mvc
             }
             else
             {
-                html.AppendFormat("<li>{0}</li>", ParsePageLink(url, pageTag, ">", pageIndex + 1));
-                html.AppendFormat("<li>{0}</li>", ParsePageLink(url, pageTag, ">|", pageCount));
+                dicRoutValues[page] = pageIndex + 1;
+                html.AppendFormat("<li>{0}</li>", helper.RouteLink(">", dicRoutValues));
+                dicRoutValues[page] = pageIndex + 1;
+                html.AppendFormat("<li>{0}</li>", helper.RouteLink(">|", dicRoutValues));
             }
             //前后加<ul>
 
@@ -123,6 +165,99 @@ namespace System.Web.Mvc
             //</ul> 
             return MvcHtmlString.Create(html.ToString());
         }
+
+        /* 网上分页 ***** /
+        /// <summary>  
+        /// 分页Pager显示  
+        /// </summary>   
+        /// <param name="html"></param>  
+        /// <param name="page">标识当前页码的QueryStringKey</param>   
+        /// <param name="pageSize">每页显示</param>  
+        /// <param name="totalCount">总数据量</param>  
+        /// <returns></returns> 
+        public static MvcHtmlString Pager(this HtmlHelper html, string page, int pageSize, int totalCount)
+        {
+            var queryString = html.ViewContext.HttpContext.Request.QueryString;
+            int currentPage = 1; //当前页  
+            var totalPages = Math.Max((totalCount + pageSize - 1) / pageSize, 1); //总页数  
+            var dict = new System.Web.Routing.RouteValueDictionary(html.ViewContext.RouteData.Values);
+            var output = new System.Text.StringBuilder();
+            if (!string.IsNullOrEmpty(queryString[page]))
+            {
+                //与相应的QueryString绑定 
+                foreach (string key in queryString.Keys)
+                    if (queryString[key] != null && !string.IsNullOrEmpty(key))
+                        dict[key] = queryString[key];
+                int.TryParse(queryString[page], out currentPage);
+            }
+            else
+            {
+                //获取 ～/Page/{page number} 的页号参数
+                if (dict.ContainsKey(page))
+                {
+                    int.TryParse(dict[page].ToString(), out currentPage);
+                }
+            }
+            if (currentPage <= 0) currentPage = 1;
+            if (totalPages > 1)
+            {
+                if (currentPage != 1)
+                {
+                    //处理首页连接  
+                    dict[page] = 1;
+                    output.AppendFormat("{0} ", html.RouteLink("首页", dict));
+                }
+                if (currentPage > 1)
+                {
+                    //处理上一页的连接  
+                    dict[page] = currentPage - 1;
+                    output.Append(html.RouteLink("上一页", dict));
+                }
+                else
+                {
+                    output.Append("上一页");
+                }
+                output.Append(" ");
+                int currint = 5;
+                for (int i = 0; i <= 10; i++)
+                {
+                    //一共最多显示10个页码，前面5个，后面5个  
+                    if ((currentPage + i - currint) >= 1 && (currentPage + i - currint) <= totalPages)
+                        if (currint == i)
+                        {
+                            //当前页处理  
+                            output.Append(string.Format("[{0}]", currentPage));
+                        }
+                        else
+                        {
+                            //一般页处理 
+                            dict[page] = currentPage + i - currint;
+                            output.Append(html.RouteLink((currentPage + i - currint).ToString(), dict));
+                        }
+                    output.Append(" ");
+                }
+                if (currentPage < totalPages)
+                {
+                    //处理下一页的链接 
+                    dict[page] = currentPage + 1;
+                    output.Append(html.RouteLink("下一页", dict));
+                }
+                else
+                {
+                    output.Append("下一页");
+                }
+                output.Append(" ");
+                if (currentPage != totalPages)
+                {
+                    dict[page] = totalPages;
+                    output.Append(html.RouteLink("末页", dict));
+                }
+                output.Append(" ");
+            }
+            output.AppendFormat("{0} / {1}", currentPage, totalPages);//这个统计加不加都行 
+            return MvcHtmlString.Create(output.ToString());
+        }
+        */
 
 
         /// <summary>
