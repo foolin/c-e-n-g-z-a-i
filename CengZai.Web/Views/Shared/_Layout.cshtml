@@ -44,14 +44,14 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">发表<b class="caret"></b></a> 
                     <ul class="dropdown-menu"> 
                         <li>@Html.ActionLink("日志", "PostText", "Article")</li> 
-                        <li>@Html.ActionLink("照片", "PostImage", "Article")</li> 
+                        @*<li>@Html.ActionLink("照片", "PostImage", "Article")</li> *@
                         <li class="divider"></li> 
                         <li>@Html.ActionLink("唠叨", "Send", "Message")</li> 
                     </ul> 
                 </li>
                 @*<li><a href="#message">唠叨<sup class="label label-important">2</sup></a></li>*@
                 <li>@Html.ActionLink("我的主页", "Blog", "Blog", new { username=user.Username }, null)</li>
-                <li>@Html.ActionLink("登记", "Index", "Lover")</li>
+                <li>@Html.ActionLink("情侣", "Index", "Lover")</li>
 			    <li>@Html.ActionLink("好友", "List", "Friend")</li>
 		    </ul>
             <!--<form class="navbar-form pull-left" action="">-->
