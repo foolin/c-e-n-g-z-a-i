@@ -22,10 +22,10 @@ namespace CengZai.Web.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="type">0=我关注,1=关注我，-1=黑名单</param>
+        /// <param name="active">friend=朋友（互相关注）, follow=我关注,fans=关注我，black=黑名单</param>
         /// <returns></returns>
         [CheckAuthFilter]
-        public ActionResult List(int? type)
+        public ActionResult List(string active)
         {
             try
             {
@@ -34,27 +34,35 @@ namespace CengZai.Web.Controllers
                 {
                     return RedirectToAction("Login", "Account");
                 }
-                BLL.User bllUser = new BLL.User();
+                BLL.Friend bllFriend = new BLL.Friend();
                 int pageSize = 20;
                 int totalCount = 0;
                 int pageIndex = GetPageNum("page");
                 DataSet dsList = null;
                 //处理
-                if (type == 1)
+                if (active == "follow")
                 {
-                    dsList = bllUser.GetFriendListByPage(true, loginUser.UserID, 0, "", pageSize, pageIndex, out totalCount);
+                    dsList = bllFriend.GetFriendUserListByPage(loginUser.UserID, Model.FriendRelation.Follow
+                        , "", pageSize, pageIndex, out totalCount);
                 }
-                else if (type == -1)
+                else if (active == "fans")
                 {
-                    dsList = bllUser.GetFriendListByPage(false, loginUser.UserID, -1, "", pageSize, pageIndex, out totalCount);
+                    dsList = bllFriend.GetFriendUserListByPage(loginUser.UserID, Model.FriendRelation.Fans
+                        , "", pageSize, pageIndex, out totalCount);
+                }
+                else if (active == "black")
+                {
+                    dsList = bllFriend.GetFriendUserListByPage(loginUser.UserID, Model.FriendRelation.Black
+                        , "", pageSize, pageIndex, out totalCount);
                 }
                 else
                 {
-                    dsList = bllUser.GetFriendListByPage(false, loginUser.UserID, 0, "", pageSize, pageIndex, out totalCount);
+                    dsList = bllFriend.GetFriendUserListByPage(loginUser.UserID, Model.FriendRelation.Friend
+                        , "", pageSize, pageIndex, out totalCount);
                 }
                 if (dsList != null && dsList.Tables.Count > 0)
                 {
-                    List<Model.User> userList = bllUser.DataTableToList(dsList.Tables[0]);
+                    List<Model.User> userList = new BLL.User().DataTableToList(dsList.Tables[0]);
                     ViewBag.UserList = userList;
                 }
             }
