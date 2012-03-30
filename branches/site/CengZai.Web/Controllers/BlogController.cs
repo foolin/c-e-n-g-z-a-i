@@ -81,7 +81,7 @@ namespace CengZai.Web.Controllers
             {
                 BLL.Article bllArt = new BLL.Article();
                 int totalCount = 0;
-                int page = GetPageNum("page");
+                int page = GetPageIndex("page");
                 List<Model.Article> blogArtList = bllArt.GetUserPublicListByPage(blogUser.UserID, "IsTop DESC,PostTime DESC", Config.PageSize, page, out totalCount);
                 ViewBag.TotalCount = totalCount;
                 ViewBag.BlogArtList = blogArtList;
@@ -92,7 +92,7 @@ namespace CengZai.Web.Controllers
                 BLL.Article bllArt = new BLL.Article();
                 int boyTotalCount = 0;
                 int girlTotalCount = 0;
-                int page = GetPageNum("page");
+                int page = GetPageIndex("page");
                 List<Model.Article> boyArtList = bllArt.GetUserPublicListByPage(boy.UserID, "IsTop DESC,PostTime DESC", Config.PageSize, page, out boyTotalCount);
                 List<Model.Article> girlArtList = bllArt.GetUserPublicListByPage(girl.UserID, "IsTop DESC,PostTime DESC", Config.PageSize, page, out girlTotalCount);
                 ViewBag.TotalCount = boyTotalCount > girlTotalCount ? boyTotalCount : girlTotalCount;
