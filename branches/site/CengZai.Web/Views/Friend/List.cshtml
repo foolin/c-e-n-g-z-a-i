@@ -2,7 +2,7 @@
     ViewBag.Title = "好友管理";
     var imgPath = CengZai.Helper.Config.UploadHttpPath;
     var userList = ViewBag.UserList as List<CengZai.Model.User>;
-    var type = Request["type"];
+    var active = Request["active"];
 }
 @section head{
 <script type="text/javascript">
@@ -25,12 +25,14 @@
     <br />
     <div>
     <ul class="nav nav-tabs">
-        <li @if (type != "1" && type != "-1")
-            {<text>class="active"</text>}>@Html.ActionLink("我关注", "List", new {type=0 })</li>
-        <li @if (type == "1")
-            {<text>class="active"</text>}>@Html.ActionLink("关注我", "List", new { type = 1 })</li>
-        <li @if (type == "-1")
-            {<text>class="active"</text>}>@Html.ActionLink("黑名单", "List", new { type = -1 })</li>
+        <li @if (active == "friend" || string.IsNullOrEmpty(active))
+            {<text>class="active"</text>}>@Html.ActionLink("朋友", "List", new { active = "friend" })</li>
+        <li @if (active == "follow")
+            {<text>class="active"</text>}>@Html.ActionLink("我关注", "List", new { active = "follow" })</li>
+        <li @if (active == "fans")
+            {<text>class="active"</text>}>@Html.ActionLink("关注我", "List", new { active = "fans" })</li>
+        <li @if (active == "black")
+            {<text>class="active"</text>}>@Html.ActionLink("黑名单", "List", new { active = "black" })</li>
     </ul>
     </div>
 
@@ -72,8 +74,8 @@
                 </tbody>
             </table>
             <div>
-                <input type="hidden" name="type" value="@(type == "-1" ? "0" : "-1")" />
-                @if (type == "-1")
+                <input type="hidden" name="type" value="@(active == "black" ? "0" : "-1")" />
+                @if (active == "black")
                 {
                     <input type="submit" value="移除黑名单" class="btn btn-primary" />
                 }

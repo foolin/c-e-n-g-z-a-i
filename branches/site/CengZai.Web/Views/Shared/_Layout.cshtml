@@ -50,7 +50,7 @@
                     </ul> 
                 </li>
                 @*<li><a href="#message">唠叨<sup class="label label-important">2</sup></a></li>*@
-                <li>@Html.ActionLink("主页", "Blog", "Blog", new { username=user.Username }, null)</li>
+                <li>@Html.ActionLink("我的主页", "Blog", "Blog", new { username=user.Username }, null)</li>
                 <li>@Html.ActionLink("登记", "Index", "Lover")</li>
 			    <li>@Html.ActionLink("好友", "List", "Friend")</li>
 		    </ul>
@@ -74,7 +74,7 @@
                     </ul> 
                 </li>
                 <li class="divider-vertical"></li> 
-                <li><a href="/Inbox">信箱<sup class="label label-success">2</sup></a></li>
+                <li><a href="/Inbox">消息@*<sup class="label label-success">2</sup>*@</a></li>
                 <li><a href="#">邀请</a></li> 
                 <li>@Html.ActionLink("退出", "Logout", "Account")</li>
             </ul>
