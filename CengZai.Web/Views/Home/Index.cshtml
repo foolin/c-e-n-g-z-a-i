@@ -1,7 +1,8 @@
 ﻿@{
     ViewBag.Title = "我的首页-" + ViewBag.SiteName;
-    var user = ViewBag.User as CengZai.Model.User;
+    var user = Html.GetLoginUser();
     var artlist = ViewBag.ArtList as List<CengZai.Model.Article>;
+    var imgPath = CengZai.Helper.Config.UploadHttpPath;
 }
 @section head{
     <link type="text/css" href="../js/imgzoom/jquery.artZoom.css" rel="stylesheet">
@@ -45,97 +46,33 @@
            {
                foreach (var art in artlist)
                {
-                <article class="feed">
-                    <div class="avatar">
-                        <a class="blog-avatar" href="http://foolin.diandian.com" style="background-image:url(http://m1.img.libdd.com/farm1/53/2FCCB335D03ADF18DE0340F650E6BB35_64_64.jpg)">Foolin</a>
-                    </div>
-                    <div class="box">
-                        <div class="box-triangle"></div>
-                        <div class="link-to-post-holder" style="display: block; ">
-                            @Html.ActionLink("查看该文章", "Detail", "Article", new { artid = art.ArtID }, new { target = "_blank", @class = "link-to-post", title = "查看文章" })
+                   var artUser = Html.GetUser(art.UserID);
+                   
+                    <section class="feed">
+            	    <aside class="feed-avatar">
+                	    <a href="@Url.Action("Blog", "Blog", new { username = artUser.Username })" title="@Html.GetUserNickname(art.UserID)" target="_blank"> 
+     				    <img src="@imgPath/@artUser.Avatar" width="64" alt="noavatar"/>
+                        </a>
+                        <span class="feed-corner"></span>
+                    </aside>
+                    <div class="feed-content">
+                        <article>
+                        <cite><a href="@Url.Action("Blog", "Blog", new { username = artUser.Username })" target="_blank">@artUser.Nickname</a> 发表于 @Html.GetDateFormat(art.PostTime, "yyyy年M月d日 HH:mm:ss") </cite>
+                        @if(!string.IsNullOrEmpty(art.Title))
+                        {
+                            <h1>@Html.ActionLink(art.Title, "Article", "Blog",  new { username=artUser.Username, artid=art.ArtID }, new { target="_blank"})</h1>
+                        }
+                        <div class="art-body">
+                            @Html.GetHtmlSubstring(art.Content, 500)
                         </div>
-                        <div class="box-shadow-top"></div>
-                        <div class="box-content">
-                        	<div class="feed-header">
-                                @Html.ActionLink(Html.GetUserNickname((int)art.UserID), "Account", new { uid = art.UserID }, new { @class = "feed-user" })
-                                <span class="post-time">发布于 @art.PostTime</span>
-                            </div>
-                            <div class="feed-body">
-                                @if (!string.IsNullOrEmpty(art.Title))
-                                {
-                            	    <h4 class="feed-title">@Html.ActionLink(art.Title, "Detail", "Article", new { artid = art.ArtID }, new { target = "_blank" }) </h4>
-                                }
-                                <div class="feed-content">
-                                	@*@MvcHtmlString.Create(art.Content)*@
-                                    @Html.GetRemoveHtmlContent(art.Content, 300)
-                                </div>
-                                <div id="feed-comment-@art.ArtID">
-@*                                <ul class="feed-comment">
-                                    <li class="row">
-                                        <div class="comment-avatar">
-                                            <span>
-                                                <a class="blog-mini-avatar" href="http://foolin.diandian.com" style="background-image:url(http://m1.img.libdd.com/farm1/53/2FCCB335D03ADF18DE0340F650E6BB35_64_64.jpg)">Foolin</a>
-                                            </span>
-                                            
-                                        </div>
-                                        <div class="comment-content">
-                                            <span class="comment-user"><a href="#User">笨猪猪</a></span>
-                                            “桂花香馅裹胡桃，江米如珠井水淘”。正月十五，元宵节。各位吃货，吃元宵了吗？两只可爱的吃货，祝大家元宵节快乐。
-                                            <div class="comment-info">2012-02-20 10:38:27</div>
-                                        </div>
-                                    </li>
-                                    <li class="row">
-                                        <div class="comment-avatar">
-                                            <span>
-                                                <a class="blog-mini-avatar" href="http://foolin.diandian.com" style="background-image:url(http://m1.img.libdd.com/farm1/53/2FCCB335D03ADF18DE0340F650E6BB35_64_64.jpg)">Foolin</a>
-                                            </span>
-                                            
-                                        </div>
-                                        <div class="comment-content">
-                                            <span class="comment-user"><a href="#User">笨猪猪</a></span>
-                                            “桂花香馅裹胡桃，江米如珠井水淘”。正月十五，元宵节。各位吃货，吃元宵了吗？两只可爱的吃货，祝大家元宵节快乐。
-                                            <div class="comment-info">2012-02-20 10:38:27</div>
-                                        </div>
-                                    </li>
-                                    <li class="row">
-                                        <div class="comment-avatar">
-                                            <span>
-                                                <a class="blog-mini-avatar" href="http://foolin.diandian.com" style="background-image:url(http://m1.img.libdd.com/farm1/53/2FCCB335D03ADF18DE0340F650E6BB35_64_64.jpg)">Foolin</a>
-                                            </span>
-                                            
-                                        </div>
-                                        <div class="comment-content">
-                                            <span class="comment-user"><a href="#User">笨猪猪</a></span>
-                                            “桂花香馅裹胡桃，江米如珠井水淘”。正月十五，元宵节。各位吃货，吃元宵了吗？两只可爱的吃货，祝大家元宵节快乐。
-                                            <div class="comment-info">2012-02-20 10:38:27</div>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <div class="comment-form">
-                                    <form action="/Comment/Post/12">
-                                        <textarea name="comment-12" class="span10" style="height:25px" placeholder="发表评论…"></textarea>
-                                        <button type="submit" class="btn" style="margin-top:5px;">发表</button> 
-                                    </form>
-                                </div>*@
-                                </div>
-                                <div class="feed-tag">
-                                    @Html.ActionLink("[查看文章]", "Detail", "Article", new { artid = art.ArtID }, new { target = "_blank", title = "查看文章" })
-                                </div>
-                                <div class="feed-action">
-                                    <a title="评论" href="#" class="feed-comments">评论(20)</a>
-                                    @*<a title="喜欢" class="feed-fav ">喜欢</a>
-                                    <a class="feed-rt" target="_blank" href="http://www.diandian.com/reblog/foolin/c078b050-52c7-11e1-a40e-782bcb3825eb">转载</a>
-                                    <a class="feed-cmt" data-nid="c078b050-52c7-11e1-a40e-782bcb3825eb">回应(4)</a><a data-type="photo" data-id="c078b050-52c7-11e1-a40e-782bcb3825eb" data-nid="c078b050-52c7-11e1-a40e-782bcb3825eb" data-url="iam" class="feed-nt">热度(142)</a>*@
-                                </div>
-                                <div class="clear"></div>
-                            </div>
-                        </div>
-                        <!--box-content 结束-->
-                        <div class="box-shadow-bottom"></div>
+                        <hr />
+                        <footer>
+                             @Html.ActionLink("阅读全文", "Article", "Blog", new { username = artUser.Username, artid = art.ArtID }, new { target="_blank"})
+                        </footer>
+                        </article>
                     </div>
                     <div class="clear"></div>
-                </article>
-                <!--feed-list-item 结束-->
+                </section>
                }
            }
 
@@ -157,15 +94,14 @@
               <li class="nav-header">@user.Nickname，欢迎您！</li> 
               <li class="active">@Html.ActionLink("最新动态","Index","Home")</li> 
               <li>@Html.ActionLink("发表日志", "PostText", "Article")</li> 
-              <li>@Html.ActionLink("上传照片", "PostImage", "Article")</li> 
-              <li><a href="#">发表唠叨</a></li> 
+              @*<li>@Html.ActionLink("上传照片", "PostImage", "Article")</li> *@
+              <li>@Html.ActionLink("发送私信","Send", "Inbox")</li> 
               <li class="nav-header">控制面板</li> 
-              <li><a href="#">邀请好友</a></li> 
-              <li><a href="#">修改资料</a></li>
-              <li><a href="#">隐私设置</a></li>
-              <li><a href="#">修改密码</a></li> 
+              <li>@Html.ActionLink("上传头像", "Avatar", "Settings")</li> 
+              <li>@Html.ActionLink("修改资料", "Profile", "Settings")</li>
+              <li>@Html.ActionLink("修改密码", "Password", "Settings")</li>
             </ul> 
-            @RenderPage("~/Views/About/_NavList.cshtml")
+            @*@RenderPage("~/Views/About/_NavList.cshtml")*@
           </div><!--/.well --> 
       </div>
       <!-- Side 结束 -->
