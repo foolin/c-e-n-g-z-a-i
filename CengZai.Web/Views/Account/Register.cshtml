@@ -1,6 +1,7 @@
 ﻿@{
     ViewBag.Title = "新用户注册";
     Layout = "_LoginLayout.cshtml";
+    var invite = ViewBag.InviteCode as CengZai.Model.InviteCode;
 }
 
 
@@ -10,14 +11,14 @@
         {
         <p>
             <label for="username">邀请码：</label>
-            @Html.TextBox("invite")
+            @Html.TextBox("invite", invite != null ? invite.Invite : "" )
             @Html.ValidationMessage("invite") 
             @Html.ActionLink("申请邀请码", "ApplyInviteCode")
         </p>
         }
         <p>
             <label for="username">邮 箱： </label>
-            @Html.TextBox("email")
+            @Html.TextBox("email", invite != null ?  invite.Email : "" )
             @Html.ValidationMessage("email") <span class="muted">请真实填写，用来登录和找回密码</span>
         </p>
         <p>

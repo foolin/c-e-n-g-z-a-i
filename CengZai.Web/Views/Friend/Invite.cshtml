@@ -32,13 +32,15 @@
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th>邀请码（复制发送给朋友即可）</th>
+                <th>邀请码</th>
+                <th>邀请网址（复制发送给朋友即可）</th>
                 <th>受邀请邮箱</th>
                 <th>状态</th>
             </tr>
             @for (int i = 0; i < inviteList.Count; i++)
             {
             <tr>
+                <td>@inviteList[i].Invite</td>
                 <td>@CengZai.Helper.Util.GetCurrDomainUrl()@Url.Action("Register", "Account", new {invite = inviteList[i].Invite })</td>
                 <td>@inviteList[i].Email</td>
                 <td>有效</td>
