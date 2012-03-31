@@ -479,7 +479,6 @@
     <Content Include="Views\Lover\Abolish.cshtml" />
     <Content Include="Views\Lover\_MyLoverInfo.cshtml" />
     <Content Include="Views\Lover\UnAccept.cshtml" />
-    <Content Include="Views\Lover\Blog.cshtml" />
     <Content Include="Views\Lover\_BlogHeader.cshtml" />
     <Content Include="Views\Inbox\Send.cshtml" />
     <Content Include="Views\Inbox\Read.cshtml" />

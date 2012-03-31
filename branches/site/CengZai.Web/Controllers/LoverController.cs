@@ -39,27 +39,6 @@ namespace CengZai.Web.Controllers
             return View();
         }
 
-        //
-        // GET: /Lover/
-        [CheckAuthFilter]
-        public ActionResult Blog(int loverID)
-        {
-            try
-            {
-                Model.User user = GetLoginUser();
-                ViewBag.User = user;
-
-                BLL.Lover bllLover = new BLL.Lover();
-                ViewBag.MyLover = bllLover.GetMyLover(user.UserID);
-                ViewBag.ReceiveLoverList = bllLover.GetReceiveList(user.UserID);
-            }
-            catch (Exception ex)
-            {
-                Log.AddErrorInfo("Lover/Index异常", ex);
-                return JumpTo("对不起，出错了", "哎呀，对不起！出错了，请刷新或者稍后访问！", "", 0);
-            }
-            return View();
-        }
 
         /// <summary>
         /// 申请
