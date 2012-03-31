@@ -248,6 +248,18 @@ namespace CengZai.Web.Controllers
         }
 
         /// <summary>
+        /// 跳转到Action
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="msg"></param>
+        /// <param name="actionName"></param>
+        /// <returns></returns>
+        protected ViewResult JumpToLogin()
+        {
+            return JumpToAction("操作错误", "您尚未登录或者操作超时！", "Login", "Account", null, 5);
+        }
+
+        /// <summary>
         /// 提示
         /// </summary>
         /// <param name="title"></param>

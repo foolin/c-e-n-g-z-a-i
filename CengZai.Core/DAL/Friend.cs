@@ -351,7 +351,7 @@ namespace CengZai.DAL
             StringBuilder strSql = new StringBuilder();
             strSql.Append("SELECT * ");
             strSql.Append(" FROM T_User ");
-            strSql.Append(@" Where UserID IN ( " + sqlSelectUserID + ") ");
+            strSql.Append(@" Where UserID IN ( " + sqlSelectUserID + ") and State>=0 ");
             if (string.IsNullOrEmpty(fieldOrder))
             {
                 fieldOrder = "Nickname ASC";
@@ -360,6 +360,77 @@ namespace CengZai.DAL
             dsList = SqlHelperEx.ExecuteDatasetByPage(Config.ConnString, strSql.ToString(), fieldOrder, pageSize, pageIndex, out totalCount);
             return dsList;
         }
+
+
+
+        /// <summary>
+        /// 取朋友的User数据
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="relation"></param>
+        /// <param name="top"></param>
+        /// <param name="fieldOrder"></param>
+        /// <returns></returns>
+        public DataSet GetFriendUserList(int userID, FriendRelation relation, int top, string fieldOrder)
+        {
+            string sqlSelectUserID = string.Empty;
+            if (relation == FriendRelation.Black)
+            {
+                sqlSelectUserID = "select FriendUserID from T_Friend where type=" + (int)FriendType.Black + " and UserID=" + userID;
+            }
+            else if (relation == FriendRelation.Fans)
+            {
+                sqlSelectUserID = "select UserID from T_Friend where type=" + (int)FriendType.Follow + " and FriendUserID=" + userID;
+            }
+            else if (relation == FriendRelation.Follow)
+            {
+                sqlSelectUserID = "select FriendUserID from T_Friend where type=" + (int)FriendType.Follow + " and UserID=" + userID;
+            }
+            else if (relation == FriendRelation.Friend)
+            {
+                sqlSelectUserID = string.Format(@"select FriendUserID from T_Friend  
+                       where type={0} and UserID={1} and FriendUserID in (
+                            select UserID from T_Friend  where type={0} and FriendUserID={1} /*关注我的人*/
+                        )
+                    "
+                    , (int)FriendType.Follow
+                    , userID);
+            }
+            else if (relation == FriendRelation.FollowOrFans)
+            {
+                sqlSelectUserID = string.Format(@"
+                            select FriendUserID from T_Friend  where type={0} and UserID={1} /*我关注的人*/
+                        union all 
+                            select UserID from T_Friend  where type={0} and FriendUserID={1} /*关注我的人*/
+                    "
+                    , (int)FriendType.Follow
+                    , userID);
+            }
+            else
+            {
+                return null;
+            }
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("SELECT ");
+            if (top > 0)
+            {
+                strSql.Append(" top " + top + " ");
+            }
+            strSql.Append(" * FROM T_User ");
+            strSql.Append(@" Where UserID IN ( " + sqlSelectUserID + ") and State>=0 ");
+            if (string.IsNullOrEmpty(fieldOrder))
+            {
+                strSql.Append(" ORDER BY Nickname ASC ");
+            }
+            else
+            {
+                strSql.Append(" ORDER BY " + fieldOrder);
+            }
+            DataSet dsList = null;
+            dsList = SqlHelper.ExecuteDataset(Config.ConnString, CommandType.Text, strSql.ToString());
+            return dsList;
+        }
+
 	}
 }
 
