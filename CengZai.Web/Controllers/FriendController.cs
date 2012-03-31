@@ -339,12 +339,80 @@ namespace CengZai.Web.Controllers
         /// 邀请好友
         /// </summary>
         /// <returns></returns>
+        [CheckAuthFilter]
         public ActionResult Invite()
         {
             return View();
         }
 
-
+        /// <summary>
+        /// 邀请好友
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [CheckAuthFilter]
+        public ActionResult Invite(string email, int? sendmail)
+        {
+            try
+            {
+                Model.User loginUser = GetLoginUser();
+                if (loginUser == null)
+                {
+                    return JumpToLogin();
+                }
+                if (!Util.IsEmail(email))
+                {
+                    ModelState.AddModelError("error", "邮箱不合法，请输入正确邮箱！");
+                    return View();
+                }
+                //检查用户是否已经注册
+                if (new BLL.User().GetModel(email) != null)
+                {
+                    ModelState.AddModelError("error", "对不起，该邮箱已经注册！");
+                    return View();
+                }
+                BLL.InviteCode bllInvite = new BLL.InviteCode();
+                Model.InviteCode mInvite = bllInvite.GetModelByEmail(email);
+                if (mInvite != null && !string.IsNullOrEmpty(mInvite.Invite))
+                {
+                    ModelState.AddModelError("error", "对不起，该邮箱已经被邀请，无需重复邀请！");
+                    return View();
+                }
+                if (mInvite == null)
+                {
+                    mInvite = new Model.InviteCode();
+                }
+                string strInviteCode = Guid.NewGuid().ToString();
+                mInvite.Email = email;
+                mInvite.Invite = strInviteCode;
+                bllInvite.Add(mInvite);
+                string inviteUrl = Util.GetCurrDomainUrl() +  Url.Action("Register", "Account", new { invite = strInviteCode });
+                if (sendmail == 1)
+                {
+                    try
+                    {
+                        string mailContent = string.Format(@"您的朋友{0}邀请您注册{1}，{2}，快快加入吧！点击下面连接即可注册：<a href='{3}' target='_blank'>{3}</a>"
+                            , loginUser.Nickname, Config.SiteName, Config.SiteSlogan, inviteUrl);
+                        Mail.Send(email, loginUser.Nickname + "邀请您注册" + Config.SiteName, mailContent);
+                        return JumpToTips("邀请成功！", "恭喜您，生成邀请连接并发送通知邮件成功！您只要把网址发送您朋友即可，邀请连接地址为：<p>" + inviteUrl + "</p>");
+                    }
+                    catch
+                    {
+                        string mailContent = string.Format(@"您的朋友{0}邀请您注册{1}，{2}，快快加入吧！点击下面连接即可注册：<a href='{3}' target='_blank'>{3}</a>"
+                            , loginUser.Nickname, Config.SiteName, Config.SiteSlogan, inviteUrl);
+                        Mail.Send(email, loginUser.Nickname + "邀请您注册" + Config.SiteName, mailContent);
+                        return JumpToTips("邮件发送不成功！", loginUser.Nickname + "，生成邀请连接成功！但发送通知邮件失败！您只要把网址发送您朋友即可，邀请连接地址为：<p>" + inviteUrl + "</p>");
+                    }
+                }
+                return JumpToTips("邀请成功！", "恭喜您，生成邀请连接成功！您只要把网址发送您朋友即可，邀请连接地址为：<p>" + inviteUrl + "</p>");
+            }
+            catch (Exception ex)
+            {
+                Log.AddErrorInfo("发送邀请连接异常", ex);
+                ModelState.AddModelError("error", "对不起，邀请连接出现异常，请稍后重试！");
+                return View();
+            }
+        }
 
 
     }

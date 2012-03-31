@@ -81,6 +81,20 @@ namespace CengZai.BLL
             return dal.GetModelByInvite(invite);
         }
 
+        /// <summary>
+        /// 得到一个对象实体
+        /// </summary>
+        public CengZai.Model.InviteCode GetModelByEmail(string email)
+        {
+            Model.InviteCode model = null;
+            DataSet dsList = GetList("email='" + email + "'");
+            if (dsList != null && dsList.Tables.Count > 0 && dsList.Tables[0].Rows.Count > 0)
+            {
+                model = dal.ToModel(dsList.Tables[0].Rows[0]);
+            }
+            return model;
+        }
+
 		/// <summary>
 		/// 获得数据列表
 		/// </summary>

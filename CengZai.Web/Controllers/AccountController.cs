@@ -101,6 +101,32 @@ namespace CengZai.Web.Controllers
                 }
 
                 //更新用户到数据库
+                bool isCreditPlus = false;
+                if (user.LoginTime != null)
+                {
+                    DateTime lastLoginDate = Convert.ToDateTime(user.LoginTime);
+                    DateTime nowDate = DateTime.Now;
+                    //两个小时登录一次，积分+1
+                    if (lastLoginDate.AddHours(2) < nowDate)
+                    {
+                        isCreditPlus = true;
+                    }
+                }
+                else
+                {
+                    isCreditPlus = true;
+                }
+                if(isCreditPlus)
+                {
+                    if (user.Credit == null)
+                    {
+                        user.Credit = 1;
+                    }
+                    else
+                    {
+                        user.Credit = user.Credit + 1;
+                    }
+                }
                 user.LoginIp = Helper.Util.GetIP();
                 user.LoginTime = DateTime.Now;
                 if (user.LoginCount != null)
@@ -201,7 +227,7 @@ namespace CengZai.Web.Controllers
                 ModelState.AddModelError("VerifyCode", "验证码不正确！");
                 return View();
             }
-            if (string.IsNullOrEmpty(email) || !Regex.IsMatch(email, @"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$"))
+            if (string.IsNullOrEmpty(email) || !Util.IsEmail(email))
             {
                 ModelState.AddModelError("Email", "请输入正确的邮箱！");
                 return View();
@@ -220,11 +246,11 @@ namespace CengZai.Web.Controllers
                     ModelState.AddModelError("Invite", "邀请码无效！");
                     return View();
                 }
-                else if (mInvite.Email != email)
-                {
-                    ModelState.AddModelError("Invite", "该邀请码已经被其它用户使用！");
-                    return View();
-                }
+                //else if (mInvite.Email != email)
+                //{
+                //    ModelState.AddModelError("Invite", "该邀请码已经被其它用户使用！");
+                //    return View();
+                //}
             }
             if (string.IsNullOrEmpty(username))
             {
