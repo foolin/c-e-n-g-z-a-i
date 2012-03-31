@@ -2,6 +2,7 @@
     ViewBag.Title = "邀请用户";
     var loginUser = Html.GetLoginUser();
     var price = CengZai.Helper.Config.InviteCredit;
+    var inviteList = ViewBag.InviteList as List<CengZai.Model.InviteCode>;
 }
 @section head{
 <script type="text/javascript">
@@ -26,30 +27,45 @@
         温馨提示，邀请朋友会@(price < 0 ? "扣除":"奖励") @Math.Abs(price) 个积分，您现在的积分是 @loginUser.Credit 个积分。
     </p>
 
+    @if (inviteList != null && inviteList.Count > 0)
+    {
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th>邀请码</th>
+                <th>邀请码（复制发送给朋友即可）</th>
                 <th>受邀请邮箱</th>
+                <th>状态</th>
             </tr>
+            @for (int i = 0; i < inviteList.Count; i++)
+            {
             <tr>
-                <td>rsososyososyu</td>
-                <td>ling@liufu.org</td>
+                <td>@CengZai.Helper.Util.GetCurrDomainUrl()@Url.Action("Register", "Account", new {invite = inviteList[i].Invite })</td>
+                <td>@inviteList[i].Email</td>
+                <td>有效</td>
             </tr>
+            }
         </thead>
     </table>
-    <p>
-    @using (Html.BeginForm("Invite", "Friend", FormMethod.Post, new { @class = "well form-inline" }))
-    {
-        <div>
-            @Html.TextBox("email", "", new { @class = "span3", size = "16", placeholder = "请输入被邀请人的邮箱" })
-            <label class="checkbox">
-              <input type="checkbox" name="sendmail" value="1" checked="checked">邮件通知
-            </label>
-            <input type="submit" class="btn" value="邀请" />
-        </div>
-        <p>@Html.ValidationMessage("error")</p>
     }
+    <p>
+        @if (price < 0 && (loginUser.Credit + price) < 0)
+        {
+            <p class="alert alert-block">囧，您的积分不够，您暂时不能邀请用户。</p>
+        }
+        else
+        {
+            using (Html.BeginForm("Invite", "Friend", FormMethod.Post, new { @class = "well form-inline" }))
+            {
+                <div>
+                    @Html.TextBox("email", "", new { @class = "span3", size = "16", placeholder = "请输入被邀请人的邮箱" })
+                    <label class="checkbox">
+                      <input type="checkbox" name="sendmail" value="1" checked="checked">邮件通知
+                    </label>
+                    <input type="submit" class="btn" value="邀请" />
+                </div>
+                <p>@Html.ValidationMessage("error")</p>
+            }
+        }
     </p>
 </div>
 </div>   

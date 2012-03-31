@@ -342,6 +342,12 @@ namespace CengZai.Web.Controllers
         [CheckAuthFilter]
         public ActionResult Invite()
         {
+            Model.User loginUser = GetLoginUser();
+            if (loginUser == null)
+            {
+                return JumpToLogin();
+            }
+            ViewBag.InviteList = new BLL.InviteCode().GetModelList("UserID=" + loginUser.UserID);
             return View();
         }
 
@@ -360,6 +366,8 @@ namespace CengZai.Web.Controllers
                 {
                     return JumpToLogin();
                 }
+                ViewBag.InviteList = new BLL.InviteCode().GetModelList("UserID=" + loginUser.UserID);
+
                 if (!Util.IsEmail(email))
                 {
                     ModelState.AddModelError("error", "邮箱不合法，请输入正确邮箱！");
@@ -385,7 +393,14 @@ namespace CengZai.Web.Controllers
                 string strInviteCode = Guid.NewGuid().ToString();
                 mInvite.Email = email;
                 mInvite.Invite = strInviteCode;
+                mInvite.UserID = loginUser.UserID;
                 bllInvite.Add(mInvite);
+                try
+                {
+                    loginUser.Credit = loginUser.Credit + Config.InviteCredit;
+                    new BLL.User().Update(loginUser);
+                }
+                catch { }
                 string inviteUrl = Util.GetCurrDomainUrl() +  Url.Action("Register", "Account", new { invite = strInviteCode });
                 if (sendmail == 1)
                 {
@@ -398,9 +413,6 @@ namespace CengZai.Web.Controllers
                     }
                     catch
                     {
-                        string mailContent = string.Format(@"您的朋友{0}邀请您注册{1}，{2}，快快加入吧！点击下面连接即可注册：<a href='{3}' target='_blank'>{3}</a>"
-                            , loginUser.Nickname, Config.SiteName, Config.SiteSlogan, inviteUrl);
-                        Mail.Send(email, loginUser.Nickname + "邀请您注册" + Config.SiteName, mailContent);
                         return JumpToTips("邮件发送不成功！", loginUser.Nickname + "，生成邀请连接成功！但发送通知邮件失败！您只要把网址发送您朋友即可，邀请连接地址为：<p>" + inviteUrl + "</p>");
                     }
                 }
