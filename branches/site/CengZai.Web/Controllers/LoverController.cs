@@ -47,25 +47,38 @@ namespace CengZai.Web.Controllers
         [CheckAuthFilter]
         public ActionResult Apply()
         {
-            Model.User user = GetLoginUser();
-            ViewBag.User = user;
-
-            BLL.Lover bllLover = new BLL.Lover();
-            Model.Lover lover = bllLover.GetMyLover(user.UserID);
-            if (lover != null)
+            try
             {
-                if (lover.State == 1)
+                Model.User user = GetLoginUser();
+                ViewBag.User = user;
+
+                BLL.Lover bllLover = new BLL.Lover();
+                Model.Lover lover = bllLover.GetMyLover(user.UserID);
+                if (lover != null)
                 {
-                    return JumpToAction("对不起，您无权申请！", "您已经领了证书，不可以再申请证书，如果需要申请，请注销原来的证书！", "Certificate", new { LoverID = lover.LoverID });
+                    if (lover.State == 1)
+                    {
+                        return JumpToAction("对不起，您无权申请！", "您已经领了证书，不可以再申请证书，如果需要申请，请注销原来的证书！", "Certificate", new { LoverID = lover.LoverID });
+                    }
+                    else
+                    {
+                        return JumpToAction("对不起，您无权申请！", "您已经有证书在处理中，不可以再申请其它证书，请注销原来的证书！", "Certificate", new { LoverID = lover.LoverID });
+                    }
                 }
-                else
+                DataSet dsFriendList = new BLL.Friend().GetFriendUserList(user.UserID, Model.FriendRelation.Follow, 0, "");
+                if (dsFriendList != null && dsFriendList.Tables.Count > 0)
                 {
-                    return JumpToAction("对不起，您无权申请！", "您已经有证书在处理中，不可以再申请其它证书，请注销原来的证书！", "Certificate", new { LoverID = lover.LoverID });
+                    ViewBag.FriendList = new BLL.User().DataTableToList(dsFriendList.Tables[0]);
+                }
+                if (user.Sex == 0)
+                {
+                    return AlertAndBack("您的性别未知，请完善资料再来申请！");
                 }
             }
-            if (user.Sex == 0)
+            catch (Exception ex)
             {
-                return AlertAndBack("您的性别未知，请完善资料再来申请！");
+                Log.AddErrorInfo("Lover/Apply出现异常", ex);
+                return JumpToTips("囧！", "啊哟，出现点小小异常，请稍后重试或者联系我们。");
             }
             return View();
         }

@@ -1,6 +1,7 @@
 ﻿@{
     ViewBag.Title = "登记注册-" + ViewBag.SiteName;
-    var user = ViewBag.User as CengZai.Model.User;
+    var loginUser = ViewBag.User as CengZai.Model.User;
+    var friendsList = ViewBag.FriendList as List<CengZai.Model.User>;
 }
 @section head{
     <link href="@Url.Content("~/js/calendar/calendar.css")" rel="stylesheet" type="text/css" />
@@ -180,18 +181,23 @@
                         <label class="control-label" for="honeyUserID">对方帐号：</label>
                             <div class="controls">
                                 <select name="honeyUserID" id="honeyUserID">
-                                    <option value="1">对方</option>
-                                    <option value="2">亲艾</option>
-                                    <option value="3">闺蜜</option>
+                                    <option value="0">-=选择=-</option>
+                                    @if (friendsList != null && friendsList.Count > 0)
+                                    {
+                                        foreach (CengZai.Model.User friend in friendsList)
+                                        {
+                                            <option value="@friend.UserID">@friend.Nickname</option>
+                                        }
+                                    }
                                 </select>
                                 <span class="field-validation-error" data-valmsg-for="honeyUserID" id="tips-honeyUserID" data-valmsg-replace="true"></span>
-                                <p class="help-block">请选择您的爱人（对方不在？请<a href="">邀请</a>或<a href="">查找</a>好友）</p>
+                                <p class="help-block">您关注的人会出现在选项里（对方不在？您可以 @Html.ActionLink("查找","Find", "Friend") 或者 @Html.ActionLink("邀请Ta加入","Invite", "Friend")）</p>
                             </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label" for="nickname">我的名字：</label>
                             <div class="controls">
-                                @Html.TextBox("nickname", user.Nickname, new { @class = "input-middle" })
+                                @Html.TextBox("nickname", loginUser.Nickname, new { @class = "input-middle" })
                                 <span class="field-validation-error" data-valmsg-for="nickname" id="tips-nickname" data-valmsg-replace="true"></span>
                                 <p class="help-block">这里是你帐号的昵称，建议用真实名字</p>
                             </div>
@@ -211,7 +217,7 @@
                     <div class="control-group">
                         <label class="control-label" for="mobile">我的手机号：</label>
                         <div class="controls">
-                            <input type="text" class="input-middle" value="@user.Mobile" name="mobile" id="mobile">
+                            <input type="text" class="input-middle" value="@loginUser.Mobile" name="mobile" id="mobile">
                             <span class="field-validation-error" data-valmsg-for="mobile" id="tips-mobile" data-valmsg-replace="true"></span>
                             <p class="help-block">用手机号代替身份证号，我们会保护您的隐私，手机号会加密显示</p>
                         </div>
@@ -219,7 +225,7 @@
                     <div class="control-group">
                         <label class="control-label" for="birth">我的生日：</label>
                         <div class="controls">
-                            <input type="text" class="input-middle" value="@Html.GetDateFormat(user.Birth, "yyyy-MM-dd")" name="birth" id="birth">
+                            <input type="text" class="input-middle" value="@Html.GetDateFormat(loginUser.Birth, "yyyy-MM-dd")" name="birth" id="birth">
                             <span class="field-validation-error" data-valmsg-for="birth" id="tips-birth" data-valmsg-replace="true"></span>
                             <p class="help-block">请填写真实生日，会显示在证件上</p>
                         </div>

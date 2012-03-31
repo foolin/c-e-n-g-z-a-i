@@ -89,8 +89,24 @@ namespace CengZai.Web.Controllers
                 {
                     return RedirectToAction("Login", "Account");
                 }
+                bool isUsePager = false;
                 BLL.User bllUser = new BLL.User();
-                DataSet dsList = bllUser.GetListBySearch(100, keyword, "RegTime DESC");
+                DataSet dsList = null;
+                if (!string.IsNullOrEmpty(keyword))
+                {
+                    dsList = bllUser.GetListBySearch(100, keyword, "RegTime DESC");
+                    if (dsList == null || dsList.Tables.Count == 0 || dsList.Tables[0].Rows.Count == 0)
+                    {
+                        return JumpToTips("暂无用户", "请输入用户的昵称、用户名或者邮箱进行查找...");
+                    }
+                }
+                else
+                {
+                    isUsePager = true;
+                    dsList = bllUser.GetListByPage("State>=0", "UserID ASC", mPageSize, mPageIndex, out mTotalCount);
+                    SetPage();
+                }
+                ViewBag.UsePager = isUsePager;  //是否使用分页
                 if (dsList != null && dsList.Tables.Count > 0)
                 {
                     List<Model.User> userList = bllUser.DataTableToList(dsList.Tables[0]);
@@ -100,10 +116,6 @@ namespace CengZai.Web.Controllers
                         userList.Remove(currUser);  //移除自己
                     }
                     ViewBag.UserList = userList;
-                }
-                else
-                {
-                    return JumpToAction("暂无用户", "即将跳转到完善资料页面...", "Avatar", "Settings");
                 }
             }
             catch (Exception ex)
@@ -319,6 +331,20 @@ namespace CengZai.Web.Controllers
                 return JumpBackAndRefresh("操作失败", "对不起，操作出现异常");
             }
         }
+
+
+
+
+        /// <summary>
+        /// 邀请好友
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Invite()
+        {
+            return View();
+        }
+
+
 
 
     }
