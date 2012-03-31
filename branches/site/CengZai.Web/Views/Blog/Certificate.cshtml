@@ -12,7 +12,7 @@
     {
         girl = new CengZai.Model.User();
     }
-    ViewBag.Title = boy.Nickname + "&" + girl.Nickname + "的证件-" + ViewBag.SiteName;
+    ViewBag.Title = boy.Nickname + "&" + girl.Nickname + "的"+ Html.GetCertificateName(lover.Certificate);
 }
 @section head{
     <link href="../../js/calendar/calendar.css" rel="stylesheet" type="text/css" />
@@ -149,14 +149,29 @@
     
     <div class="page-header">
         <div class="row-fluid">
-        <div class="span6">
-            <h2>@blogUser.Nickname <text>的</text>@Html.GetCertificateName(lover.Certificate) </h2>
-            <div class="muted">http://@ViewBag.SiteDomain@Url.Action("Certificate", new {username = blogUser.Username })</div>
-        </div>
-        <div class="span6">
-            <p>@Html.ActionLink("访问我们的博客", "Blog", new { username = blogUser.Username }, new { @class = "btn btn-danger" })</p>
-            
-        </div>
+        <span class="pull-left">
+            <h2>@ViewBag.Title </h2>
+            <div class="muted">http://@ViewBag.SiteDomain@Url.Action("Certificate", new { username = blogUser.Username })
+            <p>
+                <!-- JiaThis Button BEGIN -->
+                <div id="ckepop">
+	                <a class="jiathis_button_qzone"></a>
+	                <a class="jiathis_button_tsina"></a>
+	                <a class="jiathis_button_tqq"></a>
+	                <a class="jiathis_button_renren"></a>
+	                <a class="jiathis_button_kaixin001"></a>
+	                @*<a href="http://www.jiathis.com/share?uid=1513908" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>*@
+                </div>
+                <script type="text/javascript">    var jiathis_config = { data_track_clickback: true };</script>
+                <script type="text/javascript" src="http://v2.jiathis.com/code/jia.js?uid=1513908" charset="utf-8"></script>
+                <!-- JiaThis Button END -->
+            </p>
+            </div>
+        </span>
+        <span class="span3 pull-right">
+            <p>@Html.ActionLink("访问我们主页", "Blog", new { username = blogUser.Username }, new { @class = "btn btn-danger" })</p>
+            <p>@Html.ActionLink("我也申请证书", "Apply", "Lover", null, new { @class = "btn btn-primary" })</p>
+        </span>
         </div>
     </div>
 
@@ -174,11 +189,12 @@
             <span class="boy-name">@boy.Nickname</span>
             <span class="boy-sex">男</span>
             <span class="boy-nation">中国</span>
-            <span class="boy-age">@if(boy.Birth == null)
+            <span class="boy-age">@if (boy.Birth == null)
                                   {
                                      <text>保密</text>
                                   }
-                                  else{
+                                  else
+                                  {
                                       @(DateTime.Now.Year - Convert.ToDateTime(boy.Birth).Year);
                                   }
                                   </span>
@@ -187,12 +203,13 @@
             <span class="girl-sex">女</span>
             <span class="girl-nation">中国</span>
             <span class="girl-age">@if (girl.Birth == null)
-                                  {
+                                   {
                                      <text>保密</text>
-                                  }
-                                  else{
+                                   }
+                                   else
+                                   {
                                       @(DateTime.Now.Year - Convert.ToDateTime(girl.Birth).Year);
-                                  }
+                                   }
                                   </span>
             <span class="girl-mobile">@girl.Mobile.Substring(0, 7)****</span>
         </div>
@@ -203,6 +220,8 @@
         <span class="pull-left">@Html.ActionLink("男方证书", "Certificate", new { username = boy.Username }, new { @class = "link" })</span>
         <span class="pull-right">@Html.ActionLink("女方证书", "Certificate", new { username = girl.Username }, new { @class = "link" })</span>
     </div>
+
+
 
  </div>
 </div>
