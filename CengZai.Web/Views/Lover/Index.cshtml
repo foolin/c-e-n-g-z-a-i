@@ -73,22 +73,28 @@
     
     <!--内容区域-->
     <ul class="thumbnails">
-        @if (topLoverList == null || topLoverList.Count == 0)
-        {
-        }
-        else
+        @if (topLoverList != null || topLoverList.Count > 0)
         {
             for(var i=0; i < topLoverList.Count; i++)
             {
                 imgPath = CengZai.Helper.Config.UploadHttpPath + "/" + @topLoverList[i].Avatar;
+                var boy = Html.GetUser(topLoverList[i].BoyUserID);
+                var girl = Html.GetUser(topLoverList[i].GirlUserID);
+                var applyUser = boy;
+                if(girl.UserID == topLoverList[i].ApplyUserID){
+                    applyUser = girl;
+                }
             <li class="span3">
               <div class="thumbnail">
                 <img src="@imgPath" alt="合影">
                 <div class="caption">
-                  <h5>@Html.GetUserNickname(topLoverList[i].BoyUserID)&@Html.GetUserNickname(topLoverList[i].GirlUserID)</h5>
-                  <p>申请日期：2012年3月15日</p>
-                  <p>申请年龄：360天</p>
-                  <p><a href="#" class="btn">关注他们</a> @Html.ActionLink("访问主页", "Blog", new { @LoverID = topLoverList[i].LoverID}, new { @class = "btn" })</p>
+                  <h5>
+                    @Html.ActionLink(boy.Nickname, "Certificate", "Blog", new { username = boy.Username }, new { target="_blank" })
+                    & 
+                    @Html.ActionLink(girl.Nickname, "Certificate", "Blog", new { username = girl.Username }, new { target = "_blank" })</h5>
+                  <p>登记证书：@Html.GetCertificateName(topLoverList[i].Certificate)</p>
+                  <p>申请日期：@Html.GetDateFormat(topLoverList[i].JoinDate, "yyyy年M月d日")</p>
+                  <p>@Html.ActionLink("访问主页", "Blog", "Blog", new { @username = applyUser.Username }, new { @class = "btn", target = "_blank" })</p>
                 </div>
               </div>
             </li>

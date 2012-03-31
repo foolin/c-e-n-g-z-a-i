@@ -185,10 +185,10 @@ else
     <ul class="nav nav-pills pull-left boy">
         <li>@Html.ActionLink("首页", "Blog", new { username = boy.Username })</li>
         <li>@Html.ActionLink(boy.Nickname + "的档案", "Profile", new { username = boy.Username })</li>
-        <li>@Html.ActionLink(boy.Nickname + "的证书", "Certificate")</li>
+        <li>@Html.ActionLink(boy.Nickname + "的证书", "Certificate", new { username = boy.Username })</li>
     </ul>
     <ul class="nav nav-pills pull-right girl">
-        <li>@Html.ActionLink(girl.Nickname + "的证书", "Certificate")</li>
+        <li>@Html.ActionLink(girl.Nickname + "的证书", "Certificate", new { username = boy.Username })</li>
         <li>@Html.ActionLink(girl.Nickname + "的档案", "Profile", new { username = girl.Username })</li>
         <li>@Html.ActionLink("首页", "Blog", new { username = girl.Username })</li>
     </ul>
