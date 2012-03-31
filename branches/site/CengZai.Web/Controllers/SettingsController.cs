@@ -73,7 +73,7 @@ namespace CengZai.Web.Controllers
                 user.Sign = sign;
                 user.Intro = intro;
                 bllUser.Update(user);
-                Session["LOGIN_USER"] = user;   //更新Session
+                UpdateLoginUserSession(user);   //更新Session
                 return AjaxReturn("success", "更新成功！");
             }
             catch (Exception ex)
@@ -129,7 +129,7 @@ namespace CengZai.Web.Controllers
                 BLL.User bllUser = new BLL.User();
                 user.Password = md5Password;
                 bllUser.Update(user);
-                Session["LOGIN_USER"] = user;   //更新Session
+                UpdateLoginUserSession(user);   //更新Session
                 return AjaxReturn("success", "修改密码成功！请牢记最新的密码！");
             }
             catch (Exception ex)
@@ -192,6 +192,7 @@ namespace CengZai.Web.Controllers
                 string oldAvatar = user.Avatar;
                 user.Avatar = fileName;
                 bool isSuccess = new BLL.User().Update(user);
+                UpdateLoginUserSession(user);   //更新Session
 
                 //删除旧文件
                 if (isSuccess && !string.IsNullOrEmpty(oldAvatar))
@@ -223,12 +224,6 @@ namespace CengZai.Web.Controllers
                 Log.AddErrorInfo("SettingsController.UploadAvatar上传文件出错", ex);
                 return AjaxReturn("0", "上传图片出错，请确定您上传的是图片！");
             }
-
-            
-            
-
-            //return Content("nickname=" + nickname);
-            return AjaxReturn("0", fileName);
         }
 
     }
