@@ -6,7 +6,7 @@ using System.IO;
 using System.Runtime.Serialization.Json;
 using System.Text;
 
-namespace Sxmobi.BBI.Auth.Common
+namespace CengZai.Helper
 {
 
     /// <summary>
