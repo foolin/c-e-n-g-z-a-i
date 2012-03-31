@@ -1,6 +1,56 @@
 ﻿@{
-    ViewBag.Title = "Invite";
+    ViewBag.Title = "邀请用户";
+    var loginUser = Html.GetLoginUser();
+    var price = CengZai.Helper.Config.InviteCredit;
+}
+@section head{
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("input[name='selAll']").click(function () {
+            if ($(this).attr("checked")) {
+                $("input[name='userid']").attr("checked", true);
+            }
+            else {
+                $("input[name='userid']").attr("checked", false);
+            }
+        });
+    });
+</script>
 }
 
-<h2>Invite</h2>
+<div class="container bg-white">
+<div class="padding">
+    <h2>@ViewBag.Title</h2>
+    <hr />
+    <p>
+        温馨提示，邀请朋友会@(price < 0 ? "扣除":"奖励") @Math.Abs(price) 个积分，您现在的积分是 @loginUser.Credit 个积分。
+    </p>
 
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>邀请码</th>
+                <th>受邀请邮箱</th>
+            </tr>
+            <tr>
+                <td>rsososyososyu</td>
+                <td>ling@liufu.org</td>
+            </tr>
+        </thead>
+    </table>
+    <p>
+    @using (Html.BeginForm("Invite", "Friend", FormMethod.Post, new { @class = "well form-inline" }))
+    {
+        <div>
+            @Html.TextBox("email", "", new { @class = "span3", size = "16", placeholder = "请输入被邀请人的邮箱" })
+            <label class="checkbox">
+              <input type="checkbox" name="sendmail" value="1" checked="checked">邮件通知
+            </label>
+            <input type="submit" class="btn" value="邀请" />
+        </div>
+        <p>@Html.ValidationMessage("error")</p>
+    }
+    </p>
+</div>
+</div>   
+<!--/.container -->

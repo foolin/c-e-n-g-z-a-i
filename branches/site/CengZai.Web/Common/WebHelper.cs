@@ -33,6 +33,7 @@ namespace CengZai.Web.Common
                         cookieVal = DESEncrypt.Decrypt(cookie.Value, Config.SecrectKey);
                         if (!string.IsNullOrEmpty(cookieVal))
                         {
+                            #region __验证处理__
                             //验证处理
                             //1.首先得到明文Val：用户ID|时间戳|“用户ID|时间戳”的MD5校验码
                             //2.把明文经过DESEncrypt加密得到密文SecrectVal
@@ -85,6 +86,43 @@ namespace CengZai.Web.Common
                                         {
                                             //重新存储Session
                                             Current.Session["LOGIN_USER"] = user;
+                                            /********** 更新用户登录信息 *********/
+                                            //积分
+                                            if (user.LoginTime != null)
+                                            {
+                                                DateTime lastLoginDate = Convert.ToDateTime(user.LoginTime);
+                                                DateTime nowDate = DateTime.Now;
+                                                //两个小时登录一次，积分+1
+                                                if (lastLoginDate.AddHours(2) < nowDate)
+                                                {
+                                                    if (user.Credit == null)
+                                                    {
+                                                        user.Credit = 1;
+                                                    }
+                                                    else
+                                                    {
+                                                        user.Credit = user.Credit + 1;
+                                                    }
+                                                }
+                                            }
+                                            user.LoginTime = DateTime.Now;
+                                            user.LoginIp = Helper.Util.GetIP();
+                                            if (user.LoginCount != null)
+                                            {
+                                                user.LoginCount += 1;
+                                            }
+                                            else
+                                            {
+                                                user.LoginCount = 1;
+                                            }
+                                            try
+                                            {
+                                                new BLL.User().Update(user);
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                Log.AddErrorInfo("WebHelper.LoadLoginUserFromSessionOrCookies()更新用户积分信息异常！", ex);
+                                            }
                                         }
                                         else
                                         {
@@ -95,6 +133,7 @@ namespace CengZai.Web.Common
                                     }
                                 }
                             }
+                            #endregion __验证处理__
                         }
 
                     }

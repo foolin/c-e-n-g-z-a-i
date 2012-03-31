@@ -27,7 +27,7 @@
             <fieldset>
             <legend>@ViewBag.Title</legend>
                 
-                <p style="padding:20px 10px; line-height:2em; font-size:14px;">@ViewBag.Message</p>
+                <p style="padding:20px 10px; line-height:2em; font-size:14px;">@MvcHtmlString.Create(ViewBag.Message)</p>
                 
                 @if (@ViewBag.Time > 0 && !string.IsNullOrEmpty(ViewBag.Url))
                 {

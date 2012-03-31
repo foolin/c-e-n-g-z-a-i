@@ -130,12 +130,24 @@ namespace CengZai.Helper
         /// </summary>
         /// <param name="str"></param>
         /// <returns></returns>
-        public bool CheckBadWord(string str)
+        public static bool CheckBadWord(string str)
         {
             string pattern = @"select|insert|delete|from|count\(|drop table|update|truncate|asc\(|mid\(|char\(|xp_cmdshell|exec   master|netlocalgroup administrators|:|net user|""|or|and";
             if (Regex.IsMatch(str, pattern, RegexOptions.IgnoreCase) || Regex.IsMatch(str, @"[-|;|,|\/|\(|\)|\[|\]|\}|\{|%|@|\*|!|\']"))
                 return true;
             return false;
+        }
+
+
+        /// <summary>
+        /// 是否是邮箱
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public static bool IsEmail(string email)
+        {
+            if (string.IsNullOrEmpty(email)) return false;
+            return Regex.IsMatch(email, @"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$");
         }
 
     }

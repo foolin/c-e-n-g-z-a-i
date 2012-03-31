@@ -229,6 +229,23 @@ namespace CengZai.Helper
             }
         }
 
+        /// <summary>
+        /// 上传图最大高，单位像素
+        /// </summary>
+        public static int InviteCredit
+        {
+            get
+            {
+                int val = 0;
+                try
+                {
+                    val = Convert.ToInt32(ConfigurationManager.AppSettings["InviteCredit"]);
+                }
+                catch { }
+                return val;
+            }
+        }
+
 
         /// <summary>
         /// 缓存键前缀~
