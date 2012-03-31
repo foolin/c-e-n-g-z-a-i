@@ -397,8 +397,12 @@ namespace CengZai.Web.Controllers
                 bllInvite.Add(mInvite);
                 try
                 {
-                    loginUser.Credit = loginUser.Credit + Config.InviteCredit;
-                    new BLL.User().Update(loginUser);
+                    if (Config.InviteCredit < 0)
+                    {
+                        loginUser.Credit = loginUser.Credit + Config.InviteCredit;
+                        new BLL.User().Update(loginUser);
+                        UpdateLoginUserSession(loginUser);
+                    }
                 }
                 catch { }
                 string inviteUrl = Util.GetCurrDomainUrl() +  Url.Action("Register", "Account", new { invite = strInviteCode });

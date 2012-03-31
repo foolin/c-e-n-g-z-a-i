@@ -230,7 +230,7 @@ namespace CengZai.Helper
         }
 
         /// <summary>
-        /// 上传图最大高，单位像素
+        /// 邀请朋友，奖励（正）或者扣除（负数）多少个积分
         /// </summary>
         public static int InviteCredit
         {

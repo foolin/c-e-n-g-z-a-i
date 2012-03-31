@@ -47,6 +47,15 @@ namespace CengZai.Web.Controllers
             return Session["LOGIN_USER"] as Model.User;
         }
 
+        /// <summary>
+        /// 更新登录用户状态
+        /// </summary>
+        /// <param name="user"></param>
+        protected void UpdateLoginUserSession(Model.User loginUser)
+        {
+            Session["LOGIN_USER"] = loginUser;
+        }
+
 
         /// <summary>
         /// 弹出提示并跳转
