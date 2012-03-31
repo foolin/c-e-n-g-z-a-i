@@ -121,7 +121,7 @@ namespace CengZai.Helper
 
 
         /// <summary>
-        /// 上传图片最大宽，单位像素
+        /// 头像宽度，单位像素
         /// </summary>
         public static int AvatarWidth
         {
@@ -140,7 +140,7 @@ namespace CengZai.Helper
 
 
         /// <summary>
-        /// 上传图最大高，单位像素
+        /// 头像高度，单位像素
         /// </summary>
         public static int AvatarHeight
         {
@@ -157,6 +157,42 @@ namespace CengZai.Helper
             }
         }
 
+        /// <summary>
+        /// 证书头像宽度
+        /// </summary>
+        public static int CertificateAvatarWidth
+        {
+            get
+            {
+                int val = 0;
+                try
+                {
+                    val = Convert.ToInt32(ConfigurationManager.AppSettings["CertificateAvatarWidth"]);
+                }
+                catch { }
+                if (val <= 0) val = 180;
+                return val;
+            }
+        }
+
+
+        /// <summary>
+        /// 证书头像高度，单位像素
+        /// </summary>
+        public static int CertificateAvatarHeight
+        {
+            get
+            {
+                int val = 0;
+                try
+                {
+                    val = Convert.ToInt32(ConfigurationManager.AppSettings["CertificateAvatarHeight"]);
+                }
+                catch { }
+                if (val <= 0) val = 120;
+                return val;
+            }
+        }
 
         /// <summary>
         /// 上传图片最大宽，单位像素

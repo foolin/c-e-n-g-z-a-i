@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using CengZai.Web.Common;
 using CengZai.Helper;
 using System.Data;
+using System.Drawing.Imaging;
 
 namespace CengZai.Web.Controllers
 {
@@ -212,6 +213,7 @@ namespace CengZai.Web.Controllers
 
             //文件大小不为0
             System.Drawing.Image avatar = null;
+            System.Drawing.Image thumbnail = null;
             try
             {
                 HttpPostedFileBase file = Request.Files["fileAvatar"];
@@ -224,13 +226,24 @@ namespace CengZai.Web.Controllers
                 {
                     return AjaxReturn("2", "请选择图片文件！");
                 }
-                avatar.Save(Server.MapPath(Config.UploadMapPath + "/" + fileName));
-                avatar.Dispose();
+                thumbnail = ImageHelper.MakeThumbnail(avatar, Config.CertificateAvatarWidth, Config.CertificateAvatarHeight, ThubnailMode.Cut, ImageFormat.Jpeg);
+                thumbnail.Save(Server.MapPath(Config.UploadMapPath + "/" + fileName));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                Log.AddErrorInfo("LoverController.UploadImage上传文件出错",  ex);
+                Log.AddErrorInfo("LoverController.UploadImage上传文件出错", ex);
                 return AjaxReturn("3", "上传图片出错，请确定您上传的是图片！");
+            }
+            finally
+            {
+                if (avatar != null)
+                {
+                    avatar.Dispose();
+                }
+                if (thumbnail != null)
+                {
+                    thumbnail.Dispose();
+                }
             }
             
             

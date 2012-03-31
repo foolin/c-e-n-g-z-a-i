@@ -27,7 +27,7 @@ namespace CengZai.Web.Controllers
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             //初始化分页
-            mPageSize = 20;
+            mPageSize = Config.PageSize;
             mPageIndex = GetPageIndex("page");   
             mTotalCount = 0;
 
