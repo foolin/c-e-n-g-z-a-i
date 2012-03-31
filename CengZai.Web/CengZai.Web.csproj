@@ -500,6 +500,7 @@
     <Content Include="Views\Friend\FeedFriendsForFirstLogin.cshtml" />
     <Content Include="Views\Friend\Find.cshtml" />
     <Content Include="Views\Friend\List.cshtml" />
+    <Content Include="Views\Friend\Invite.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

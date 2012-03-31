@@ -69,9 +69,10 @@ namespace System.Web.Mvc
                     int.TryParse(dicRoutValues[page].ToString(), out pageIndex);
                 }
             }
-            pageIndex = (pageIndex < 1 || pageIndex > pageCount) ? 1 : pageIndex;
             pageSize = pageSize < 1 ? 20 : pageSize;
             pageCount = Math.Max((totalCount + pageSize - 1) / pageSize, 1); //总页数
+            pageIndex = (pageIndex < 1 || pageIndex > pageCount) ? 1 : pageIndex;
+            
 
 
             StringBuilder html = new StringBuilder();

@@ -66,6 +66,10 @@
         <input type="submit" value="关注选中用户" class="btn btn-primary" /> &nbsp;&nbsp; @Html.ActionLink("取消", "Avatar", "Settings")
     </div>
     }
+    @if (ViewBag.UsePager)
+    {
+        <div class="pager"> @Html.Pager() </div>
+    }
 </div>
 </div>   
 <!--/.container -->

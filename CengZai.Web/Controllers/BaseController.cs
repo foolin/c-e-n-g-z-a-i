@@ -283,7 +283,17 @@ namespace CengZai.Web.Controllers
                 page = "page";
             }
             int pageIndex = 0;
-            int.TryParse(Request[page], out pageIndex);
+            if (!string.IsNullOrEmpty(Request[page]))
+            {
+                int.TryParse(Request[page], out pageIndex);
+            }
+            else
+            {
+                if (RouteData != null && RouteData.Values != null && RouteData.Values.ContainsKey(page))
+                {
+                    int.TryParse(RouteData.Values[page].ToString(), out pageIndex);
+                }
+            }
             if (pageIndex < 1)
             {
                 pageIndex = 1;
@@ -296,6 +306,7 @@ namespace CengZai.Web.Controllers
         /// </summary>
         protected void SetPage()
         {
+            ViewBag.PageIndex = mPageIndex;
             ViewBag.PageSize = mPageSize;
             ViewBag.TotalCount = mTotalCount;
         }
