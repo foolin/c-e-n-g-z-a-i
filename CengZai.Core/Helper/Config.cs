@@ -121,16 +121,72 @@ namespace CengZai.Helper
 
 
         /// <summary>
-        /// 缩略图最大值
+        /// 上传图片最大宽，单位像素
         /// </summary>
-        public static int ThumbImageMax
+        public static int AvatarWidth
         {
             get
             {
                 int val = 0;
                 try
                 {
-                    val = Convert.ToInt32(ConfigurationManager.AppSettings["ThumbImageMax"]);
+                    val = Convert.ToInt32(ConfigurationManager.AppSettings["AvatarWidth"]);
+                }
+                catch { }
+                if (val <= 0) val = 150;
+                return val;
+            }
+        }
+
+
+        /// <summary>
+        /// 上传图最大高，单位像素
+        /// </summary>
+        public static int AvatarHeight
+        {
+            get
+            {
+                int val = 0;
+                try
+                {
+                    val = Convert.ToInt32(ConfigurationManager.AppSettings["AvatarHeight"]);
+                }
+                catch { }
+                if (val <= 0) val = 150;
+                return val;
+            }
+        }
+
+
+        /// <summary>
+        /// 上传图片最大宽，单位像素
+        /// </summary>
+        public static int UploadImageMaxWidth
+        {
+            get
+            {
+                int val = 0;
+                try
+                {
+                    val = Convert.ToInt32(ConfigurationManager.AppSettings["UploadImageMaxWidth"]);
+                }
+                catch { }
+                return val;
+            }
+        }
+
+
+        /// <summary>
+        /// 上传图最大高，单位像素
+        /// </summary>
+        public static int UploadImageMaxHeight
+        {
+            get
+            {
+                int val = 0;
+                try
+                {
+                    val = Convert.ToInt32(ConfigurationManager.AppSettings["UploadImageMaxHeight"]);
                 }
                 catch { }
                 return val;

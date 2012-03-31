@@ -43,6 +43,7 @@
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
@@ -87,6 +88,7 @@
     <Compile Include="Helper\Config.cs" />
     <Compile Include="Helper\DbHelperSQL.cs" />
     <Compile Include="Helper\DESEncrypt.cs" />
+    <Compile Include="Helper\ImageHelper.cs" />
     <Compile Include="Helper\JsonConvert.cs" />
     <Compile Include="Helper\Log.cs" />
     <Compile Include="Helper\Mail.cs" />

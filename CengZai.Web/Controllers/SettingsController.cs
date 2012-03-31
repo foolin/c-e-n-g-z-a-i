@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using CengZai.Web.Common;
 using CengZai.Helper;
+using System.Drawing.Imaging;
 
 namespace CengZai.Web.Controllers
 {
@@ -168,6 +169,7 @@ namespace CengZai.Web.Controllers
 
 
             //文件大小不为0
+            System.Drawing.Image thumbnail = null;
             System.Drawing.Image avatar = null;
             try
             {
@@ -181,9 +183,11 @@ namespace CengZai.Web.Controllers
                 {
                     return AjaxReturn("0", "请选择图片文件！");
                 }
-                avatar.Save(Server.MapPath(Config.UploadMapPath + "/" + fileName));
-                avatar.Dispose();
 
+                thumbnail = ImageHelper.MakeThumbnail(avatar, Config.AvatarWidth, Config.AvatarHeight, ThubnailMode.Cut, ImageFormat.Jpeg);
+                thumbnail.Save(Server.MapPath(Config.UploadMapPath + "/" + fileName));
+                avatar.Dispose();
+                thumbnail.Dispose();
 
                 string oldAvatar = user.Avatar;
                 user.Avatar = fileName;
