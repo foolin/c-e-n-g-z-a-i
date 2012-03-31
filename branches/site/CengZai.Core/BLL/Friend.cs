@@ -255,6 +255,19 @@ namespace CengZai.BLL
             return dal.GetFriendUserListByPage(userID, relation, fieldOrder, pageSize, pageIndex, out totalCount);
         }
 
+        /// <summary>
+        /// 取朋友的User数据
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="relation"></param>
+        /// <param name="top"></param>
+        /// <param name="fieldOrder"></param>
+        /// <returns></returns>
+        public DataSet GetFriendUserList(int userID, FriendRelation relation, int top, string fieldOrder)
+        {
+            return dal.GetFriendUserList(userID, relation, top, fieldOrder);
+        }
+
 	}
 }
 

@@ -471,7 +471,6 @@
     <Content Include="Views\About\Join.cshtml" />
     <Content Include="Views\About\_NavList.cshtml" />
     <Content Include="Views\Account\ResendActivate.cshtml" />
-    <Content Include="Views\Home\User.cshtml" />
     <Content Include="Views\Lover\Apply.cshtml" />
     <Content Include="Views\Lover\Accept.cshtml" />
     <Content Include="Views\Lover\Preview.cshtml" />
@@ -493,7 +492,6 @@
     <Content Include="Views\Blog\Profile.cshtml" />
     <Content Include="Views\Blog\Certificate.cshtml" />
     <Content Include="Views\Blog\Article.cshtml" />
-    <Content Include="Views\Home\IndexBak.cshtml" />
     <Content Include="Views\Blog\_BlogHeader.cshtml" />
     <Content Include="Views\Blog\BlogSingle.cshtml" />
     <Content Include="Views\Blog\_HeadNav.cshtml" />

@@ -82,7 +82,7 @@ namespace System.Web.Mvc
                 return MvcHtmlString.Create("");
             }
             return AjaxExtensions.ActionLink(helper
-                , "关注"
+                , "关注Ta"
                 , "FriendAdd"
                 , "Friend"
                 , new { friendUserID = friendUserID, time = DateTime.Now.Ticks }

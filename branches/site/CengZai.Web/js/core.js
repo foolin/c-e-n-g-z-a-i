@@ -24,7 +24,7 @@
             return;
         }
         if (json.id > 0) {
-            $("a[frienduserid='" + json.id + "']").replaceWith('<a class="" data-ajax="true" data-ajax-failure="$FR.addFail" data-ajax-success="$FR.addSuccess" frienduserid="' + json.id + '" href="/friend/friendadd?frienduserid=' + json.id + '&amp;time=' + new Date().getMilliseconds() + '" title="点击关注Ta">关注</a>');
+            $("a[frienduserid='" + json.id + "']").replaceWith('<a class="" data-ajax="true" data-ajax-failure="$FR.addFail" data-ajax-success="$FR.addSuccess" frienduserid="' + json.id + '" href="/friend/friendadd?frienduserid=' + json.id + '&amp;time=' + new Date().getMilliseconds() + '" title="点击关注Ta">关注Ta</a>');
             return;
         }
         else {
