@@ -390,7 +390,7 @@ namespace CengZai.Web.Controllers
                 {
                     mInvite = new Model.InviteCode();
                 }
-                string strInviteCode = Guid.NewGuid().ToString();
+                string strInviteCode = Guid.NewGuid().ToString().Replace("-","").Substring(0, 16);
                 mInvite.Email = email;
                 mInvite.Invite = strInviteCode;
                 mInvite.UserID = loginUser.UserID;

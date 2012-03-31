@@ -193,7 +193,7 @@ namespace CengZai.Web.Controllers
         /// 用户注册
         /// </summary>
         /// <returns></returns>
-        public ActionResult Register()
+        public ActionResult Register(string invite)
         {
             if (GetLoginUser() != null)
             {
@@ -204,6 +204,15 @@ namespace CengZai.Web.Controllers
             {
                 return Content(string.Format("系统在升级，暂停开放注册！ <a href='{2}'>返回首页</a>  <hr><a href='http://{1}'>{0}</a> ", Config.SiteName, Config.SiteDomain, Util.GetCurrDomainUrl()));
             }
+            if (!string.IsNullOrEmpty(invite))
+            {
+                Model.InviteCode model = new BLL.InviteCode().GetModelByInvite(invite);
+                if (model == null)
+                {
+                    model = new Model.InviteCode();
+                }
+                ViewBag.InviteCode = model;
+            }
             return View();
         }
 
@@ -211,6 +220,8 @@ namespace CengZai.Web.Controllers
         public ActionResult Register(string email, string username, string password, string repassword, string verifyCode, string invite, int? sex, int? chkTerms)
         {
             ViewBag.RegisterLimit = Config.RegisterLimit;
+
+            Model.InviteCode mInvite = null;
 
             if (Config.RegisterLimit == 2)
             {
@@ -240,7 +251,7 @@ namespace CengZai.Web.Controllers
                     return View();
                 }
                 BLL.InviteCode bllInvite = new BLL.InviteCode();
-                Model.InviteCode mInvite = bllInvite.GetModelByInvite(invite);
+                mInvite = bllInvite.GetModelByInvite(invite);
                 if (mInvite == null)
                 {
                     ModelState.AddModelError("Invite", "邀请码无效！");
@@ -295,42 +306,65 @@ namespace CengZai.Web.Controllers
 
             try
             {
-                Model.User user = new Model.User();
-                BLL.User bll = new BLL.User();
-                if (bll.Exists(email))
+                Model.User mUser = new Model.User();
+                BLL.User bllUser = new BLL.User();
+                if (bllUser.Exists(email))
                 {
                     ModelState.AddModelError("Email", "对不起，该邮箱已经注册！");
                     return View();
                 }
 
-                user.AreaID = 0;
-                user.Avatar = "img/noavatar.jpg";
-                user.Birth = null;
-                user.Email = email;
-                user.Intro = "";
-                user.LoginCount = 0;
-                user.LoginIp = "";
-                user.LoginTime = null;
-                user.Mobile = "";
-                user.Username = username;
-                user.Nickname = username;
-                user.Password = md5Password;
-                user.Privacy = 0;
-                user.RegIp = Helper.Util.GetIP();
-                user.RegTime = DateTime.Now;
-                user.Sex = sex;
-                user.Sign = "此家伙不懒，就是什么也没留下";
-                user.State = 0;
-                user.Vip = 0;
-                user.Credit = 0;
-                user.Money = 0;
-                user.Config = "";
-                bll.Add(user);
+                mUser.AreaID = 0;
+                mUser.Avatar = "img/noavatar.jpg";
+                mUser.Birth = null;
+                mUser.Email = email;
+                mUser.Intro = "";
+                mUser.LoginCount = 0;
+                mUser.LoginIp = "";
+                mUser.LoginTime = null;
+                mUser.Mobile = "";
+                mUser.Username = username;
+                mUser.Nickname = username;
+                mUser.Password = md5Password;
+                mUser.Privacy = 0;
+                mUser.RegIp = Helper.Util.GetIP();
+                mUser.RegTime = DateTime.Now;
+                mUser.Sex = sex;
+                mUser.Sign = "此家伙不懒，就是什么也没留下";
+                mUser.State = 0;
+                mUser.Vip = 0;
+                mUser.Credit = 0;
+                mUser.Money = 0;
+                mUser.Config = "";
+                mUser.UserID = bllUser.Add(mUser);
+
+                try
+                {
+                    if (mInvite == null)
+                    {
+                        BLL.Friend bllFriend = new BLL.Friend();
+                        bllFriend.Add(mUser.UserID, (int)mInvite.UserID);    //关注邀请人
+                        bllFriend.Add((int)mInvite.UserID, mUser.UserID);    //关注被邀请人
+                        //如果是积分
+                        if (Config.InviteCredit > 0)
+                        {
+                            Model.User inviteUser = bllUser.GetModel((int)mInvite.UserID);
+                            inviteUser.Credit = inviteUser.Credit + Config.InviteCredit;
+                            bllUser.Update(inviteUser);
+                        }
+                        new BLL.InviteCode().Delete(mInvite.ID);
+
+                    }
+                }
+                catch(Exception ex) 
+                {
+                    Log.AddErrorInfo("Account/Register注册激活码处理异常", ex);
+                }
 
                 try
                 {
                     //激活码：邮箱#注册时间 转md5
-                    string activeCode = FormsAuthentication.HashPasswordForStoringInConfigFile(user.Email + "#" + user.RegTime, "MD5");
+                    string activeCode = FormsAuthentication.HashPasswordForStoringInConfigFile(mUser.Email + "#" + mUser.RegTime, "MD5");
                     string domainUrl = Request.Url.GetLeftPart(UriPartial.Authority);
 
                     StringBuilder mailContent = new StringBuilder();

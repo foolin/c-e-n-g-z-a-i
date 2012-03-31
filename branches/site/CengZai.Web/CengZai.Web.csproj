@@ -391,7 +391,9 @@
     <Content Include="js\swfupload\swfupload_fp9.swf" />
     <Content Include="Test.aspx" />
     <Content Include="Global.asax" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

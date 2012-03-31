@@ -118,6 +118,7 @@
   <ItemGroup>
     <Content Include="Dll\Commons.dll" />
     <Content Include="Dll\log4net.dll" />
+    <Content Include="Dll\log4net.xml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\" />
