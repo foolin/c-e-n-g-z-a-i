@@ -100,6 +100,8 @@
     <Content Include="css\bootstrap-responsive.min.css" />
     <Content Include="img\bg.jpg" />
     <Content Include="img\btn-background.jpg" />
+    <Content Include="img\btn-background.png" />
+    <Content Include="img\btn-upload.png" />
     <Content Include="img\certificate_bg.jpg" />
     <Content Include="img\certificate_bg2.jpg" />
     <Content Include="img\certificate_cover.png" />
@@ -109,6 +111,9 @@
     <Content Include="img\certificate_cover_start1.png" />
     <Content Include="img\certificate_left.png" />
     <Content Include="img\certificate_right.png" />
+    <Content Include="img\left-corner.png" />
+    <Content Include="img\logo2.png" />
+    <Content Include="img\证件内容背景.png" />
     <Content Include="js\calendar\calendar.css" />
     <Content Include="js\calendar\calendar_day.png" />
     <Content Include="js\calendar\jquery.calendar.js" />
