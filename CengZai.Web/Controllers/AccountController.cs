@@ -340,7 +340,7 @@ namespace CengZai.Web.Controllers
 
                 try
                 {
-                    if (mInvite == null)
+                    if (mInvite != null)
                     {
                         BLL.Friend bllFriend = new BLL.Friend();
                         bllFriend.Add(mUser.UserID, (int)mInvite.UserID);    //关注邀请人
