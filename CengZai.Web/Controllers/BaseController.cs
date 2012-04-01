@@ -351,5 +351,35 @@ namespace CengZai.Web.Controllers
             public string msg;
         }
 
+
+        /// <summary>
+        /// 发送系统消息
+        /// </summary>
+        /// <param name="toUserID"></param>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        protected bool SendSysNotice(int toUserID, string content)
+        {
+            try
+            {
+                Model.Inbox inbox = new Model.Inbox();
+                inbox.Content = content;
+                inbox.FromUserID = 0;
+                inbox.IsDelete = 0;
+                inbox.IsRead = 0;
+                inbox.IsSystem = 1;
+                inbox.SendTime = DateTime.Now;
+                inbox.Title = "系统消息";
+                inbox.ToUserID = toUserID;
+                new BLL.Inbox().Add(inbox);
+                return true;
+            }
+            catch(Exception ex)
+            {
+                Log.AddErrorInfo("发送系统消息异常", ex);
+                return false;
+            }
+        }
+
     }
 }
