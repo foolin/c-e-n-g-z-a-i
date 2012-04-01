@@ -347,15 +347,20 @@ namespace CengZai.Web.Controllers
                         BLL.Friend bllFriend = new BLL.Friend();
                         bllFriend.Add(mUser.UserID, (int)mInvite.UserID);    //关注邀请人
                         bllFriend.Add((int)mInvite.UserID, mUser.UserID);    //关注被邀请人
+                        Model.User inviteUser = bllUser.GetModel((int)mInvite.UserID);
                         //如果是积分
                         if (Config.InviteCredit > 0)
                         {
-                            Model.User inviteUser = bllUser.GetModel((int)mInvite.UserID);
                             inviteUser.Credit = inviteUser.Credit + Config.InviteCredit;
                             bllUser.Update(inviteUser);
                         }
                         new BLL.InviteCode().Delete(mInvite.ID);
-
+                        
+                        SendSysNotice((int)mInvite.UserID, "您邀请的用户【" + mInvite.Email
+                            + "】已经成功注册，注册的昵称为：<a href='" + Url.Action("Blog", "Blog", new { username = username }) + "'>"
+                            + username + "</a>,快去看看吧！");
+                        SendSysNotice(mUser.UserID,  mUser.Nickname + "，邀请您邀请加入的人：<a href='" + Url.Action("Blog", "Blog", new { username = username }) + "'>"
+                            + username + "</a>,快去看看吧！");
                     }
                 }
                 catch(Exception ex) 
