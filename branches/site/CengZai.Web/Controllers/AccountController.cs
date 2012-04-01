@@ -219,6 +219,8 @@ namespace CengZai.Web.Controllers
         [HttpPost]
         public ActionResult Register(string email, string username, string password, string repassword, string verifyCode, string invite, int? sex, int? chkTerms)
         {
+            ViewBag.Password = password;
+            ViewBag.Repassword = repassword;
             ViewBag.RegisterLimit = Config.RegisterLimit;
 
             Model.InviteCode mInvite = null;
