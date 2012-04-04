@@ -59,11 +59,11 @@ namespace CengZai.Web.Controllers
                 {
                     if (lover.State == 1)
                     {
-                        return JumpToAction("对不起，您无权申请！", "您已经领了证书，不可以再申请证书，如果需要申请，请注销原来的证书！", "Certificate", new { LoverID = lover.LoverID });
+                        return JumpToAction("对不起，您无权申请！", "您已经领了证书，不可以再申请证书，如果需要申请，请注销原来的证书！", "Certificate", "Blog", new { username = user.Username }, 5);
                     }
                     else
                     {
-                        return JumpToAction("对不起，您无权申请！", "您已经有证书在处理中，不可以再申请其它证书，请注销原来的证书！", "Certificate", new { LoverID = lover.LoverID });
+                        return JumpToAction("对不起，您无权申请！", "您已经有证书在处理中，不可以再申请其它证书，请注销原来的证书！", "Certificate", new { username = user.Username }, 5);
                     }
                 }
                 DataSet dsFriendList = new BLL.Friend().GetFriendUserList(user.UserID, Model.FriendRelation.Follow, 0, "");
@@ -205,11 +205,24 @@ namespace CengZai.Web.Controllers
         /// <returns></returns>
         [CheckAuthFilter]
         [HttpPost]
-        public ActionResult UploadImage()
+        public ActionResult UploadImage(int? loverID)
         {
-            string fileName = string.Format("{0}{1}.jpg", DateTime.Now.ToString("yyyyMMddmmss"), new Random().Next(100, 999));
-            //保存成自己的文件全路径,newfile就是你上传后保存的文件,
-            //服务器上的UpLoadFile文件夹必须有读写权限
+            string fileName = "";
+
+            if (loverID != null)
+            {
+                Model.User user = GetLoginUser();
+                Model.Lover lover = new BLL.Lover().GetModel((int)loverID);
+                if (user == null || lover == null)
+                {
+                    return AjaxReturn("-1", "你无权上传文件！");
+                }
+                fileName = lover.Avatar;
+            }
+            if (string.IsNullOrEmpty(fileName))
+            {
+                fileName = string.Format("{0}{1}.jpg", DateTime.Now.ToString("yyyyMMddmmss"), new Random().Next(100, 999));
+            }
 
             //文件大小不为0
             System.Drawing.Image avatar = null;
@@ -219,12 +232,12 @@ namespace CengZai.Web.Controllers
                 HttpPostedFileBase file = Request.Files["fileAvatar"];
                 if (file == null)
                 {
-                    return AjaxReturn("1", "请选择上传文件！");
+                    return AjaxReturn("-2", "请选择上传文件！");
                 }
                 avatar = System.Drawing.Image.FromStream(file.InputStream);
                 if (avatar == null)
                 {
-                    return AjaxReturn("2", "请选择图片文件！");
+                    return AjaxReturn("-3", "请选择图片文件！");
                 }
                 thumbnail = ImageHelper.MakeThumbnail(avatar, Config.CertificateAvatarWidth, Config.CertificateAvatarHeight, ThubnailMode.Cut, ImageFormat.Jpeg);
                 thumbnail.Save(Server.MapPath(Config.UploadMapPath + "/" + fileName));
@@ -232,7 +245,7 @@ namespace CengZai.Web.Controllers
             catch (Exception ex)
             {
                 Log.AddErrorInfo("LoverController.UploadImage上传文件出错", ex);
-                return AjaxReturn("3", "上传图片出错，请确定您上传的是图片！");
+                return AjaxReturn("-4", "上传图片出错，请确定您上传的是图片！");
             }
             finally
             {
@@ -243,24 +256,6 @@ namespace CengZai.Web.Controllers
                 if (thumbnail != null)
                 {
                     thumbnail.Dispose();
-                }
-            }
-            
-            
-            //删除旧文件
-            if (!string.IsNullOrEmpty(Request["avatar"]))
-            {
-                try
-                {
-                    string oldImage = Server.MapPath(Config.UploadMapPath + "/" + Request["avatar"]);
-                    if (System.IO.File.Exists(oldImage))
-                    {
-                        System.IO.File.Delete(oldImage);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Log.AddErrorInfo("删除文件出错：" + ex.Message);
                 }
             }
 
@@ -564,36 +559,36 @@ namespace CengZai.Web.Controllers
         }
 
 
-        /// <summary>
-        /// 证书
-        /// </summary>
-        /// <param name="loverID"></param>
-        /// <returns></returns>
-        public ActionResult Certificate(int? loverID)
-        {
-            if (loverID == null)
-            {
-                return JumpToHome("对不起，操作错误！", "您访问的页面不存在！");
-            }
-            try
-            {
-                Model.User user = GetLoginUser();
-                ViewBag.User = user;
+        ///// <summary>
+        ///// 证书
+        ///// </summary>
+        ///// <param name="loverID"></param>
+        ///// <returns></returns>
+        //public ActionResult Certificate(int? loverID)
+        //{
+        //    if (loverID == null)
+        //    {
+        //        return JumpToHome("对不起，操作错误！", "您访问的页面不存在！");
+        //    }
+        //    try
+        //    {
+        //        Model.User user = GetLoginUser();
+        //        ViewBag.User = user;
 
-                Model.Lover lover = new BLL.Lover().GetModel((int)loverID);
-                if (lover == null)
-                {
-                    return JumpToHome("对不起，操作错误！", "您访问的页面不存在！");
-                }
-                ViewBag.Lover = lover;
-            }
-            catch (Exception ex)
-            {
-                Log.AddErrorInfo("Lover/UnAccept出现异常：", ex);
-                return JumpToHome("对不起，操作错误！", "您访问的页面出现点异常！");
-            }
-            return View();
-        }
+        //        Model.Lover lover = new BLL.Lover().GetModel((int)loverID);
+        //        if (lover == null)
+        //        {
+        //            return JumpToHome("对不起，操作错误！", "您访问的页面不存在！");
+        //        }
+        //        ViewBag.Lover = lover;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Log.AddErrorInfo("Lover/UnAccept出现异常：", ex);
+        //        return JumpToHome("对不起，操作错误！", "您访问的页面出现点异常！");
+        //    }
+        //    return View();
+        //}
 
         /// <summary>
         /// 删除数据

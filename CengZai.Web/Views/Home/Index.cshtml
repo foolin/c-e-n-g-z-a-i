@@ -2,7 +2,6 @@
     ViewBag.Title = "我的首页-" + ViewBag.SiteName;
     var loginUser = Html.GetLoginUser();
     var artlist = ViewBag.ArtList as List<CengZai.Model.Article>;
-    var imgPath = CengZai.Helper.Config.UploadHttpPath;
 }
 @section head{
     <link type="text/css" href="../js/imgzoom/jquery.artZoom.css" rel="stylesheet">
@@ -61,7 +60,7 @@
                     <section class="feed">
             	    <aside class="feed-avatar">
                 	    <a href="@Url.Action("Blog", "Blog", new { username = artUser.Username })" title="@Html.GetUserNickname(art.UserID)" target="_blank"> 
-     				    <img src="@imgPath/@artUser.Avatar" width="64" alt="noavatar"/>
+     				    <img src="@Html.GetImageUrl(artUser.Avatar)" width="64" alt="noavatar"/>
                         </a>
                         <p>&nbsp;&nbsp;@Ajax.GetFriendAddLink(artUser.UserID, "")</p>
                         <span class="feed-corner"></span>

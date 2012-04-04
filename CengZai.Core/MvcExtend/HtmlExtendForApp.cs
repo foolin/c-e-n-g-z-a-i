@@ -41,5 +41,16 @@ namespace System.Web.Mvc
         {
             return (CengZai.Helper.Config.UploadHttpPath + "/" + path).Replace("//", "/");
         }
+
+
+        /// <summary>
+        /// 获取上传图片Url
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public static string GetImageUrl(this HtmlHelper helper, string imagePath)
+        {
+            return CengZai.Helper.Util.GetImageUrl(imagePath);
+        }
     }
 }

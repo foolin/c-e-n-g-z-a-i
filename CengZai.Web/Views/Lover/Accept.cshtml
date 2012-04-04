@@ -2,16 +2,13 @@
     ViewBag.Title = "我接受申请并完善资料-" + ViewBag.SiteName;
     var user = ViewBag.User as CengZai.Model.User;
     var lover = ViewBag.Lover as CengZai.Model.Lover;
-    var avatarUrl = CengZai.Helper.Config.UploadHttpPath + "/" + lover.Avatar;
 }
 @section head{
     <link href="@Url.Content("~/js/calendar/calendar.css")" rel="stylesheet" type="text/css" />
     <script src="@Url.Content("~/js/calendar/jquery.calendar.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/js/swfupload/fileprogress.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/js/swfupload/swfupload.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/js/swfupload/handlers.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/js/mvc/MicrosoftAjax.js")" type="text/javascript"></script> 
-    <script src="@Url.Content("~/js/mvc/MicrosoftMvcAjax.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/js/mvc/jquery.unobtrusive-ajax.min.js")" type="text/javascript"></script>
     <script type="text/javascript">
 
         var oathTplData = [""
@@ -69,116 +66,92 @@
 
 
 <script type="text/javascript">
+
     var swfu;
 
-    function uploadError(file, errorCode, message) {
-        var errDesc = message;
-
-        switch (errorCode) {
-		case SWFUpload.UPLOAD_ERROR.FILE_CANCELLED:
-            errDesc = "";
-			break;
-		case SWFUpload.UPLOAD_ERROR.UPLOAD_STOPPED:
-            break;
-		case SWFUpload.UPLOAD_ERROR.UPLOAD_LIMIT_EXCEEDED:
-			break;
-            
-        case SWFUpload.QUEUE_ERROR.QUEUE_LIMIT_EXCEEDED:
-            errDesc = "您上传文件太多喇！";
-			break;
-		case SWFUpload.QUEUE_ERROR.ZERO_BYTE_FILE:
-            errDesc = "您上传文件太小！";
-			break;
-		case SWFUpload.QUEUE_ERROR.FILE_EXCEEDS_SIZE_LIMIT:
-            errDesc = "您上传文件太大！";
-			break;
-		case SWFUpload.QUEUE_ERROR.INVALID_FILETYPE:
-            errDesc = "您上传文件格式不对！";
-            break;
-		default:
-			break;
-		}
-
-        alert('错误：' + errDesc);
-    }
-
-    SWFUpload.onload = function () {
+    window.onload = function () {
         var settings = {
-            flash_url: "/js/swfupload/swfupload.swf",
-            flash9_url: "/js/swfupload/swfupload_fp9.swf",
+            flash_url: "../../js/swfupload/swfupload.swf",
+            flash9_url: "../../js/swfupload/swfupload_fp9.swf",
             upload_url: "/Lover/UploadImage",
             file_post_name: "fileAvatar",
             post_params: {
                 "ASPSESSID": "@Session.SessionID",
+                "loverid": "@lover.LoverID"
             },
+            debug: false,
 
             // File Upload Settings
-            file_size_limit: "1 MB",
+            file_size_limit: "2 MB",
             file_types: "*.jpg",
             file_types_description: "JPG Images",
             file_upload_limit: 0,    // Zero means unlimited
             file_queue_limit: 1,
-            debug: false,
+            button_window_mode: SWFUpload.WINDOW_MODE.TRANSPARENT,
 
-            // Button Settings
-            //button_image_url: "/img/upload-photo.png",
-            button_placeholder_id: "divUploadAvatar",
+            // Button settings
+            //button_image_url: "../../img/upload-photo.png",
             button_width: 160,
             button_height: 38,
-            button_text: '<span>我要重新上传</span>',
-            //button_text: '<span class="button">上传图片 <span class="buttonSmall"></span></span>',
-            //button_text_style: '.button { font-family: Helvetica, Arial, sans-serif; font-size: 14pt; } .buttonSmall { font-size: 10pt; }',
-            button_text_top_padding: 1,
-            button_text_left_padding: 5,
+            button_placeholder_id: "divUploadAvatar",
+            button_text: '<span class="theFont">我要重新上传</span>',
+            button_text_style: ".theFont { font-size: 12px;color:#009966; }",
+            button_text_left_padding: 12,
+            button_text_top_padding: 3,
+            custom_settings: {
+                progressTarget: "uploadProgress"
+            },
 
-            //点击上传
-            file_dialog_complete_handler: function (numFilesSelected, numFilesQueued) {
-                try {
-                    if (numFilesQueued > 0) {
-                        this.addPostParam("avatar",$("#avatar").val());
-                        this.startUpload();
-                        $("#tips-avatar").html("正在上传...");
-                    }
-                } catch (ex) {
-                    this.debug(ex);
-                }
-            },
-            upload_error_handler : uploadError,
-            file_queue_error_handler: uploadError,
-			upload_success_handler :  function(file, serverData) {
-	            try {
-                    var data = eval('(' + serverData + ')');
-                    if(data.id == 0){
-                        $("#avatar").val(data.msg);
-                        var showUrl =  '@CengZai.Helper.Config.UploadHttpPath/' + data.msg;
-                        $("#imgAvatar").attr("src",  showUrl);
-                        $("#imgAvatar").css("display","block");
-                        $("#tips-avatar").html("上传完毕");;
-                    }
-                    else
-                    {
-                        $("#tips-avatar").html(data.msg);;
-                        alert(data.msg);
-                    }
-                    
-	            } catch (ex) {
-                    alert('上传图片出现异常，请稍后再试');
-                    console.log(ex);
-		            this.debug(ex);
-	            }
-            },
-            upload_complete_handler: function(file) {
-                try {
-                    /*  I want the next upload to continue automatically so I'll call startUpload here */
-                } catch (ex) {
-                    this.debug(ex);
-                }
-            },
+            // The event handler functions are defined in handlers.js
+            swfupload_preload_handler: preLoad,
+            swfupload_load_failed_handler: loadFailed,
+            file_dialog_complete_handler: fileDialogComplete,
+            file_queued_handler: fileQueued,
+            file_queue_error_handler: fileQueueError,
+            upload_start_handler: uploadStart,
+            upload_progress_handler: uploadProgress,
+            upload_error_handler: uploadError,
+            upload_success_handler: uploadSuccess
+
         };
-
 
         swfu = new SWFUpload(settings);
     }
+
+    function fileDialogComplete(numFilesSelected, numFilesQueued) {
+        try {
+            if (numFilesQueued > 0) {
+                this.addPostParam("avatar", $("#avatar").val());
+                this.startUpload();
+                $("#tips-avatar").html("正在上传...");
+            }
+        } catch (ex) {
+            this.debug(ex);
+        }
+    }
+
+    function uploadSuccess(file, serverData) {
+        try {
+            var data = eval('(' + serverData + ')');
+            if (data.id == 0) {
+                $("#avatar").val(data.msg);
+                var showUrl = '@CengZai.Helper.Config.UploadHttpPath/' + data.msg;
+                $("#imgAvatar").attr("src", showUrl);
+                $("#imgAvatar").css("display", "block");
+                $("#tips-avatar").html("上传完毕");
+            }
+            else {
+                $("#tips-avatar").html(data.msg);
+                alert(data.msg);
+            }
+
+        } catch (ex) {
+            alert('上传图片出现异常，请稍后再试');
+            console.log(ex);
+            this.debug(ex);
+        }
+    }
+
 </script>
 
 }
@@ -225,12 +198,13 @@
                         <label class="control-label" for="birth">我们的合照头像：</label>
                         <div class="controls">
                             <p>
-                                <img id="imgAvatar"  width="196" height="136" alt="" src="@avatarUrl" />
+                                <img id="imgAvatar"  width="196" height="136" alt="" src="@Html.GetImageUrl(lover.Avatar)" />
                                 <input type="hidden" value="@lover.Avatar" name="avatar" id="avatar" />
                             </p>
                             <div id="divUploadAvatar"></div>
+                            <div id="uploadProgress" style="color:Red"></div>
                             <span class="field-validation-error" data-valmsg-for="avatar" id="tips-avatar" data-valmsg-replace="true"></span>
-                            <p class="help-block">请上传一张你们的合影照片，建议比例是196px×136px，大小不能超过1MB（不可更改）</p>
+                            <p class="help-block">请上传一张你们的合影照片，建议比例是180px（宽）×120px（高），大小不能超过2MB（不可更改）</p>
                         </div>
                     </div>
                     <div class="control-group">

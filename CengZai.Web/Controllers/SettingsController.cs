@@ -65,6 +65,10 @@ namespace CengZai.Web.Controllers
                 {
                     return AjaxReturn("birth", "请填写正确的生日，未满14岁周岁禁止使用本站！");
                 }
+                if (sign != null && sign.Length > 50)
+                {
+                    return AjaxReturn("sign", "签名不能超过50个字符！");
+                }
                 BLL.User bllUser = new BLL.User();
                 user.Nickname = nickname;
                 user.Sex = sex;

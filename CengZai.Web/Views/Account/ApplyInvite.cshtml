@@ -1,0 +1,46 @@
+﻿@{
+    ViewBag.Title = "申请邀请码";
+}
+
+<div class="container bg-white">
+<section class="padding">
+    <div class="page-header"> 
+        <h1>@ViewBag.Title</h1> 
+    </div> 
+    <div>
+    @using (Html.BeginForm("ApplyInvite","Account", FormMethod.Post, new { @class = "well" }))
+    {
+        <p>
+            <label for="username">邮 箱： </label>
+            @Html.TextBox("email", "", new { @class = "span3", size = "16", placeholder = "请输入您的邮箱" })
+            @Html.ValidationMessage("email")
+        </p>
+         <p>
+            <label for="verifyCode">验证码：</label>
+            @Html.TextBox("verifyCode","", new { @class = "span2", size = "16", placeholder = "请输入图片的验证码" })
+            <img id="imgVerifyCode" src="../../pages/verifycode.aspx?t=@DateTime.Now" alt="刷新验证码" style="cursor:pointer;" onclick="refreshCode('imgVerifyCode')" />
+          	<a href="javascript:refreshCode('imgVerifyCode')">看不清？</a>
+            @Html.ValidationMessage("verifyCode")
+            <script type="text/javascript">
+                //刷新
+                function refreshCode(id) {
+                    var img = document.getElementById(id);
+                    img.src = "../../pages/verifycode.aspx?t=" + new Date().getTime();
+                }
+            </script>
+        </p>
+        <p>
+            <input type="submit" class="btn" value="申请邀请码" />
+        </p>
+        <p class="muted">由于<b>@ViewBag.SiteName</b>正在紧张测试中，尚未正式开放注册，我们会根据定期发放邀请码，邀请部分用户试用。</p>
+    }
+    
+    </div>
+    @if (!string.IsNullOrEmpty(ViewBag.Message))
+    {
+    <div class="alert alert-error">
+        @MvcHtmlString.Create(ViewBag.Message)
+    </div>
+    }
+</section>
+</div>
