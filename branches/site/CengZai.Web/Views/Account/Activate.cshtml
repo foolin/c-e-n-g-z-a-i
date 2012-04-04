@@ -1,14 +1,22 @@
 ﻿@{
-    ViewBag.Title = "用户激活-" + ViewBag.SiteName;
-    Layout = "_LoginLayout.cshtml";
+    ViewBag.Title = "用户激活";
+    var email = ViewBag.Email as string;
 }
 
-    <div class="alert">
-        <h2 class="alert-heading">用户激活</h2> 
-        <p class="textcontent">
+<div class="container bg-white">
+<div class="padding">
+    <div class="page-header"> 
+        <h1>@ViewBag.Title</h1> 
+    </div> 
+    <div class = "well">
+        <p>
             @MvcHtmlString.Create(ViewBag.Message)
         </p>
         <p>
             @Html.ActionLink("点击这里返回登录", "Login", "Account")
         </p>
     </div>
+
+</div>
+</div>
+

@@ -4,30 +4,31 @@
 }
 
     <div class="login-form">
-        @using (Html.BeginForm()) {
-            
+        @using (Html.BeginForm()) 
+        {
             <p>
-                <label for="username">邮 箱：</label>
+                <label for="email">邮 箱：</label>
                 @Html.TextBox("email")
                 @Html.ValidationMessage("email")
             </p>
             <p>
                 <label for="password">密 码：</label>
                 @Html.Password("password")
-                @Html.ValidationMessage("password")
+                @Html.ValidationMessage("password") 
+                @Html.ActionLink("忘记密码？", "FindPassword")
             </p>
                 
             <p>
                 <label class="checkbox inline"> 
-                    <input type="checkbox" name="remember" id="remember" value="1"> 记住我的登录状态
+                    <input type="checkbox" name="remember" id="remember" value="1"> 下次自动登录 <span class="muted">（使用公共电脑切勿选择此项）</span>
                 </label> 
-                <p class="help-block">如果是公共电脑，切勿选择此项</p>
+                
             </p>
             <p class="btn-group">
                 <input type="submit" class="btn btn-primary" value="登录" />
                 @Html.ActionLink("尚未注册？", "Register", null, new { @class = "btn btn-danger" })
             </p>
-            <p><a href="#">忘记密码？</a></p>
+            <p></p>
             <p>@Html.ValidationSummary()</p>
             
         }

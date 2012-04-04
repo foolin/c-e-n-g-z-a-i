@@ -54,7 +54,7 @@
     {
         if (myLover.State == 1)
         {
-            @Html.ActionLink("查看我的" + Html.GetCertificateName(myLover.Certificate), "Certificate", "Lover", new { LoverID = @myLover.LoverID }, new { @class = "btn btn-large btn-primary" })
+            @Html.ActionLink("查看我的" + Html.GetCertificateName(myLover.Certificate), "Certificate", "Blog", new { username=@user.Username }, new { @class = "btn btn-large btn-primary" })
         }
         else
         {
@@ -77,7 +77,7 @@
         {
             for(var i=0; i < topLoverList.Count; i++)
             {
-                imgPath = CengZai.Helper.Config.UploadHttpPath + "/" + @topLoverList[i].Avatar;
+                imgPath =  Html.GetImageUrl(topLoverList[i].Avatar);
                 var boy = Html.GetUser(topLoverList[i].BoyUserID);
                 var girl = Html.GetUser(topLoverList[i].GirlUserID);
                 var applyUser = boy;

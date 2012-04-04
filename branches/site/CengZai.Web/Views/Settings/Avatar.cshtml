@@ -1,10 +1,10 @@
 ﻿@{
     ViewBag.Title = "上传头像";
     var user = Html.GetLoginUser();
-    var imgPath = CengZai.Helper.Config.UploadHttpPath + "/" + user.Avatar;
 }
 @section head{
     <script src="@Url.Content("~/js/swfupload/swfupload.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/js/swfupload/fileprogress.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/js/swfupload/handlers.js")" type="text/javascript"></script>
     <script type="text/javascript">
         var swfu;
@@ -21,7 +21,7 @@
                 debug: false,
 
                 // File Upload Settings
-                file_size_limit: "1 MB",
+                file_size_limit: "2 MB",
                 file_types: "*.jpg",
                 file_types_description: "JPG Images",
                 file_upload_limit: 0,    // Zero means unlimited
@@ -37,6 +37,9 @@
                 button_text_style: ".theFont { font-size: 16;color:#ff0000; }",
                 button_text_left_padding: 12,
                 button_text_top_padding: 3,
+                custom_settings: {
+                    progressTarget: "uploadProgress"
+                },
 
                 // The event handler functions are defined in handlers.js
                 swfupload_preload_handler: preLoad,
@@ -48,6 +51,8 @@
                 upload_progress_handler: uploadProgress,
                 upload_error_handler: uploadError,
                 upload_success_handler: uploadSuccess
+
+                
                     
             };
 
@@ -104,12 +109,13 @@
                 <label class="control-label" for="oldpassword">当前头像：</label>
                 <div class="controls">
                     <p>
-                        <img id="imgAvatar" class="thumbnail" width="200" src="@imgPath" alt="当前头像" />
+                        <img id="imgAvatar" class="thumbnail" width="150" src="@Html.GetImageUrl(user.Avatar)" alt="当前头像" />
                         @Html.Hidden("avartar", @user.Avatar)
                     </p>
                     <div id="divUploadAvatar"></div>
+                    <div id="uploadProgress" style="color:Red"></div>
                      <span class="field-validation-error" data-valmsg-for="avatar" id="tips-avatar" data-valmsg-replace="true"></span>
-                    <p class="help-block">请上传一张150px（宽）×150px（高）的头像</p>
+                    <p class="help-block">请上传一张150px（宽）×150px（高）的头像，最大图片大小2Mb</p>
 
                 </div>
             </div>

@@ -262,35 +262,12 @@ namespace System.Web.Mvc
 
 
         /// <summary>
-        /// 规格化网址
-        /// </summary>
-        /// <param name="pageNum"></param>
-        /// <param name="pageTitle"></param>
-        /// <returns></returns>
-        private static string ParsePageLink(string url, string pageTag, string pageName, int pageNum)
-        {
-            //判断是否有参数
-            if (url.IndexOf('?') != -1)
-            {
-                return (" <a href=\"" + url + "&" + pageTag + "=" + pageNum + "\">" + pageName + "</a> ").Replace("?&", "?");
-            }
-
-            return " <a href=\"" + url + "?" + pageTag + "=" + pageNum + "\">" + pageName + "</a> ";
-        }
-
-        /// <summary>
         /// 取邮箱域名
         /// </summary>
         /// <param name="email"></param>
         public static string GetEmailDomain(this HtmlHelper helper, string email)
         {
-            if (string.IsNullOrEmpty(email) || email.IndexOf('@') == -1)
-            {
-                return email;
-            }
-
-            string domain = email.Substring(email.IndexOf('@') + 1);
-            return domain;
+            return CengZai.Helper.Util.GetEmailDomain(email);
         }
 
 

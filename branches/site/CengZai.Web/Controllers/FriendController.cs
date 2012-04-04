@@ -97,7 +97,7 @@ namespace CengZai.Web.Controllers
                     dsList = bllUser.GetListBySearch(100, keyword, "RegTime DESC");
                     if (dsList == null || dsList.Tables.Count == 0 || dsList.Tables[0].Rows.Count == 0)
                     {
-                        return JumpToTips("暂无用户", "请输入用户的昵称、用户名或者邮箱进行查找...");
+                        return JumpToAction("找不到关键词“" + keyword + "”的用户", "对不起，找不到关键词为“" + keyword + "”的用户，您可以试试搜索昵称、用户名或邮箱进行查找。", "Find");
                     }
                 }
                 else
@@ -124,6 +124,49 @@ namespace CengZai.Web.Controllers
                 return JumpToAction("页面出现异常", "即将跳转到完善资料页面...", "Avatar", "Settings");
             }
             return View();
+        }
+
+        /// <summary>
+        /// 关注朋友处理
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [CheckAuthFilter]
+        public ActionResult Find(int[] userid)
+        {
+            try
+            {
+                int feedCount = 0;
+                Model.User loginUser = GetLoginUser();
+                if (loginUser == null)
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+                if (userid != null && userid.Length > 0)
+                {
+                    BLL.Friend bllFriend = new BLL.Friend();
+                    foreach (int friendUserID in userid)
+                    {
+                        if (bllFriend.Add(loginUser.UserID, friendUserID))
+                        {
+                            feedCount++;
+                        }
+                    }
+                }
+                if (feedCount > 0)
+                {
+                    return JumpBackAndRefresh("关注成功", "恭喜您，关注成功，一共关注" + feedCount + "个好友，您以后可以随时关注更多或者取消！");
+                }
+                else
+                {
+                    return JumpBackAndRefresh("关注失败", "对不起，关注" + feedCount + "个用户！");
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.AddErrorInfo("Find(int[] userid)关注用户提交失败！", ex);
+                return JumpBackAndRefresh("关注失败", "对不起，关注出现异常");
+            }
         }
 
         /// <summary>
@@ -417,10 +460,10 @@ namespace CengZai.Web.Controllers
                     }
                     catch
                     {
-                        return JumpToTips("邮件发送不成功！", loginUser.Nickname + "，生成邀请连接成功！但发送通知邮件失败！您只要把网址发送您朋友即可，邀请连接地址为：<p>" + inviteUrl + "</p>");
+                        return JumpToTips("邮件发送不成功！", loginUser.Nickname + "，生成邀请连接成功！但发送通知邮件失败！您只要把网址发送您朋友即可，邀请码为：" + strInviteCode + "，邀请网址：<br />" + inviteUrl + "");
                     }
                 }
-                return JumpToTips("邀请成功！", "恭喜您，生成邀请连接成功！您只要把网址发送您朋友即可，邀请连接地址为：<p>" + inviteUrl + "</p>");
+                return JumpToTips("邀请成功！", "恭喜您，生成邀请连接成功！您只要把网址发送您朋友即可，邀请码为：" + strInviteCode + "，邀请网址：<br />" + inviteUrl + "");
             }
             catch (Exception ex)
             {

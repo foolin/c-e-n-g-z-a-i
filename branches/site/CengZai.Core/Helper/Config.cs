@@ -45,6 +45,18 @@ namespace CengZai.Helper
             }
         }
 
+
+        /// <summary>
+        /// 客服邮箱
+        /// </summary>
+        public static string KefuEmail
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["KefuEmail"] + "";
+            }
+        }
+
         /// <summary>
         /// 连接字符串
         /// </summary>

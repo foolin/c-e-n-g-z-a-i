@@ -230,7 +230,7 @@ fieldset legend
 
 
 
-/**************** feed-list *************/
+/**************** feed-list ************* /
 .avatar{
 	float:left;
 	position:relative;
@@ -464,7 +464,7 @@ a.blog-mini-avatar{
 	color: #ff0000;
 	text-decoration:underline;
 }
-
+*/
 
 /**** feed for new *****/
 .feed{
@@ -492,14 +492,14 @@ a.blog-mini-avatar{
 }
 .feed-content{
 	margin-left:100px;
-	width:75%;
+	width:80%;
 	background:#FFFFFF;
 	border-radius:5px;
 	-moz-border-radius:5px;
 	-webkit-border-radius: 5px;
 }
 .feed-content article{
-	padding:0;
+	padding:20px;
 	font-size:14px;
 }
 .feed-content .art-body

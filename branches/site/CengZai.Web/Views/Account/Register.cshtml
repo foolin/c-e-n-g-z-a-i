@@ -15,7 +15,9 @@
             <label for="username">邀请码：</label>
             @Html.TextBox("invite", invite != null ? invite.Invite : "" )
             @Html.ValidationMessage("invite") 
-            @Html.ActionLink("申请邀请码", "ApplyInviteCode")
+            <span class="muted">必须有邀请码才能注册
+            （您可以接受朋友的邀请，或者 @Html.ActionLink("申请邀请码", "ApplyInvite")）
+            </span>
         </p>
         }
         <p>
@@ -48,7 +50,7 @@
             })
         </p>
         <p>
-            <label for="confirmPassword">验证码：</label>
+            <label for="verifyCode">验证码：</label>
             @Html.TextBox("verifyCode")
             <img id="imgVerifyCode" src="../../pages/verifycode.aspx?t=@DateTime.Now" alt="刷新验证码" style="cursor:pointer;" onclick="refreshCode('imgVerifyCode')" />
           	<a href="javascript:refreshCode('imgVerifyCode')">看不清？</a>

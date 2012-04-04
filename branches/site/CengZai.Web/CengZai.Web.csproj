@@ -113,6 +113,7 @@
     <Content Include="img\certificate_right.png" />
     <Content Include="img\left-corner.png" />
     <Content Include="img\logo2.png" />
+    <Content Include="img\noavatar.jpg" />
     <Content Include="img\证件内容背景.png" />
     <Content Include="js\calendar\calendar.css" />
     <Content Include="js\calendar\calendar_day.png" />
@@ -396,6 +397,7 @@
     <Content Include="js\swfupload\swfupload_fp9.swf" />
     <Content Include="Test.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="UploadFiles\img\noavatar.jpg" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -481,7 +483,7 @@
     <Content Include="Views\Lover\Apply.cshtml" />
     <Content Include="Views\Lover\Accept.cshtml" />
     <Content Include="Views\Lover\Preview.cshtml" />
-    <Content Include="Views\Lover\Certificate.cshtml" />
+    <None Include="Views\Lover\Certificate.cshtml.bak" />
     <Content Include="Views\Lover\Index.cshtml" />
     <Content Include="Views\Lover\Abolish.cshtml" />
     <Content Include="Views\Lover\_MyLoverInfo.cshtml" />
@@ -496,7 +498,7 @@
     <Content Include="Views\Settings\_SettingNav.cshtml" />
     <Content Include="Views\Blog\Blog_bak.cshtml" />
     <Content Include="Views\Blog\Profile.cshtml" />
-    <Content Include="Views\Blog\Certificate.cshtml" />
+    <None Include="Views\Blog\Certificate.cshtml" />
     <Content Include="Views\Blog\Article.cshtml" />
     <Content Include="Views\Blog\_BlogHeader.cshtml" />
     <Content Include="Views\Blog\BlogSingle.cshtml" />
@@ -508,6 +510,9 @@
     <Content Include="Views\Friend\Find.cshtml" />
     <Content Include="Views\Friend\List.cshtml" />
     <Content Include="Views\Friend\Invite.cshtml" />
+    <Content Include="Views\Account\FindPassword.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Account\ApplyInvite.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

@@ -73,6 +73,13 @@
                 </div>
             </div>
             <div class="control-group">
+                <label class="control-label" for="username">邮箱：</label>
+                <div class="controls">
+                    @Html.TextBox("email", user.Email, new { @class = "input-middle", disabled = "disabled" })
+                    <p class="help-block">邮箱暂时不可更改</p>
+                </div>
+            </div>
+            <div class="control-group">
                 <label class="control-label" for="nickname">昵称：</label>
                 <div class="controls">
                     @Html.TextBox("nickname", user.Nickname, new { @class = "input-middle" })
@@ -126,7 +133,7 @@
                 <div class="controls">
                     @Html.TextBox("sign", user.Sign, new { @class = "input-middle" })
                     <span class="field-validation-error" data-valmsg-for="sign" id="tips-sign" data-valmsg-replace="true"></span>
-                    <p class="help-block">这里是你帐号的昵称，建议用真实名字</p>
+                    <p class="help-block">最大长度不能超过50个字符（一个汉字属于两个字符）</p>
                 </div>
             </div>
             <div class="control-group">
@@ -134,7 +141,7 @@
                 <div class="controls">
                     <textarea name="intro" id="intro" class="input-xlarge" style="width:400px;" rows="8">@user.Intro</textarea>
                     <p class="field-validation-error" data-valmsg-for="oath" id="tips-oath" data-valmsg-replace="true"></p>
-                    <p class="help-block">请填写您的自我介绍</p>
+                    <p class="help-block">请填写您的自我介绍，最多500个字符</p>
                 </div>
             </div>
             <div class="form-actions"> 

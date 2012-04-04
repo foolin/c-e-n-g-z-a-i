@@ -94,6 +94,22 @@ namespace CengZai.Helper
 
 
         /// <summary>
+        /// 取邮箱域名
+        /// </summary>
+        /// <param name="email"></param>
+        public static string GetEmailDomain(string email)
+        {
+            if (string.IsNullOrEmpty(email) || email.IndexOf('@') == -1)
+            {
+                return email;
+            }
+
+            string domain = email.Substring(email.IndexOf('@') + 1);
+            return domain;
+        }
+
+
+        /// <summary>
         /// 移除Html代码
         /// </summary>
         /// <param name="html"></param>
@@ -148,6 +164,102 @@ namespace CengZai.Helper
         {
             if (string.IsNullOrEmpty(email)) return false;
             return Regex.IsMatch(email, @"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$");
+        }
+
+
+        /// <summary>
+        /// 获取上传图片Url
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public static string GetImageUrl(string imagePath)
+        {
+            string url ="";
+            if (string.IsNullOrEmpty(imagePath))
+            {
+                url = "/img/noavatar.jpg";
+            }
+            else
+            {
+                url = Config.UploadHttpPath + "/" + imagePath;
+            }
+            return url;
+        }
+
+
+        /// <summary>
+        /// 取中文日期
+        /// </summary>
+        /// <param name="date"></param>
+        /// <param name="format"></param>
+        /// <returns></returns>
+        public static string GetChinseDate(DateTime? date, string format)
+        {
+            string strDate = "";
+            try
+            {
+                DateTime dtDate = Convert.ToDateTime(date);
+                strDate = NumToChinese(dtDate.ToString(format));
+                strDate = strDate.Replace("年一〇", "年十");
+                strDate = strDate.Replace("年一", "年十");  //11月，12月
+            }
+            catch { }
+            return strDate;
+        }
+
+        /// <summary>
+        /// 数字转中文
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <returns></returns>
+        public static string NumToChinese(string nums)
+        {
+            if (string.IsNullOrEmpty(nums))
+            {
+                return nums;
+            }
+            StringBuilder result = new StringBuilder();
+            char[] arr = nums.ToCharArray();
+            foreach (char c in arr)
+            {
+                switch (c)
+                {
+                    case '0':
+                        result.Append("〇");
+                        break;
+                    case '1':
+                        result.Append("一");
+                        break;
+                    case '2':
+                        result.Append("二");
+                        break;
+                    case '3':
+                        result.Append("三");
+                        break;
+                    case '4':
+                        result.Append("四");
+                        break;
+                    case '5':
+                        result.Append("五");
+                        break;
+                    case '6':
+                        result.Append("六");
+                        break;
+                    case '7':
+                        result.Append("七");
+                        break;
+                    case '8':
+                        result.Append("八");
+                        break;
+                    case '9':
+                        result.Append("九");
+                        break;
+                    default:
+                        result.Append(c);
+                        break;
+                }
+            }
+            return result.ToString();
         }
 
     }

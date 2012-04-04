@@ -1,6 +1,5 @@
 ﻿@{
     ViewBag.Title = "搜索用户";
-    var imgPath = CengZai.Helper.Config.UploadHttpPath;
     var userList = ViewBag.UserList as List<CengZai.Model.User>;
 }
 @section head{
@@ -26,7 +25,7 @@
         @using (Html.BeginForm("Find", "Friend", FormMethod.Get, new { @class = "navbar-form" }))
         {
             <div class="input-append">
-                <input type="text" name="keyword" class="span2" id="appendedPrependedInput" size="16"  placeholder="搜索感兴趣的人"><input type="submit" class="btn" value="搜索" />
+                <input type="text" name="keyword" value="@Request["keyword"]" class="span2" id="appendedPrependedInput" size="16"  placeholder="搜索感兴趣的人"><input type="submit" class="btn" value="搜索" />
             </div>
         }
         </div>
@@ -52,7 +51,7 @@
             {
                 <tr>
                     <td><input name="userid" type="checkbox" value="@user.UserID" /></td>
-                    <td><img src="@imgPath/@user.Avatar" alt="" width="50" /></td>
+                    <td><img src="@Html.GetImageUrl(user.Avatar)" alt="@user.Nickname" width="50" /></td>
                     <td>@user.Nickname</td>
                     <td>@Html.GetUserSexName(user.Sex)</td>
                     <td>@user.Sign</td>
