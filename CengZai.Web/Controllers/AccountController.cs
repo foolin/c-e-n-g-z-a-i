@@ -625,21 +625,22 @@ namespace CengZai.Web.Controllers
                     return View();
                 }
                 string cacheKey = "FindPassword_" + email.ToLower();
-                int preSendTimeTicks = 0;
+                long preSendTimeTicks = 0;
                 try
                 {
-                    preSendTimeTicks = Convert.ToInt32(HttpContext.Cache[cacheKey]);
+                    preSendTimeTicks = Convert.ToInt64(HttpContext.Cache[cacheKey]);
                 }
                 catch
                 {
                     preSendTimeTicks = 0;
                 }
                 //两个小时内有效
-                if (DateTime.MinValue.Ticks >= preSendTimeTicks
+                if (preSendTimeTicks >= DateTime.MinValue.Ticks
                     && preSendTimeTicks <= DateTime.MaxValue.Ticks
-                    && DateTime.Now.AddHours(-2).Ticks <= preSendTimeTicks)
+                    && preSendTimeTicks >= DateTime.Now.AddHours(-2).Ticks)
                 {
-                    ViewBag.Message = "两个小时切勿重复发送找回密码邮件，上次发送找回密码邮件为：" + new DateTime(preSendTimeTicks);
+                    ViewBag.Message = "两个小时内只可以操作一次发送找回密码邮件，您上次发送找回密码时间为：" + new DateTime(preSendTimeTicks) 
+                        + "，如果您未收到邮件，请注意确认是否被误认为是垃圾邮件。";
                     return View();
                 }
                 Model.User user = new BLL.User().GetModel(email);
@@ -693,7 +694,7 @@ namespace CengZai.Web.Controllers
                     //缓存发送时间
                     HttpContext.Cache.Insert(cacheKey, cacheVal, null, DateTime.Now.AddHours(2), TimeSpan.Zero);
 
-                    ViewBag.Message = "重置密码邮件已经发送，请尽快登录邮箱进行进行重置，两个小时有效！<a class=\"btn btn-danger\" href=\"http://mail." + Util.GetEmailDomain(email) + "\" target=\"_blank\">登录邮箱进行激活</a> ";
+                    ViewBag.Message = "重置密码邮件已经发送，请尽快登录邮箱进行进行重置，两个小时内有效！<a class=\"btn btn-danger\" href=\"http://mail." + Util.GetEmailDomain(email) + "\" target=\"_blank\">登录邮箱进行激活</a> ";
                     return View();
                 }
                 catch (Exception ex)
@@ -709,7 +710,6 @@ namespace CengZai.Web.Controllers
                 ViewBag.Message = "发送重置密码邮件异常";
                 return View();
             }
-            return View();
         }
 
 
@@ -736,17 +736,17 @@ namespace CengZai.Web.Controllers
                     }
                     HttpContext.Cache.Remove(cacheKey); //移除连接
                     //缓存时间戳
-                    int cacheTicks = Convert.ToInt32(cacheVal);
+                    long cacheTicks = Convert.ToInt64(cacheVal);
                     if (cacheTicks < DateTime.MinValue.Ticks || cacheTicks > DateTime.MaxValue.Ticks
                         || new DateTime(cacheTicks).AddHours(2).Ticks < DateTime.Now.Ticks)
                     {
                         return JumpToTips("重置密码出错", "重置密码连接已失效！");
                     }
                     //Url的时间戳
-                    int urlTicks = 0;
+                    long urlTicks = 0;
                     try
                     {
-                        urlTicks = Convert.ToInt32(DESEncrypt.Decrypt(verifycode, Config.SecrectKey));
+                        urlTicks = Convert.ToInt64(DESEncrypt.Decrypt(verifycode, Config.SecrectKey));
                     }
                     catch { }
                     //校验Url时间戳

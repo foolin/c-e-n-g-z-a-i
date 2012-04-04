@@ -78,6 +78,26 @@ namespace CengZai.Web
 
         void Application_BeginRequest(object sender, EventArgs e)
         {
+            try
+            {
+                //如果为xxx.com则重定向为www.xxx.com
+                string strUrl = Request.Url.ToString().Trim().ToLower();
+                if (System.Text.RegularExpressions.Regex.IsMatch(strUrl, @"^http://([a-zA-Z_\-0-9]+\.[a-zA-Z_\-0-9]+)/"
+                    , System.Text.RegularExpressions.RegexOptions.Compiled 
+                    | System.Text.RegularExpressions.RegexOptions.IgnoreCase))
+                {
+                    Response.RedirectPermanent(
+                        System.Text.RegularExpressions.Regex.Replace(
+                        strUrl
+                        , @"^http://([a-zA-Z_\-0-9]+\.[a-zA-Z_\-0-9]+)/"
+                        ,@"http://www.$1/"
+                        ));
+                }
+            }
+            catch { }
+
+
+
             /* Fix for the Flash Player Cookie bug in Non-IE browsers.
              * Since Flash Player always sends the IE cookies even in FireFox
              * we have to bypass the cookies by sending the values as part of the POST or GET
