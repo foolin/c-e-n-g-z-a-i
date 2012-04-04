@@ -102,9 +102,7 @@
     <Content Include="img\btn-background.jpg" />
     <Content Include="img\btn-background.png" />
     <Content Include="img\btn-upload.png" />
-    <Content Include="img\certificate_bg.jpg" />
     <Content Include="img\certificate_bg2.jpg" />
-    <Content Include="img\certificate_cover.png" />
     <Content Include="img\certificate_cover_end.png" />
     <Content Include="img\certificate_cover_end1.png" />
     <Content Include="img\certificate_cover_start.png" />
