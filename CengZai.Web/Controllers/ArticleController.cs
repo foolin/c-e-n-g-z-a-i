@@ -322,5 +322,77 @@ namespace CengZai.Web.Controllers
         //    }
         //}
 
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="categoryName"></param>
+        /// <returns></returns>
+        public ActionResult AjaxCategoryAdd(string categoryName, string categoryDesc, int? categoryID)
+        {
+            try
+            {
+                categoryName = (categoryName + "").Trim();
+                if (string.IsNullOrEmpty(categoryName))
+                {
+                    return AjaxReturn("error", "请输入广告分类名称");
+                }
+                if (Util.CheckBadWord(categoryName))
+                {
+                    return AjaxReturn("error", "广告分类含有非法字符");
+                }
+                if (!string.IsNullOrEmpty(categoryDesc) && categoryDesc.Length > 300)
+                {
+                    return AjaxReturn("error", "广告描述不可以大于300个字符");
+                }
+                Model.User loginUser = GetLoginUser();
+                if (loginUser == null)
+                {
+                    return AjaxReturn("error", "您尚未登录或者登录超时");
+                }
+                
+                BLL.Category bCategory = new BLL.Category();
+                DataSet dsExistList = bCategory.GetList("UserID=" + loginUser.UserID);
+                if (dsExistList != null && dsExistList.Tables.Count > 0)
+                {
+                    DataRow[] rows = dsExistList.Tables[0].Select("CategoryName='"+ categoryName +"'");
+                    if (rows.Length > 0)
+                    {
+                        return AjaxReturn("error", "已经存在该广告分类");
+                    }
+                }
+                Model.Category mCategory = null;
+                if (categoryID != null)
+                {
+                    mCategory = bCategory.GetModel((int)categoryID);
+                }
+                if (mCategory == null || mCategory.UserID != loginUser.UserID)
+                {
+                    //如果分类为空或者用户分类权限不同
+                    mCategory = new Model.Category();
+                }
+                mCategory.CategoryDesc = categoryDesc;
+                mCategory.CategoryName = categoryName;
+                mCategory.UserID = loginUser.UserID;
+                System.Web.Script.Serialization.JavaScriptSerializer jss = new System.Web.Script.Serialization.JavaScriptSerializer();
+                if (mCategory.CategoryID == categoryID)
+                {
+                    bCategory.Update(mCategory);
+                    return AjaxReturn("success", jss.Serialize(mCategory));
+                }
+                else
+                {
+                    mCategory.CategoryID = bCategory.Add(mCategory);
+                    return AjaxReturn("success", jss.Serialize(mCategory));
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.AddErrorInfo("新建广告分类异常", ex);
+                return AjaxReturn("error", "");
+            }
+        }
+
     }
 }

@@ -5,6 +5,7 @@ using System.Web;
 using System.IO;
 using System.Runtime.Serialization.Json;
 using System.Text;
+using System.Web.Script.Serialization;
 
 namespace CengZai.Helper
 {
@@ -15,7 +16,7 @@ namespace CengZai.Helper
     /// Author:Foolin
     /// Date: 2011.11.14
     /// </summary>
-    class JsonConvert
+    public class JsonConvert
     {
         /// <summary>
         /// 序列化成Json
@@ -49,6 +50,29 @@ namespace CengZai.Helper
             return ds.ReadObject(ms) as T;
         }
 
+
+        /// <summary>
+        /// 序列化，主要针对web，会解析对象属性
+        /// </summary>
+        /// <param name="obj"></param>
+        public static string JavascriptSerialize(object obj)
+        {
+            JavaScriptSerializer jss = new JavaScriptSerializer();
+            return jss.Serialize(obj);
+        }
+
+
+        /// <summary>
+        /// 反序列化，主要针对web，会解析对象属性
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="strJson"></param>
+        /// <returns></returns>
+        public static T JavascriptDeserialize<T>(string strJson) where T : class
+        {
+            JavaScriptSerializer jss = new JavaScriptSerializer();
+            return jss.Deserialize<T>(strJson);
+        }
 
     }
 
