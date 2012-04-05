@@ -19,8 +19,8 @@ namespace CengZai.Web.Controllers
         {
             try
             {
-                Model.User user = GetLoginUser();
-                if (user == null)
+                Model.User loginUser = GetLoginUser();
+                if (loginUser == null)
                 {
                     return JumpToLogin();
                 }
@@ -28,10 +28,10 @@ namespace CengZai.Web.Controllers
                 DataSet dsArtList = null;   //文章列表
                 BLL.Article bllArt = new BLL.Article();
                 //取朋友文章
-                DataSet dsFollowUserList = new BLL.Friend().GetFriendUserList(user.UserID, Model.FriendRelation.Follow, 0, "");
+                DataSet dsFollowUserList = new BLL.Friend().GetFriendUserList(loginUser.UserID, Model.FriendRelation.Follow, 0, "");
                 if (dsFollowUserList != null && dsFollowUserList.Tables.Count > 0 && dsFollowUserList.Tables[0].Rows.Count > 0)
                 {
-                    string userIds = "0";
+                    string userIds = loginUser.UserID.ToString();
                     foreach (DataRow row in dsFollowUserList.Tables[0].Rows)
                     {
                         userIds += "," + row["UserID"];

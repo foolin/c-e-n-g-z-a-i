@@ -43,7 +43,11 @@ namespace CengZai.Web.Controllers
         {
             try
             {
-                
+                Model.User loginUser =  GetLoginUser();
+                if(loginUser == null)
+                {
+                    return JumpToLogin();
+                }
                 if (string.IsNullOrEmpty(content))
                 {
                     ModelState.AddModelError("Error", "内容不能为空！");
@@ -76,12 +80,12 @@ namespace CengZai.Web.Controllers
                 }
                 
                 model.Type = 0;
-                model.UserID = GetLoginUser().UserID;
+                model.UserID = loginUser.UserID;
                 model.ViewCount = 0;
                 BLL.Article bll = new BLL.Article();
                 bll.Add(model);
 
-                return RedirectToAction("Account", "Home", new { ID = 1 });
+                return JumpToHome("发表文章成功！", "恭喜，您发表的文章成功！");
             }
             catch (Exception ex)
             {

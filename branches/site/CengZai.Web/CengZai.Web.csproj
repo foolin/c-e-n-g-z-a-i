@@ -113,9 +113,9 @@
     <Content Include="img\ie-certificate_cover_love.png" />
     <Content Include="img\ie-certificate_cover_marry.png" />
     <Content Include="img\left-corner.png" />
-    <Content Include="img\logo.png" />
+    <Content Include="img\logo1.png" />
     <Content Include="img\logo2.png" />
-    <Content Include="img\logo_topbar.png" />
+    <Content Include="img\logo_topbar1.png" />
     <Content Include="img\noavatar.jpg" />
     <Content Include="img\证件内容背景.png" />
     <Content Include="js\calendar\calendar.css" />
