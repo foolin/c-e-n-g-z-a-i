@@ -94,8 +94,8 @@ namespace CengZai.Web.Controllers
         {
             try
             {
-                Model.User user = GetLoginUser();
-                ViewBag.User = user;
+                Model.User loginUser = GetLoginUser();
+                ViewBag.User = loginUser;
 
                 if (certificate == null)
                 {
@@ -105,7 +105,7 @@ namespace CengZai.Web.Controllers
                 {
                     return AjaxReturn("honeyUserID", "请选择对方的帐号");
                 }
-                if (honeyUserID == user.UserID)
+                if (honeyUserID == loginUser.UserID)
                 {
                     return AjaxReturn("honeyUserID", "亲，你没事吧？自己和自己搞？");
                 }
@@ -152,32 +152,33 @@ namespace CengZai.Web.Controllers
                
                 //更新申请者信息
                 BLL.User bllUser = new BLL.User();
-                user.Nickname = nickname;
-                user.Mobile = mobile;
-                user.Birth = birth;
-                bllUser.Update(user);
+                loginUser.Nickname = nickname;
+                loginUser.Mobile = mobile;
+                loginUser.Birth = birth;
+                bllUser.Update(loginUser);
+                UpdateLoginUserSession(loginUser);  //更新session
                 //插入申请表
                 Model.Lover lover = new Model.Lover();
                 lover.ApplyTime = DateTime.Now;
-                lover.ApplyUserID = user.UserID;
+                lover.ApplyUserID = loginUser.UserID;
                 lover.Avatar = avatar;
                 lover.Certificate = certificate;
                 lover.JoinDate = joinDate;
                 lover.Flow = (int)Model.LoverFlow.Apply;
                 lover.State = 0;
-                lover.UpdateUserID = user.UserID;
+                lover.UpdateUserID = loginUser.UserID;
                 lover.UpdateTime = DateTime.Now;
-                if (user.Sex == 2)
+                if (loginUser.Sex == 2)
                 {
                     lover.BoyOath = "";
                     lover.BoyUserID = honeyUserID;  //对方ID
                     lover.GirlOath = oath;
-                    lover.GirlUserID = user.UserID;
+                    lover.GirlUserID = loginUser.UserID;
                 }
                 else
                 {
                     lover.BoyOath = oath;
-                    lover.BoyUserID = user.UserID;
+                    lover.BoyUserID = loginUser.UserID;
                     lover.GirlOath = "";
                     lover.GirlUserID = honeyUserID;
                 }
@@ -391,7 +392,7 @@ namespace CengZai.Web.Controllers
 
                 //更新申请者信息
                 BLL.User bllUser = new BLL.User();
-                user.Username = user.Nickname;
+                user.Nickname = nickname;
                 user.Mobile = mobile;
                 user.Birth = birth;
                 bllUser.Update(user);
