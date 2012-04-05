@@ -418,6 +418,7 @@
     <Folder Include="Dlls\" />
     <Folder Include="js\kindeditor\attached\" />
     <Folder Include="Models\" />
+    <Folder Include="tpl\default\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\Register.cshtml" />
@@ -427,9 +428,6 @@
       <Project>{939C462C-17FF-4CDD-8F01-D1FB46218A42}</Project>
       <Name>CengZai</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Article\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\Login.cshtml" />
@@ -497,13 +495,10 @@
     <Content Include="Views\Settings\Password.cshtml" />
     <Content Include="Views\Settings\Avatar.cshtml" />
     <Content Include="Views\Settings\_SettingNav.cshtml" />
-    <Content Include="Views\Blog\Blog_bak.cshtml" />
     <Content Include="Views\Blog\Profile.cshtml" />
     <None Include="Views\Blog\Certificate.cshtml" />
     <Content Include="Views\Blog\Article.cshtml" />
-    <Content Include="Views\Blog\_BlogHeader.cshtml" />
     <Content Include="Views\Blog\BlogSingle.cshtml" />
-    <Content Include="Views\Blog\_HeadNav.cshtml" />
     <Content Include="Views\Blog\_BlogLayout.cshtml" />
     <Content Include="Views\Blog\Blog.cshtml" />
     <Content Include="Views\Blog\test.cshtml" />
