@@ -334,17 +334,17 @@ namespace CengZai.Web.Controllers
             try
             {
                 categoryName = (categoryName + "").Trim();
-                if (string.IsNullOrEmpty(categoryName))
+                if (string.IsNullOrEmpty(categoryName) || categoryName.Length > 20)
                 {
-                    return AjaxReturn("error", "请输入广告分类名称");
+                    return AjaxReturn("error", "分类为空或者超过20个字符");
                 }
                 if (Util.CheckBadWord(categoryName))
                 {
-                    return AjaxReturn("error", "广告分类含有非法字符");
+                    return AjaxReturn("error", "分类含有非法字符");
                 }
                 if (!string.IsNullOrEmpty(categoryDesc) && categoryDesc.Length > 300)
                 {
-                    return AjaxReturn("error", "广告描述不可以大于300个字符");
+                    return AjaxReturn("error", "分类描述不可以大于300个字符");
                 }
                 Model.User loginUser = GetLoginUser();
                 if (loginUser == null)
