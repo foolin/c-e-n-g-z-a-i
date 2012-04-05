@@ -107,6 +107,7 @@ namespace CengZai.DAL
 		{
 			
 			StringBuilder strSql=new StringBuilder();
+            strSql.Append("update T_Article set CategoryID=0 where CategoryID=@CategoryID; ");  //先把文章分类置0
 			strSql.Append("delete from T_Category ");
 			strSql.Append(" where CategoryID=@CategoryID");
 			SqlParameter[] parameters = {

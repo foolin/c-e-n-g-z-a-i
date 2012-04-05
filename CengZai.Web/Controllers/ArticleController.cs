@@ -325,7 +325,7 @@ namespace CengZai.Web.Controllers
 
 
         /// <summary>
-        /// 
+        /// 添加分类
         /// </summary>
         /// <param name="categoryName"></param>
         /// <returns></returns>
@@ -386,6 +386,46 @@ namespace CengZai.Web.Controllers
                     mCategory.CategoryID = bCategory.Add(mCategory);
                     return AjaxReturn("success", jss.Serialize(mCategory));
                 }
+            }
+            catch (Exception ex)
+            {
+                Log.AddErrorInfo("新建广告分类异常", ex);
+                return AjaxReturn("error", "");
+            }
+        }
+
+
+
+        /// <summary>
+        /// 删除分类
+        /// </summary>
+        /// <param name="categoryName"></param>
+        /// <returns></returns>
+        public ActionResult AjaxCategoryDel(int? categoryID)
+        {
+            try
+            {
+                if (categoryID == null || categoryID <= 0)
+                {
+                    return AjaxReturn("error", "参数错误");
+                }
+                Model.User loginUser = GetLoginUser();
+                if (loginUser == null)
+                {
+                    return AjaxReturn("error", "您尚未登录或者登录超时");
+                }
+                BLL.Category bCategory = new BLL.Category();
+                Model.Category mCategory = bCategory.GetModel((int)categoryID);
+                if (mCategory == null)
+                {
+                    return AjaxReturn("error", "分类不存在！");
+                }
+                if (mCategory.UserID != loginUser.UserID)
+                {
+                    return AjaxReturn("error", "删除分类不存在！");
+                }
+                bCategory.Delete(mCategory.CategoryID);
+                return AjaxReturn("success", mCategory.CategoryID.ToString());
             }
             catch (Exception ex)
             {
