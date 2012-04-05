@@ -63,7 +63,9 @@
           <div class="well">
             <p><a data-toggle="modal" href="#categoryModal">新建分类</a></p>
             @Html.DropDownList("categoryid", ViewData["CategoryList"] as SelectList, "默认分类")
-            @Ajax.ActionLink("","", new AjaxOptions{})
+            @Ajax.ActionLink("删除", "AjaxCategoryDel", null
+            , new AjaxOptions { OnBegin = "return confirm('确定删除？');", OnSuccess = "cateDelOnSuccess", OnFailure = "cateDelOnSuccess" }
+            , new { id="btnCategoryDel", @class="hide"})
             <hr />
             @Html.DropDownList("privacy", ViewData["PrivateList"] as List<SelectListItem>)
             <hr />
@@ -83,13 +85,11 @@
 <!--/.container -->
 
 <script type="text/javascript">
-    function cateOnBegin() {
 
-    }
-    function cateOnSuccess(e) {
+    function cateAddOnSuccess(e) {
         e = eval(e);
         if (e.id == "success") {
-            var cate = eval('('+ e.msg + ')');
+            var cate = eval('(' + e.msg + ')');
             console.log(cate);
             $("<option value=\"" + cate.CategoryID + "\">" + cate.CategoryName + "</option>").appendTo("#categoryid");
             $("#categoryid").val(cate.CategoryID);
@@ -99,14 +99,42 @@
             alert(e.msg);
         }
     }
-    function cateOnFailure(e) {
-        
+    function cateAddOnFailure(e) {
+        alert('添加出现异常，请稍后重试！');
+    }
+    $(document).ready(function () {
+        //$("#btnCategoryDel").hide();
+        $("#categoryid").change(function () {
+            var val = parseInt($(this).val());
+            if (val > 0) {
+                $("#btnCategoryDel").attr("href", "/article/ajaxcategorydel?categoryid=" + val);
+                $("#btnCategoryDel").show();
+            }
+            else {
+                $("#btnCategoryDel").attr("href", "/article/ajaxcategorydel?categoryid=" + val);
+                $("#btnCategoryDel").hide();
+            }
+        });
+    });
+    function cateDelOnSuccess(e) {
+        e = eval(e);
+        if (e.id == "success") {
+            var cateID = e.msg;
+            $('#categoryid option[value=' + cateID + ']').remove();
+            $("#btnCategoryDel").hide();
+        }
+        else {
+            alert(e.msg);
+        }
+    }
+    function cateDelOnFailure(e) {
+        alert('添加出现异常，请稍后重试！');
     }
 </script>
 
  <!-- sample modal content -->
 <div id="categoryModal" class="modal hide fade">
-@using (Ajax.BeginForm("AjaxCategoryAdd", new AjaxOptions { OnBegin = "", OnSuccess = "cateOnSuccess", OnFailure = "cateOnFailure" }))
+@using (Ajax.BeginForm("AjaxCategoryAdd", new AjaxOptions { OnBegin = "", OnSuccess = "cateAddOnSuccess", OnFailure = "cateAddOnFailure" }))
 {
     <div class="modal-header">
         <a class="close" data-dismiss="modal" >&times;</a>
