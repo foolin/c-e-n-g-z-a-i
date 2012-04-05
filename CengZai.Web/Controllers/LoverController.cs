@@ -152,7 +152,7 @@ namespace CengZai.Web.Controllers
                
                 //更新申请者信息
                 BLL.User bllUser = new BLL.User();
-                user.Username = user.Nickname;
+                user.Nickname = nickname;
                 user.Mobile = mobile;
                 user.Birth = birth;
                 bllUser.Update(user);
