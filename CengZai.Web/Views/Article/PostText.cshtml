@@ -144,12 +144,12 @@
         <div class="control-group">
               <label for="title">分类名称</label> 
               @Html.TextBox("categoryName", "", new { @class = "input-middle" }) 
-              <span class="muted">必填</span>
+              <span class="muted">必填，20个字符以内</span>
          </div>
          <div class="control-group">
               <label for="title">分类描述</label> 
               <textarea class="input-middle" rows="5"></textarea>
-              <span class="muted">（可不填）</span>
+              <span class="muted">最多300个字符以内（可不填）</span>
          </div>
     </div>
     <div class="modal-footer">
