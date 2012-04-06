@@ -71,11 +71,11 @@
     <Compile Include="Controllers\InboxController.cs" />
     <Compile Include="Controllers\LoverController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
-    <Compile Include="Pages\VerifyCode.aspx.cs">
+    <Compile Include="pages\VerifyCode.aspx.cs">
       <DependentUpon>VerifyCode.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Pages\VerifyCode.aspx.designer.cs">
+    <Compile Include="pages\VerifyCode.aspx.designer.cs">
       <DependentUpon>VerifyCode.aspx</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AboutController.cs" />
