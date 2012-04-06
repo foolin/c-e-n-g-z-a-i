@@ -7,6 +7,7 @@ body{
 }
 
 a{
+	color:#333333;
 }
 a:hover{
 	color:#FF0000;
@@ -272,11 +273,16 @@ padding: 10px 20px 5px;
 }
 .feed-list {
 	clear: both;
+	padding: 5px 0;
+}
+
+.feed {
 	margin: 10px 0;
 	color: #444;
 	padding: 5px 0;
 	position: relative;
 }
+
 .feed .feed-header {
 	padding: 15px 22px 0;
 	overflow: hidden;
@@ -288,9 +294,23 @@ padding: 10px 20px 5px;
 .feed .feed-header a:hover{
 	color:#ff0000;
 }
-.feed .feed-content {
-	padding: 15px 22px 0;
+.feed .feed-title {
+	padding:10px 20px;
+	color: #444;
+	font-size: 22px;
+	font-weight: normal;
+	_font-weight: bold;
+	line-height: 1.3em;
+	margin: 10px 0 0;
+	word-wrap: break-word;
+	clear: both;
 	overflow: hidden;
+	_overflow: visiable;
+}
+.feed .feed-content {
+	padding: 20px;
+	overflow: hidden;
+	line-height: 20px;
 }
 .feed .link-to-post-holder{
 	position:absolute;right:-2px;
@@ -333,7 +353,30 @@ padding: 10px 20px 5px;
 	-moz-animation:animLinkToPost 100ms step-start;
 	-ms-animation:animLinkToPost 100ms step-start
 }
-
+.feed .feed-tag {
+	float: left;
+	margin-left:20px;
+	padding-bottom:10px;
+	color: #A8B1BA;
+	width: 220px;
+	height: 14px;
+	line-height: 14px;
+	overflow: hidden;
+	display: block;
+}
+.feed .feed-action {
+	float: right;
+	margin-right:20px;
+	padding-bottom:10px;
+}
+.feed .feed-tag a,.feed .feed-action a {
+	color: #999;
+	text-decoration: none;
+}
+.feed .feed-tag a:hover,.feed .feed-action a:hover {
+	color: #ff0000;
+	text-decoration:underline;
+}
 /********** 底部 ****************/
 footer{
 	border-top:solid 1px #ccc;
