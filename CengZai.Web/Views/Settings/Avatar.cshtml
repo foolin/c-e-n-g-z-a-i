@@ -109,7 +109,7 @@
                 <label class="control-label" for="oldpassword">当前头像：</label>
                 <div class="controls">
                     <p>
-                        <img id="imgAvatar" class="thumbnail" width="150" src="@Html.GetImageUrl(user.Avatar)" alt="当前头像" />
+                        <img id="imgAvatar" class="thumbnail" width="150" src="@Url.GetAvatarUrl(user.Avatar)" alt="当前头像" />
                         @Html.Hidden("avartar", @user.Avatar)
                     </p>
                     <div id="divUploadAvatar"></div>

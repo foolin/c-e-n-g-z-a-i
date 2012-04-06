@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Text.RegularExpressions;
 
 namespace System.Web.Mvc
 {
@@ -31,26 +32,5 @@ namespace System.Web.Mvc
             return new CengZai.BLL.Lover().GetFlowName(flow);
         }
 
-        /// <summary>
-        /// 取Http路径
-        /// </summary>
-        /// <param name="helper"></param>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public static string GetHttpPath(this HtmlHelper helper, string path)
-        {
-            return (CengZai.Helper.Config.UploadHttpPath + "/" + path).Replace("//", "/");
-        }
-
-
-        /// <summary>
-        /// 获取上传图片Url
-        /// </summary>
-        /// <param name="email"></param>
-        /// <returns></returns>
-        public static string GetImageUrl(this HtmlHelper helper, string imagePath)
-        {
-            return CengZai.Helper.Util.GetImageUrl(imagePath);
-        }
     }
 }

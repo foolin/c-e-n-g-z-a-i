@@ -41,7 +41,7 @@
             {
                 <tr>
                     <td><input name="userid" checked="checked" type="checkbox" value="@user.UserID" /></td>
-                    <td><img src="@Html.GetImageUrl(user.Avatar)" alt="@user.Nickname" width="50" /></td>
+                    <td><img src="@Url.GetAvatarUrl(user.Avatar)" alt="@user.Nickname" width="50" /></td>
                     <td>@user.Nickname</td>
                     <td>@Html.GetUserSexName(user.Sex)</td>
                     <td>@user.Sign</td>

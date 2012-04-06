@@ -72,11 +72,11 @@
     <Compile Include="Controllers\InboxController.cs" />
     <Compile Include="Controllers\LoverController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
-    <Compile Include="pages\VerifyCode.aspx.cs">
+    <Compile Include="page\VerifyCode.aspx.cs">
       <DependentUpon>VerifyCode.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="pages\VerifyCode.aspx.designer.cs">
+    <Compile Include="page\VerifyCode.aspx.designer.cs">
       <DependentUpon>VerifyCode.aspx</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AboutController.cs" />
@@ -160,7 +160,7 @@
     <Content Include="resource\js\swfupload\fileprogress.js" />
     <Content Include="resource\js\swfupload\handlers.js" />
     <Content Include="resource\js\turn.min.js" />
-    <Content Include="pages\VerifyCode.aspx" />
+    <Content Include="page\VerifyCode.aspx" />
     <Content Include="resource\css\bootstrap.css" />
     <Content Include="resource\css\bootstrap.min.css" />
     <Content Include="resource\css\login.css" />

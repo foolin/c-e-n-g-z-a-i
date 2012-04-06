@@ -77,7 +77,7 @@
         {
             for(var i=0; i < topLoverList.Count; i++)
             {
-                imgPath =  Html.GetImageUrl(topLoverList[i].Avatar);
+                imgPath =  Url.GetAvatarUrl(topLoverList[i].Avatar);
                 var boy = Html.GetUser(topLoverList[i].BoyUserID);
                 var girl = Html.GetUser(topLoverList[i].GirlUserID);
                 var applyUser = boy;

@@ -172,18 +172,18 @@ namespace CengZai.Helper
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
-        public static string GetImageUrl(string imagePath)
+        public static string GetAvatarUrl(string imagePath)
         {
             string url ="";
             if (string.IsNullOrEmpty(imagePath))
             {
-                url = "/img/noavatar.jpg";
+                url = Config.ResourceDomain +  "/img/noavatar.jpg";
             }
             else
             {
                 url = Config.UploadHttpPath + "/" + imagePath;
             }
-            return url;
+            return Regex.Replace(url, "([^:])//", "$1/");
         }
 
 

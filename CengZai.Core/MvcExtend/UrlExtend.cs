@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Text.RegularExpressions;
 
 namespace System.Web.Mvc
 {
@@ -42,5 +43,32 @@ namespace System.Web.Mvc
             catch { }
             return relativePath;
         }
+
+
+
+
+        /// <summary>
+        /// 取Http路径
+        /// </summary>
+        /// <param name="helper"></param>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static string GetUploadUrl(this UrlHelper helper, string path)
+        {
+            string combilePath = CengZai.Helper.Config.UploadHttpPath + "/" + path;
+            return Regex.Replace(combilePath, "([^:])//", "$1/");
+        }
+
+
+        /// <summary>
+        /// 获取上传图片Url
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public static string GetAvatarUrl(this UrlHelper helper, string imagePath)
+        {
+            return CengZai.Helper.Util.GetAvatarUrl(imagePath);
+        }
+
     }
 }
