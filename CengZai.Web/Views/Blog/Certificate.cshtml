@@ -50,12 +50,12 @@
         }
         #certificate .info-left
         {
-            background:url(../../img/certificate_left.png) no-repeat;
+            background:url(@Url.GetResourceUrl("/img/certificate_left.png")) no-repeat;
         }
         
         #certificate .info-right
         {
-            background:url(../../img/certificate_right.png) no-repeat;
+            background:url(@Url.GetResourceUrl("/img/certificate_right.png")) no-repeat;
         }
         .info-left span
         {
@@ -165,7 +165,7 @@
             position:absolute;
             width:522px;
             height:421px;
-            background:url(../../img/@coverImg) no-repeat;
+            background:url(@Url.GetResourceUrl("/img/" + coverImg)) no-repeat;
             overflow:hidden;
             z-index:999;
             cursor:pointer;
@@ -175,7 +175,7 @@
             position:absolute;
             width:522px;
             height:421px;
-            background:url(../../img/ie-certificate_bg.jpg) no-repeat;
+            background:url(@Url.GetResourceUrl("/img/ie-certificate_bg.jpg")) no-repeat;
             overflow:hidden;
             z-index:999;
             cursor:pointer;
