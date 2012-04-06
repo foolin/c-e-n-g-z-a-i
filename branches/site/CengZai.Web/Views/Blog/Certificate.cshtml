@@ -230,7 +230,7 @@
 @*    <div id="certificate" class="certificate">
         <div class="conver-start"><img src="../../img/certificate_cover_start.png" /></div>
 	    <div class="info-left">
-            <span class="avatar"><img class="thumbnail" src="@Html.GetHttpPath(lover.Avatar)" /></span>
+            <span class="avatar"><img class="thumbnail" src="@Url.GetUploadUrl(lover.Avatar)" /></span>
             <span class="owner">@blogUser.Nickname</span>
             <span class="date">@Html.GetDateFormat(lover.JoinDate, "yyyy年M月d日")</span>
             <span class="loverid">CZ-@Html.GetDateFormat(lover.ApplyTime, "yyMMdd")-@lover.LoverID</span>
@@ -273,7 +273,7 @@
         </div>
         <div id="ie-certificate-info" class="info">
             <div class="info-left">
-                <span class="avatar"><img class="thumbnail" src="@Html.GetHttpPath(lover.Avatar)" /></span>
+                <span class="avatar"><img class="thumbnail" src="@Url.GetUploadUrl(lover.Avatar)" /></span>
                 <span class="owner">@blogUser.Nickname</span>
                 <span class="date">@Html.GetDateFormat(lover.JoinDate, "yyyy年M月d日")</span>
                 <span class="loverid">CZ-@Html.GetDateFormat(lover.ApplyTime, "yyMMdd")-@lover.LoverID</span>

@@ -198,7 +198,7 @@
                         <label class="control-label" for="birth">我们的合照头像：</label>
                         <div class="controls">
                             <p>
-                                <img id="imgAvatar"  width="196" height="136" alt="" src="@Html.GetImageUrl(lover.Avatar)" />
+                                <img id="imgAvatar"  width="196" height="136" alt="" src="@Url.GetAvatarUrl(lover.Avatar)" />
                                 <input type="hidden" value="@lover.Avatar" name="avatar" id="avatar" />
                             </p>
                             <div id="divUploadAvatar"></div>

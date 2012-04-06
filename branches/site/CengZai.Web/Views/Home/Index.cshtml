@@ -45,7 +45,7 @@
                     <section class="feed">
             	    <aside class="feed-avatar">
                 	    <a href="@Url.Action("Blog", "Blog", new { username = artUser.Username })" title="@Html.GetUserNickname(art.UserID)" target="_blank"> 
-     				    <img src="@Html.GetImageUrl(artUser.Avatar)" width="64" alt="noavatar"/>
+     				    <img src="@Url.GetAvatarUrl(artUser.Avatar)" width="64" alt="noavatar"/>
                         </a>
                         <p>&nbsp;&nbsp;@Ajax.GetFriendAddLink(artUser.UserID, "")</p>
                         <span class="feed-corner"></span>
