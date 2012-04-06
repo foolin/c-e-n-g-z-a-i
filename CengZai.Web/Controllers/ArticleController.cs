@@ -127,7 +127,6 @@ namespace CengZai.Web.Controllers
 
         [ValidateInput(false)]
         [HttpPost]
-        [CheckAuthFilter]
         public ActionResult AjaxPostText(int? artid, string title, string content, int? categoryid, int? privacy, int? top, int? draft)
         {
             try
@@ -205,6 +204,47 @@ namespace CengZai.Web.Controllers
             }
         }
 
+        //删除日志
+        [CheckAuthFilter]
+        [HttpPost]
+        public ActionResult Delete(int? artid)
+        {
+            try
+            {
+                Model.User loginUser = GetLoginUser();
+                if (loginUser == null)
+                {
+                    return JumpToLogin();
+                }
+                if (artid == null)
+                {
+                    return JumpBackAndRefresh("删除失败！", "对不起，操作错误！");
+                }
+                BLL.Article bllArt= new BLL.Article();
+                Model.Article mArt = bllArt.GetModel((int)artid);
+                if (mArt == null)
+                {
+                    return JumpBackAndRefresh("删除失败！", "对不起，日志不存在或者已被删除！");
+                }
+                if (mArt.UserID != loginUser.UserID)
+                {
+                    return JumpBackAndRefresh("删除失败！", "对不起，你无权限操作或者日志不存在！");
+                }
+                bllArt.Delete(mArt.ArtID);
+                //******* 删除附件 **********//
+                //尚未开发
+                //******* 删除附件 **********//
+                return JumpBackAndRefresh("删除成功", "删除日志成功！");
+            }
+            catch (Exception ex)
+            {
+                Log.AddErrorInfo("删除文章出现异常", ex);
+                return JumpToTips("删除失败！", "删除出现错误，请稍后重试！");
+            }
+        }
+
+
+
         /// <summary>
         /// 添加分类
         /// </summary>
@@ -214,6 +254,12 @@ namespace CengZai.Web.Controllers
         {
             try
             {
+                Model.User loginUser = GetLoginUser();
+                if (loginUser == null)
+                {
+                    return AjaxReturn("error", "您尚未登录或者登录超时");
+                }
+
                 categoryName = (categoryName + "").Trim();
                 if (string.IsNullOrEmpty(categoryName) || categoryName.Length > 20)
                 {
@@ -226,11 +272,6 @@ namespace CengZai.Web.Controllers
                 if (!string.IsNullOrEmpty(categoryDesc) && categoryDesc.Length > 300)
                 {
                     return AjaxReturn("error", "分类描述不可以大于300个字符");
-                }
-                Model.User loginUser = GetLoginUser();
-                if (loginUser == null)
-                {
-                    return AjaxReturn("error", "您尚未登录或者登录超时");
                 }
                 
                 BLL.Category bCategory = new BLL.Category();
@@ -276,7 +317,6 @@ namespace CengZai.Web.Controllers
         }
 
 
-
         /// <summary>
         /// 删除分类
         /// </summary>
@@ -286,15 +326,17 @@ namespace CengZai.Web.Controllers
         {
             try
             {
-                if (categoryID == null || categoryID <= 0)
-                {
-                    return AjaxReturn("error", "参数错误");
-                }
                 Model.User loginUser = GetLoginUser();
                 if (loginUser == null)
                 {
                     return AjaxReturn("error", "您尚未登录或者登录超时");
                 }
+
+                if (categoryID == null || categoryID <= 0)
+                {
+                    return AjaxReturn("error", "参数错误");
+                }
+
                 BLL.Category bCategory = new BLL.Category();
                 Model.Category mCategory = bCategory.GetModel((int)categoryID);
                 if (mCategory == null)
@@ -314,6 +356,7 @@ namespace CengZai.Web.Controllers
                 return AjaxReturn("error", "");
             }
         }
+
 
     }
 }

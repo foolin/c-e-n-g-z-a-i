@@ -35,4 +35,12 @@
     delFail: function (res) {
         alert("操作失败！出现异常：" + res.responseText);
     }
-}
+};
+
+
+(function (d) {
+    d['okValue'] = '确定';
+    d['cancelValue'] = '取消';
+    d['title'] = '消息';
+    // [more..]
+})($.dialog.defaults);

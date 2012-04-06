@@ -94,5 +94,25 @@ namespace CengZai.Model
 		#endregion Model
 
 	}
+
+
+    /// <summary>
+    /// 附件类型
+    /// </summary>
+    public enum AttachmentSource
+    {
+        /// <summary>
+        /// 相片
+        /// </summary>
+        Article = 1,
+        /// <summary>
+        /// 用户头像
+        /// </summary>
+        User = 2,
+        /// <summary>
+        /// 情侣合照头像
+        /// </summary>
+        Lover = 3
+    }
 }
 

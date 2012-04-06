@@ -7,10 +7,32 @@
 }
 
 @section head{
+    <script type="text/javascript">
+        function delArticleDialog(_this) {
+            $.dialog({
+                title: "确定删除？",
+                content: "删除后，日志将不能恢复，您确定删除吗？",
+                lock: true,
+                //okValue:"确定",
+                ok: function () {
+                    var url = $(_this).attr("href");
+                    var delForm = $("#formArtDel");
+                    if (delForm.size() == 0) {
+                        var htmlForm = '<form name="formArtDel" method="post" action="' + url + '" id="formArtDel"></form>';
+                        $("body").append(htmlForm);
+                    }
+                    $("#formArtDel").submit();
+                },
+                //okValue:"取消",
+                cancel: function () {
+                }
+            });
+        }
+    </script>
 }
 
 <div class="container bg-white">
-        <div class="padding">
+    <div class="padding">
             
            <h2>@ViewBag.Title</h2> 
 
@@ -57,7 +79,7 @@
                             <td>@Html.GetDateFormat(art.PostTime, "yyyy-MM-dd")</td>
                             <td>
                                 @Html.ActionLink("编辑", "PostText", "Article", new { artid = art.ArtID }, new { target = "_self" })
-                                @Html.ActionLink("删除", "Delete", "Article", new { artid = art.ArtID }, new { target = "_self", onclick="return $.confirm('确定删除该文章吗？');" })
+                                @Html.ActionLink("删除", "Delete", "Article", new { artid = art.ArtID }, new { target = "_self", onclick = "delArticleDialog(this); return false;" })
                             </td>
                           </tr>
                          }
@@ -68,9 +90,8 @@
             </div>
             <div class="pager">@Html.Pager()</div>
      
-        </div>
     </div>
-    
-</div>   
+</div>
 <!--/.container -->
+
 
