@@ -507,6 +507,7 @@
     <Content Include="Views\Settings\Avatar.cshtml" />
     <Content Include="Views\Settings\_SettingNav.cshtml" />
     <Content Include="Views\Blog\Profile.cshtml" />
+    <Content Include="Views\Article\Index.cshtml" />
     <None Include="Views\Blog\Certificate.cshtml" />
     <Content Include="Views\Blog\Article.cshtml" />
     <Content Include="Views\Blog\BlogSingle.cshtml" />

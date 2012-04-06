@@ -16,12 +16,46 @@ namespace CengZai.Web.Controllers
         //
         // GET: /Article/
         [CheckAuthFilter]
-        public ActionResult Index(string domain)
+        public ActionResult Index(string active)
         {
-            BLL.Article bll = new BLL.Article();
-            List<Model.Article> artList = bll.GetModelList("State=1");
-            ViewBag.Domain = domain + "";
-            return View(artList);
+            try
+            {
+                Model.User loginUser = GetLoginUser();
+                if (loginUser == null)
+                {
+                    return JumpToLogin();
+                }
+                string strWhere = "UserID=" + loginUser.UserID;
+                if (active == "draft")
+                {
+                    strWhere += " and State=0 ";
+                }
+                else if (active == "public")
+                {
+                    strWhere += " and State=1 and privacy=0 ";
+                }
+                else if (active == "friend")
+                {
+                    strWhere += " and State=1 and privacy=1 ";
+                }
+                else if (active == "privacy")
+                {
+                    strWhere += " and State=1 and privacy=2 ";
+                }
+                BLL.Article bll = new BLL.Article();
+                DataSet dsList = bll.GetListByPage(strWhere, "PostTime DESC", mPageSize, mPageIndex, out mTotalCount);
+                SetPage();  //设置分页
+                if (dsList != null && dsList.Tables.Count > 0)
+                {
+                    ViewBag.ArtList = bll.DataTableToList(dsList.Tables[0]);
+                }
+                return View();
+            }
+            catch (Exception ex)
+            {
+                Log.AddErrorInfo("获取用户文章列表异常", ex);
+                return JumpToTips("无法获取文章列表", "糟糕！无法获取日志列表，请稍后重试！");
+            }
         }
 
         [CheckAuthFilter]
@@ -133,7 +167,10 @@ namespace CengZai.Web.Controllers
                 model.Content = Helper.Util.GetSafeHtml(content);
                 model.IsTop = (top == null ? 0 : top);
                 model.PostIP = Helper.Util.GetIP();
-                model.PostTime = DateTime.Now;
+                if (isNewArticle || model.PostTime== null)
+                {
+                    model.PostTime = DateTime.Now;
+                }
                 model.Privacy = (privacy == null ? 0 : privacy);
                 model.ReplyCount = 0;
                 model.ReportCount = 0;

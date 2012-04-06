@@ -43,7 +43,7 @@
                     time: 3000,
                     focus: false,
                     beforeunload: function () {
-                        location.href="/";
+                        location.href = "@(Request.UrlReferrer != null ? Request.UrlReferrer.PathAndQuery: "")";
                         return true;
                     }
                 });
