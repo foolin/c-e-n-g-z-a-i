@@ -1,0 +1,76 @@
+﻿@{
+    ViewBag.Title = "日志管理";
+    var content = Request.Unvalidated().Form["content"];
+    var artList = ViewBag.ArtList as List<CengZai.Model.Article>;
+    var active = Request["Active"];
+    var loginUser = Html.GetLoginUser();
+}
+
+@section head{
+}
+
+<div class="container bg-white">
+        <div class="padding">
+            
+           <h2>@ViewBag.Title</h2> 
+
+            <ul class="nav nav-tabs">
+                <li @if (active == "draft")
+                    {<text>class="active"</text>}>@Html.ActionLink("草稿", "Index", new { active = "draft" })</li>
+                <li @if (active == "public")
+                    {<text>class="active"</text>}>@Html.ActionLink("所有人可见", "Index", new { active = "public" })</li>
+                <li @if (active == "friend")
+                    {<text>class="active"</text>}>@Html.ActionLink("仅好友可见", "Index", new { active = "friend" })</li>
+                <li @if (active == "privacy")
+                    {<text>class="active"</text>}>@Html.ActionLink("仅自己可见", "Index", new { active = "privacy" })</li>
+                <li @if (active == "all" || string.IsNullOrEmpty(active) )
+                    {<text>class="active"</text>}>@Html.ActionLink("全部", "Index", new { active="all" })</li>
+            </ul>
+ 
+            <div class="tab-content">
+                <div class="tab-pane active" id="all">
+                    @if (artList == null)
+                    {
+                        <p>暂无任何日志</p>
+                    }
+                    else
+                    {
+                        <table class="table table-border" >
+                        <thead>
+                          <tr>
+                            <th>标题</th>
+                            <th>内容</th>
+                            <th style="width:10%">隐私</th>
+                            <th style="width:5%">类型</th>
+                            <th style="width:10%">日期</th>
+                            <th style="width:10%">操作</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                         @foreach(CengZai.Model.Article art in artList)
+                         {
+                          <tr>
+                            <td>@Html.ActionLink(art.Title ?? "日志", "Article", "Blog", new { username = loginUser.Username, artid = art.ArtID }, new { target = "_blank" })</td>
+                            <td>@Html.GetRemoveHtmlContent(art.Content, 50)...</td>
+                            <td>@(art.Privacy == 2 ? "仅自己可见" : art.Privacy == 1 ? "仅好友可见":"所有人可见")</td>
+                            <td>@(art.State > 0 ? "发布" : "草稿")</td>
+                            <td>@Html.GetDateFormat(art.PostTime, "yyyy-MM-dd")</td>
+                            <td>
+                                @Html.ActionLink("编辑", "PostText", "Article", new { artid = art.ArtID }, new { target = "_self" })
+                                @Html.ActionLink("删除", "Delete", "Article", new { artid = art.ArtID }, new { target = "_self", onclick="return $.confirm('确定删除该文章吗？');" })
+                            </td>
+                          </tr>
+                         }
+                        </tbody>
+                      </table>
+                    }
+                </div>
+            </div>
+            <div class="pager">@Html.Pager()</div>
+     
+        </div>
+    </div>
+    
+</div>   
+<!--/.container -->
+
