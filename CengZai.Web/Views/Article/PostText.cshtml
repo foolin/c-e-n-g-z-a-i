@@ -9,8 +9,8 @@
 }
 
 @section head{
-	<script type="text/javascript" charset="utf-8" src="../js/kindeditor/kindeditor-min.js"></script>
-	<script type="text/javascript" charset="utf-8" src="../js/kindeditor/lang/zh_CN.js"></script>
+	<script type="text/javascript" charset="utf-8" src="@Url.GetResourceUrl("/js/kindeditor/kindeditor-min.js")"></script>
+	<script type="text/javascript" charset="utf-8" src="@Url.GetResourceUrl("/js/kindeditor/lang/zh_CN.js")"></script>
 	<script type="text/javascript">
 	    $(function () {
 	        var editor = KindEditor.create('textarea[name="content"]',
