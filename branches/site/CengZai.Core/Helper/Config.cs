@@ -47,6 +47,19 @@ namespace CengZai.Helper
 
 
         /// <summary>
+        /// js/css文件资源文件主机地址
+        /// </summary>
+        public static string ResourceDomain
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["ResourceDomain"] + "";
+            }
+        }
+
+
+
+        /// <summary>
         /// 客服邮箱
         /// </summary>
         public static string KefuEmail

@@ -114,6 +114,7 @@
     <Compile Include="MvcExtend\HtmlExtend.cs" />
     <Compile Include="MvcExtend\HtmlExtendForApp.cs" />
     <Compile Include="MvcExtend\HtmlExtendForUser.cs" />
+    <Compile Include="MvcExtend\UrlExtend.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

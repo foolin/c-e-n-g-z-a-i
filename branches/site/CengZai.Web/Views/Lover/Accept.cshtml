@@ -4,11 +4,11 @@
     var lover = ViewBag.Lover as CengZai.Model.Lover;
 }
 @section head{
-    <link href="@Url.Content("~/js/calendar/calendar.css")" rel="stylesheet" type="text/css" />
-    <script src="@Url.Content("~/js/calendar/jquery.calendar.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/js/swfupload/fileprogress.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/js/swfupload/swfupload.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/js/swfupload/handlers.js")" type="text/javascript"></script>
+    <link href="@Url.GetResourceUrl("/js/calendar/calendar.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.GetResourceUrl("/js/calendar/jquery.calendar.js")" type="text/javascript"></script>
+    <script src="@Url.GetResourceUrl("/js/swfupload/fileprogress.js")" type="text/javascript"></script>
+    <script src="@Url.GetResourceUrl("/js/swfupload/swfupload.js")" type="text/javascript"></script>
+    <script src="@Url.GetResourceUrl("/js/swfupload/handlers.js")" type="text/javascript"></script>
     <script type="text/javascript">
 
         var oathTplData = [""
@@ -71,8 +71,8 @@
 
     window.onload = function () {
         var settings = {
-            flash_url: "../../js/swfupload/swfupload.swf",
-            flash9_url: "../../js/swfupload/swfupload_fp9.swf",
+            flash_url: "@Url.GetResourceUrl("/js/swfupload/swfupload.swf")",
+            flash9_url: "@Url.GetResourceUrl("/js/swfupload/swfupload_fp9.swf")",
             upload_url: "/Lover/UploadImage",
             file_post_name: "fileAvatar",
             post_params: {
@@ -90,7 +90,7 @@
             button_window_mode: SWFUpload.WINDOW_MODE.TRANSPARENT,
 
             // Button settings
-            //button_image_url: "../../img/upload-photo.png",
+            //button_image_url: "@Url.GetResourceUrl("/img/upload-photo.png")",
             button_width: 160,
             button_height: 38,
             button_placeholder_id: "divUploadAvatar",

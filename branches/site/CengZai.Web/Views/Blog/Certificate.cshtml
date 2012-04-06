@@ -18,11 +18,11 @@
 }
 
 @section head{
-    <link href="../../js/calendar/calendar.css" rel="stylesheet" type="text/css" />
-    <script src="../../js/calendar/jquery.calendar.js" type="text/javascript"></script>
-    <script src="../../js/swfupload/swfupload.js" type="text/javascript"></script>
-    <script src="../../js/swfupload/handlers.js" type="text/javascript"></script>
-    @*<script src="../../js/turn.min.js" type="text/javascript"></script>*@
+    <link href="@Url.GetResourceUrl("/js/calendar/calendar.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.GetResourceUrl("/js/calendar/jquery.calendar.js")" type="text/javascript"></script>
+    <script src="@Url.GetResourceUrl("/js/swfupload/swfupload.js")" type="text/javascript"></script>
+    <script src="@Url.GetResourceUrl("/js/swfupload/handlers.js")" type="text/javascript"></script>
+    @*<script src="@Url.GetResourceUrl("/js/turn.min.js")" type="text/javascript"></script>*@
     <style type="text/css">
         #ctrl-link
         {
@@ -330,7 +330,7 @@
         $("#ie-certificate-info").animate({
             width: 522, height: 421
         }, 1000);
-        $("#ie-certificate-info span").show();
+        //$("#ie-certificate-info span").css("display","block");
         certificateFlag = 1;
     }
     function certificateOpenInfo() {
@@ -340,7 +340,8 @@
         $("#ie-certificate-info").animate({
             width: 0, height: 421
         }, 1000, "swing");
-        $("#ie-certificate-info span").hide();
+        //$("#ie-certificate-info span").css("display", "none");
+        //$("#ie-certificate-info span").css("width", "auto");
         certificateFlag = 0;
     }
     function certificateAutoSwitch() {

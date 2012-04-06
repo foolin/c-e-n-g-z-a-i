@@ -3,8 +3,8 @@
     var user = Html.GetLoginUser();
 }
 @section head{
-    <link href="@Url.Content("~/js/calendar/calendar.css")" rel="stylesheet" type="text/css" />
-    <script src="@Url.Content("~/js/calendar/jquery.calendar.js")" type="text/javascript"></script>
+    <link href="@Url.GetResourceUrl("/js/calendar/calendar.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.GetResourceUrl("/js/calendar/jquery.calendar.js")" type="text/javascript"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             $("#birth").calendar();
