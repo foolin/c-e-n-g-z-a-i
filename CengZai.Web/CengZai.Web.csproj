@@ -25,6 +25,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <FilesToIncludeForPublish>OnlyFilesToRunTheApp</FilesToIncludeForPublish>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -159,7 +160,7 @@
     <Content Include="resource\js\swfupload\fileprogress.js" />
     <Content Include="resource\js\swfupload\handlers.js" />
     <Content Include="resource\js\turn.min.js" />
-    <Content Include="Pages\VerifyCode.aspx" />
+    <Content Include="pages\VerifyCode.aspx" />
     <Content Include="resource\css\bootstrap.css" />
     <Content Include="resource\css\bootstrap.min.css" />
     <Content Include="resource\css\login.css" />
@@ -213,7 +214,6 @@
     <Content Include="resource\js\swfupload\swfupload_fp9.swf" />
     <Content Include="Test.aspx" />
     <Content Include="Global.asax" />
-    <Content Include="UploadFiles\img\noavatar.jpg" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -230,8 +230,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\" />
-    <Folder Include="Dlls\" />
-    <Folder Include="Models\" />
     <Folder Include="resource\js\kindeditor\attached\" />
     <Folder Include="resource\tpl\default\" />
   </ItemGroup>
