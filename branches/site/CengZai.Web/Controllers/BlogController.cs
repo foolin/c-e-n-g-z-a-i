@@ -141,13 +141,13 @@ namespace CengZai.Web.Controllers
                 }
                 catch (Exception ex)
                 {
-                    Log.AddErrorInfo("BlogController.Article()更新阅读量异常", ex);
+                    Log.Error("BlogController.Article()更新阅读量异常", ex);
                 }
                 ViewBag.Article = art;
             }
             catch (Exception ex)
             {
-                Log.AddErrorInfo("BlogController.Article()读取文章异常", ex);
+                Log.Error("BlogController.Article()读取文章异常", ex);
                 return JumpToTips("对不起，网页出现异常", "对不起，网页出现异常！");
             }
             return View();

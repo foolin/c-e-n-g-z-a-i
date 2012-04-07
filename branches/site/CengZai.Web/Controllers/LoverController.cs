@@ -34,7 +34,7 @@ namespace CengZai.Web.Controllers
             }
             catch (Exception ex)
             {
-                Log.AddErrorInfo("Lover/Index异常", ex);
+                Log.Error("Lover/Index异常", ex);
                 return JumpTo("对不起，出错了", "哎呀，对不起！出错了，请刷新或者稍后访问！", "", 0);
             }
             return View();
@@ -78,7 +78,7 @@ namespace CengZai.Web.Controllers
             }
             catch (Exception ex)
             {
-                Log.AddErrorInfo("Lover/Apply出现异常", ex);
+                Log.Error("Lover/Apply出现异常", ex);
                 return JumpToTips("囧！", "啊哟，出现点小小异常，请稍后重试或者联系我们。");
             }
             return View();
@@ -123,7 +123,7 @@ namespace CengZai.Web.Controllers
                     return AjaxReturn("nickname", "请输入您的名字");
                 }
                 if (string.IsNullOrEmpty(avatar) ||
-                    !System.IO.File.Exists(Server.MapPath(Config.UploadMapPath + "/" + avatar))
+                    !System.IO.File.Exists(Util.MapPath(Config.UploadMapPath + "/" + avatar))
                     )
                 {
                     return AjaxReturn("avatar", "请上传你们的合照头像");
@@ -194,7 +194,7 @@ namespace CengZai.Web.Controllers
             }
             catch (Exception ex)
             {
-                Log.AddErrorInfo("LoverController.Apply()出现异常", ex);
+                Log.Error("LoverController.Apply()出现异常", ex);
                 return AjaxReturn("error", "操作异常，请检查输入或者稍后重试");
             }
         }
@@ -241,11 +241,11 @@ namespace CengZai.Web.Controllers
                     return AjaxReturn("-3", "请选择图片文件！");
                 }
                 thumbnail = ImageHelper.MakeThumbnail(avatar, Config.CertificateAvatarWidth, Config.CertificateAvatarHeight, ThubnailMode.Cut, ImageFormat.Jpeg);
-                thumbnail.Save(Server.MapPath(Config.UploadMapPath + "/" + fileName));
+                thumbnail.Save(Util.MapPath(Config.UploadMapPath + "/" + fileName));
             }
             catch (Exception ex)
             {
-                Log.AddErrorInfo("LoverController.UploadImage上传文件出错", ex);
+                Log.Error("LoverController.UploadImage上传文件出错", ex);
                 return AjaxReturn("-4", "上传图片出错，请确定您上传的是图片！");
             }
             finally
@@ -311,7 +311,7 @@ namespace CengZai.Web.Controllers
             }
             catch (Exception ex)
             {
-                Log.AddErrorInfo("Lover/UnAccept出现异常：", ex);
+                Log.Error("Lover/UnAccept出现异常：", ex);
                 return JumpToHome("对不起，操作错误！", "您访问的页面出现点异常！");
             }
 
@@ -363,7 +363,7 @@ namespace CengZai.Web.Controllers
                     return AjaxReturn("nickname", "请输入您的名字");
                 }
                 if (string.IsNullOrEmpty(avatar) ||
-                    !System.IO.File.Exists(Server.MapPath(Config.UploadMapPath + "/" + avatar))
+                    !System.IO.File.Exists(Util.MapPath(Config.UploadMapPath + "/" + avatar))
                     )
                 {
                     return AjaxReturn("avatar", "请上传你们的合照头像");
@@ -426,7 +426,7 @@ namespace CengZai.Web.Controllers
             }
             catch (Exception ex)
             {
-                Log.AddErrorInfo("LoverController.Accept()出现异常", ex);
+                Log.Error("LoverController.Accept()出现异常", ex);
                 return AjaxReturn("error", "操作异常，请检查输入或者稍后重试");
             }
         }
@@ -469,7 +469,7 @@ namespace CengZai.Web.Controllers
             }
             catch (Exception ex)
             {
-                Log.AddErrorInfo("Lover/UnAccept出现异常：", ex);
+                Log.Error("Lover/UnAccept出现异常：", ex);
                 return JumpToHome("对不起，操作错误！", "您访问的页面出现点异常！");
             }
 
@@ -518,7 +518,7 @@ namespace CengZai.Web.Controllers
             }
             catch (Exception ex)
             {
-                Log.AddErrorInfo("Lover/UnAccept出现异常：", ex);
+                Log.Error("Lover/UnAccept出现异常：", ex);
                 return JumpToHome("对不起，操作错误！", "您访问的页面出现点异常！");
             }
         }
@@ -553,7 +553,7 @@ namespace CengZai.Web.Controllers
             }
             catch (Exception ex)
             {
-                Log.AddErrorInfo("Lover/UnAccept出现异常：", ex);
+                Log.Error("Lover/UnAccept出现异常：", ex);
                 return JumpToHome("对不起，操作错误！", "您访问的页面出现点异常！");
             }
             return View();
@@ -622,7 +622,7 @@ namespace CengZai.Web.Controllers
             }
             catch (Exception ex)
             {
-                Log.AddErrorInfo("Lover/UnAccept出现异常：", ex);
+                Log.Error("Lover/UnAccept出现异常：", ex);
                 return JumpToHome("对不起，操作错误！", "您访问的页面出现点异常！");
             }
             return View();
@@ -667,7 +667,7 @@ namespace CengZai.Web.Controllers
             }
             catch (Exception ex)
             {
-                Log.AddErrorInfo("Lover/Abolish出现异常：", ex);
+                Log.Error("Lover/Abolish出现异常：", ex);
                 return JumpToHome("对不起，操作错误！", "您访问的页面出现点异常！");
             }
         }

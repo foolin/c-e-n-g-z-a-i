@@ -20,16 +20,16 @@ namespace CengZai.Helper
         /// </summary>
         /// <param name="info"></param>
         /// <param name="ex"></param>
-        public static void AddErrorInfo(string info, Exception ex)
+        public static void Error(string info, Exception ex)
         {
-            AddErrorInfo(info + "\n" + ex.Message + "\n" + ex.StackTrace);
+            Error(info + "\n" + ex.Message + "\n" + ex.StackTrace);
         }
 
         /// <summary>
         /// 打印错误信息
         /// </summary>
         /// <param name="info"></param>
-        public static void AddErrorInfo(string info)
+        public static void Error(string info)
         {
             string logFilePath = AppDomain.CurrentDomain.BaseDirectory + "\\Log\\Error.txt";
             try
@@ -57,9 +57,9 @@ namespace CengZai.Helper
         /// 打印调试信息
         /// </summary>
         /// <param name="info"></param>
-        public static void AddDebugInfo(string info)
+        public static void Info(string info)
         {
-            string logFilePath = AppDomain.CurrentDomain.BaseDirectory + "\\Log\\DebugLog\\Error.txt";
+            string logFilePath = AppDomain.CurrentDomain.BaseDirectory + "\\Log\\DebugLog.txt";
             try
             {
                 debuglogger.Error(info);

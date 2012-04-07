@@ -49,7 +49,7 @@ namespace CengZai.Web.Controllers
             }
             catch (Exception ex)
             {
-                Log.AddErrorInfo("私信异常", ex);
+                Log.Error("私信异常", ex);
             }
             return View();
         }
@@ -98,7 +98,7 @@ namespace CengZai.Web.Controllers
             }
             catch (Exception ex)
             {
-                Log.AddErrorInfo("发送私信异常", ex);
+                Log.Error("发送私信异常", ex);
             }
             return View();
         }
@@ -151,7 +151,7 @@ namespace CengZai.Web.Controllers
             }
             catch (Exception ex)
             {
-                Log.AddErrorInfo("发送私信异常", ex);
+                Log.Error("发送私信异常", ex);
                 return AjaxReturn("error", "发送出现异常");
             }
             

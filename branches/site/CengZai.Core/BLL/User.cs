@@ -229,7 +229,7 @@ namespace CengZai.BLL
             }
             catch (Exception ex)
             {
-                Log.AddErrorInfo("BLL.User.Update()异常", ex);
+                Log.Error("BLL.User.Update()异常", ex);
             }
             return dsList != null;
         }

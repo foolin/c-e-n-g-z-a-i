@@ -172,7 +172,7 @@ namespace CengZai.Web.Controllers
             }
             catch (Exception ex)
             {
-                Log.AddErrorInfo("User/Login异常：" + ex.Message);
+                Log.Error("User/Login异常：" + ex.Message);
                 ModelState.AddModelError("Error", "登录异常，请稍后重试！");
                 return View();
             }
@@ -372,7 +372,7 @@ namespace CengZai.Web.Controllers
                 }
                 catch (Exception ex)
                 {
-                    Log.AddErrorInfo("Account/Register注册激活码处理异常", ex);
+                    Log.Error("Account/Register注册激活码处理异常", ex);
                 }
 
                 try
@@ -430,7 +430,7 @@ namespace CengZai.Web.Controllers
             }
             catch (Exception ex)
             {
-                Helper.Log.AddErrorInfo("User/Reginster异常：" + ex.Message);
+                Helper.Log.Error("User/Reginster异常：" + ex.Message);
                 ModelState.AddModelError("ErrorMsg", "注册异常，请稍后重试！" + ex.Message);
             }
 
@@ -531,7 +531,7 @@ namespace CengZai.Web.Controllers
                     }
                     catch (Exception ex)
                     {
-                        Log.AddErrorInfo("重发激活邮件异常", ex);
+                        Log.Error("重发激活邮件异常", ex);
                         ViewBag.Message = "重发激活邮件失败，请检查邮箱是否正确，或者稍后重试。";
                         return View();
                     }
@@ -539,7 +539,7 @@ namespace CengZai.Web.Controllers
             }
             catch (Exception ex)
             {
-                Log.AddErrorInfo("重发激活邮件异常", ex);
+                Log.Error("重发激活邮件异常", ex);
                 ViewBag.Message = "重发激活邮件异常";
                 return View();
             }
@@ -699,14 +699,14 @@ namespace CengZai.Web.Controllers
                 }
                 catch (Exception ex)
                 {
-                    Log.AddErrorInfo("发送重置密码邮件异常", ex);
+                    Log.Error("发送重置密码邮件异常", ex);
                     ViewBag.Message = "发送重置密码邮件失败，请检查邮箱是否正确，或者稍后重试。";
                     return View();
                 }
             }
             catch (Exception ex)
             {
-                Log.AddErrorInfo("发送重置密码邮件异常", ex);
+                Log.Error("发送重置密码邮件异常", ex);
                 ViewBag.Message = "发送重置密码邮件异常";
                 return View();
             }
@@ -781,7 +781,7 @@ namespace CengZai.Web.Controllers
             }
             catch (Exception ex)
             {
-                Log.AddErrorInfo("重置密码异常", ex);
+                Log.Error("重置密码异常", ex);
                 return JumpToTips("重置密码出错", "对不起，重置密码出错，请稍后重试！");
             }
             return View();
@@ -825,7 +825,7 @@ namespace CengZai.Web.Controllers
             }
             catch (Exception ex)
             {
-                Log.AddErrorInfo("重置密码异常！", ex);
+                Log.Error("重置密码异常！", ex);
                 return JumpToTips("重置密码失败", "重置密码异常，请重试或者联系客服！");
             }
         }
@@ -897,7 +897,7 @@ namespace CengZai.Web.Controllers
             }
             catch (Exception ex)
             {
-                Log.AddErrorInfo("申请邀请码异常", ex);
+                Log.Error("申请邀请码异常", ex);
                 ViewBag.Message = "申请邀请码异常，请稍后重试。";
                 return View();
             }

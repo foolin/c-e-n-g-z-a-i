@@ -374,7 +374,7 @@ namespace CengZai.Web.Controllers
             }
             catch(Exception ex)
             {
-                Log.AddErrorInfo("发送系统消息异常", ex);
+                Log.Error("发送系统消息异常", ex);
                 return false;
             }
         }

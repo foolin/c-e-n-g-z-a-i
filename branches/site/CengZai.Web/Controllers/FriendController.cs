@@ -68,7 +68,7 @@ namespace CengZai.Web.Controllers
             }
             catch (Exception ex)
             {
-                Log.AddErrorInfo("批量关注朋友页面出现异常！", ex);
+                Log.Error("批量关注朋友页面出现异常！", ex);
                 return JumpToAction("页面出现异常", "即将跳转到完善资料页面...", "Avatar", "Settings");
             }
             return View();
@@ -120,7 +120,7 @@ namespace CengZai.Web.Controllers
             }
             catch (Exception ex)
             {
-                Log.AddErrorInfo("批量关注朋友页面出现异常！", ex);
+                Log.Error("批量关注朋友页面出现异常！", ex);
                 return JumpToAction("页面出现异常", "即将跳转到完善资料页面...", "Avatar", "Settings");
             }
             return View();
@@ -164,7 +164,7 @@ namespace CengZai.Web.Controllers
             }
             catch (Exception ex)
             {
-                Log.AddErrorInfo("Find(int[] userid)关注用户提交失败！", ex);
+                Log.Error("Find(int[] userid)关注用户提交失败！", ex);
                 return JumpBackAndRefresh("关注失败", "对不起，关注出现异常");
             }
         }
@@ -203,7 +203,7 @@ namespace CengZai.Web.Controllers
             }
             catch (Exception ex)
             {
-                Log.AddErrorInfo("添加用户异常", ex);
+                Log.Error("添加用户异常", ex);
                 return AjaxReturn("-1", "出现异常！");
             }
         }
@@ -243,7 +243,7 @@ namespace CengZai.Web.Controllers
             }
             catch (Exception ex)
             {
-                Log.AddErrorInfo("取消关注异常", ex);
+                Log.Error("取消关注异常", ex);
                 return AjaxReturn("-1", "出现异常！");
             }
         }
@@ -276,7 +276,7 @@ namespace CengZai.Web.Controllers
             }
             catch (Exception ex)
             {
-                Log.AddErrorInfo("批量关注朋友页面出现异常！", ex);
+                Log.Error("批量关注朋友页面出现异常！", ex);
                 return JumpToAction("页面出现异常", "即将跳转到完善资料页面...", "Avatar", "Settings");
             }
             return View();
@@ -321,7 +321,7 @@ namespace CengZai.Web.Controllers
             }
             catch (Exception ex)
             {
-                Log.AddErrorInfo("FeedFriendsForFirstLogin(int[] userid)关注用户提交失败！", ex);
+                Log.Error("FeedFriendsForFirstLogin(int[] userid)关注用户提交失败！", ex);
                 return JumpToAction("关注失败", "对不起，关注出现异常", "FeedFriendsForFirstLogin", null, 5);
             }
         }
@@ -370,7 +370,7 @@ namespace CengZai.Web.Controllers
             }
             catch (Exception ex)
             {
-                Log.AddErrorInfo("EditFriend(int[] userid, int? type)关注用户提交失败！", ex);
+                Log.Error("EditFriend(int[] userid, int? type)关注用户提交失败！", ex);
                 return JumpBackAndRefresh("操作失败", "对不起，操作出现异常");
             }
         }
@@ -467,7 +467,7 @@ namespace CengZai.Web.Controllers
             }
             catch (Exception ex)
             {
-                Log.AddErrorInfo("发送邀请连接异常", ex);
+                Log.Error("发送邀请连接异常", ex);
                 ModelState.AddModelError("error", "对不起，邀请连接出现异常，请稍后重试！");
                 return View();
             }
