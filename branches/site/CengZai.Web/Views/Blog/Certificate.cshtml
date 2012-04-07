@@ -12,7 +12,7 @@
     {
         girl = new CengZai.Model.User();
     }
-    ViewBag.Title = boy.Nickname + "&" + girl.Nickname + "的"+ Html.GetCertificateName(lover.Certificate);
+    ViewBag.Title = boy.Nickname + "和" + girl.Nickname + "的"+ Html.GetCertificateName(lover.Certificate);
     var coverImg = string.Format("ie-certificate_cover_{0}.png",
         lover.Certificate == (int)CengZai.Model.LoverCertificate.Marry ? "marry" : "love");
 }

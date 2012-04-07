@@ -111,6 +111,11 @@ namespace CengZai.Web.Controllers
         //证件信息
         public ActionResult Certificate(string username, int? loverid)
         {
+            Model.Lover lover = ViewBag.BlogLover as Model.Lover;
+            if (lover == null)
+            {
+                return JumpToHome("证书不存在！", "对不起，您访问的证书不存在！");
+            }
             return View();
         }
 
