@@ -401,7 +401,7 @@ namespace CengZai.Web.Controllers
         /// <returns></returns>
         protected AjaxModel SaveImageFromTemp(string filename)
         {
-            return SaveImageFromTemp(filename, 0, 0, 0, 0);
+            return CutAndSaveImageFromTemp(filename, 0, 0, 0, 0);
         }
 
 
@@ -414,7 +414,7 @@ namespace CengZai.Web.Controllers
         /// <param name="w"></param>
         /// <param name="h"></param>
         /// <returns></returns>
-        protected AjaxModel SaveImageFromTemp(string filename, int? x, int? y, int? w, int? h)
+        protected AjaxModel CutAndSaveImageFromTemp(string filename, int? x, int? y, int? w, int? h)
         {
             try
             {
@@ -454,7 +454,7 @@ namespace CengZai.Web.Controllers
                 {
                     thumbnail = ImageHelper.CutImage(original, (int)x, (int)y, (int)w, (int)h);
                 }
-                else
+                else if (w > Config.UploadImageMaxWidth || h > Config.UploadImageMaxHeight)
                 {
                     thumbnail = ImageHelper.MakeThumbnail(
                         original
@@ -462,6 +462,10 @@ namespace CengZai.Web.Controllers
                         , Config.UploadImageMaxHeight
                         , ThubnailMode.Auto
                         , ImageFormat.Jpeg);
+                }
+                else
+                {
+                    thumbnail = original.Clone() as Image;   //复制一个副本
                 }
                 Util.EnsureFileDir(newFileMapPath);    //确保文件存在
                 thumbnail.Save(newFileMapPath); //保存新文件

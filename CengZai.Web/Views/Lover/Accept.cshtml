@@ -9,6 +9,8 @@
     <script src="@Url.GetResourceUrl("/js/swfupload/fileprogress.js")" type="text/javascript"></script>
     <script src="@Url.GetResourceUrl("/js/swfupload/swfupload.js")" type="text/javascript"></script>
     <script src="@Url.GetResourceUrl("/js/swfupload/handlers.js")" type="text/javascript"></script>
+    <link href="@Url.GetResourceUrl("/js/jcrop/css/jquery.Jcrop.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.GetResourceUrl("/js/jcrop/js/jquery.Jcrop.min.js")" type="text/javascript"></script>
     <script type="text/javascript">
 
         var oathTplData = [""
@@ -73,8 +75,10 @@
         var settings = {
             flash_url: "@Url.GetResourceUrl("/js/swfupload/swfupload.swf")",
             flash9_url: "@Url.GetResourceUrl("/js/swfupload/swfupload_fp9.swf")",
-            upload_url: "/Lover/UploadImage",
-            file_post_name: "fileAvatar",
+//            upload_url: "/Lover/UploadImage",
+//            file_post_name: "fileAvatar",
+            upload_url: "/Tool/AjaxUploadTempImage",
+            file_post_name: "file",
             post_params: {
                 "ASPSESSID": "@Session.SessionID",
                 "loverid": "@lover.LoverID"
@@ -133,12 +137,15 @@
     function uploadSuccess(file, serverData) {
         try {
             var data = eval('(' + serverData + ')');
-            if (data.id == 0) {
-                $("#avatar").val(data.msg);
-                var showUrl = '@CengZai.Helper.Config.UploadHttpPath/' + data.msg;
-                $("#imgAvatar").attr("src", showUrl);
-                $("#imgAvatar").css("display", "block");
-                $("#tips-avatar").html("上传完毕");
+            if (data.id == "success") {
+//                $("#avatar").val(data.msg);
+//                var showUrl = '@CengZai.Helper.Config.UploadHttpPath/' + data.msg;
+//                $("#imgAvatar").attr("src", showUrl);
+//                $("#imgAvatar").css("display", "block");
+//                $("#tips-avatar").html("上传完毕");
+                var filename = data.msg;
+                var showUrl =  '@CengZai.Helper.Config.UploadHttpPath/' + filename;
+                openCutImageDialog(filename, showUrl);
             }
             else {
                 $("#tips-avatar").html(data.msg);
@@ -220,7 +227,7 @@
                         <div class="controls">
                             <input type="text" class="input-middle" value="@Html.GetDateFormat(user.Birth,"yyyy-MM-dd")" name="birth" id="birth">
                             <span class="field-validation-error" data-valmsg-for="birth" id="tips-birth" data-valmsg-replace="true"></span>
-                            <p class="help-block">请填写真实生日，会显示在证件上</p>
+                            <p class="help-block">请填写真实生日，会显示在证件上，如：1990-02-14</p>
                         </div>
                     </div>
                     <div class="control-group">
@@ -276,4 +283,84 @@
         </div>
     </div>
 </div>
+
+
+ <!-- sample modal content -->
+<div id="imgCutModal" class="hide">
+@using (Ajax.BeginForm("AjaxCutTempImage", "Tool", new AjaxOptions { OnSuccess = "cutResult" }))
+{
+    <img id="imgCutOriginal" alt="" />
+   
+    <div class="padding">
+        <input type="submit" value="保存选中区域" class="btn btn-primary" /> <span class="muted">点击图片选取框进行裁剪</span>
+    </div>
+    <div id="coords">
+        <input type="hidden" id="hdFilename" name="filename" value="" />
+        <input type="hidden" id="x" name="x" value="0" />
+        <input type="hidden" id="y" name="y" value="0" />
+        <input type="hidden" id="w" name="w" value="0" />
+        <input type="hidden" id="h" name="h" value="0" />
+    </div>
+}
+</div>
+
+
+
+<script type="text/javascript">
+    function openCutImageDialog(filename, showUrl) {
+        $("#imgCutOriginal").attr("src", showUrl);
+        $("#hdFilename").val(filename);
+        //初始化裁剪对话框
+        $.dialog({
+            id: "DIALOG_CUT_IMAGE",
+            title: '裁剪上传图片',
+            content: $('#imgCutModal').html(),
+            focus: false,
+            lock: true,
+            padding: 3
+        });
+
+        //初始化裁剪
+        $('#imgCutOriginal').Jcrop({
+            onChange: setCoords,
+            onSelect: setCoords,
+            onRelease: clearCoords,
+            bgColor: 'black',
+            bgOpacity: .4,
+            setSelect: [0, 0, 180, 120],
+            aspectRatio: 180 / 120,
+            minSize: [180, 120]
+        });
+    }
+
+    function setCoords(c) {
+        $('#x').val(c.x);
+        $('#y').val(c.y);
+        $('#w').val(c.w);
+        $('#h').val(c.h);
+    };
+
+    function clearCoords() {
+        $('#coords input').val('');
+    };
+
+    function cutResult(e) {
+        e = eval(e);
+        if (e.id == "success") {
+            var filename = e.msg;
+            var showUrl = '@CengZai.Helper.Config.UploadHttpPath/' + filename;
+            $("#avatar").val(filename);
+            $("#imgAvatar").attr("src", showUrl);
+            $("#imgAvatar").css("display", "block");
+            $("#tips-avatar").html("上传完毕");
+            $.dialog.get('DIALOG_CUT_IMAGE').close();
+        }
+        else {
+            alert(e.msg);
+        }
+    }
+
+</script>
+
+
 
