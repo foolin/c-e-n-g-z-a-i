@@ -115,7 +115,7 @@ namespace CengZai.Web.Controllers
                 }
                 if (new BLL.Lover().GetMyLover((int)honeyUserID) != null)
                 {
-                    return AjaxReturn("honeyUserID", "唉哟，对方帐号怎么不存在呢？");
+                    return AjaxReturn("honeyUserID", "唉哟，对方有对象喇，您想干嘛？嘿嘿！");
                 }
                 nickname = (nickname + "").Trim();
                 if (nickname.Length == 0 || nickname.Length > 20)
@@ -149,7 +149,20 @@ namespace CengZai.Web.Controllers
                 {
                     return AjaxReturn("oath", "誓言这么长啊？都超过1000个字符了！精简点吧，记得说重点哦...");
                 }
-               
+
+                AjaxModel ajaxSaveImageModel = SaveImageFromTemp(avatar);
+                if (ajaxSaveImageModel == null)
+                {
+                    return AjaxReturn("avatar", "上传文件出错");
+                }
+                if (ajaxSaveImageModel.id == "success")
+                {
+                    avatar = ajaxSaveImageModel.msg;    //新图片地址
+                }
+                else
+                {
+                    return AjaxReturn(ajaxSaveImageModel);
+                }
                 //更新申请者信息
                 BLL.User bllUser = new BLL.User();
                 loginUser.Nickname = nickname;
@@ -200,69 +213,69 @@ namespace CengZai.Web.Controllers
         }
 
 
-        /// <summary>
-        /// 接收
-        /// </summary>
-        /// <returns></returns>
-        [CheckAuthFilter]
-        [HttpPost]
-        public ActionResult UploadImage(int? loverID)
-        {
-            string fileName = "";
+        ///// <summary>
+        ///// 接收
+        ///// </summary>
+        ///// <returns></returns>
+        //[CheckAuthFilter]
+        //[HttpPost]
+        //public ActionResult UploadImage(int? loverID)
+        //{
+        //    string fileName = "";
 
-            if (loverID != null)
-            {
-                Model.User user = GetLoginUser();
-                Model.Lover lover = new BLL.Lover().GetModel((int)loverID);
-                if (user == null || lover == null)
-                {
-                    return AjaxReturn("-1", "你无权上传文件！");
-                }
-                fileName = lover.Avatar;
-            }
-            if (string.IsNullOrEmpty(fileName))
-            {
-                fileName = string.Format("{0}{1}.jpg", DateTime.Now.ToString("yyyyMMddmmss"), new Random().Next(100, 999));
-            }
+        //    if (loverID != null)
+        //    {
+        //        Model.User user = GetLoginUser();
+        //        Model.Lover lover = new BLL.Lover().GetModel((int)loverID);
+        //        if (user == null || lover == null)
+        //        {
+        //            return AjaxReturn("-1", "你无权上传文件！");
+        //        }
+        //        fileName = lover.Avatar;
+        //    }
+        //    if (string.IsNullOrEmpty(fileName))
+        //    {
+        //        fileName = string.Format("{0}{1}.jpg", DateTime.Now.ToString("yyyyMMddmmss"), new Random().Next(100, 999));
+        //    }
 
-            //文件大小不为0
-            System.Drawing.Image avatar = null;
-            System.Drawing.Image thumbnail = null;
-            try
-            {
-                HttpPostedFileBase file = Request.Files["fileAvatar"];
-                if (file == null)
-                {
-                    return AjaxReturn("-2", "请选择上传文件！");
-                }
-                avatar = System.Drawing.Image.FromStream(file.InputStream);
-                if (avatar == null)
-                {
-                    return AjaxReturn("-3", "请选择图片文件！");
-                }
-                thumbnail = ImageHelper.MakeThumbnail(avatar, Config.CertificateAvatarWidth, Config.CertificateAvatarHeight, ThubnailMode.Cut, ImageFormat.Jpeg);
-                thumbnail.Save(Util.MapPath(Config.UploadMapPath + "/" + fileName));
-            }
-            catch (Exception ex)
-            {
-                Log.Error("LoverController.UploadImage上传文件出错", ex);
-                return AjaxReturn("-4", "上传图片出错，请确定您上传的是图片！");
-            }
-            finally
-            {
-                if (avatar != null)
-                {
-                    avatar.Dispose();
-                }
-                if (thumbnail != null)
-                {
-                    thumbnail.Dispose();
-                }
-            }
+        //    //文件大小不为0
+        //    System.Drawing.Image avatar = null;
+        //    System.Drawing.Image thumbnail = null;
+        //    try
+        //    {
+        //        HttpPostedFileBase file = Request.Files["fileAvatar"];
+        //        if (file == null)
+        //        {
+        //            return AjaxReturn("-2", "请选择上传文件！");
+        //        }
+        //        avatar = System.Drawing.Image.FromStream(file.InputStream);
+        //        if (avatar == null)
+        //        {
+        //            return AjaxReturn("-3", "请选择图片文件！");
+        //        }
+        //        thumbnail = ImageHelper.MakeThumbnail(avatar, Config.CertificateAvatarWidth, Config.CertificateAvatarHeight, ThubnailMode.Cut, ImageFormat.Jpeg);
+        //        thumbnail.Save(Util.MapPath(Config.UploadMapPath + "/" + fileName));
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Log.Error("LoverController.UploadImage上传文件出错", ex);
+        //        return AjaxReturn("-4", "上传图片出错，请确定您上传的是图片！");
+        //    }
+        //    finally
+        //    {
+        //        if (avatar != null)
+        //        {
+        //            avatar.Dispose();
+        //        }
+        //        if (thumbnail != null)
+        //        {
+        //            thumbnail.Dispose();
+        //        }
+        //    }
 
-            //return Content("nickname=" + nickname);
-            return AjaxReturn("0", fileName);
-        }
+        //    //return Content("nickname=" + nickname);
+        //    return AjaxReturn("0", fileName);
+        //}
 
 
 

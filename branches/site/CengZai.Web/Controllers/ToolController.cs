@@ -18,7 +18,7 @@ namespace CengZai.Web.Controllers
         //上传图片到临时目录
         [HttpPost]
         [CheckAuthFilter]
-        public ActionResult AjaxUploadImage(string postname)
+        public ActionResult AjaxUploadTempImage(string postname)
         {
             try
             {
@@ -67,10 +67,45 @@ namespace CengZai.Web.Controllers
             }
         }
 
-        //裁剪文件
+        ////裁剪或者直接保存文件
+        //[HttpPost]
+        //[CheckAuthFilter]
+        //public ActionResult AjaxSaveImage(string filename, int? x, int? y, int? w, int? h)
+        //{
+        //    try
+        //    {
+        //        Model.User user = GetLoginUser();
+        //        if (user == null)
+        //        {
+        //            return AjaxReturn("error", "您尚未登录！");
+        //        }
+        //        AjaxModel ajaxModel = CutAndSaveImageFromTemp(filename, x, y, w, h);
+        //        if (ajaxModel == null)
+        //        {
+        //            return AjaxReturn("error", "保存文件出错！");
+        //        }
+        //        return AjaxReturn(ajaxModel);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Log.Error("Tool裁剪文件出现异常", ex);
+        //        return AjaxReturn("error", "裁剪出现错误！");
+        //    }
+        //}
+
+
+        /// <summary>
+        /// 裁剪并替换临时文件文件
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="w"></param>
+        /// <param name="h"></param>
+        /// <returns></returns>
         [HttpPost]
         [CheckAuthFilter]
-        public ActionResult AjaxSaveImage(string filename, int? x, int? y, int? w, int? h)
+        public ActionResult AjaxCutTempImage(string filename, int? x, int? y, int? w, int? h)
         {
             try
             {
@@ -79,62 +114,34 @@ namespace CengZai.Web.Controllers
                 {
                     return AjaxReturn("error", "您尚未登录！");
                 }
-                AjaxModel ajaxModel = SaveImageFromTemp(filename, x, y, w, h);
-                if (ajaxModel == null)
+                //判断文件是否为空或者是否不在临时文件夹且属于用户上传的图片里面
+                //文件名必须为以下格式：_temp/1_201204073214740.jpg，否则视为非法文件（防止串改其它用户或者目录文件）
+                if (string.IsNullOrEmpty(filename) || filename.IndexOf("_temp/" + user.UserID + "_") != 0)
                 {
-                    return AjaxReturn("error", "保存文件出错！");
+                    return AjaxReturn("error", "非法操作！");
                 }
-                return AjaxReturn(ajaxModel);
-                ////判断文件是否为空或者是否不在临时文件夹且属于用户上传的图片里面
-                ////文件名必须为以下格式：_temp/1_201204073214740.jpg，否则视为非法文件（防止串改其它用户或者目录文件）
-                //if (string.IsNullOrEmpty(filename) || filename.IndexOf("_temp/" + user.UserID + "_") != 0)
-                //{
-                //    return AjaxReturn("error", "非法操作！");
-                //}
-                //if(x== null || y== null || w == null || h == null)
-                //{
-                //    return AjaxReturn("error", "请选取要裁剪图像的区域！");
-                //}
-                //string fileMapPath = Util.MapPath(Config.UploadMapPath + "/" + filename);
-                //if (!System.IO.File.Exists(fileMapPath))
-                //{
-                //    return AjaxReturn("error", "图片不存在！");
-                //}
-                //Image original = null;
-                //Image thumbnail = null;
-                //original = Image.FromFile(fileMapPath);
-                //if (original == null)
-                //{
-                //    return AjaxReturn("error", "图片不存在！");
-                //}
-                ////新文件名-把文件转移到用户自己的目录
-                ////旧文件名：_temp/1_201204073214740.jpg
-                ////新文件名：1/1_201204073214740.jpg
-                //string newFilename = filename.Replace("_temp/" + user.UserID + "_", user.UserID + "/" + user.UserID + "_");
-                //string newFileMapPath = Util.MapPath(Config.UploadMapPath + "/" + newFilename);
-                //if (w > 0 && h > 0)
-                //{
-                //    thumbnail = ImageHelper.CutImage(original, (int)x, (int)y, (int)w, (int)h);
-                //}
-                //else
-                //{
-                //    thumbnail = ImageHelper.MakeThumbnail(
-                //        original
-                //        , Config.UploadImageMaxWidth
-                //        , Config.UploadImageMaxHeight
-                //        , ThubnailMode.Auto
-                //        , ImageFormat.Jpeg);
-                //}
-                //Util.EnsureFileDir(newFileMapPath);    //确保文件存在
-                //thumbnail.Save(newFileMapPath); //保存新文件
-                //original.Dispose();
-                //thumbnail.Dispose();
-                //try
-                //{
-                //    System.IO.File.Delete(fileMapPath); //删除旧文件
-                //}
-                //catch { }
-                //return AjaxReturn("success", newFilename);
+                if (x == null || y == null || w == null || h == null || w<=0 || h<=0)
+                {
+                    return AjaxReturn("error", "请选取要裁剪图像的区域！");
+                }
+                string fileMapPath = Util.MapPath(Config.UploadMapPath + "/" + filename);
+                if (!System.IO.File.Exists(fileMapPath))
+                {
+                    return AjaxReturn("error", "图片不存在！");
+                }
+                Image original = null;
+                Image thumbnail = null;
+                original = Image.FromFile(fileMapPath);
+                if (original == null)
+                {
+                    return AjaxReturn("error", "图片不存在！");
+                }
+                thumbnail = ImageHelper.CutImage(original, (int)x, (int)y, (int)w, (int)h);
+                original.Dispose(); //先关闭源图片，然后进行覆盖
+                Util.EnsureFileDir(fileMapPath);    //确保文件存在
+                thumbnail.Save(fileMapPath); //保存新文件
+                thumbnail.Dispose();
+                return AjaxReturn("success", filename);
             }
             catch (Exception ex)
             {

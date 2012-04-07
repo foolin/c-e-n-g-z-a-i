@@ -249,7 +249,7 @@ namespace CengZai.Web.Controllers
                 y = y ?? 0;
                 w = w ?? Config.AvatarWidth;
                 h = h ?? Config.AvatarHeight;
-                AjaxModel ajaxModel = SaveImageFromTemp(filename, x, y, w, h);
+                AjaxModel ajaxModel = CutAndSaveImageFromTemp(filename, x, y, w, h);
                 if (ajaxModel.id == "success")
                 {
                     string oldAvatar = user.Avatar;
