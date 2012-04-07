@@ -305,5 +305,31 @@ namespace CengZai.Helper
             }
         }
 
+
+        /// <summary>
+        /// 确保文件的目录存在。
+        /// <para>如果文件目录不存在，则创建目录（包括上级目录）。</para>
+        /// </summary>
+        /// <param name="path">文件路径</param>
+        /// <returns>返回一个 Boolean 值，如果目录或文件不存在且创建它们出现异常时，返回值为 False。</returns>
+        public static bool EnsureFileDir(string path)
+        {
+            try
+            {
+                if (File.Exists(path))
+                    return true;
+                if (EnsureDir(Directory.GetParent(path).ToString()))
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Sxmobi.EnsureFileDir", ex);
+                return false;
+            }
+        }
+
     }
 }

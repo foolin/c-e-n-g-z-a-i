@@ -72,6 +72,7 @@
     <Compile Include="Controllers\InboxController.cs" />
     <Compile Include="Controllers\LoverController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
+    <Compile Include="Controllers\ToolController.cs" />
     <Compile Include="page\VerifyCode.aspx.cs">
       <DependentUpon>VerifyCode.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

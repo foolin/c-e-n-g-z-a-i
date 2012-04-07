@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using CengZai.Helper;
 using CengZai.Web.Common;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace CengZai.Web.Controllers
 {
@@ -328,21 +330,33 @@ namespace CengZai.Web.Controllers
         /// <returns></returns>
         protected JsonResult AjaxReturn(string id, string msg)
         {
-            return Json(new _AjaxReturn(id, msg),JsonRequestBehavior.AllowGet);
+            return Json(new AjaxModel(id, msg),JsonRequestBehavior.AllowGet);
         }
+
+        /// <summary>
+        /// Joson返回
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="msg"></param>
+        /// <returns></returns>
+        protected JsonResult AjaxReturn(AjaxModel ajaxModel)
+        {
+            return Json(ajaxModel, JsonRequestBehavior.AllowGet);
+        }
+
 
         /// <summary>
         /// 错误信息实体
         /// </summary>
-        protected class _AjaxReturn
+        protected class AjaxModel
         {
-            public _AjaxReturn(string id, string msg)
+            public AjaxModel(string id, string msg)
             {
                 this.id = id;
                 this.msg = msg;
                 
             }
-            public _AjaxReturn()
+            public AjaxModel()
             {
             }
             public string id;
@@ -376,6 +390,94 @@ namespace CengZai.Web.Controllers
             {
                 Log.Error("发送系统消息异常", ex);
                 return false;
+            }
+        }
+
+
+        /// <summary>
+        /// 直接保存
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <returns></returns>
+        protected AjaxModel SaveImageFromTemp(string filename)
+        {
+            return SaveImageFromTemp(filename, 0, 0, 0, 0);
+        }
+
+
+        /// <summary>
+        /// 裁剪并保存
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="w"></param>
+        /// <param name="h"></param>
+        /// <returns></returns>
+        protected AjaxModel SaveImageFromTemp(string filename, int? x, int? y, int? w, int? h)
+        {
+            try
+            {
+                Model.User user = GetLoginUser();
+                if (user == null)
+                {
+                    return new AjaxModel("error", "您尚未登录！");
+                }
+                //判断文件是否为空或者是否不在临时文件夹且属于用户上传的图片里面
+                //文件名必须为以下格式：_temp/1_201204073214740.jpg，否则视为非法文件（防止串改其它用户或者目录文件）
+                if (string.IsNullOrEmpty(filename) || filename.IndexOf("_temp/" + user.UserID + "_") != 0)
+                {
+                    return new AjaxModel("error", "非法操作！");
+                }
+                if (x == null || y == null || w == null || h == null)
+                {
+                    return new AjaxModel("error", "请选取要裁剪图像的区域！");
+                }
+                string fileMapPath = Util.MapPath(Config.UploadMapPath + "/" + filename);
+                if (!System.IO.File.Exists(fileMapPath))
+                {
+                    return new AjaxModel("error", "图片不存在！");
+                }
+                Image original = null;
+                Image thumbnail = null;
+                original = Image.FromFile(fileMapPath);
+                if (original == null)
+                {
+                    return new AjaxModel("error", "图片不存在！");
+                }
+                //新文件名-把文件转移到用户自己的目录
+                //旧文件名：_temp/1_201204073214740.jpg
+                //新文件名：1/1_201204073214740.jpg
+                string newFilename = filename.Replace("_temp/" + user.UserID + "_", user.UserID + "/" + user.UserID + "_");
+                string newFileMapPath = Util.MapPath(Config.UploadMapPath + "/" + newFilename);
+                if (w > 0 && h > 0)
+                {
+                    thumbnail = ImageHelper.CutImage(original, (int)x, (int)y, (int)w, (int)h);
+                }
+                else
+                {
+                    thumbnail = ImageHelper.MakeThumbnail(
+                        original
+                        , Config.UploadImageMaxWidth
+                        , Config.UploadImageMaxHeight
+                        , ThubnailMode.Auto
+                        , ImageFormat.Jpeg);
+                }
+                Util.EnsureFileDir(newFileMapPath);    //确保文件存在
+                thumbnail.Save(newFileMapPath); //保存新文件
+                original.Dispose();
+                thumbnail.Dispose();
+                try
+                {
+                    System.IO.File.Delete(fileMapPath); //删除旧文件
+                }
+                catch { }
+                return new AjaxModel("success", newFilename);
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Tool裁剪文件出现异常", ex);
+                return new AjaxModel("error", "裁剪出现错误！");
             }
         }
 

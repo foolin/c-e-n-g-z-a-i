@@ -152,55 +152,111 @@ namespace CengZai.Web.Controllers
         }
 
 
+        ///// <summary>
+        ///// 接收
+        ///// </summary>
+        ///// <returns></returns>
+        //[CheckAuthFilter]
+        //[HttpPost]
+        //public ActionResult UploadAvatar()
+        //{
+
+        //    Model.User user = GetLoginUser();
+        //    if (user == null)
+        //    {
+        //        return AjaxReturn("0", "您尚未登录！");
+        //    }
+
+        //    string fileName = string.Format("{0}{1}.jpg", DateTime.Now.ToString("yyyyMMddmmss"), new Random().Next(100, 999));
+        //    //保存成自己的文件全路径,newfile就是你上传后保存的文件,
+        //    //服务器上的UpLoadFile文件夹必须有读写权限
+
+
+        //    //文件大小不为0
+        //    System.Drawing.Image thumbnail = null;
+        //    System.Drawing.Image avatar = null;
+        //    try
+        //    {
+        //        HttpPostedFileBase file = Request.Files["fileAvatar"];
+        //        if (file == null)
+        //        {
+        //            return AjaxReturn("0", "请选择上传文件！");
+        //        }
+        //        avatar = System.Drawing.Image.FromStream(file.InputStream);
+        //        if (avatar == null)
+        //        {
+        //            return AjaxReturn("0", "请选择图片文件！");
+        //        }
+
+        //        thumbnail = ImageHelper.MakeThumbnail(avatar, Config.AvatarWidth, Config.AvatarHeight, ThubnailMode.Cut, ImageFormat.Jpeg);
+        //        thumbnail.Save(Util.MapPath(Config.UploadMapPath + "/" + fileName));
+        //        avatar.Dispose();
+        //        thumbnail.Dispose();
+
+        //        string oldAvatar = user.Avatar;
+        //        user.Avatar = fileName;
+        //        bool isSuccess = new BLL.User().Update(user);
+        //        UpdateLoginUserSession(user);   //更新Session
+
+        //        //删除旧文件
+        //        if (isSuccess && !string.IsNullOrEmpty(oldAvatar))
+        //        {
+        //            try
+        //            {
+        //                string oldImage = Util.MapPath(Config.UploadMapPath + "/" + oldAvatar);
+        //                if (System.IO.File.Exists(oldImage))
+        //                {
+        //                    System.IO.File.Delete(oldImage);
+        //                }
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                Log.Error("删除文件出错：" + ex.Message);
+        //            }
+        //        }
+        //        if (isSuccess)
+        //        {
+        //            return AjaxReturn("1", fileName);
+        //        }
+        //        else
+        //        {
+        //            return AjaxReturn("1", "上传图片失败！");
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Log.Error("SettingsController.UploadAvatar上传文件出错", ex);
+        //        return AjaxReturn("0", "上传图片出错，请确定您上传的是图片！");
+        //    }
+        //}
+
         /// <summary>
         /// 接收
         /// </summary>
         /// <returns></returns>
         [CheckAuthFilter]
         [HttpPost]
-        public ActionResult UploadAvatar()
+        public ActionResult AjaxSaveAvatar(string filename, int? x, int? y, int? w, int? h)
         {
-
-            Model.User user = GetLoginUser();
-            if (user == null)
-            {
-                return AjaxReturn("0", "您尚未登录！");
-            }
-
-            string fileName = string.Format("{0}{1}.jpg", DateTime.Now.ToString("yyyyMMddmmss"), new Random().Next(100, 999));
-            //保存成自己的文件全路径,newfile就是你上传后保存的文件,
-            //服务器上的UpLoadFile文件夹必须有读写权限
-
-
-            //文件大小不为0
-            System.Drawing.Image thumbnail = null;
-            System.Drawing.Image avatar = null;
             try
             {
-                HttpPostedFileBase file = Request.Files["fileAvatar"];
-                if (file == null)
+                Model.User user = GetLoginUser();
+                if (user == null)
                 {
-                    return AjaxReturn("0", "请选择上传文件！");
+                    return AjaxReturn("0", "您尚未登录！");
                 }
-                avatar = System.Drawing.Image.FromStream(file.InputStream);
-                if (avatar == null)
+                x = x ?? 0;
+                y = y ?? 0;
+                w = w ?? Config.AvatarWidth;
+                h = h ?? Config.AvatarHeight;
+                AjaxModel ajaxModel = SaveImageFromTemp(filename, x, y, w, h);
+                if (ajaxModel.id == "success")
                 {
-                    return AjaxReturn("0", "请选择图片文件！");
-                }
-
-                thumbnail = ImageHelper.MakeThumbnail(avatar, Config.AvatarWidth, Config.AvatarHeight, ThubnailMode.Cut, ImageFormat.Jpeg);
-                thumbnail.Save(Util.MapPath(Config.UploadMapPath + "/" + fileName));
-                avatar.Dispose();
-                thumbnail.Dispose();
-
-                string oldAvatar = user.Avatar;
-                user.Avatar = fileName;
-                bool isSuccess = new BLL.User().Update(user);
-                UpdateLoginUserSession(user);   //更新Session
-
-                //删除旧文件
-                if (isSuccess && !string.IsNullOrEmpty(oldAvatar))
-                {
+                    string oldAvatar = user.Avatar;
+                    user.Avatar = ajaxModel.msg;
+                    bool isSuccess = new BLL.User().Update(user);
+                    UpdateLoginUserSession(user);   //更新Session
+                    //删除旧文件
                     try
                     {
                         string oldImage = Util.MapPath(Config.UploadMapPath + "/" + oldAvatar);
@@ -214,21 +270,93 @@ namespace CengZai.Web.Controllers
                         Log.Error("删除文件出错：" + ex.Message);
                     }
                 }
-                if (isSuccess)
-                {
-                    return AjaxReturn("1", fileName);
-                }
-                else
-                {
-                    return AjaxReturn("1", "上传图片失败！");
-                }
+                return AjaxReturn(ajaxModel);
             }
             catch (Exception ex)
             {
-                Log.Error("SettingsController.UploadAvatar上传文件出错", ex);
+                Log.Error("SettingsController.AjaxSaveAvatar上传文件出错", ex);
                 return AjaxReturn("0", "上传图片出错，请确定您上传的是图片！");
             }
         }
+
+
+        ///// <summary>
+        ///// 接收
+        ///// </summary>
+        ///// <returns></returns>
+        //[CheckAuthFilter]
+        //[HttpPost]
+        //public ActionResult SaveAvatar(string filename)
+        //{
+
+        //    Model.User user = GetLoginUser();
+        //    if (user == null)
+        //    {
+        //        return AjaxReturn("0", "您尚未登录！");
+        //    }
+
+        //    string fileName = string.Format("{0}{1}.jpg", DateTime.Now.ToString("yyyyMMddmmss"), new Random().Next(100, 999));
+        //    //保存成自己的文件全路径,newfile就是你上传后保存的文件,
+        //    //服务器上的UpLoadFile文件夹必须有读写权限
+
+
+        //    //文件大小不为0
+        //    System.Drawing.Image thumbnail = null;
+        //    System.Drawing.Image avatar = null;
+        //    try
+        //    {
+        //        HttpPostedFileBase file = Request.Files["fileAvatar"];
+        //        if (file == null)
+        //        {
+        //            return AjaxReturn("0", "请选择上传文件！");
+        //        }
+        //        avatar = System.Drawing.Image.FromStream(file.InputStream);
+        //        if (avatar == null)
+        //        {
+        //            return AjaxReturn("0", "请选择图片文件！");
+        //        }
+
+        //        thumbnail = ImageHelper.MakeThumbnail(avatar, Config.AvatarWidth, Config.AvatarHeight, ThubnailMode.Cut, ImageFormat.Jpeg);
+        //        thumbnail.Save(Util.MapPath(Config.UploadMapPath + "/" + fileName));
+        //        avatar.Dispose();
+        //        thumbnail.Dispose();
+
+        //        string oldAvatar = user.Avatar;
+        //        user.Avatar = fileName;
+        //        bool isSuccess = new BLL.User().Update(user);
+        //        UpdateLoginUserSession(user);   //更新Session
+
+        //        //删除旧文件
+        //        if (isSuccess && !string.IsNullOrEmpty(oldAvatar))
+        //        {
+        //            try
+        //            {
+        //                string oldImage = Util.MapPath(Config.UploadMapPath + "/" + oldAvatar);
+        //                if (System.IO.File.Exists(oldImage))
+        //                {
+        //                    System.IO.File.Delete(oldImage);
+        //                }
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                Log.Error("删除文件出错：" + ex.Message);
+        //            }
+        //        }
+        //        if (isSuccess)
+        //        {
+        //            return AjaxReturn("1", fileName);
+        //        }
+        //        else
+        //        {
+        //            return AjaxReturn("1", "上传图片失败！");
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Log.Error("SettingsController.UploadAvatar上传文件出错", ex);
+        //        return AjaxReturn("0", "上传图片出错，请确定您上传的是图片！");
+        //    }
+        //}
 
     }
 }
