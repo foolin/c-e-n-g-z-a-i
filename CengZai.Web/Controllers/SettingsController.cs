@@ -82,7 +82,7 @@ namespace CengZai.Web.Controllers
             }
             catch (Exception ex)
             {
-                Log.AddErrorInfo("Settings/Profile更新异常", ex);
+                Log.Error("Settings/Profile更新异常", ex);
                 return AjaxReturn("error", "更新失败！操作异常，请检查是否输入是否正确！");
             }
         }
@@ -138,7 +138,7 @@ namespace CengZai.Web.Controllers
             }
             catch (Exception ex)
             {
-                Log.AddErrorInfo("Settings/Password更新异常", ex);
+                Log.Error("Settings/Password更新异常", ex);
                 return AjaxReturn("error", "修改密码失败！操作异常，请检查是否输入是否正确！");
             }
         }
@@ -189,7 +189,7 @@ namespace CengZai.Web.Controllers
                 }
 
                 thumbnail = ImageHelper.MakeThumbnail(avatar, Config.AvatarWidth, Config.AvatarHeight, ThubnailMode.Cut, ImageFormat.Jpeg);
-                thumbnail.Save(Server.MapPath(Config.UploadMapPath + "/" + fileName));
+                thumbnail.Save(Util.MapPath(Config.UploadMapPath + "/" + fileName));
                 avatar.Dispose();
                 thumbnail.Dispose();
 
@@ -203,7 +203,7 @@ namespace CengZai.Web.Controllers
                 {
                     try
                     {
-                        string oldImage = Server.MapPath(Config.UploadMapPath + "/" + oldAvatar);
+                        string oldImage = Util.MapPath(Config.UploadMapPath + "/" + oldAvatar);
                         if (System.IO.File.Exists(oldImage))
                         {
                             System.IO.File.Delete(oldImage);
@@ -211,7 +211,7 @@ namespace CengZai.Web.Controllers
                     }
                     catch (Exception ex)
                     {
-                        Log.AddErrorInfo("删除文件出错：" + ex.Message);
+                        Log.Error("删除文件出错：" + ex.Message);
                     }
                 }
                 if (isSuccess)
@@ -225,7 +225,7 @@ namespace CengZai.Web.Controllers
             }
             catch (Exception ex)
             {
-                Log.AddErrorInfo("SettingsController.UploadAvatar上传文件出错", ex);
+                Log.Error("SettingsController.UploadAvatar上传文件出错", ex);
                 return AjaxReturn("0", "上传图片出错，请确定您上传的是图片！");
             }
         }

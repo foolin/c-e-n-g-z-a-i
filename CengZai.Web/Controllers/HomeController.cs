@@ -54,7 +54,7 @@ namespace CengZai.Web.Controllers
             }
             catch (Exception ex)
             {
-                Log.AddErrorInfo("取好友动态数据异常", ex);
+                Log.Error("取好友动态数据异常", ex);
             }
             return View();
         }

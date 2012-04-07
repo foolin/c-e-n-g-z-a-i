@@ -53,7 +53,7 @@ namespace CengZai.Web.Controllers
             }
             catch (Exception ex)
             {
-                Log.AddErrorInfo("获取用户文章列表异常", ex);
+                Log.Error("获取用户文章列表异常", ex);
                 return JumpToTips("无法获取文章列表", "糟糕！无法获取日志列表，请稍后重试！");
             }
         }
@@ -120,7 +120,7 @@ namespace CengZai.Web.Controllers
             }
             catch (Exception ex)
             {
-                Log.AddErrorInfo("ArticleController.PostText异常", ex);
+                Log.Error("ArticleController.PostText异常", ex);
                 return JumpToTips("初始化提交文章表单出错", "亲，初始化提交文章表单出错了，请检查输入或者联系客服！");
             }
         }
@@ -199,7 +199,7 @@ namespace CengZai.Web.Controllers
             }
             catch (Exception ex)
             {
-                Log.AddErrorInfo(GetLoginUser().Email + "提交文章出现异常：" + ex.Message + ",详细：" + ex.StackTrace);
+                Log.Error(GetLoginUser().Email + "提交文章出现异常：" + ex.Message + ",详细：" + ex.StackTrace);
                 return AjaxReturn("error", "对不起，文章保存失败！出现了异常");
             }
         }
@@ -238,7 +238,7 @@ namespace CengZai.Web.Controllers
             }
             catch (Exception ex)
             {
-                Log.AddErrorInfo("删除文章出现异常", ex);
+                Log.Error("删除文章出现异常", ex);
                 return JumpToTips("删除失败！", "删除出现错误，请稍后重试！");
             }
         }
@@ -311,7 +311,7 @@ namespace CengZai.Web.Controllers
             }
             catch (Exception ex)
             {
-                Log.AddErrorInfo("新建广告分类异常", ex);
+                Log.Error("新建广告分类异常", ex);
                 return AjaxReturn("error", "");
             }
         }
@@ -352,7 +352,7 @@ namespace CengZai.Web.Controllers
             }
             catch (Exception ex)
             {
-                Log.AddErrorInfo("新建广告分类异常", ex);
+                Log.Error("新建广告分类异常", ex);
                 return AjaxReturn("error", "");
             }
         }

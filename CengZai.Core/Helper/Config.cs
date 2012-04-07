@@ -292,16 +292,13 @@ namespace CengZai.Helper
             get
             {
                 string path = ConfigurationManager.AppSettings["UploadMapPath"] + "";
-                if (!Directory.Exists(HttpContext.Current.Server.MapPath(path)))
+                try
                 {
-                    try
-                    {
-                        Directory.CreateDirectory(HttpContext.Current.Server.MapPath(path));
-                    }
-                    catch (Exception ex)
-                    {
-                        Log.AddErrorInfo("创建上传文件目录MapUploadPath：" + path + "出错，异常：" + ex.Message);
-                    }
+                    Util.EnsureDir(Util.MapPath(path));
+                }
+                catch (Exception ex)
+                {
+                    Log.Error("创建上传文件目录MapUploadPath：" + path + "出错，异常：" + ex.Message);
                 }
 
                 return path;
@@ -335,7 +332,7 @@ namespace CengZai.Helper
                 }
                 catch (Exception ex)
                 {
-                    Log.AddErrorInfo("Config.PageSize异常", ex);
+                    Log.Error("Config.PageSize异常", ex);
                 }
                 if (pageSize <= 0)
                 {

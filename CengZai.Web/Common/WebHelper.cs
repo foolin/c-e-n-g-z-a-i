@@ -121,7 +121,7 @@ namespace CengZai.Web.Common
                                             }
                                             catch (Exception ex)
                                             {
-                                                Log.AddErrorInfo("WebHelper.LoadLoginUserFromSessionOrCookies()更新用户积分信息异常！", ex);
+                                                Log.Error("WebHelper.LoadLoginUserFromSessionOrCookies()更新用户积分信息异常！", ex);
                                             }
                                         }
                                         else
@@ -141,7 +141,7 @@ namespace CengZai.Web.Common
             }
             catch(Exception ex) 
             {
-                Log.AddErrorInfo("WebHelper.LoadLoginUserFromSessionOrCookies(HttpContext Current)异常", ex);
+                Log.Error("WebHelper.LoadLoginUserFromSessionOrCookies(HttpContext Current)异常", ex);
             }
 
             return user;

@@ -29,7 +29,7 @@ namespace System.Web.Mvc
             }
             catch (Exception ex)
             {
-                Log.AddErrorInfo("HtmlExtendForUser.GetUser()异常：" + ex.Message);
+                Log.Error("HtmlExtendForUser.GetUser()异常：" + ex.Message);
             }
             return user;
         }
@@ -54,7 +54,7 @@ namespace System.Web.Mvc
             }
             catch (Exception ex)
             {
-                Log.AddErrorInfo("HtmlExtendForUser.GetUser()异常：" + ex.Message);
+                Log.Error("HtmlExtendForUser.GetUser()异常：" + ex.Message);
             }
             return user;
         }
@@ -83,7 +83,7 @@ namespace System.Web.Mvc
             }
             catch (Exception ex)
             {
-                Log.AddErrorInfo("HtmlExtendForUser.GetUserNickname()异常：" + ex.Message);
+                Log.Error("HtmlExtendForUser.GetUserNickname()异常：" + ex.Message);
             }
             return nickname;
         }
@@ -112,7 +112,7 @@ namespace System.Web.Mvc
             }
             catch (Exception ex)
             {
-                Log.AddErrorInfo("HtmlExtendForUser.GetUserNickname()异常：" + ex.Message);
+                Log.Error("HtmlExtendForUser.GetUserNickname()异常：" + ex.Message);
             }
             return nickname;
         }

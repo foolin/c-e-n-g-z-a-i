@@ -12,7 +12,7 @@ namespace CengZai.Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Log.AddErrorInfo("测试啊");
+            Log.Error("测试啊");
         }
     }
 }

@@ -181,7 +181,7 @@ namespace CengZai.BLL
             }
             catch (Exception ex)
             {
-                Log.AddErrorInfo("BLL.Article.GetUserPublicListByPage()异常", ex);
+                Log.Error("BLL.Article.GetUserPublicListByPage()异常", ex);
             }
             return list;
         }

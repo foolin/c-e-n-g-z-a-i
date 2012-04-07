@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Text.RegularExpressions;
+using System.IO;
 
 namespace CengZai.Helper
 {
@@ -260,6 +261,48 @@ namespace CengZai.Helper
                 }
             }
             return result.ToString();
+        }
+
+
+        /// <summary>
+        /// 取文件物理路径
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static string MapPath(string path)
+        {
+            if (path.IndexOf(':') == -1)
+            {
+                path = HttpContext.Current.Server.MapPath(path);
+            }
+            return path;
+        }
+
+
+        /// <summary>
+        /// 确保目录存在。
+        /// <para>如果目录不存在，则创建目录（包括上级目录）。</para>
+        /// </summary>
+        /// <param name="path">目录路径（不含文件名）</param>
+        /// <returns>返回一个 Boolean 值，如果目录不存在且创建目录出现异常时，返回值为 False。</returns>
+        public static bool EnsureDir(string path)
+        {
+            try
+            {
+                if (Directory.Exists(path))
+                    return true;
+                if (EnsureDir(Directory.GetParent(path).ToString()))
+                {
+                    Directory.CreateDirectory(path);
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Util.EnsureDir", ex);
+                return false;
+            }
         }
 
     }
