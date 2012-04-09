@@ -21,7 +21,7 @@ namespace System.Web.Mvc
         {
             try
             {
-                string domain = (CengZai.Helper.Config.ResourceDomain + "").Trim();
+                string domain = (CengZai.Helper.Config.ResourceHost + "").Trim();
                 if (string.IsNullOrEmpty(domain))
                 {
                     domain = CengZai.Helper.Util.GetCurrDomainUrl();

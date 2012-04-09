@@ -130,7 +130,7 @@
                 <div class="span10 text-right">
                     <p><h4><span class="muted font12">男主人</span> @Html.ActionLink(@boy.Nickname, "Blog", new { username = boy.Username })</h4></p>
                     <p class="sign">@boy.Sign</p>
-                    <p class="muted">http://@ViewBag.SiteDomain@Url.Action("Blog", "Blog", new {username=boy.Username })</p>
+                    <p class="muted">@ViewBag.SiteHost@Url.Action("Blog", "Blog", new {username=boy.Username })</p>
                 </div>
                 <div class="span2 text-right">
                     <p class="thumbnail"><img class="avartar" src="@Url.GetAvatarUrl(boy.Avatar)" alt="" /></p>
@@ -151,12 +151,12 @@
                 <div class="span10">
                     <p><h4>@Html.ActionLink(girl.Nickname, "Blog", new { username = girl.Username }) <span class="muted font12">女主人</span></h4></p>
                     <p class="sign">@girl.Sign</p>
-                    <p class="muted">http://@ViewBag.SiteDomain@Url.Action("Blog", "Blog", new { username = girl.Username })</p>
+                    <p class="muted">@ViewBag.SiteHost@Url.Action("Blog", "Blog", new { username = girl.Username })</p>
                 </div>
             </div>
         </div>
     </div>
-    @*<div class="lover-info">博客地址：http://@ViewBag.SiteDomain@Url.Action("Blog", "Blog")</div>*@
+    @*<div class="lover-info">博客地址：@ViewBag.SiteHost@Url.Action("Blog", "Blog")</div>*@
 }
 else
 {
@@ -172,7 +172,7 @@ else
                     <p><h4>@Html.ActionLink(blogUser.Nickname, "Blog", new { username = blogUser.Username }) <span class="muted font12">单身</span></h4></p>
                     <p class="sign">@blogUser.Sign</p>
                     <p>@Html.ActionLink("关注她", "FeedID", "Feed")</p>
-                    <p class="muted">http://@ViewBag.SiteDomain@Url.Action("Blog", "Blog")</p>
+                    <p class="muted">@ViewBag.SiteHost@Url.Action("Blog", "Blog")</p>
                 </div>
             </div>
         </div>

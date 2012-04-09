@@ -38,7 +38,7 @@ namespace CengZai.Web
            //));
 
            // routes.Add("DomainDefault", new DomainRoute(
-           //"{username}." + Config.SiteDomain     // Domain with parameters 
+            //"{username}." + Config.SiteDomain     // Domain with parameters 
            // , "{controller}/{action}/{page}/{id}" // URL with parameters
            // , new { controller = "Blog", action = "Blog", username = "", page = 0, @id = UrlParameter.Optional } // Parameter defaults
            // , new { username = @"[\w]{5}", page = "[0-9]+" }

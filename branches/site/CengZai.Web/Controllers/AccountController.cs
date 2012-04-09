@@ -206,7 +206,7 @@ namespace CengZai.Web.Controllers
             ViewBag.RegisterLimit = Config.RegisterLimit;
             if (Config.RegisterLimit == 2)
             {
-                return Content(string.Format("系统在升级，暂停开放注册！ <a href='{2}'>返回首页</a>  <hr><a href='http://{1}'>{0}</a> ", Config.SiteName, Config.SiteDomain, Util.GetCurrDomainUrl()));
+                return Content(string.Format("系统在升级，暂停开放注册！ <a href='{2}'>返回首页</a>  <hr><a href='{1}'>{0}</a> ", Config.SiteName, Config.SiteHost, Util.GetCurrDomainUrl()));
             }
             if (!string.IsNullOrEmpty(invite))
             {
@@ -405,7 +405,7 @@ namespace CengZai.Web.Controllers
                     mailContent.Append("<br />");
                     mailContent.Append("<br />");
 
-                    mailContent.Append("<a href=\"http://" + Config.SiteDomain + "\"  target=\"_blank\"><span style=\"font-weight:bold; color:#F00; text-decoration:none;\">" + Config.SiteName + "（" + Config.SiteDomain + ")</span></a>");
+                    mailContent.Append("<a href=\"" + Config.SiteHost + "\"  target=\"_blank\"><span style=\"font-weight:bold; color:#F00; text-decoration:none;\">" + Config.SiteName + "（" + Config.SiteHost + ")</span></a>");
                     mailContent.Append("<br />");
                     mailContent.Append(DateTime.Now.ToString("yyyy年MM月dd日"));
                     mailContent.Append("<hr />");
@@ -519,7 +519,7 @@ namespace CengZai.Web.Controllers
                         mailContent.Append("<br />");
                         mailContent.Append("<br />");
 
-                        mailContent.Append("<a href=\"http://" + Config.SiteDomain + "\"  target=\"_blank\"><span style=\"font-weight:bold; color:#F00; text-decoration:none;\">" + Config.SiteName + "（" + Config.SiteDomain + ")</span></a>");
+                        mailContent.Append("<a href=\"" + Config.SiteHost + "\"  target=\"_blank\"><span style=\"font-weight:bold; color:#F00; text-decoration:none;\">" + Config.SiteName + "（" + Config.SiteHost + ")</span></a>");
                         mailContent.Append("<br />");
                         mailContent.Append(DateTime.Now.ToString("yyyy年MM月dd日"));
                         mailContent.Append("<hr />");
@@ -687,7 +687,7 @@ namespace CengZai.Web.Controllers
                     mailContent.Append("<br />");
                     mailContent.Append("<br />");
 
-                    mailContent.Append("<a href=\"http://" + Config.SiteDomain + "\"  target=\"_blank\"><span style=\"font-weight:bold; color:#F00; text-decoration:none;\">" + Config.SiteName + "（" + Config.SiteDomain + ")</span></a>");
+                    mailContent.Append("<a href=\"" + Config.SiteHost + "\"  target=\"_blank\"><span style=\"font-weight:bold; color:#F00; text-decoration:none;\">" + Config.SiteName + "（" + Config.SiteHost + ")</span></a>");
                     mailContent.Append("<br />");
                     mailContent.Append(DateTime.Now.ToString("yyyy年MM月dd日"));
                     mailContent.Append("<hr />");
