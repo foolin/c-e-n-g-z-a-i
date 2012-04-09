@@ -33,6 +33,7 @@ namespace CengZai.Web.Controllers
             mPageIndex = GetPageIndex("page");   
             mTotalCount = 0;
 
+
             //初始化
             ViewData["SiteName"] = Config.SiteName;
             ViewData["SiteDomain"] = Config.SiteDomain;
