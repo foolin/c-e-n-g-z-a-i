@@ -62,6 +62,13 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="404.aspx.cs">
+      <DependentUpon>404.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="404.aspx.designer.cs">
+      <DependentUpon>404.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Common\CheckAuthFilter.cs" />
     <Compile Include="Common\ErrorFilter.cs" />
     <Compile Include="Common\LowerCaseUrlRoute.cs" />
@@ -85,19 +92,13 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Test.aspx.cs">
-      <DependentUpon>Test.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Test.aspx.designer.cs">
-      <DependentUpon>Test.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="404.aspx" />
     <Content Include="resource\css\bootstrap-responsive.css" />
     <Content Include="resource\css\bootstrap-responsive.min.css" />
     <Content Include="resource\img\bg.jpg" />
@@ -214,7 +215,6 @@
     <Content Include="resource\js\swfupload\swfupload.swf" />
     <Content Include="resource\js\swfupload\swfupload_fp9.swf" />
     <Content Include="resource\skin\default\blog.css" />
-    <Content Include="Test.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
