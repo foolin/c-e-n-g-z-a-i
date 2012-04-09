@@ -129,7 +129,7 @@ namespace CengZai.Web.Controllers
                 {
                     return AjaxReturn("oldpassword", "您输入当前密码错误！！");
                 }
-                string md5Password = System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(oldpassword, "MD5");
+                string md5Password = System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(password, "MD5");
                 BLL.User bllUser = new BLL.User();
                 user.Password = md5Password;
                 bllUser.Update(user);
