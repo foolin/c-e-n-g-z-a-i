@@ -1,0 +1,213 @@
+﻿body {
+	padding:0; margin:0; 
+	background:#FDE6EC url(bg.jpg) no-repeat;
+	background:#FDE6EC url(bg1.jpg) repeat;
+	font-size:12px;
+	position:relative; zoom:1;
+}
+.blog-wrapper{
+	margin:0 auto;
+	padding:0;
+	width:960px;
+}
+.clearfix::after {
+	clear: both;
+}
+.clearfix::before, .clearfix::after {
+	content: ' 0020';
+	display: block;
+	overflow: hidden;
+	visibility: hidden;
+	width: 0;
+	height: 0;
+}
+.clear{
+	clear:both;
+}
+a {
+	color:#C06;
+	text-decoration: none;
+}
+a:hover{
+	color:#0033CC;
+}
+/************ 导航 **********/
+.blog-header{
+	margin:0;
+	padding:20px 20px 0;
+	text-align:left;
+}
+.blog-header .hd-boy{
+	float:left;
+	width:40%;
+	text-align:right;
+}
+.blog-header .hd-love{
+	float:left;
+	width:20%;
+	text-align:center;
+}
+.blog-header .hd-girl{
+	float:right;
+	width:40%;
+	text-align:left;
+}
+.blog-header .hd-boy .hd-info, .blog-header .hd-boy .hd-avatar{
+	float:right;
+}
+.blog-header .hd-girl .hd-info, .blog-header .hd-girl .hd-avatar{
+	float:left;
+}
+.blog-header .hd-info{
+	width:75%;
+}
+.blog-header .hd-avatar{
+	width:25%;
+}
+.blog-header h1, .blog-header p{
+	padding:5px;
+}
+.blog-header h1{
+	margin:0;
+	padding:0;
+	font-size:16pt;
+}
+.blog-header .hd-avatar{
+}
+.blog-header .hd-avatar img{
+	padding:5px;
+	border:solid 1px #CCC;
+	background:#FFFFFF;
+}
+.blog-header h1 .muted{
+	font-size:12px;
+	color:#999999;
+}
+.blog-header .hd-love p{
+	margin:0;
+	padding:0;
+	font-size:14px;
+	line-height:1.8em;
+}
+/************ 导航 **********/
+.blog-nav{
+	margin:0;
+	font-size:14px;
+	font-weight:bold;
+	text-align:left; margin: 20px 0; 
+}
+.blog-nav ul, .blog-nav li{
+	margin:0;
+	padding:0;
+	list-style:none;
+}
+.blog-nav ul { margin: 0; display: inline-block; }
+.blog-nav li { display: block; float: left; margin-left: 10px; }
+.blog-nav a { color:#F06; text-transform: uppercase; border-bottom: 1px solid transparent; display: inline-block; }
+.blog-nav a:hover { color: #ff0000; border-bottom:1px solid #FF5432}
+.blog-nav li:before { color: #F06; display: inline-block; margin-right: 10px; content: '•'; }
+.blog-nav li:first-child { margin: 0; }
+.blog-nav li:first-child:before { content: ''; margin: 0; display: none; }
+
+/************* 内容体 *************/
+.blog-body{
+	padding-top:10px;
+	padding-bottom:10px;
+	background:#FFF;
+}
+.blog-body .boy-side{
+	float:left; width:20%;
+}
+.blog-body .boy-side-inner{
+	text-align:right;
+}
+.blog-body .love-content{
+	float:left; width:60%;
+}
+.blog-body .girl-side{
+	float:right; width:20%;
+}
+.blog-body .girl-side-inner{
+	text-align:left;
+}
+
+.blog-body .avatar,.blog-body .info{
+	
+}
+.blog-body .avatar img{
+	border:solid 1px #CCC;
+	padding:3px;
+	background:#FFFFFF;
+	width:150px;
+}
+.blog-body .info p{
+	margin:0;
+	padding:5px;
+}
+.blog-body .info .name{
+	font-size:14pt;
+	font-weight:bold;
+}
+
+/**** feed for new *****/
+.feed{
+	margin:0 auto;
+	margin-bottom:20px;
+	width:96%;
+	background:#FFFFFF;
+	border-radius:5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius: 5px;
+	color:#333;
+}
+.feed article{
+	padding:20px;
+	font-size:14px;
+}
+.feed .art-body
+{
+    line-height:1.8em;
+    font-size:14px;
+}
+.feed cite{
+	margin-bottom:18px;
+	font-size:12px;
+	color:#999;
+}
+.feed cite a
+{
+    color:#950;
+}
+.feed h1{
+	font-size:14pt;
+	margin-top:10px;
+	margin-bottom:10px;
+}
+.feed h1 a
+{
+    color:#666;
+}
+.feed footer{
+	margin-bottom:5px;
+	margin-top:0px;
+	font-size:12px;
+}
+.feed hr
+{
+    margin-bottom:10px;
+	border-top:solid 1px #d9d9d9;
+	border-bottom:solid 1px #fff;
+}
+
+
+
+/************* 底部按钮 ***********/
+.blog-footer{
+	height:78px;
+}
+
+.btn-panel { list-style-type:none; position: absolute; z-index:100; right:0; top:0; margin:0; padding:0; }
+.btn-panel li { float:right; display:inline; margin:0 0 0 5px; padding:0; }
+.btn-panel a.icon { display:block; overflow:hidden; height:26px; text-indent:-9999px; background-repeat:no-repeat; background-image:url('toolbar-simple.png'); opacity: 0.75; filter:alpha(opacity=75); }
+.btn-panel a.icon:hover { opacity: 1; filter:alpha(opacity=100); }
+ 

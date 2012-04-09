@@ -213,6 +213,7 @@
     <Content Include="resource\js\swfupload\swfupload.speed.js" />
     <Content Include="resource\js\swfupload\swfupload.swf" />
     <Content Include="resource\js\swfupload\swfupload_fp9.swf" />
+    <Content Include="resource\skin\default\blog.css" />
     <Content Include="Test.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Web.config">
@@ -232,7 +233,6 @@
   <ItemGroup>
     <Folder Include="bin\" />
     <Folder Include="resource\js\kindeditor\attached\" />
-    <Folder Include="resource\tpl\default\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\Register.cshtml" />
@@ -321,6 +321,7 @@
     <Content Include="Views\Account\FindPassword.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\ApplyInvite.cshtml" />
+    <Content Include="Views\Blog\LoveBlog.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

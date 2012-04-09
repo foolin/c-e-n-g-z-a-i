@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using CengZai.Helper;
 
 namespace CengZai.Web
 {
@@ -21,19 +22,29 @@ namespace CengZai.Web
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            //routes.MapLowerCaseUrlRoute(
-            //    "Blog", // Route name
-            //    "blog/{domain}/{controller}/{action}/{id}", // URL with parameters
-            //    new { controller = "Article", action = "Index", domain = @"", id = UrlParameter.Optional }
-            //    , 
-            //    new{domain = @"[a-zA-Z0-9_-]{5,30}",}
-            //);
+           // /********** 二级域名路由 ***********/
+           // routes.Add("DomainArticleRoute", new DomainRoute(
+           //"{username}.mvc.com"     // Domain with parameters 
+           // , "blog/{username}/article/{artid}/{id}" // URL with parameters
+           // , new { controller = "Blog", action = "Article", username = "", page = 0, @id = UrlParameter.Optional } // Parameter defaults
+           // , new { username = @"[\w]{5}", artid = "[0-9]+", page = "[0-9]+" }
+           //));
 
-            //routes.MapLowerCaseUrlRoute(
-            //    "Domain", // Route name
-            //    "{domain}/{controller}/{action}/", // URL with parameters
-            //    new { controller = "Article", action = "Index", domain = @"[a-zA-Z0-9_-]{5,30}", } // Parameter defaults
-            //);
+           // routes.Add("DomainBlogRoute", new DomainRoute(
+           //"{username}." + Config.SiteDomain     // Domain with parameters 
+           // , "{action}/{page}/{id}" // URL with parameters
+           // , new { controller = "Blog", action = "Blog", username = "", page = 0, @id = UrlParameter.Optional } // Parameter defaults
+           // , new { username = @"[\w]{5}", page = "[0-9]+" }
+           //));
+
+           // routes.Add("DomainDefault", new DomainRoute(
+           //"{username}." + Config.SiteDomain     // Domain with parameters 
+           // , "{controller}/{action}/{page}/{id}" // URL with parameters
+           // , new { controller = "Blog", action = "Blog", username = "", page = 0, @id = UrlParameter.Optional } // Parameter defaults
+           // , new { username = @"[\w]{5}", page = "[0-9]+" }
+           //));
+
+           // /********** 二级域名路由 end ***********/
 
             routes.MapLowerCaseUrlRoute(
                 "BlogArticle", // Route name
@@ -51,17 +62,10 @@ namespace CengZai.Web
             );
 
 
-            //routes.MapLowerCaseUrlRoute(
-            //    "Lover", // Route name
-            //    "{controller}/{loverid}/{action}/{id}", // URL with parameters
-            //    new { controller = "Lover", action = "Blog", loverid = @"[0-9]{7,30}", id = UrlParameter.Optional } // Parameter defaults
-            //    , new { loverid = @"[0-9]{7,30}" }
-            //);
-
             routes.MapLowerCaseUrlRoute(
                 "Default", // Route name
                 "{controller}/{action}/{page}/{id}", // URL with parameters
-                new { controller = "Home", action = "Index", page=1, id = UrlParameter.Optional } // Parameter defaults
+                new { controller = "Account", action = "Index", page=1, id = UrlParameter.Optional } // Parameter defaults
                 , new { page = "[0-9]+" }
             );
 

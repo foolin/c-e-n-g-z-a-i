@@ -19,7 +19,11 @@ namespace CengZai.Web.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            if (GetLoginUser() != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return View("Login");
         }
 
         public ActionResult Login()
