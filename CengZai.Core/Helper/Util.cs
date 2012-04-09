@@ -178,7 +178,7 @@ namespace CengZai.Helper
             string url ="";
             if (string.IsNullOrEmpty(imagePath))
             {
-                url = Config.ResourceDomain +  "/img/noavatar.jpg";
+                url = Config.ResourceHost +  "/img/noavatar.jpg";
             }
             else
             {

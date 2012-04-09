@@ -26,11 +26,11 @@ namespace CengZai.Helper
         /// <summary>
         /// 网站域名
         /// </summary>
-        public static string SiteDomain
+        public static string SiteHost
         {
             get
             {
-                return ConfigurationManager.AppSettings["SiteDomain"] + "";
+                return ConfigurationManager.AppSettings["SiteHost"] + "";
             }
         }
 
@@ -71,11 +71,11 @@ namespace CengZai.Helper
         /// <summary>
         /// js/css文件资源文件主机地址
         /// </summary>
-        public static string ResourceDomain
+        public static string ResourceHost
         {
             get
             {
-                return ConfigurationManager.AppSettings["ResourceDomain"] + "";
+                return ConfigurationManager.AppSettings["ResourceHost"] + "";
             }
         }
 
@@ -84,11 +84,11 @@ namespace CengZai.Helper
         /// <summary>
         /// 客服邮箱
         /// </summary>
-        public static string KefuEmail
+        public static string SiteDomain
         {
             get
             {
-                return ConfigurationManager.AppSettings["KefuEmail"] + "";
+                return ConfigurationManager.AppSettings["SiteDomain"] + "";
             }
         }
 

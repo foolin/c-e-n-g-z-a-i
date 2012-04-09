@@ -202,7 +202,7 @@
         <div class="row-fluid">
         <span class="pull-left">
             <h2>@ViewBag.Title </h2>
-            <div class="muted">http://@ViewBag.SiteDomain@Url.Action("Certificate", new { username = blogUser.Username })
+            <div class="muted">@ViewBag.SiteHost@Url.Action("Certificate", new { username = blogUser.Username })
             <p>
                 <!-- JiaThis Button BEGIN -->
                 <div id="ckepop">
