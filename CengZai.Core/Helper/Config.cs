@@ -45,6 +45,28 @@ namespace CengZai.Helper
             }
         }
 
+        /// <summary>
+        /// 网站标语
+        /// </summary>
+        public static string SiteKeyword
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["SiteKeyword"] + "";
+            }
+        }
+
+        /// <summary>
+        /// 网站标语
+        /// </summary>
+        public static string SiteDescription
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["SiteDescription"] + "";
+            }
+        }
+
 
         /// <summary>
         /// js/css文件资源文件主机地址

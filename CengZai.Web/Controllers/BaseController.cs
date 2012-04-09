@@ -38,6 +38,8 @@ namespace CengZai.Web.Controllers
             ViewData["SiteName"] = Config.SiteName;
             ViewData["SiteDomain"] = Config.SiteDomain;
             ViewData["SiteSlogan"] = Config.SiteSlogan;
+            ViewData["SiteKeyword"] = Config.SiteKeyword;
+            ViewData["SiteDescription"] = Config.SiteDescription;
             WebHelper.LoadLoginUserFromSessionOrCookies(filterContext.HttpContext);
         }
 
