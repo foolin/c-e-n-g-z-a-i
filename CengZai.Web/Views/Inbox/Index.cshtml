@@ -50,7 +50,7 @@
                             <td>@inbox.MsgID</td>
                             <td>@Html.GetUserNickname(inbox.FromUserID)</td>
                             <td>@Html.GetUserNickname(inbox.FromUserID)</td>
-                            <td>@inbox.Content</td>
+                            <td>@MvcHtmlString.Create(inbox.Content)</td>
                             <td>@Html.GetDateFormat(inbox.SendTime, "yyyy-MM-dd HH:mm:ss")</td>
                             <td>
                             @MvcHtmlString.Create(inbox.FromUserID > 0 ? Html.ActionLink("回复", "Reply", new { msgid=inbox.MsgID, touserid = inbox.FromUserID }).ToHtmlString() : "")
