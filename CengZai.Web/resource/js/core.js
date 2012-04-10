@@ -44,3 +44,48 @@
     d['title'] = '消息';
     // [more..]
 })($.dialog.defaults);
+
+
+function onAjaxSuccess(e) {
+    if (e.id == "success") {
+        $.dialog({
+            title: '操作成功',
+            content: e.msg,
+            lock: true,
+            time: 3000,
+            focus: false,
+            beforeunload: function () {
+                location.href = location.href;
+                return true;
+            }
+        });
+    }
+    else {
+        $.dialog({
+            title: '操作失败',
+            content: e.msg,
+            lock: true,
+            time: 3000,
+            focus: false
+        });
+    }
+}
+
+/*********** 定期更新消息 **********/
+$(document).ready(function () {
+    intervalUpdateInboxNewCount();
+    setInterval(intervalUpdateInboxNewCount, 180*1000);  //3分钟更新一次
+});
+
+function intervalUpdateInboxNewCount() {
+    $.getJSON("/inbox/ajaxgetnewcount", function (json) {
+        if (json.id == "success") {
+            var count = parseInt(json.msg);
+            if (count > 0) {
+                $("#inboxNewCount").html(count).show();
+                return;
+            }
+            $("#inboxNewCount").html(0).hide();
+        }
+    });
+}

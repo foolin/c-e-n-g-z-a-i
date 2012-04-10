@@ -347,16 +347,16 @@ namespace CengZai.Web.Controllers
                     return AjaxReturn("error", "您访问的页面不存在！");
                 }
 
-                Model.User user = GetLoginUser();
-                ViewBag.User = user;
+                Model.User loginUser = GetLoginUser();
+                ViewBag.User = loginUser;
 
                 Model.Lover lover = new BLL.Lover().GetModel((int)loverID);
                 if (lover == null || lover.State != 0)
                 {
                     return AjaxReturn("error", "您访问的页面不存在！");
                 }
-                if ((lover.BoyUserID != user.UserID && lover.GirlUserID != user.UserID)
-                    || lover.ApplyUserID == user.UserID
+                if ((lover.BoyUserID != loginUser.UserID && lover.GirlUserID != loginUser.UserID)
+                    || lover.ApplyUserID == loginUser.UserID
                     )
                 {
                     return AjaxReturn("error", "您访问无权操作！");
@@ -366,7 +366,7 @@ namespace CengZai.Web.Controllers
                     return AjaxReturn("error", "您访问的登记已经失效！");
                 }
 
-                if (new BLL.User().GetModel(user.UserID) == null)
+                if (new BLL.User().GetModel(loginUser.UserID) == null)
                 {
                     return AjaxReturn("honeyUserID", "唉哟，对方帐号怎么不存在呢？");
                 }
@@ -405,22 +405,31 @@ namespace CengZai.Web.Controllers
 
                 //更新申请者信息
                 BLL.User bllUser = new BLL.User();
-                user.Nickname = nickname;
-                user.Mobile = mobile;
-                user.Birth = birth;
-                bllUser.Update(user);
+                loginUser.Nickname = nickname;
+                loginUser.Mobile = mobile;
+                loginUser.Birth = birth;
+                bllUser.Update(loginUser);
 
                 //更新资料
                 lover.Avatar = avatar;
                 lover.JoinDate = joinDate;
-                lover.Flow = (int)Model.LoverFlow.Accept;
-                lover.UpdateUserID = user.UserID;
+                if (Config.LoverLimit == 0)
+                {
+                    lover.Flow = (int)Model.LoverFlow.Award;    //直接授予证书
+                    lover.Flow = 3;
+                }
+                else
+                {
+                    lover.Flow = (int)Model.LoverFlow.Accept;
+                    lover.State = 0;
+                }
+                lover.UpdateUserID = loginUser.UserID;
                 lover.UpdateTime = DateTime.Now;
-                if (lover.BoyUserID == user.UserID)
+                if (lover.BoyUserID == loginUser.UserID)
                 {
                     lover.BoyOath = oath;
                 }
-                else if (lover.GirlUserID == user.UserID)
+                else if (lover.GirlUserID == loginUser.UserID)
                 {
                     lover.GirlOath = oath;
                 }
@@ -428,9 +437,49 @@ namespace CengZai.Web.Controllers
                 {
                     return AjaxReturn("error", "严重鄙视你！原来你不是男方，也不是女方，传说中的第三者？");
                 }
-                if (new BLL.Lover().Update(lover))
+                string relationName = (lover.Certificate == 2? "夫妻" : "情侣");
+                BLL.Lover bllLover = new BLL.Lover();
+                
+               if (bllLover.Update(lover))
                 {
-                    return AjaxReturn("success", "接受成功！请耐心等待系统审核...");
+                    if (Config.LoverLimit == 0)
+                    {
+                        try
+                        {
+                            Model.User applyUser = new BLL.User().GetModel(loginUser.UserID);
+                            SendSysNotice((int)lover.ApplyUserID, "恭喜，贺喜！" + loginUser.Nickname
+                                + "已经同意您的申请，您们已经正式成为" + relationName + "，并已经有"
+                                + "<a href='" + Url.Action("Certificate", "Blog", new { username = applyUser.Username }) + "'>"
+                                + bllLover.GetCertificateName(lover.Certificate) + "</a>"
+                                );
+                            SendSysNotice(loginUser.UserID, "恭喜，贺喜！您与" + applyUser.Username
+                                + "已经正式成为" + relationName + "，并已经有"
+                                + "<a href='" + Url.Action("Certificate", "Blog", new { username = loginUser.Username }) + "'>"
+                                + bllLover.GetCertificateName(lover.Certificate) + "</a>"
+                                );
+                        }
+                        catch (Exception ex)
+                        {
+                            Log.Error("Lover/Accept发送短消息异常", ex);
+                        }
+                        return AjaxReturn("success", "接受成功！您们已经成为情侣并已有证书！");
+                    }
+                    else
+                    {
+                        try
+                        {
+                            Model.User applyUser = new BLL.User().GetModel(loginUser.UserID);
+                            SendSysNotice((int)lover.ApplyUserID, "恭喜，" + loginUser.Nickname
+                                + "已经同意您的申请，请耐心等待系统审核。"
+                                + bllLover.GetCertificateName(lover.Certificate) + "</a>"
+                                );
+                        }
+                        catch (Exception ex)
+                        {
+                            Log.Error("Lover/Accept发送短消息异常", ex);
+                        }
+                        return AjaxReturn("success", "接受成功！请耐心等待系统审核...");
+                    }
                 }
                 else
                 {

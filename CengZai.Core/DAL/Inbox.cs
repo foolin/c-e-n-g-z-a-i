@@ -340,6 +340,47 @@ namespace CengZai.DAL
 		}*/
 
 		#endregion  Method
+
+
+
+        /// <summary>
+        /// 设置为已读/未读
+        /// </summary>
+        public bool SetReadByUser(int userID)
+        {
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("update T_Inbox set IsRead=1 ");
+            strSql.Append(" where ToUserID=" + userID);
+            int rows = DbHelperSQL.ExecuteSql(strSql.ToString());
+            if (rows > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
+        /// <summary>
+        /// 设置为已读/未读
+        /// </summary>
+        public bool SetIsRead(string msgIds, int isRead)
+        {
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("update T_Inbox set IsRead=" + isRead);
+            strSql.Append(" where MsgID  in (" + msgIds + ")");
+            int rows = DbHelperSQL.ExecuteSql(strSql.ToString());
+            if (rows > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 	}
 }
 

@@ -2,28 +2,33 @@
     ViewBag.Title = "Index";
     var inboxList = ViewBag.InboxList as List<CengZai.Model.Inbox>;
     var active = Request["Active"];
+    int newCount = ViewBag.NewCount;
+    
 }
 
 
 <div class="container bg-white">
 <div class="padding">
 
-            <h2>我的信箱 <span class="pull-right">@Html.ActionLink("发送私信", "Send", null, new { @class = "btn" })</span></h2> 
+            <h2>我的消息 <span class="pull-right">@Html.ActionLink("发送私信", "Send", null, new { @class = "btn" })</span></h2> 
 
             <ul class="nav nav-tabs">
-                <li @if (active == "all" || string.IsNullOrEmpty(active) )
-                    {<text>class="active"</text>}>@Html.ActionLink("全部", "Index", new { active="all" })</li>
+                <li @if (active == "all" || string.IsNullOrEmpty(active))
+                    {<text>class="active"</text>}>@Html.ActionLink("全部", "Index", new { active = "all" })</li>
                 <li @if (active == "privacy")
                     {<text>class="active"</text>}>@Html.ActionLink("私信", "Index", new { active = "privacy" })</li>
                 <li @if (active == "notice")
                     {<text>class="active"</text>}>@Html.ActionLink("通知", "Index", new { active = "notice" })</li>
+                <li @if (active == "unread")
+                    {
+                        <text>class="active"</text>}>@Html.ActionLink("未读(" + newCount + ")", "Index", new { active = "unread" })</li>
             </ul>
  
             <div class="tab-content">
                 <div class="tab-pane active" id="all">
-                    @if (inboxList == null)
+                    @if (inboxList == null || inboxList.Count == 0)
                     {
-                        <p>暂无任何私信</p>
+                        <p>暂无</p>
                     }
                     else
                     {
@@ -39,7 +44,7 @@
                           </tr>
                         </thead>
                         <tbody>
-                         @foreach(CengZai.Model.Inbox inbox in inboxList)
+                         @foreach (CengZai.Model.Inbox inbox in inboxList)
                          {
                           <tr>
                             <td>@inbox.MsgID</td>
@@ -47,17 +52,26 @@
                             <td>@Html.GetUserNickname(inbox.FromUserID)</td>
                             <td>@inbox.Content</td>
                             <td>@Html.GetDateFormat(inbox.SendTime, "yyyy-MM-dd HH:mm:ss")</td>
-                            <td>@MvcHtmlString.Create(inbox.FromUserID > 0 ? Html.ActionLink("回复", "Send", new { touserid = inbox.FromUserID }).ToHtmlString() : "")</td>
+                            <td>
+                            @MvcHtmlString.Create(inbox.FromUserID > 0 ? Html.ActionLink("回复", "Reply", new { msgid=inbox.MsgID, touserid = inbox.FromUserID }).ToHtmlString() : "")
+                            @if (inbox.IsRead == 0)
+                            {
+                                <sup class="label label-important">未读</sup>
+                            }
+                            </td>
                           </tr>
                          }
                         </tbody>
                       </table>
                     }
                 </div>
-                <div class="tab-pane" id="receive">...</div>
-                <div class="tab-pane" id="send">...</div>
             </div>
- 
+            <div>
+            @if (active == "unread" && inboxList != null && inboxList.Count > 0)
+            {
+                @Ajax.ActionLink("我知道了", "AjaxSetRead", null, new AjaxOptions { HttpMethod = "post", OnSuccess = "onAjaxSuccess" }, new { @class = "btn btn-primary" });
+            }
+            </div>
             <script>
                 $(function () {
                     $('.tabs a:last').tab('show')
