@@ -367,8 +367,8 @@ namespace CengZai.Web.Controllers
                                 SendSysNotice((int)mInvite.UserID, "您邀请的用户【" + mInvite.Email
                                     + "】已经成功注册，注册的昵称为：<a href='" + Url.Action("Blog", "Blog", new { username = username }) + "'>"
                                     + username + "</a>,快去看看吧！");
-                                SendSysNotice(mUser.UserID, mUser.Nickname + "，邀请您邀请加入的人：<a href='" + Url.Action("Blog", "Blog", new { username = username }) + "'>"
-                                    + username + "</a>,快去看看吧！");
+                                SendSysNotice(mUser.UserID, mUser.Nickname + "，邀请您邀请加入的人：<a href='" + Url.Action("Blog", "Blog", new { username = inviteUser.Username }) + "'>"
+                                    + inviteUser.Nickname + "</a>,快去看看吧！");
                             }
                         }
                         
@@ -405,7 +405,7 @@ namespace CengZai.Web.Controllers
                     mailContent.Append("<br />");
                     mailContent.Append("<br />");
 
-                    mailContent.Append("<a href=\"" + Config.SiteHost + "\"  target=\"_blank\"><span style=\"font-weight:bold; color:#F00; text-decoration:none;\">" + Config.SiteName + "（" + Config.SiteHost + ")</span></a>");
+                    mailContent.Append("<a href=\"" + Config.SiteHost + "\"  target=\"_blank\"><span style=\"font-weight:bold; color:#F00; text-decoration:none;\">" + Config.SiteName + "（" + Config.SiteDomain + ")</span></a>");
                     mailContent.Append("<br />");
                     mailContent.Append(DateTime.Now.ToString("yyyy年MM月dd日"));
                     mailContent.Append("<hr />");
@@ -519,7 +519,7 @@ namespace CengZai.Web.Controllers
                         mailContent.Append("<br />");
                         mailContent.Append("<br />");
 
-                        mailContent.Append("<a href=\"" + Config.SiteHost + "\"  target=\"_blank\"><span style=\"font-weight:bold; color:#F00; text-decoration:none;\">" + Config.SiteName + "（" + Config.SiteHost + ")</span></a>");
+                        mailContent.Append("<a href=\"" + Config.SiteHost + "\"  target=\"_blank\"><span style=\"font-weight:bold; color:#F00; text-decoration:none;\">" + Config.SiteName + "（" + Config.SiteDomain + ")</span></a>");
                         mailContent.Append("<br />");
                         mailContent.Append(DateTime.Now.ToString("yyyy年MM月dd日"));
                         mailContent.Append("<hr />");
@@ -687,7 +687,7 @@ namespace CengZai.Web.Controllers
                     mailContent.Append("<br />");
                     mailContent.Append("<br />");
 
-                    mailContent.Append("<a href=\"" + Config.SiteHost + "\"  target=\"_blank\"><span style=\"font-weight:bold; color:#F00; text-decoration:none;\">" + Config.SiteName + "（" + Config.SiteHost + ")</span></a>");
+                    mailContent.Append("<a href=\"" + Config.SiteHost + "\"  target=\"_blank\"><span style=\"font-weight:bold; color:#F00; text-decoration:none;\">" + Config.SiteName + "（" + Config.SiteDomain + ")</span></a>");
                     mailContent.Append("<br />");
                     mailContent.Append(DateTime.Now.ToString("yyyy年MM月dd日"));
                     mailContent.Append("<hr />");
