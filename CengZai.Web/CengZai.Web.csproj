@@ -214,8 +214,14 @@
     <Content Include="resource\js\swfupload\swfupload.speed.js" />
     <Content Include="resource\js\swfupload\swfupload.swf" />
     <Content Include="resource\js\swfupload\swfupload_fp9.swf" />
+    <Content Include="resource\skin\default\bg.jpg" />
+    <Content Include="resource\skin\default\bg1.jpg" />
     <Content Include="resource\skin\default\blog.css" />
     <Content Include="Global.asax" />
+    <Content Include="resource\skin\default\operate.png" />
+    <Content Include="resource\skin\default\toolbar-ie.png" />
+    <Content Include="resource\skin\default\toolbar-simple.png" />
+    <Content Include="resource\skin\default\toolbar.png" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -308,6 +314,11 @@
     <Content Include="Views\Settings\_SettingNav.cshtml" />
     <Content Include="Views\Blog\Profile.cshtml" />
     <Content Include="Views\Article\Index.cshtml" />
+    <None Include="resource\psd\UploadImage.psd" />
+    <None Include="resource\psd\结婚证封面.psd" />
+    <None Include="resource\psd\证件内容背景.psd" />
+    <None Include="resource\psd\证件封面.psd" />
+    <None Include="resource\psd\证件背面.psd" />
     <None Include="Views\Blog\Certificate.cshtml" />
     <Content Include="Views\Blog\Article.cshtml" />
     <Content Include="Views\Blog\BlogSingle.cshtml" />
