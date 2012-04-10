@@ -168,6 +168,26 @@ namespace CengZai.Helper
 
 
         /// <summary>
+        /// 情侣登记限制：
+        /// 0=自动审核通过，
+        /// 1=人工审核通过，
+        /// </summary>
+        public static int LoverLimit
+        {
+            get
+            {
+                int val = 0;
+                try
+                {
+                    val = Convert.ToInt32(ConfigurationManager.AppSettings["LoverLimit"]);
+                }
+                catch { }
+                return val;
+            }
+        }
+
+
+        /// <summary>
         /// 头像宽度，单位像素
         /// </summary>
         public static int AvatarWidth

@@ -83,7 +83,7 @@
                     </ul> 
                 </li>
                 <li class="divider-vertical"></li> 
-                <li><a href="/Inbox">消息@*<sup class="label label-success">2</sup>*@</a></li>
+                <li><a href="@Url.Action("Index", "Inbox", new { active = "unread" })">消息<sup id="inboxNewCount" class="label label-success hide">0</sup></a></li>
                 <li>@Html.ActionLink("邀请","Invite","Friend")</li> 
                 <li>@Html.ActionLink("退出", "Logout", "Account")</li>
             </ul>

@@ -23,15 +23,15 @@ namespace CengZai.Web.Controllers
         {
             try
             {
-                Model.User user = GetLoginUser();
-                if (user == null)
+                Model.User loginUser = GetLoginUser();
+                if (loginUser == null)
                 {
                     return JumpToTips("您尚未登录", "您尚未登录");
                 }
                 List<Model.Inbox> list = null;
                 
                 BLL.Inbox bllInbox = new BLL.Inbox();
-                string where = string.Format("ToUserID={0}", user.UserID);
+                string where = string.Format("ToUserID={0}", loginUser.UserID);
                 if (active == "privacy")
                 {
                     where += " and IsSystem=0 ";
@@ -40,12 +40,24 @@ namespace CengZai.Web.Controllers
                 {
                     where += " and IsSystem=1 ";
                 }
+                else if (active == "unread")
+                {
+                    where += " and IsRead=0 ";
+                }
                 DataSet dsInboxList = bllInbox.GetList(0, where, "SendTime DESC");
                 if (dsInboxList != null && dsInboxList.Tables.Count > 0)
                 {
                     list = bllInbox.DataTableToList(dsInboxList.Tables[0]);
                 }
                 ViewBag.InboxList = list;
+
+                int newCount = 0;
+                DataSet dsUnReadList = bllInbox.GetList("IsRead=0 and ToUserID=" + loginUser.UserID);
+                if (dsUnReadList != null && dsUnReadList.Tables.Count > 0)
+                {
+                    newCount = dsUnReadList.Tables[0].Rows.Count;
+                }
+                ViewBag.NewCount = newCount;
             }
             catch (Exception ex)
             {
@@ -157,10 +169,81 @@ namespace CengZai.Web.Controllers
             
         }
 
+
+        //设置已读
+        [HttpPost]
+        [CheckAuthFilter]
+        public ActionResult AjaxSetRead()
+        {
+            try
+            {
+                Model.User loginUser = GetLoginUser();
+                if(loginUser == null)
+                {
+                    return AjaxReturn("error", "您尚未登录！");
+                }
+                new BLL.Inbox().SetReadByUser(loginUser.UserID);
+                return AjaxReturn("success", "设为已读成功！");
+            }
+            catch (Exception ex)
+            {
+                Log.Error("消息设置为已读失败", ex);
+                return AjaxReturn("error", "设置为已读失败！");
+            }
+        }
+
+        [CheckAuthFilter]
+        public ActionResult Reply(int? msgid, int? touserid)
+        {
+            if (msgid != null)
+            {
+                try
+                {
+                    new BLL.Inbox().SetIsRead(msgid.ToString(), 1);
+                }
+                catch (Exception ex)
+                {
+                    Log.Error("消息设置为已读失败", ex);
+                }
+            }
+            return RedirectToAction("Send", new { touserid = touserid });
+        }
+
+
+
         [CheckAuthFilter]
         public ActionResult Read(int msgid)
         {
             return View();
+        }
+
+
+        //设置已读
+        [CheckAuthFilter]
+        public ActionResult AjaxGetNewCount()
+        {
+            try
+            {
+                Model.User loginUser = GetLoginUser();
+                if (loginUser == null)
+                {
+                    return AjaxReturn("error", "您尚未登录！");
+                }
+                int count = 0;
+                BLL.Inbox bllInbox = new BLL.Inbox();
+                string where = string.Format("ToUserID={0} and IsRead=0 ", loginUser.UserID);
+                DataSet dsInboxList = bllInbox.GetList(where);
+                if (dsInboxList != null && dsInboxList.Tables.Count > 0)
+                {
+                    count = dsInboxList.Tables[0].Rows.Count;
+                }
+                return AjaxReturn("success", count.ToString());
+            }
+            catch (Exception ex)
+            {
+                Log.Error("消息设置为已读失败", ex);
+                return AjaxReturn("error", "0");
+            }
         }
 
     }

@@ -180,6 +180,23 @@ namespace CengZai.BLL
 		//}
 
 		#endregion  Method
+
+
+        /// <summary>
+        /// 设置为已读/未读
+        /// </summary>
+        public bool SetReadByUser(int userID)
+        {
+            return dal.SetReadByUser(userID);
+        }
+
+        /// <summary>
+        /// 设置为已读/未读
+        /// </summary>
+        public bool SetIsRead(string msgIds, int isRead)
+        {
+            return dal.SetIsRead(msgIds, isRead);
+        }
 	}
 }
 
