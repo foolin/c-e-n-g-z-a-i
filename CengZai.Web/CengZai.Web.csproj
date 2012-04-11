@@ -259,9 +259,6 @@
     <Content Include="Views\Account\Activate.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\Master.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
