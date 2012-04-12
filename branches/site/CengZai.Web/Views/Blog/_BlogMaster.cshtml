@@ -1,0 +1,316 @@
+﻿@{
+    Layout = null;
+    var loginUser = Html.GetLoginUser();
+    var blogUser = ViewBag.BlogUser as CengZai.Model.User;
+    var blogLover = ViewBag.BlogLover as CengZai.Model.Lover;
+    var loverUser = ViewBag.LoverUser as CengZai.Model.User;
+    var boy = ViewBag.Boy as CengZai.Model.User;
+    var girl = ViewBag.Girl as CengZai.Model.User;
+    string blogSkin = ViewBag.BlogSkin + "";
+    
+    if (blogLover != null)
+    {
+        ViewBag.Title = boy.Nickname + "和" + girl.Nickname + "";
+    }
+    else
+    {
+        ViewBag.Title = blogUser.Nickname;
+    }
+    
+    string blogClassName = "";
+    if(blogLover == null)
+    {
+        if(girl != null)
+        {
+            blogClassName = "blog-single-girl";
+        }
+        else
+        {
+            blogClassName = "blog-single-boy";
+        }
+    }
+    if(string.IsNullOrEmpty(blogSkin))
+    {
+        blogSkin = "skin";
+    }
+
+}
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>@ViewBag.Title - @ViewBag.SiteName</title>
+<link href="@Url.GetResourceUrl("/css/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.GetResourceUrl("/css/style.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.GetResourceUrl("/css/blog.css")" rel="stylesheet" type="text/css" />
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+  <script src="@Url.GetResourceUrl("/js/html5.js")" type="text/javascript"></script>
+<![endif]-->
+<script src="@Url.GetResourceUrl("/js/jquery.min.js")" type="text/javascript"></script>
+<script src="@Url.GetResourceUrl("/js/bootstrap.min.js")" type="text/javascript"></script>
+<link href="@Url.GetResourceUrl("/js/dialog/skins/twitter.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.GetResourceUrl("/js/dialog/jquery.artDialog.min.js")" type="text/javascript"></script>
+<script src="@Url.GetResourceUrl("/js/dialog/artDialog.plugins.min.js")" type="text/javascript"></script>
+<style type="text/css">
+    #skins
+    {
+    	width:580px;
+    }
+    #skins a
+    {
+    	float:left;
+    	margin-right:10px;
+    	margin-bottom:10px;
+    	text-align:center;
+    	color:#000;
+    }
+    #skins a:hover, #skins .active
+    {
+    	text-decoration:none;
+    	color:#ff0000;
+    }
+    #skins img
+    {
+    	display:block;
+    	border:solid 1px #ccc;
+    	background:#fff;
+    	padding:5px;
+    }
+    #skins a:hover img,#skins .active img
+    {
+    	display:block;
+    	border:solid 1px #f00;
+    	background:#FEE2F1;
+    	padding:5px;
+    }
+</style>
+<script type="text/javascript">
+//打开设置主题风格的对话框
+function openSetSkinModal() {
+    $.dialog({
+        id: "BLOG_SET_SKIN_MODAL",
+        title: '设置风格主题',
+        content: $('#modalSetSkin').html(),
+        focus: false,
+        lock: false,
+        padding: 15,
+        okValue:"保存",
+        ok: function () {
+            var data = $("#skins a.active").attr("data");
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("AjaxSetBlogSkin","Settings") ",
+                data: "skin=" + data,
+                success: function (e) {
+                    e = eval(e);
+                    if(e.id="success"){
+                        this.close();
+                    }
+                    else{
+                        alert(e.msg);
+                    }
+                }
+            });
+        },
+        cancelValue:"取消",
+        cancel: function () {
+            var lenSkins = $("#skins a").length;
+            for (var i = 0; i < lenSkins; i++) {
+                if (i == 0) {
+                    $("body").removeClass("skin");
+                }
+                else {
+                    $("body").removeClass("skin" + i);
+                }
+            }
+            $("body").addClass("@blogSkin");
+        }
+    });
+    initSkinClick();
+}
+function initSkinClick() {
+    //function setSkinPreview(id) {
+    $("#skins a").click(function () {
+        var lenSkins = $("#skins a").length;
+        for (var i = 0; i < lenSkins; i++) {
+            if (i == 0) {
+                $("body").removeClass("skin");
+            }
+            else {
+                $("body").removeClass("skin" + i);
+            }
+        }
+        $("body").addClass($(this).attr("data"));
+        $("#skins a").removeClass("active");
+        $(this).addClass("active");
+    });
+}
+</script>
+</head>
+
+<body class="@blogClassName @blogSkin">
+
+@Html.Partial("_Topbar")
+
+<div class="blog-bd">
+    <div class="bside">
+    <div class="bside-inner">
+        @if (boy != null)
+        {
+    	<div class="user-info">
+            <div class="avatar">
+                <a href="@Url.Action("Blog", "Blog", new { username = boy.Username })"><img src="@Url.GetAvatarUrl(boy.Avatar)"></a>
+            </div>
+            <div class="detail">
+                <div class="nums">
+@*                    <p><a href="#">粉丝<strong>12</strong></a></p>
+                    <p class="divider"></p>
+                    <p><a href="#">关注<strong>108</strong></a></p>
+                    <div class="clear"></div>*@
+            	</div>
+                @if (loginUser != null && boy.UserID == loginUser.UserID)
+                {
+                    <p><input type="button" class="btn btn-success" onclick="openSetSkinModal();" value="设置博客风格主题" /></p>
+                }
+                <h3 class="name">@boy.Nickname @Ajax.GetFriendAddLink(boy.UserID, "font12")</h3>
+                <ul class="intro">
+                    <li><b>性别：</b>帅哥</li>
+                    <li><b>签名：</b>@boy.Sign</li>
+                    <li><b>主页：</b>@CengZai.Helper.Config.SiteHost/@Url.Action("Blog", "Blog", new { username = boy.Username })</li>
+                    <li><b>介绍：</b>@boy.Intro</li>
+                    @if (blogLover != null)
+                    {
+                        <li><b>证书：</b>@Html.ActionLink(Html.GetCertificateName(blogLover.Certificate), "Certificate", new { username = boy.Username })</li>
+                        <li><b>宣誓：</b>@blogLover.BoyOath</li>
+                    }
+                </ul>
+            </div>
+            @*<div class="sidebox">
+                <h3>文章分类</h3>
+                <ul>
+                    <li><a href="#">男欢女爱(10)</a></li>
+                    <li><a href="#">男欢女爱(10)</a></li>
+                    <li><a href="#">生男生女(10)</a></li>
+                </ul>
+            </div>*@
+        </div>
+        }
+        else
+        {
+            <text>暂无男主人</text>
+        }
+   	</div>
+    </div>
+    <!--/bsider-->
+    <div class="gside">
+    <div class="gside-inner">
+        @if (girl != null)
+        {
+    	<div class="user-info">
+            <div class="avatar">
+                <a href="@Url.Action("Blog", "Blog", new { username = girl.Username })"><img src="@Url.GetAvatarUrl(girl.Avatar)"></a>
+            </div>
+            <div class="detail">
+            	<div class="nums">
+@*                    <p><a href="#">粉丝<strong id="followerNum">12</strong></a></p>
+                    <p class="divider"></p>
+                    <p><a href="#">关注<strong id="followerNum">108</strong></a></p>
+                    <div class="clear"></div>*@
+            	</div>
+                @if (loginUser != null && girl.UserID == loginUser.UserID)
+                { 
+                    <p><input type="button" class="btn btn-success" onclick="openSetSkinModal();" value="设置博客风格主题" /></p>
+                }
+                <h3 class="name">@girl.Nickname  @Ajax.GetFriendAddLink(girl.UserID, "font12")</h3>
+                <ul class="intro">
+                    <li><b>性别：</b>美女</li>
+                    <li><b>签名：</b>@girl.Sign</li>
+                    <li><b>主页：</b>@CengZai.Helper.Config.SiteHost/@Url.Action("Blog", "Blog", new { username = girl.Username })</li>
+                    <li><b>介绍：</b>@girl.Intro</li>
+                    @if (blogLover != null)
+                    {
+                        <li><b>证书：</b>@Html.ActionLink(Html.GetCertificateName(blogLover.Certificate), "Certificate", new { username = boy.Username })</li>
+                        <li><b>宣誓：</b>@blogLover.GirlOath</li>
+                    }
+                </ul>
+            </div>
+        </div>
+@*        <div class="sidebox">
+            <h3>文章分类</h3>
+            <ul>
+                <li><a href="#">男欢女爱(10)</a></li>
+                <li><a href="#">男欢女爱(10)</a></li>
+                <li><a href="#">生男生女(10)</a></li>
+            </ul>
+        </div>*@
+        }
+        else
+        {
+            <text>暂无女主人</text>
+        }
+    </div>
+    </div>
+    <!--/gsider-->
+    <div class="main">
+    <div class="main-inner">
+    	<div class="blog-info">
+            @if (blogLover != null)
+            {
+        	    <div class="avatar">
+                    <a href="#"><img src="@Url.GetAvatarUrl(blogLover.Avatar)"></a>
+                </div>
+                <div class="detail">
+            	        <h1 class="title">@ViewBag.Title 
+                                <span>@(blogLover.Certificate == 2 ? "夫妻" : "情侣")</span>
+                        </h1>
+            	        <ul class="intro">
+                	        <li>我们已经相恋<strong>@Html.GetDaysByNow(blogLover.JoinDate)</strong>天，查看我们的
+                             @Html.ActionLink(Html.GetCertificateName(blogLover.Certificate), "Certificate", new { username = blogUser.Username })
+                            </li>
+                            <li><b>博客网址：</b>@CengZai.Helper.Config.SiteHost/@Url.Action("Blog", "Blog", new { username = blogUser.Username })</li>
+                        </ul>
+                </div>
+            }
+            else
+            {
+                <h1 class="title">@ViewBag.Title <span>单身</span> </h1>
+            	<ul class="intro">
+                	<li>Ta还单身噢，快快 @Html.ActionLink("申请与Ta成为情侣", "Apply", "Lover", null, new { @class = "btn btn-large btn-success" })</li>
+                    <li><b>博客网址：</b>@CengZai.Helper.Config.SiteHost/@Url.Action("Blog", "Blog", new { username = blogUser.Username })</li>
+                </ul>
+            }
+            <div class="clear"></div>
+        </div>
+        <!--/blog-info-->
+        <hr>
+        <div class="blog-container">
+            @RenderBody()
+        </div>
+		<!--/blog-container-->
+		<div class="pager"></div>
+	</div>
+    </div>
+    <!--/main-->
+</div>
+<div class="blog-ft">
+	<div class="copyright">&copy; 2012 @ViewBag.Title</div>
+    <div class="powered">Powered by <a href="@ViewBag.SiteHost">@ViewData["SiteName"]<text>(</text>@ViewData["SiteDomain"])</a></div>
+</div>
+
+<div id="modalSetSkin" class="hide">
+    <div id="skins">
+        <a href="#" data="skin"><img src="@Url.GetResourceUrl("/img/blog/blog-skin-thumbnail.jpg")" />甜甜蜜蜜（默认）</span></a>
+        <a href="#" data="skin1"><img src="@Url.GetResourceUrl("/img/blog/blog-skin1-thumbnail.jpg")" />爱意朦胧</span></a>
+        <a href="#" data="skin2"><img src="@Url.GetResourceUrl("/img/blog/blog-skin2-thumbnail.jpg")" />粉红佳人</span></a>
+        <a href="#" data="skin3"><img src="@Url.GetResourceUrl("/img/blog/blog-skin3-thumbnail.jpg")" />涂鸦爱情</span></a>
+        <a href="#" data="skin4"><img src="@Url.GetResourceUrl("/img/blog/blog-skin4-thumbnail.jpg")" />光棍宅男</span></a>
+        <a href="#" data="skin5"><img src="@Url.GetResourceUrl("/img/blog/blog-skin5-thumbnail.jpg")" />光棍宅女</span></a>
+        <a href="#" data="skin6"><img src="@Url.GetResourceUrl("/img/blog/blog-skin6-thumbnail.jpg")" />卡通爱情</span></a>
+        <div class="clear"></div>
+    </div>
+</div>
+
+</body>
+</html>

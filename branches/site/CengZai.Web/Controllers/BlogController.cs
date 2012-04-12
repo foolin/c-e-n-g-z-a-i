@@ -26,9 +26,23 @@ namespace CengZai.Web.Controllers
                 return;
             }
             ViewBag.BlogUser = blogUser;    //保存博客主
+            string blogSkin = "";
+            if (blogUser.Config != null && !string.IsNullOrEmpty(blogUser.Config.BlogSkin))
+            {
+                blogSkin = blogUser.Config.BlogSkin;
+            }
+            ViewBag.BlogSkin = blogSkin;
             Model.Lover blogLover = bllLover.GetAwardLover(blogUser.UserID);
             if (blogLover == null)
             {
+                if (blogUser.Sex == 2)
+                {
+                    ViewBag.Girl = blogUser;
+                }
+                else
+                {
+                    ViewBag.Boy = blogUser;
+                }
                 return;
             }
             Model.User loverUser = null;
@@ -67,38 +81,37 @@ namespace CengZai.Web.Controllers
         //用户博客
         public ActionResult Blog(string username, int? pageid)
         {
-            Model.User blogUser = ViewBag.BlogUser;
-            Model.User loverUser = ViewBag.LoverUser;
-            Model.User boy = ViewBag.Boy;
-            Model.User girl = ViewBag.Girl;
-            ViewBag.TotalCount = 0;
-            if (blogUser == null)
+            try
             {
-                return JumpToHome("对不起！", "您访问的博客不存在！");
-            }
-            
-            if (loverUser == null)
-            {
+                Model.User blogUser = ViewBag.BlogUser;
+                Model.User loverUser = ViewBag.LoverUser;
+                Model.User boy = ViewBag.Boy;
+                Model.User girl = ViewBag.Girl;
+                ViewBag.TotalCount = 0;
+                if (blogUser == null)
+                {
+                    return JumpToHome("对不起！", "您访问的博客不存在！");
+                }
+
+                string userIds = blogUser.UserID.ToString();
+                if (boy != null)
+                {
+                    userIds += "," + boy.UserID;
+                }
+                if (girl != null)
+                {
+                    userIds += "," + girl.UserID;
+                }
                 BLL.Article bllArt = new BLL.Article();
-                int totalCount = 0;
-                int page = GetPageIndex("page");
-                List<Model.Article> blogArtList = bllArt.GetUserPublicListByPage(blogUser.UserID, "IsTop DESC,PostTime DESC", Config.PageSize, page, out totalCount);
-                ViewBag.TotalCount = totalCount;
-                ViewBag.BlogArtList = blogArtList;
-                return View("BlogSingle");
-            }
-            else
-            {
-                BLL.Article bllArt = new BLL.Article();
-                int boyTotalCount = 0;
-                int girlTotalCount = 0;
-                int page = GetPageIndex("page");
-                List<Model.Article> boyArtList = bllArt.GetUserPublicListByPage(boy.UserID, "IsTop DESC,PostTime DESC", Config.PageSize, page, out boyTotalCount);
-                List<Model.Article> girlArtList = bllArt.GetUserPublicListByPage(girl.UserID, "IsTop DESC,PostTime DESC", Config.PageSize, page, out girlTotalCount);
-                ViewBag.TotalCount = boyTotalCount > girlTotalCount ? boyTotalCount : girlTotalCount;
-                ViewBag.BoyArtList = boyArtList;
-                ViewBag.GirlArtList = girlArtList;
+                List<Model.Article> artList = bllArt.GetUserPublicListByPage(userIds, "IsTop DESC,PostTime DESC", mPageSize, mPageIndex, out mTotalCount);
+                SetPage();  //设置分页
+                ViewBag.ArtList = artList;
                 return View();
+            }
+            catch (Exception ex)
+            {
+                Log.Error("");
+                return JumpToTips("操作失败", "对不起，可能网络出现问题，请稍后重试！");
             }
         }
 

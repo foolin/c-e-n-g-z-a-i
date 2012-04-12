@@ -1,4 +1,5 @@
 ﻿using System;
+using CengZai.Helper;
 namespace CengZai.Model
 {
 	/// <summary>
@@ -8,7 +9,9 @@ namespace CengZai.Model
 	public partial class User
 	{
 		public User()
-		{}
+		{
+            _config = new UserConfig();
+        }
 		#region Model
 		private int _userid;
 		private string _email;
@@ -33,7 +36,7 @@ namespace CengZai.Model
         private int? _credit;
         private int? _vip;
         private int? _money;
-        private string _config;
+        private UserConfig _config;
 		/// <summary>
 		/// 用户ID
 		/// </summary>
@@ -218,10 +221,18 @@ namespace CengZai.Model
             set { _money = value; }
             get { return _money; }
         }
+        ///// <summary>
+        ///// 用户配置
+        ///// </summary>
+        //public string Config
+        //{
+        //    set { _config = value; }
+        //    get { return _config; }
+        //}
         /// <summary>
         /// 用户配置
         /// </summary>
-        public string Config
+        public UserConfig Config
         {
             set { _config = value; }
             get { return _config; }
@@ -243,5 +254,62 @@ public enum LoveState
     Lost = 2,   //失恋
     Marry = 3, //已婚
     Hide = 4, //请勿打扰
+}
+
+public class UserConfig
+{
+    public UserConfig()
+    {
+        this.BlogSkin = "";
+    }
+
+    /// <summary>
+    /// 博客皮肤
+    /// </summary>
+    public string BlogSkin
+    {
+        set;
+        get;
+    }
+
+
+    #region __静态转换方法___
+    public static UserConfig ToModel(string config)
+    {
+        UserConfig modelConfig = null;
+        try
+        {
+            modelConfig = JsonConvert.JavascriptDeserialize<UserConfig>(config);
+        }
+        catch (Exception ex)
+        {
+            Log.Error("UserConfig转换JavascriptDeserialize异常：" + config, ex);
+        }
+        return modelConfig;
+    }
+
+    /// <summary>
+    /// 转换为字符串
+    /// </summary>
+    /// <returns></returns>
+    public static string ToString(UserConfig config)
+    {
+        if (config == null)
+        {
+            return "";
+        }
+        string ret = "";
+        try
+        {
+            ret = JsonConvert.JavascriptSerialize(config);
+        }
+        catch (Exception ex)
+        {
+            Log.Error("UserConfig转换Json异常", ex);
+        }
+        return ret;
+    }
+    #endregion
+
 }
 

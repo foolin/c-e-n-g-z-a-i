@@ -342,7 +342,7 @@ namespace CengZai.Web.Controllers
                 mUser.Vip = 0;
                 mUser.Credit = 0;
                 mUser.Money = 0;
-                mUser.Config = "";
+                mUser.Config = new UserConfig();
                 mUser.UserID = bllUser.Add(mUser);
 
                 try
