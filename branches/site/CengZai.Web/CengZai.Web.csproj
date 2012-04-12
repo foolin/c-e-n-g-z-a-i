@@ -114,6 +114,9 @@
     <Content Include="resource\img\blog\blog-skin1-thumbnail.jpg" />
     <Content Include="resource\img\blog\blog-skin2-thumbnail.jpg" />
     <Content Include="resource\img\blog\blog-skin3-thumbnail.jpg" />
+    <Content Include="resource\img\blog\blog-skin4-thumbnail.jpg" />
+    <Content Include="resource\img\blog\blog-skin5-thumbnail.jpg" />
+    <Content Include="resource\img\blog\blog-skin6-thumbnail.jpg" />
     <Content Include="resource\img\btn-background.jpg" />
     <Content Include="resource\img\btn-background.png" />
     <Content Include="resource\img\btn-upload.png" />

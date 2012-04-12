@@ -231,7 +231,7 @@ function initSkinClick() {
                     <li><b>介绍：</b>@girl.Intro</li>
                     @if (blogLover != null)
                     {
-                        <li><b>证书：</b>@Html.ActionLink(Html.GetCertificateName(blogLover.Certificate), "Certificate", new { username = boy.Username })</li>
+                        <li><b>证书：</b>@Html.ActionLink(Html.GetCertificateName(blogLover.Certificate), "Certificate", new { username = girl.Username })</li>
                         <li><b>宣誓：</b>@blogLover.GirlOath</li>
                     }
                 </ul>
