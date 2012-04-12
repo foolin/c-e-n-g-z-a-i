@@ -178,7 +178,7 @@ function initSkinClick() {
                 <ul class="intro">
                     <li><b>性别：</b>帅哥</li>
                     <li><b>签名：</b>@boy.Sign</li>
-                    <li><b>主页：</b>@CengZai.Helper.Config.SiteHost/@Url.Action("Blog", "Blog", new { username = boy.Username })</li>
+                    <li><b>主页：</b>@CengZai.Helper.Config.SiteHost@Url.Action("Blog", "Blog", new { username = boy.Username })</li>
                     <li><b>介绍：</b>@boy.Intro</li>
                     @if (blogLover != null)
                     {
@@ -227,7 +227,7 @@ function initSkinClick() {
                 <ul class="intro">
                     <li><b>性别：</b>美女</li>
                     <li><b>签名：</b>@girl.Sign</li>
-                    <li><b>主页：</b>@CengZai.Helper.Config.SiteHost/@Url.Action("Blog", "Blog", new { username = girl.Username })</li>
+                    <li><b>主页：</b>@CengZai.Helper.Config.SiteHost@Url.Action("Blog", "Blog", new { username = girl.Username })</li>
                     <li><b>介绍：</b>@girl.Intro</li>
                     @if (blogLover != null)
                     {
@@ -267,7 +267,7 @@ function initSkinClick() {
                         </h1>
             	        <ul class="intro">
                 	        <li>我们已经相恋<strong>@Html.GetDaysByNow(blogLover.JoinDate)</strong>天，查看我们的
-                             @Html.ActionLink(Html.GetCertificateName(blogLover.Certificate), "Certificate", new { username = blogUser.Username })
+                             @Html.ActionLink(Html.GetCertificateName(blogLover.Certificate), "Certificate", new { username = blogUser.Username }, new {@class="btn btn-danger" })
                             </li>
                             <li><b>博客网址：</b>@CengZai.Helper.Config.SiteHost/@Url.Action("Blog", "Blog", new { username = blogUser.Username })</li>
                         </ul>
@@ -278,7 +278,7 @@ function initSkinClick() {
                 <h1 class="title">@ViewBag.Title <span>单身</span> </h1>
             	<ul class="intro">
                 	<li>Ta还单身噢，快快 @Html.ActionLink("申请与Ta成为情侣", "Apply", "Lover", null, new { @class = "btn btn-large btn-success" })</li>
-                    <li><b>博客网址：</b>@CengZai.Helper.Config.SiteHost/@Url.Action("Blog", "Blog", new { username = blogUser.Username })</li>
+                    <li><b>博客网址：</b>@CengZai.Helper.Config.SiteHost@Url.Action("Blog", "Blog", new { username = blogUser.Username })</li>
                 </ul>
             }
             <div class="clear"></div>
