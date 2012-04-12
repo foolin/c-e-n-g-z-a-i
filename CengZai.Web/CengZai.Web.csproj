@@ -321,6 +321,7 @@
     <Content Include="Views\Settings\Password.cshtml" />
     <Content Include="Views\Settings\Avatar.cshtml" />
     <Content Include="Views\Settings\_SettingNav.cshtml" />
+    <Content Include="Views\Blog\Certificate.cshtml" />
     <None Include="Views\Blog\Profile.cshtml.bak" />
     <Content Include="Views\Article\Index.cshtml" />
     <None Include="resource\psd\UploadImage.psd" />
@@ -329,7 +330,7 @@
     <None Include="resource\psd\证件封面.psd" />
     <None Include="resource\psd\证件背面.psd" />
     <Content Include="Views\Blog\Blog.cshtml" />
-    <None Include="Views\Blog\Certificate.cshtml" />
+    <None Include="Views\Blog\Certificate.cshtml.bak" />
     <Content Include="Views\Blog\Article.cshtml" />
     <None Include="Views\Blog\BlogSingle.cshtml.bak" />
     <None Include="Views\Blog\_BlogLayout.cshtml.bak" />
