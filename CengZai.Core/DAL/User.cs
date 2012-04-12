@@ -111,7 +111,7 @@ namespace CengZai.DAL
             parameters[18].Value = model.Credit;
             parameters[19].Value = model.Vip;
             parameters[20].Value = model.Money;
-            parameters[21].Value = model.Config;
+            parameters[21].Value = UserConfig.ToString(model.Config);
             parameters[22].Value = model.Avatar;
 
 			object obj = DbHelperSQL.GetSingle(strSql.ToString(),parameters);
@@ -201,7 +201,7 @@ namespace CengZai.DAL
             parameters[18].Value = model.Credit;
             parameters[19].Value = model.Vip;
             parameters[20].Value = model.Money;
-            parameters[21].Value = model.Config;
+            parameters[21].Value = UserConfig.ToString(model.Config);
             parameters[22].Value = model.UserID;
             parameters[23].Value = model.Avatar;
 
@@ -534,7 +534,7 @@ namespace CengZai.DAL
             }
             if (row["Config"] != null && row["Config"].ToString() != "")
             {
-                model.Config = row["Config"].ToString();
+                model.Config = UserConfig.ToModel(row["Config"].ToString()); 
             }
             if (row["Avatar"] != null && row["Avatar"].ToString() != "")
             {

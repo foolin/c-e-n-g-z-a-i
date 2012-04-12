@@ -1,17 +1,19 @@
 ﻿@{
-    ViewBag.Title = "Blog";
-    Layout = "~/Views/Blog/_BlogLayout.cshtml";
-    var Article = ViewBag.Article as CengZai.Model.Article;
+    
+    Layout = "~/Views/Blog/_BlogMaster.cshtml";
+    var art = ViewBag.Article as CengZai.Model.Article;
+    var artUser = Html.GetUser(art.UserID);
+    ViewBag.Title = (art.Title ?? "")  + artUser.Nickname + "的博客";
 }
 
     <!--内容区域-->
-    <div class="article well">
-        @if (!string.IsNullOrEmpty(Article.Title))
+    <div class="article">
+        <p>您的位置：@Html.ActionLink(artUser.Nickname + "的博客", "Blog", new { username = artUser.Username }) -> <a>日志正文</a></p>
+        @if (!string.IsNullOrEmpty(art.Title))
         {
-        <div class="page-header"> 
-            <h3>@Article.Title  <small class="font12" style="padding-left:50px">作者：@Html.GetUserNickname(Article.UserID) @Html.GetDateFormat(Article.PostTime, "yyyy-M-d HH:mm:ss") 阅读(@Article.ViewCount)</small></h3> 
-        </div> 
+            <h2>@art.Title </h2>
         }
-        <div class="art-content">@MvcHtmlString.Create(Article.Content)</div>
+        <p class="font14 muted">作者：@Html.GetUserNickname(art.UserID) | 发表:@Html.GetDateFormat(art.PostTime, "yyyy-M-d HH:mm:ss") | 阅读：<b>@art.ViewCount</b>次</p>
+        <div class="art-content" style="font-size:14px;">@MvcHtmlString.Create(art.Content)</div>
     </div>
     <!--/内容区域-->

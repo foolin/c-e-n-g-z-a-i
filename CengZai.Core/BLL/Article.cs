@@ -167,13 +167,13 @@ namespace CengZai.BLL
         /// <param name="pageIndex"></param>
         /// <param name="totalCount"></param>
         /// <returns></returns>
-        public List<Model.Article> GetUserPublicListByPage(int userID, string fieldOrder, int pageSize, int pageIndex, out int totalCount)
+        public List<Model.Article> GetUserPublicListByPage(string userIds, string fieldOrder, int pageSize, int pageIndex, out int totalCount)
         {
             List<Model.Article> list = null;
             totalCount = 0;
             try
             {
-                DataSet dsList = GetListByPage("Privacy=0 and State=1 and UserID=" + userID, fieldOrder, pageSize, pageIndex, out totalCount);
+                DataSet dsList = GetListByPage("Privacy=0 and State=1 and UserID in (" + userIds + ")", fieldOrder, pageSize, pageIndex, out totalCount);
                 if (dsList != null && dsList.Tables.Count > 0)
                 {
                     list = DataTableToList(dsList.Tables[0]);
@@ -184,6 +184,21 @@ namespace CengZai.BLL
                 Log.Error("BLL.Article.GetUserPublicListByPage()异常", ex);
             }
             return list;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="fieldOrder"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="totalCount"></param>
+        /// <returns></returns>
+        public List<Model.Article> GetUserPublicListByPage(int userID, string fieldOrder, int pageSize, int pageIndex, out int totalCount)
+        {
+            return GetUserPublicListByPage(userID.ToString(), fieldOrder, pageSize, pageIndex, out totalCount);
         }
 	}
 }

@@ -234,7 +234,6 @@ namespace CengZai.Web.Controllers
         /// 接收
         /// </summary>
         /// <returns></returns>
-        [CheckAuthFilter]
         [HttpPost]
         public ActionResult AjaxSaveAvatar(string filename, int? x, int? y, int? w, int? h)
         {
@@ -243,7 +242,7 @@ namespace CengZai.Web.Controllers
                 Model.User user = GetLoginUser();
                 if (user == null)
                 {
-                    return AjaxReturn("0", "您尚未登录！");
+                    return AjaxReturn("error", "您尚未登录！");
                 }
                 x = x ?? 0;
                 y = y ?? 0;
@@ -275,9 +274,37 @@ namespace CengZai.Web.Controllers
             catch (Exception ex)
             {
                 Log.Error("SettingsController.AjaxSaveAvatar上传文件出错", ex);
-                return AjaxReturn("0", "上传图片出错，请确定您上传的是图片！");
+                return AjaxReturn("error", "上传图片出错，请确定您上传的是图片！");
             }
         }
+
+        // 博客设置
+        [HttpPost]
+        public ActionResult AjaxSetBlogSkin(string skin)
+        {
+            try
+            {
+                Model.User user = GetLoginUser();
+                if (user == null)
+                {
+                    return AjaxReturn("error", "您尚未登录！");
+                }
+                if (user.Config == null)
+                {
+                    user.Config = new UserConfig();
+                }
+                user.Config.BlogSkin = skin;
+                new BLL.User().Update(user);    //更新到数据库
+                UpdateLoginUserSession(user);   //更新到Session
+                return AjaxReturn("success", "修改资料成功！");
+            }
+            catch (Exception ex)
+            {
+                Log.Error("SettingsController.AjaxSaveAvatar上传文件出错", ex);
+                return AjaxReturn("error", "上传图片出错，请确定您上传的是图片！");
+            }
+        }
+
 
 
         ///// <summary>

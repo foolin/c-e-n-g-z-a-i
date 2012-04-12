@@ -46,7 +46,10 @@
         <ol>
     	    <li>请检查您输入的网址是否正确。</li>
             <li><a href="/">返回网站首页</a></li>
-        </ol>        <p><%=CengZai.Helper.Config.SiteName + "，" + CengZai.Helper.Config.SiteSlogan %></p>             </div>
+        </ol>
+        <p><%=CengZai.Helper.Config.SiteName + "，" + CengZai.Helper.Config.SiteSlogan %></p>
+         
+    </div>
     </div>
 </body>
 </html>

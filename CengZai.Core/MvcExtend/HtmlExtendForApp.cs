@@ -32,5 +32,23 @@ namespace System.Web.Mvc
             return new CengZai.BLL.Lover().GetFlowName(flow);
         }
 
+
+        /// <summary>
+        /// 取天数
+        /// </summary>
+        /// <param name="helper"></param>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public static int GetDaysByNow(this HtmlHelper helper, DateTime? date)
+        {
+            int days = 0;
+            try
+            {
+                days = (DateTime.Now - Convert.ToDateTime(date)).Days;
+            }
+            catch { }
+            return days;
+        }
+
     }
 }
