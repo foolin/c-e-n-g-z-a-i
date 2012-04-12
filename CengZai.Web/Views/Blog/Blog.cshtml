@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "Blog";
+    Layout = "~/Views/Blog/_BlogMaster.cshtml";
+    var artList = ViewBag.ArtList as List<CengZai.Model.Article>;
+}
+
+@if (artList == null || artList.Count == 0)
+{
+    <div>暂无文章</div>
+}
+else
+{
+    <div class="blog-feed-list">
+        @foreach(CengZai.Model.Article art in artList){
+            var artUser = Html.GetUser(art.UserID);
+            <section class="blog-feed">
+                <aside class="feed-avatar">
+                    <a href="@Url.Action("Blog", "Blog", new { username = artUser.Username })"><img src="@Url.GetAvatarUrl(artUser.Avatar)"></a>
+                </aside >
+                <div class="feed-content">
+                    <cite><a href="@Url.Action("Blog", "Blog", new { username = artUser.Username })" target="_blank">@artUser.Nickname</a> 发表于 @Html.GetDateFormat(art.PostTime, "yyyy年M月d日 HH:mm:ss") </cite>
+                     @if (!string.IsNullOrEmpty(art.Title))
+                    {
+                        <h1>@Html.ActionLink(art.Title, "Article", new { username = artUser.Username, artid = art.ArtID })</h1>
+                    }
+                   
+			        <div class="text">
+                        @Html.GetAutoHtmlString(art.Content, 1000)
+                    </div>
+                    <hr />
+                    <footer>
+                            @Html.ActionLink("阅读全文", "Article", "Blog", new { username = artUser.Username, artid = art.ArtID }, new { target = "_blank" })
+                    </footer>
+                </div>
+                <div class="clear"></div>
+            </section>
+        }     
+    </div>
+    <!--/blog-feed-list-->
+    <div class="pager">@Html.Pager()</div>
+}
+
+
