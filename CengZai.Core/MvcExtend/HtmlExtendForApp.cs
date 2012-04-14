@@ -81,9 +81,11 @@ namespace System.Web.Mvc
         {
             if (CengZai.Helper.Config.OpenBlogDomain == 1)
             {
-                Dictionary<string, object> dicHtmlAttributes = htmlAttributes as Dictionary<string, object>;
+                //Dictionary<string, object> dicHtmlAttributes = htmlAttributes as Dictionary<string, object>;
+                //return helper.ActionLink(linkText, actionName, controllerName, "http", CengZai.Helper.Config.SiteDomain, ""
+                //    , new RouteValueDictionary(routeValues), dicHtmlAttributes);
                 return helper.ActionLink(linkText, actionName, controllerName, "http", CengZai.Helper.Config.SiteDomain, ""
-                    , new RouteValueDictionary(routeValues), dicHtmlAttributes);
+                    , routeValues, htmlAttributes);
             }
             else
             {
