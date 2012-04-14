@@ -10,7 +10,7 @@
     
     if (blogLover != null)
     {
-        ViewBag.Title = boy.Nickname + "和" + girl.Nickname + "";
+        ViewBag.Title = boy.Nickname + "和" + girl.Nickname + "的" + Html.GetLoverRelation(blogLover.Certificate) + "博客";
     }
     else
     {
@@ -267,10 +267,10 @@ function initSkinClick() {
                 </div>
                 <div class="detail">
             	        <h1 class="title">@ViewBag.Title 
-                                <span>@(blogLover.Certificate == 2 ? "夫妻" : "情侣")</span>
+                                <span>@Html.GetLoverRelation(blogLover.Certificate)</span>
                         </h1>
             	        <ul class="intro">
-                	        <li>我们已经<strong>@Html.GetLoverRelation(blogLover.Certificate)</strong><strong>@Html.GetDaysByNow(blogLover.JoinDate)</strong>天，查看我们的
+                	        <li>我们已经是<strong>@Html.GetLoverRelation(blogLover.Certificate)</strong><strong>@Html.GetDaysByNow(blogLover.JoinDate)</strong>天，查看我们的
                              @Html.HttpActionLink(Html.GetCertificateName(blogLover.Certificate), "Certificate","Blog", new { username = blogUser.Username }, new {@class="btn btn-danger" })
                             </li>
                             <li><b>博客网址：</b>@Url.BlogUrl(blogUser.Username)</li>
