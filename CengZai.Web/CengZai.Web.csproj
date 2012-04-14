@@ -79,6 +79,7 @@
     <Compile Include="Controllers\InboxController.cs" />
     <Compile Include="Controllers\LoverController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
+    <Compile Include="Controllers\SquareController.cs" />
     <Compile Include="Controllers\ToolController.cs" />
     <Compile Include="page\VerifyCode.aspx.cs">
       <DependentUpon>VerifyCode.aspx</DependentUpon>
@@ -342,6 +343,9 @@
     <Content Include="Views\Account\ApplyInvite.cshtml" />
     <Content Include="Views\Blog\_BlogMaster.cshtml" />
     <Content Include="Views\Shared\_Topbar.cshtml" />
+    <Content Include="Views\Home\Square.cshtml" />
+    <Content Include="Views\Square\Index.cshtml" />
+    <Content Include="Views\Shared\_Footer.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
@@ -360,7 +364,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>6288</DevelopmentServerPort>
+          <DevelopmentServerPort>31416</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

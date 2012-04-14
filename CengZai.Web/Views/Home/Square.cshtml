@@ -1,0 +1,74 @@
+﻿@{
+    ViewBag.Title = "情侣广场";
+    var loginUser = Html.GetLoginUser();
+    var topLoverList = ViewBag.TopLoverList as List<CengZai.Model.Lover>;
+}
+
+@section head{
+<style type="text/css">
+
+</style>
+}
+
+<div class="container  bg-white">
+<div class="padding">
+
+
+    
+    @if (loginUser == null)
+    {
+        <div class="well">
+            <h2>@ViewBag.SiteName <span style="font-size:14px; padding:10px; color:#999;">@ViewBag.SiteSlogan</span></h2>
+            <p>@ViewBag.SiteDescription</p> 
+            
+            @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-inline" }))
+            {
+                <input type="text" id="email" name="email" class="input-small" placeholder="邮箱" />
+                <input type="password" id="password" name="password" class="input-small" placeholder="密码" />
+                <label class="checkbox">
+                  <input type="checkbox" id="remember" name="remember" /> 一个月内自动登录
+                </label>
+                <button type="submit" class="btn btn-success">登录</button>
+                @Html.ActionLink("还没帐号？立即注册", "Register", "Account", null, new { @class = "btn btn-danger" })
+            }
+        </div>
+    }
+    </div>
+    
+    <!--内容区域-->
+    <ul class="thumbnails">
+        @if (topLoverList != null || topLoverList.Count > 0)
+        {
+            for (var i = 0; i < topLoverList.Count; i++)
+            {
+                var boy = Html.GetUser(topLoverList[i].BoyUserID);
+                var girl = Html.GetUser(topLoverList[i].GirlUserID);
+                var applyUser = boy;
+                if (girl.UserID == topLoverList[i].ApplyUserID)
+                {
+                    applyUser = girl;
+                }
+            <li class="span3">
+              <div class="thumbnail">
+                <img src="@Url.GetAvatarUrl(topLoverList[i].Avatar)" alt="合影">
+                <div class="caption">
+                  <h5>
+                    @Html.ActionLink(boy.Nickname, "Certificate", "Blog", new { username = boy.Username }, new { target = "_blank" })
+                    & 
+                    @Html.ActionLink(girl.Nickname, "Certificate", "Blog", new { username = girl.Username }, new { target = "_blank" })</h5>
+                  <p>证书类型：@Html.ActionLink(@Html.GetCertificateName(topLoverList[i].Certificate), "Certificate", "Blog", new { username = applyUser.Username }, new { target = "_blank" })</p>
+                  <p>@Html.GetLoverRelation(topLoverList[i].Certificate)日期：@Html.GetDateFormat(topLoverList[i].JoinDate, "yyyy年M月d日")</p>
+                  <p>@Html.ActionLink("访问主页", "Blog", "Blog", new { @username = applyUser.Username }, new { @class = "btn", target = "_blank" })</p>
+                </div>
+              </div>
+            </li>
+            }
+        }
+    </ul>
+    <!--/内容区域-->
+
+</div>
+</div>
+
+
+
