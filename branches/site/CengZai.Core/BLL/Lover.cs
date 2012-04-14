@@ -265,11 +265,11 @@ namespace CengZai.BLL
         {
             if (certificate == (int)CengZai.Model.LoverCertificate.Love)
             {
-                return "恋爱";
+                return "情侣";
             }
             if (certificate == (int)CengZai.Model.LoverCertificate.Marry)
             {
-                return "结婚";
+                return "夫妻";
             }
 
             return "";

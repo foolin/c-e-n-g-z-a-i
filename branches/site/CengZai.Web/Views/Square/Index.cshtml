@@ -49,7 +49,7 @@
                 }
             <li class="span3">
               <div class="thumbnail">
-                <img src="@Url.GetAvatarUrl(topLoverList[i].Avatar)" alt="合影">
+                <img src="@Url.GetAvatarUrl(topLoverList[i].Avatar)" width="200" alt="@boy.Nickname 和 @girl.Nickname 的合影">
                 <div class="caption">
                   <h5>
                     @Html.ActionLink(boy.Nickname, "Certificate", "Blog", new { username = boy.Username }, new { target = "_blank" })
@@ -58,7 +58,7 @@
                   <p>证书类型：@Html.ActionLink(@Html.GetCertificateName(topLoverList[i].Certificate), "Certificate", "Blog", new { username = applyUser.Username }, new { target = "_blank" })</p>
                   <p>@Html.GetLoverRelation(topLoverList[i].Certificate)日期：@Html.GetDateFormat(topLoverList[i].JoinDate, "yyyy年M月d日")</p>
                   <p>
-                    <a href="@Url.BlogUrl(applyUser.Username)" class="btn" target = "_blank">情侣博客</a> 
+                    <a href="@Url.BlogUrl(applyUser.Username)" class="btn" target = "_blank">@Html.GetLoverRelation(topLoverList[i].Certificate)博客</a> 
                     @Html.ActionLink(Html.GetCertificateName(topLoverList[i].Certificate), "Certificate", "Blog", new { username = applyUser.Username }, new { target = "_blank", @class="btn" }) 
                     
                     @*@Html.ActionLink("访问主页", "Blog", "Blog", new { @username = applyUser.Username }, new { @class = "btn", target = "_blank" })*@</p>
