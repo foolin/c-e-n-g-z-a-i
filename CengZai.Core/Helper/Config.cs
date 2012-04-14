@@ -160,6 +160,18 @@ namespace CengZai.Helper
         }
 
         /*********** 相关开关配置 ************/
+
+        /// <summary>
+        /// 禁止用户注册的域名/用户名
+        /// </summary>
+        public static string ProtectUsername
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["ProtectUsername"] + "";
+            }
+        }
+
         /// <summary>
         /// 登录限制：
         /// 0=非锁定注册用户可登录，

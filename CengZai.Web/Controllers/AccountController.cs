@@ -251,7 +251,7 @@ namespace CengZai.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(string email, string username, string password, string repassword, string verifyCode, string invite, int? sex, int? chkTerms)
+        public ActionResult Register(string email, string username, string nickname, string password, string repassword, string verifyCode, string invite, int? sex, int? chkTerms)
         {
             try
             {
@@ -316,10 +316,24 @@ namespace CengZai.Web.Controllers
                     ModelState.AddModelError("Username", "用户名格式不正确！");
                     return View();
                 }
+                string protectedUserName = "," + Config.ProtectUsername + ",";
+                if (!string.IsNullOrEmpty(protectedUserName) && protectedUserName.IndexOf("," + username + ",") != -1)
+                {
+                    ModelState.AddModelError("Username", "该用户名已经被注册或者保护！");
+                    return View();
+                }
                 if (new BLL.User().GetModelByUserName(username) != null)
                 {
                     ModelState.AddModelError("Username", "该用户名已经被注册！");
                     return View();
+                }
+                if (!string.IsNullOrEmpty(nickname) && nickname.Length > 20)
+                {
+                    nickname = nickname.Substring(0, 20);
+                }
+                if (string.IsNullOrEmpty(nickname))
+                {
+                    nickname = username;
                 }
                 if (string.IsNullOrEmpty(password) || password.Length < 6)
                 {
@@ -361,7 +375,7 @@ namespace CengZai.Web.Controllers
                 mUser.LoginTime = null;
                 mUser.Mobile = "";
                 mUser.Username = username;
-                mUser.Nickname = username;
+                mUser.Nickname = nickname;
                 mUser.Password = md5Password;
                 mUser.Privacy = 0;
                 mUser.RegIp = Helper.Util.GetIP();
