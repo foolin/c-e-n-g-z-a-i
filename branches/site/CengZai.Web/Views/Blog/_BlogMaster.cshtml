@@ -105,7 +105,7 @@ function openSetSkinModal() {
             var data = $("#skins a.active").attr("data");
             $.ajax({
                 type: "POST",
-                url: "@Url.HttpAction("AjaxSetBlogSkin","Settings") ",
+                url: "@Url.Action("AjaxSetBlogSkin","Settings") ",
                 data: "skin=" + data,
                 success: function (e) {
                     e = eval(e);

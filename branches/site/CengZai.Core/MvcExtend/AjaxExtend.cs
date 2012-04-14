@@ -63,27 +63,14 @@ namespace System.Web.Mvc
             }
             if (relative == 1)
             {
-                if (CengZai.Helper.Config.OpenBlogDomain == 1)
-                {
-                    //已关注
-                    return helper.HttpActionLink("已关注"
-                    , "FriendDel"
-                    , "Friend"
-                    , new { friendUserID = friendUserID, time = DateTime.Now.Ticks }
-                    , new AjaxOptions { OnSuccess = "$FR.delSuccess", OnFailure = "$FR.delFail" }
-                    , new { frienduserid = friendUserID, @class = (cssClass + " muted"), title = "点击取消关注" });
-                }
-                else
-                {
-                    //已关注
-                    return helper.ActionLink(
-                    "已关注"
-                    , "FriendDel"
-                    , "Friend"
-                    , new { friendUserID = friendUserID, time = DateTime.Now.Ticks }
-                    , new AjaxOptions { OnSuccess = "$FR.delSuccess", OnFailure = "$FR.delFail" }
-                    , new { frienduserid = friendUserID, @class = (cssClass + " muted"), title = "点击取消关注" });
-                }
+                //已关注
+                return helper.ActionLink(
+                "已关注"
+                , "FriendDel"
+                , "Friend"
+                , new { friendUserID = friendUserID, time = DateTime.Now.Ticks }
+                , new AjaxOptions { OnSuccess = "$FR.delSuccess", OnFailure = "$FR.delFail" }
+                , new { frienduserid = friendUserID, @class = (cssClass + " muted"), title = "点击取消关注" });
             }
             if (relative == -1)
             {
@@ -94,26 +81,13 @@ namespace System.Web.Mvc
             {
                 return MvcHtmlString.Create("");
             }
-            if (CengZai.Helper.Config.OpenBlogDomain == 1)
-            {
-                return helper.HttpActionLink("关注Ta"
+            return helper.ActionLink("关注Ta"
                     , "FriendAdd"
                     , "Friend"
                     , new { friendUserID = friendUserID, time = DateTime.Now.Ticks }
                     , new AjaxOptions { OnSuccess = "$FR.addSuccess", OnFailure = "$FR.addFail" }
                     , new { frienduserid = friendUserID, @class = cssClass, title = "点击关注Ta" }
                     );
-            }
-            else
-            {
-                return helper.ActionLink("关注Ta"
-                    , "FriendAdd"
-                    , "Friend"
-                    , new { friendUserID = friendUserID, time = DateTime.Now.Ticks }
-                    , new AjaxOptions { OnSuccess = "$FR.addSuccess", OnFailure = "$FR.addFail" }
-                    , new { frienduserid = friendUserID, @class = cssClass, title = "点击关注Ta" }
-                    );
-            }
         }
 
 

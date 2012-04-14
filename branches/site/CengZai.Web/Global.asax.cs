@@ -31,9 +31,9 @@ namespace CengZai.Web
                     string rule = @"(\b((?!www)\w)+\b)";
                     routes.MapBlogDomainRoute("DomainBlog"
                         , rule
-                        , "{controller}/{action}/{page}/{id}" // URL with parameters
-                        , new { controller = "Blog", action = "Blog", page = 1, id = UrlParameter.Optional } // Parameter defaults
-                        , new { page = "[0-9]+" }
+                        , "{controller}/{action}/{id}" // URL with parameters
+                        , new { controller = "Blog", action = "Blog", id = UrlParameter.Optional } // Parameter defaults
+                        , null
                         );
                 }
                 catch (Exception ex)
