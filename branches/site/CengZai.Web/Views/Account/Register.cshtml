@@ -24,7 +24,7 @@
         <p>
             <label for="username">邮 箱： </label>
             @Html.TextBox("email", invite != null ? invite.Email : "")
-            @Html.ValidationMessage("email") <span class="alert">请真实填写，用来登录和找回密码</span>
+            @Html.ValidationMessage("email") <span class="alert">请真实填写，用来登录和找回密码，不可修改</span>
         </p>
         <p>
             <label for="password">密 码：</label>
