@@ -28,18 +28,6 @@ namespace CengZai.Web
             {
                 try
                 {
-                    //string rule = @"^[\w]{5,}";
-                    //if (!string.IsNullOrEmpty(CengZai.Helper.Config.VipBlogName))
-                    //{
-                    //    rule = @"^([\w]{5,}|" + CengZai.Helper.Config.VipBlogName + ")$";
-                    //}
-                    // routes.Add("DomainBlog", new DomainRoute(
-                    //"{username}." + Config.BlogDomain.ToLower()     // Domain with parameters 
-                    // , "{id}" // URL with parameters
-                    // , new { controller = "Blog", action = "Blog", id = UrlParameter.Optional } // Parameter defaults
-                    // , new { username = rule }
-                    //));
-
                     string rule = @"(\b((?!www)\w)+\b)";
                     routes.MapBlogDomainRoute("DomainBlog"
                         , rule
