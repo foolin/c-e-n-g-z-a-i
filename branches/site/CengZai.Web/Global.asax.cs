@@ -44,26 +44,26 @@ namespace CengZai.Web
            // /********** 二级域名路由 end ***********/
 
             routes.MapLowerCaseUrlRoute(
-                "BlogArticle", // Route name
-                "blog/{username}/article/{artid}.html", // URL with parameters
-                new { controller = "Blog", action = "Article", username = "" } // Parameter defaults
+                "BlogArticle" // Route name
+                , "blog/{username}/article/{artid}.html" // URL with parameters
+                , new { controller = "Blog", action = "Article", username = "" } // Parameter defaults
                 , new { username = @"[\w]+", artid = "[0-9]+" }
             );
 
             //博客{BlogController.Blog}
             routes.MapLowerCaseUrlRoute(
-                "Blog", // Route name
-                "blog/{username}/{action}/{page}/{id}", // URL with parameters
-                new { controller = "Blog", action = "Blog", username = "",  page=0, @id = UrlParameter.Optional } // Parameter defaults
+                "Blog" // Route name
+                , "blog/{username}/{action}/{page}/{id}" // URL with parameters
+                , new { controller = "Blog", action = "Blog", username = "", page = 0, @id = UrlParameter.Optional } // Parameter defaults
                 , new { username = @"[\w]+", page = "[0-9]+" }
             );
 
 
             routes.MapLowerCaseUrlRoute(
-                "Default", // Route name
-                "{controller}/{action}/{page}/{id}", // URL with parameters
-                new { controller = "Account", action = "Index", page=1, id = UrlParameter.Optional } // Parameter defaults
-                , new { page = "[0-9]+" }
+                "Default" // Route name
+                , "{controller}/{action}/{id}" // URL with parameters
+                , new { controller = "Square", action = "Index", id = UrlParameter.Optional } // Parameter defaults
+                , null
             );
 
         }

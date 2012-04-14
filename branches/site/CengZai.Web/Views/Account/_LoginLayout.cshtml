@@ -22,16 +22,7 @@
     <hr />
     @RenderBody()
     <hr />
-    <div class="link">
-        <p class="pull-left">&copy 2012 @ViewData["SiteName"]<text>(</text>@ViewData["SiteDomain"])</p>
-        <div class="pull-right">
-            @Html.ActionLink("关于我们", "Us", "About") | 
-            @Html.ActionLink("用户协议", "Agreement", "About") | 
-            @Html.ActionLink("隐身政策", "Privacy", "About") | 
-            <a href="http://www.miibeian.gov.cn" target="_blank">粤ICP备11056743号</a>
-        </div>
-    </div>
+    @Html.Partial("_Footer")
 </div>
-<script type="text/javascript" src="http://js.tongji.linezing.com/2807601/tongji.js"></script><noscript><a href="http://www.linezing.com"><img src="http://img.tongji.linezing.com/2807601/tongji.gif"/></a></noscript>
 </body>
 </html>

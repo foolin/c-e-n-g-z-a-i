@@ -270,7 +270,7 @@ function initSkinClick() {
                                 <span>@(blogLover.Certificate == 2 ? "夫妻" : "情侣")</span>
                         </h1>
             	        <ul class="intro">
-                	        <li>我们已经相恋<strong>@Html.GetDaysByNow(blogLover.JoinDate)</strong>天，查看我们的
+                	        <li>我们已经<strong>@Html.GetLoverRelation(blogLover.Certificate)</strong><strong>@Html.GetDaysByNow(blogLover.JoinDate)</strong>天，查看我们的
                              @Html.HttpActionLink(Html.GetCertificateName(blogLover.Certificate), "Certificate","Blog", new { username = blogUser.Username }, new {@class="btn btn-danger" })
                             </li>
                             <li><b>博客网址：</b>@Url.BlogUrl(blogUser.Username)</li>

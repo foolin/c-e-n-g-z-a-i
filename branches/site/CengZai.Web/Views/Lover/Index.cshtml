@@ -92,27 +92,14 @@
                     @Html.ActionLink(boy.Nickname, "Certificate", "Blog", new { username = boy.Username }, new { target="_blank" })
                     & 
                     @Html.ActionLink(girl.Nickname, "Certificate", "Blog", new { username = girl.Username }, new { target = "_blank" })</h5>
-                  <p>登记证书：@Html.GetCertificateName(topLoverList[i].Certificate)</p>
-                  <p>申请日期：@Html.GetDateFormat(topLoverList[i].JoinDate, "yyyy年M月d日")</p>
+                  <p>证书类型：@Html.ActionLink(@Html.GetCertificateName(topLoverList[i].Certificate), "Certificate", "Blog", new { username = applyUser.Username }, new { target = "_blank" })</p>
+                  <p>@Html.GetLoverRelation(topLoverList[i].Certificate)日期：@Html.GetDateFormat(topLoverList[i].JoinDate, "yyyy年M月d日")</p>
                   <p>@Html.ActionLink("访问主页", "Blog", "Blog", new { @username = applyUser.Username }, new { @class = "btn", target = "_blank" })</p>
                 </div>
               </div>
             </li>
             }
         }
-        <!--
-        <li class="span3">
-          <div class="thumbnail">
-            <img src="http://placehold.it/260x180" alt="">
-            <div class="caption">
-              <h5>负卐零&卢常春</h5>
-              <p>登记时间：2012年3月15日</p>
-              <p>登记年龄：360天</p>
-              <p><a href="#" class="btn">关注他们</a> <a href="#" class="btn">访问主页</a></p>
-            </div>
-          </div>
-        </li>
-        -->
     </ul>
     <!--/内容区域-->
 
