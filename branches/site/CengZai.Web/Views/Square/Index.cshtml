@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "情侣广场";
+    ViewBag.Title = ViewBag.SiteSlogan;
     var loginUser = Html.GetLoginUser();
     var topLoverList = ViewBag.TopLoverList as List<CengZai.Model.Lover>;
 }
@@ -57,7 +57,11 @@
                     @Html.ActionLink(girl.Nickname, "Certificate", "Blog", new { username = girl.Username }, new { target = "_blank" })</h5>
                   <p>证书类型：@Html.ActionLink(@Html.GetCertificateName(topLoverList[i].Certificate), "Certificate", "Blog", new { username = applyUser.Username }, new { target = "_blank" })</p>
                   <p>@Html.GetLoverRelation(topLoverList[i].Certificate)日期：@Html.GetDateFormat(topLoverList[i].JoinDate, "yyyy年M月d日")</p>
-                  <p>@Html.ActionLink("访问主页", "Blog", "Blog", new { @username = applyUser.Username }, new { @class = "btn", target = "_blank" })</p>
+                  <p>
+                    <a href="@Url.BlogUrl(applyUser.Username)" class="btn" target = "_blank">情侣博客</a> 
+                    @Html.ActionLink(Html.GetCertificateName(topLoverList[i].Certificate), "Certificate", "Blog", new { username = applyUser.Username }, new { target = "_blank", @class="btn" }) 
+                    
+                    @*@Html.ActionLink("访问主页", "Blog", "Blog", new { @username = applyUser.Username }, new { @class = "btn", target = "_blank" })*@</p>
                 </div>
               </div>
             </li>

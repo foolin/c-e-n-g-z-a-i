@@ -109,19 +109,19 @@ namespace System.Web.Mvc
         /// <returns></returns>
         public static string BlogUrl(this UrlHelper helper, string username, bool isInnerUrl)
         {
+            int port = helper.RequestContext.HttpContext.Request.Url.Port;
+            string strPort = "";
+            if (port != 80)
+            {
+                strPort = ":" + port;
+            }
             if (CengZai.Helper.Config.OpenBlogDomain == 1 && !isInnerUrl)
             {
-                int port = helper.RequestContext.HttpContext.Request.Url.Port;
-                string strPort = "";
-                if (port != 80)
-                {
-                    strPort = ":" + port;
-                }
                 return "http://" + username + "." + CengZai.Helper.Config.BlogDomain + strPort;
             }
             else
             {
-                return CengZai.Helper.Config.SiteHost + helper.Action("Blog", "Blog", new { username = username });
+                return helper.Action("Blog", "Blog", new RouteValueDictionary(new { username = username }), "http", CengZai.Helper.Config.SiteDomain);
             }
         }
 
