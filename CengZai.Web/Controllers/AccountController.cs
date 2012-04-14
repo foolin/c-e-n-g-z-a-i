@@ -306,12 +306,12 @@ namespace CengZai.Web.Controllers
                     ModelState.AddModelError("Username", "用户名不能为空！");
                     return View();
                 }
-                if (username.Length < 4 || username.Length > 20)
+                if (username.Length < 5 || username.Length > 20)
                 {
-                    ModelState.AddModelError("Username", "用户名必须4到20个字符之间！");
+                    ModelState.AddModelError("Username", "用户名必须5到20个字符之间！");
                     return View();
                 }
-                if (!Regex.IsMatch(username, @"^[a-z][a-z0-9_]{3,19}$", RegexOptions.IgnoreCase))
+                if (!Regex.IsMatch(username, @"^[a-z][a-z0-9_]{4,19}$", RegexOptions.IgnoreCase))
                 {
                     ModelState.AddModelError("Username", "用户名格式不正确！");
                     return View();
