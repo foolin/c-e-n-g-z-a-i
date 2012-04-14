@@ -202,7 +202,7 @@
         <div class="row-fluid">
         <span class="pull-left">
             <h2>@ViewBag.Title </h2>
-            <div class="muted">@ViewBag.SiteHost@Url.Action("Certificate", new { username = blogUser.Username })
+            <div class="muted">@Url.HttpAction("Certificate","Blog", new { username = blogUser.Username })
             <p>
                 <!-- JiaThis Button BEGIN -->
                 <div id="ckepop">
@@ -220,8 +220,8 @@
             </div>
         </span>
         <span class="span3 pull-right">
-            <p>@Html.ActionLink("访问我们主页", "Blog", new { username = blogUser.Username }, new { @class = "btn btn-danger" })</p>
-            <p>@Html.ActionLink("我也申请证书", "Apply", "Lover", null, new { @class = "btn btn-primary" })</p>
+            <p><a href="@Url.BlogUrl("blogUser.Username ")" class="btn btn-danger" >访问我们主页</a></p>
+            <p>@Html.HttpActionLink("我也申请证书", "Apply", "Lover", null, new { @class = "btn btn-primary" })</p>
         </span>
         </div>
     </div>
@@ -311,8 +311,8 @@
     </div>
 
     <div id="ctrl-link">
-        <span class="pull-left">@Html.ActionLink("男方证书", "Certificate", new { username = boy.Username }, new { @class = "link" })</span>
-        <span class="pull-right">@Html.ActionLink("女方证书", "Certificate", new { username = girl.Username }, new { @class = "link" })</span>
+        <span class="pull-left">@Html.HttpActionLink("男方证书", "Certificate","Blog", new { username = boy.Username }, new { @class = "link" })</span>
+        <span class="pull-right">@Html.HttpActionLink("女方证书", "Certificate", "Blog", new { username = girl.Username }, new { @class = "link" })</span>
         <div class="clear"></div>
     </div>
 

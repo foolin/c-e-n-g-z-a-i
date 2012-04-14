@@ -16,55 +16,50 @@
         @if (user != null)
         {
 		    <ul class="nav">
-			    <li class="active">@Html.ActionLink("首页","Index","Home")</li>
+			    <li class="active">@Html.HttpActionLink("首页","Index","Home", null, null)</li>
                 <li class="dropdown"> 
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">发表<b class="caret"></b></a> 
                     <ul class="dropdown-menu"> 
-                        <li>@Html.ActionLink("日志", "PostText", "Article")</li> 
-                        <li>@Html.ActionLink("私信", "Send", "Inbox")</li>
-                        @*<li>@Html.ActionLink("照片", "PostImage", "Article")</li> *@
-                        @*<li class="divider"></li> 
-                        <li>@Html.ActionLink("唠叨", "Send", "Message")</li> *@
+                        <li>@Html.HttpActionLink("日志", "PostText", "Article")</li> 
+                        <li>@Html.HttpActionLink("私信", "Send", "Inbox")</li>
                         <li class="divider"></li> 
-                        <li>@Html.ActionLink("日志管理", "Index", "Article")</li>
+                        <li>@Html.HttpActionLink("日志管理", "Index", "Article")</li>
                     </ul> 
                 </li>
-                @*<li><a href="#message">唠叨<sup class="label label-important">2</sup></a></li>*@
-                <li>@Html.ActionLink("我的主页", "Blog", "Blog", new { username=user.Username }, null)</li>
-                <li>@Html.ActionLink("情侣", "Index", "Lover")</li>
-			    <li>@Html.ActionLink("好友", "List", "Friend")</li>
+                <li>@Html.HttpActionLink("我的主页", "Blog", "Blog", new { username = user.Username }, null)</li>
+                <li>@Html.HttpActionLink("情侣", "Index", "Lover")</li>
+			    <li>@Html.HttpActionLink("好友", "List", "Friend")</li>
 		    </ul>
             <!--<form class="navbar-form pull-left" action="">-->
-            using (Html.BeginForm("Find", "Friend", FormMethod.Get, new {@class="navbar-form pull-left" }))
-            {
+            <form method="get" action="@Url.Action("Find", "Friend")" class="navbar-form pull-left">
                 <div class="input-append">
                     <input type="text" name="keyword" class="span2" id="appendedPrependedInput" size="16"  placeholder="搜索感兴趣的人"><input type="submit" class="btn" value="搜索" />
                 </div>
-            }
+            </form>
             <!--</form>-->
             <ul class="nav pull-right nav-mini-link">
                 <li class="dropdown"> 
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">@user.Nickname <b class="caret"></b></a> 
                     <ul class="dropdown-menu"> 
-                    <li>@Html.ActionLink("上传头像", "Avatar", "Settings")</li> 
-                    <li>@Html.ActionLink("修改资料", "Profile", "Settings")</li> 
-                    <li>@Html.ActionLink("修改密码", "Password","Settings")</li> 
+                    <li>@Html.HttpActionLink("上传头像", "Avatar", "Settings")</li> 
+                    <li>@Html.HttpActionLink("修改资料", "Profile", "Settings")</li> 
+                    <li>@Html.HttpActionLink("修改密码", "Password", "Settings")</li> 
                     <li class="divider"></li> 
-                    <li>@Html.ActionLink("退出", "Logout", "Account")</li> 
+                    <li>@Html.HttpActionLink("退出", "Logout", "Account")</li> 
                     </ul> 
                 </li>
                 <li class="divider-vertical"></li> 
-                <li><a href="@Url.Action("Index", "Inbox", new { active = "unread" })">消息<sup id="inboxNewCount" class="label label-success hide">0</sup></a></li>
-                <li>@Html.ActionLink("邀请","Invite","Friend")</li> 
-                <li>@Html.ActionLink("退出", "Logout", "Account")</li>
+                <li><a href="@Url.HttpAction("Index", "Inbox", new { active = "unread" })">消息<sup id="inboxNewCount" class="label label-success hide">0</sup></a></li>
+                <li>@Html.HttpActionLink("邀请", "Invite", "Friend")</li> 
+                <li>@Html.HttpActionLink("退出", "Logout", "Account")</li>
             </ul>
         }
         else
         {
             <ul class="nav">
-                <li>@Html.ActionLink("登录", "Index", "Home")</li>
+                <li>@Html.HttpActionLink("登录", "Index", "Home")</li>
 		    </ul>
-            <p class="navbar-text pull-right">还有没有注册曾在网？ @Html.ActionLink("立刻注册","Register","Account")</p>
+            <p class="navbar-text pull-right">还有没有注册曾在网？ @Html.HttpActionLink("立刻注册", "Register", "Account")</p>
         }
 		</div><!--/.nav-collapse -->
 	</div>

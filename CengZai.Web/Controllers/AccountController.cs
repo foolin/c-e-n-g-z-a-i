@@ -9,6 +9,7 @@ using System.Text;
 using System.Web.Security;
 using CengZai.Helper;
 using System.Data;
+using System.Net;
 
 namespace CengZai.Web.Controllers
 {
@@ -157,6 +158,7 @@ namespace CengZai.Web.Controllers
                 {
                     cookie.Expires = DateTime.Now.AddDays(30);  //30天不过期
                 }
+                cookie.Domain = Util.GetRootDomain(Config.SiteDomain);
                 Response.Cookies.Add(cookie);
 
                 //写入Session登录
@@ -185,12 +187,40 @@ namespace CengZai.Web.Controllers
 
         public ActionResult Logout()
         {
-            if (Response.Cookies["LOGIN_USER"] != null)
+            HttpCookie cookie = Response.Cookies["LOGIN_USER"];
+            if (cookie != null)
             {
-                Response.Cookies["LOGIN_USER"].Expires = DateTime.Now.AddDays(-9999);
+                if (string.IsNullOrEmpty(cookie.Domain))
+                {
+                    cookie.Domain = Util.GetRootDomain(Config.SiteDomain);
+                }
+                cookie.Expires = DateTime.Now.AddDays(-9999);
+                Response.SetCookie(cookie);
             }
+
+            Model.User loginUser = GetLoginUser();
             Session["LOGIN_USER"]  = null;
+            if (Config.OpenBlogDomain == 1 && loginUser != null)
+            {
+                string subDomainLogoutUrl = Url.BlogUrl(loginUser.Username) + Url.Action("SubdomainLogout", "Account");
+                return Content("<script type=\"text/javascript\">top.location.href='" + subDomainLogoutUrl + "'</script>");
+            }
             return RedirectToAction("Login", "Account");
+        }
+
+        /// <summary>
+        /// 子域名退出
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        public ActionResult SubdomainLogout(string url)
+        {
+            Session["LOGIN_USER"] = null;
+            if (string.IsNullOrEmpty(url))
+            {
+                url = Url.HttpAction("Login", "Account", null);
+            }
+            return JumpTo("退出登录","注销登录成功！", url, 0);
         }
 
         /// <summary>

@@ -70,5 +70,58 @@ namespace System.Web.Mvc
             return CengZai.Helper.Util.GetAvatarUrl(imagePath);
         }
 
+
+        /// <summary>
+        /// 取绝对路径
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public static string HttpAction(this UrlHelper helper, string actionName, string controllerName)
+        {
+            return helper.HttpAction(actionName, controllerName, null);
+        }
+
+        /// <summary>
+        /// 取绝对路径
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public static string HttpAction(this UrlHelper helper, string actionName, string controllerName, object routeValues)
+        {
+            RouteValueDictionary rvdRouteValues = new RouteValueDictionary(routeValues);
+            if (CengZai.Helper.Config.OpenBlogDomain == 1)
+            {
+                return helper.Action(actionName, controllerName, rvdRouteValues, "http", CengZai.Helper.Config.SiteDomain);
+            }
+            else
+            {
+                return helper.Action(actionName, controllerName, rvdRouteValues);
+            }
+        }
+
+        /// <summary>
+        /// 取某用户博客地址
+        /// </summary>
+        /// <param name="helper"></param>
+        /// <param name="actionName"></param>
+        /// <returns></returns>
+        public static string BlogUrl(this UrlHelper helper, string username)
+        {
+            if (CengZai.Helper.Config.OpenBlogDomain == 1)
+            {
+                int port = helper.RequestContext.HttpContext.Request.Url.Port;
+                string strPort = "";
+                if(port != 80)
+                {
+                    strPort = ":" + port;
+                }
+                return "http://" + username + "." + CengZai.Helper.Config.BlogDomain + strPort;
+            }
+            else
+            {
+                return CengZai.Helper.Config.SiteHost + helper.Action("Blog", "Blog", new { username=username });
+            }
+        }
+
     }
 }

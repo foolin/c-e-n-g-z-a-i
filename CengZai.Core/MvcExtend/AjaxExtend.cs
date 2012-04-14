@@ -63,14 +63,27 @@ namespace System.Web.Mvc
             }
             if (relative == 1)
             {
-                //已关注
-                return AjaxExtensions.ActionLink(helper
-                , "已关注"
-                , "FriendDel"
-                , "Friend"
-                , new { friendUserID = friendUserID, time = DateTime.Now.Ticks }
-                , new AjaxOptions { OnSuccess = "$FR.delSuccess", OnFailure = "$FR.delFail" }
-                , new { frienduserid = friendUserID, @class = (cssClass + " muted"), title="点击取消关注" });
+                if (CengZai.Helper.Config.OpenBlogDomain == 1)
+                {
+                    //已关注
+                    return helper.HttpActionLink("已关注"
+                    , "FriendDel"
+                    , "Friend"
+                    , new { friendUserID = friendUserID, time = DateTime.Now.Ticks }
+                    , new AjaxOptions { OnSuccess = "$FR.delSuccess", OnFailure = "$FR.delFail" }
+                    , new { frienduserid = friendUserID, @class = (cssClass + " muted"), title = "点击取消关注" });
+                }
+                else
+                {
+                    //已关注
+                    return helper.ActionLink(
+                    "已关注"
+                    , "FriendDel"
+                    , "Friend"
+                    , new { friendUserID = friendUserID, time = DateTime.Now.Ticks }
+                    , new AjaxOptions { OnSuccess = "$FR.delSuccess", OnFailure = "$FR.delFail" }
+                    , new { frienduserid = friendUserID, @class = (cssClass + " muted"), title = "点击取消关注" });
+                }
             }
             if (relative == -1)
             {
@@ -81,14 +94,56 @@ namespace System.Web.Mvc
             {
                 return MvcHtmlString.Create("");
             }
-            return AjaxExtensions.ActionLink(helper
-                , "关注Ta"
-                , "FriendAdd"
-                , "Friend"
-                , new { friendUserID = friendUserID, time = DateTime.Now.Ticks }
-                , new AjaxOptions { OnSuccess = "$FR.addSuccess", OnFailure = "$FR.addFail" }
-                , new { frienduserid = friendUserID, @class = cssClass, title = "点击关注Ta" });
-                //, new { frienduserid = friendUserID });
+            if (CengZai.Helper.Config.OpenBlogDomain == 1)
+            {
+                return helper.HttpActionLink("关注Ta"
+                    , "FriendAdd"
+                    , "Friend"
+                    , new { friendUserID = friendUserID, time = DateTime.Now.Ticks }
+                    , new AjaxOptions { OnSuccess = "$FR.addSuccess", OnFailure = "$FR.addFail" }
+                    , new { frienduserid = friendUserID, @class = cssClass, title = "点击关注Ta" }
+                    );
+            }
+            else
+            {
+                return helper.ActionLink("关注Ta"
+                    , "FriendAdd"
+                    , "Friend"
+                    , new { friendUserID = friendUserID, time = DateTime.Now.Ticks }
+                    , new AjaxOptions { OnSuccess = "$FR.addSuccess", OnFailure = "$FR.addFail" }
+                    , new { frienduserid = friendUserID, @class = cssClass, title = "点击关注Ta" }
+                    );
+            }
+        }
+
+
+        /// <summary>
+        /// 取绝对路径
+        /// </summary>
+        /// <param name="ajaxHelper"></param>
+        /// <param name="linkText"></param>
+        /// <param name="actionName"></param>
+        /// <param name="controllerName"></param>
+        /// <returns></returns>
+        public static MvcHtmlString HttpActionLink(this AjaxHelper ajaxHelper, string linkText, string actionName, string controllerName)
+        {
+            return ajaxHelper.HttpActionLink(linkText, actionName, controllerName, null, null, null);
+        }
+
+        /// <summary>
+        /// 取绝对路径
+        /// </summary>
+        /// <param name="ajaxHelper"></param>
+        /// <param name="linkText"></param>
+        /// <param name="actionName"></param>
+        /// <param name="controllerName"></param>
+        /// <param name="routeValues"></param>
+        /// <param name="ajaxOptions"></param>
+        /// <param name="htmlAttributes"></param>
+        /// <returns></returns>
+        public static MvcHtmlString HttpActionLink(this AjaxHelper ajaxHelper, string linkText, string actionName, string controllerName, object routeValues, AjaxOptions ajaxOptions, object htmlAttributes)
+        {
+            return ajaxHelper.ActionLink(linkText, actionName, controllerName, "http", CengZai.Helper.Config.SiteDomain, "", routeValues, ajaxOptions, htmlAttributes);
         }
     }
 }

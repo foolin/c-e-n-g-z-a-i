@@ -101,7 +101,7 @@ function openSetSkinModal() {
             var data = $("#skins a.active").attr("data");
             $.ajax({
                 type: "POST",
-                url: "@Url.Action("AjaxSetBlogSkin","Settings") ",
+                url: "@Url.HttpAction("AjaxSetBlogSkin","Settings") ",
                 data: "skin=" + data,
                 success: function (e) {
                     e = eval(e);
@@ -161,7 +161,7 @@ function initSkinClick() {
         {
     	<div class="user-info">
             <div class="avatar">
-                <a href="@Url.Action("Blog", "Blog", new { username = boy.Username })"><img src="@Url.GetAvatarUrl(boy.Avatar)"></a>
+                <a href="@Url.HttpAction("Blog", "Blog", new { username = boy.Username })"><img src="@Url.GetAvatarUrl(boy.Avatar)"></a>
             </div>
             <div class="detail">
                 <div class="nums">
@@ -178,11 +178,11 @@ function initSkinClick() {
                 <ul class="intro">
                     <li><b>性别：</b>帅哥</li>
                     <li><b>签名：</b>@boy.Sign</li>
-                    <li><b>主页：</b>@CengZai.Helper.Config.SiteHost@Url.Action("Blog", "Blog", new { username = boy.Username })</li>
+                    <li><b>主页：</b>@Url.BlogUrl(boy.Username)</li>
                     <li><b>介绍：</b>@boy.Intro</li>
                     @if (blogLover != null)
                     {
-                        <li><b>证书：</b>@Html.ActionLink(Html.GetCertificateName(blogLover.Certificate), "Certificate", new { username = boy.Username })</li>
+                        <li><b>证书：</b>@Html.HttpActionLink(Html.GetCertificateName(blogLover.Certificate), "Certificate", "Blog", new { username = boy.Username }, null)</li>
                         <li><b>宣誓：</b>@blogLover.BoyOath</li>
                     }
                 </ul>
@@ -210,7 +210,7 @@ function initSkinClick() {
         {
     	<div class="user-info">
             <div class="avatar">
-                <a href="@Url.Action("Blog", "Blog", new { username = girl.Username })"><img src="@Url.GetAvatarUrl(girl.Avatar)"></a>
+                <a href="@Url.HttpAction("Blog", "Blog", new { username = girl.Username })"><img src="@Url.GetAvatarUrl(girl.Avatar)"></a>
             </div>
             <div class="detail">
             	<div class="nums">
@@ -227,11 +227,11 @@ function initSkinClick() {
                 <ul class="intro">
                     <li><b>性别：</b>美女</li>
                     <li><b>签名：</b>@girl.Sign</li>
-                    <li><b>主页：</b>@CengZai.Helper.Config.SiteHost@Url.Action("Blog", "Blog", new { username = girl.Username })</li>
+                    <li><b>主页：</b>@Url.BlogUrl(girl.Username)</li>
                     <li><b>介绍：</b>@girl.Intro</li>
                     @if (blogLover != null)
                     {
-                        <li><b>证书：</b>@Html.ActionLink(Html.GetCertificateName(blogLover.Certificate), "Certificate", new { username = girl.Username })</li>
+                        <li><b>证书：</b>@Html.HttpActionLink(Html.GetCertificateName(blogLover.Certificate), "Certificate","Blog", new { username = girl.Username }, null)</li>
                         <li><b>宣誓：</b>@blogLover.GirlOath</li>
                     }
                 </ul>
@@ -267,9 +267,9 @@ function initSkinClick() {
                         </h1>
             	        <ul class="intro">
                 	        <li>我们已经相恋<strong>@Html.GetDaysByNow(blogLover.JoinDate)</strong>天，查看我们的
-                             @Html.ActionLink(Html.GetCertificateName(blogLover.Certificate), "Certificate", new { username = blogUser.Username }, new {@class="btn btn-danger" })
+                             @Html.HttpActionLink(Html.GetCertificateName(blogLover.Certificate), "Certificate","Blog", new { username = blogUser.Username }, new {@class="btn btn-danger" })
                             </li>
-                            <li><b>博客网址：</b>@CengZai.Helper.Config.SiteHost/@Url.Action("Blog", "Blog", new { username = blogUser.Username })</li>
+                            <li><b>博客网址：</b>@Url.BlogUrl(blogUser.Username)</li>
                         </ul>
                 </div>
             }
@@ -277,8 +277,8 @@ function initSkinClick() {
             {
                 <h1 class="title">@ViewBag.Title <span>单身</span> </h1>
             	<ul class="intro">
-                	<li>Ta还单身噢，快快 @Html.ActionLink("申请与Ta成为情侣", "Apply", "Lover", null, new { @class = "btn btn-large btn-success" })</li>
-                    <li><b>博客网址：</b>@CengZai.Helper.Config.SiteHost@Url.Action("Blog", "Blog", new { username = blogUser.Username })</li>
+                	<li>Ta还单身噢，快快 @Html.HttpActionLink("申请与Ta成为情侣", "Apply", "Lover", null, new { @class = "btn btn-large btn-success" })</li>
+                    <li><b>博客网址：</b>@Url.BlogUrl(blogUser.Username)</li>
                 </ul>
             }
             <div class="clear"></div>
