@@ -50,9 +50,13 @@
 <![endif]-->
 <script src="@Url.GetResourceUrl("/js/jquery.min.js")" type="text/javascript"></script>
 <script src="@Url.GetResourceUrl("/js/bootstrap.min.js")" type="text/javascript"></script>
+<script src="@Url.GetResourceUrl("/js/mvc/MicrosoftAjax.js")" type="text/javascript"></script> 
+<script src="@Url.GetResourceUrl("/js/mvc/MicrosoftMvcAjax.js")" type="text/javascript"></script>
+<script src="@Url.GetResourceUrl("/js/mvc/jquery.unobtrusive-ajax.min.js")" type="text/javascript"></script>
 <link href="@Url.GetResourceUrl("/js/dialog/skins/twitter.css")" rel="stylesheet" type="text/css" />
 <script src="@Url.GetResourceUrl("/js/dialog/jquery.artDialog.min.js")" type="text/javascript"></script>
 <script src="@Url.GetResourceUrl("/js/dialog/artDialog.plugins.min.js")" type="text/javascript"></script>
+<script src="@Url.GetResourceUrl("/js/core.js")" type="text/javascript"></script>
 <style type="text/css">
     #skins
     {
@@ -161,7 +165,7 @@ function initSkinClick() {
         {
     	<div class="user-info">
             <div class="avatar">
-                <a href="@Url.BlogUrl(boy.Username)"><img src="@Url.GetAvatarUrl(boy.Avatar)"></a>
+                <a href="@Url.BlogUrl(boy.Username, true)"><img src="@Url.GetAvatarUrl(boy.Avatar)"></a>
             </div>
             <div class="detail">
                 <div class="nums">
@@ -210,7 +214,7 @@ function initSkinClick() {
         {
     	<div class="user-info">
             <div class="avatar">
-                <a href="@Url.BlogUrl(girl.Username)"><img src="@Url.GetAvatarUrl(girl.Avatar)"></a>
+                <a href="@Url.BlogUrl(girl.Username, true)"><img src="@Url.GetAvatarUrl(girl.Avatar)"></a>
             </div>
             <div class="detail">
             	<div class="nums">

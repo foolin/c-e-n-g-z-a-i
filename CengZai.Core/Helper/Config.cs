@@ -104,17 +104,6 @@ namespace CengZai.Helper
         }
 
         /// <summary>
-        /// 特殊用户名博客名称，多用“|”进行分割
-        /// </summary>
-        public static string VipBlogName
-        {
-            get
-            {
-                return ConfigurationManager.AppSettings["VipBlogName"] + "";
-            }
-        }
-
-        /// <summary>
         /// 是否打开二级域名
         /// </summary>
         public static int OpenBlogDomain

@@ -15,10 +15,10 @@ else
             var artUser = Html.GetUser(art.UserID);
             <section class="blog-feed">
                 <aside class="feed-avatar">
-                    <a href="@Url.BlogUrl(artUser.Username)"><img src="@Url.GetAvatarUrl(artUser.Avatar)"></a>
+                    <a href="@Url.BlogUrl(artUser.Username, true)"><img src="@Url.GetAvatarUrl(artUser.Avatar)"></a>
                 </aside >
                 <div class="feed-content">
-                    <cite><a href="@Url.BlogUrl(artUser.Username)" target="_blank">@artUser.Nickname</a> 发表于 @Html.GetDateFormat(art.PostTime, "yyyy年M月d日 HH:mm:ss") </cite>
+                    <cite><a href="@Url.BlogUrl(artUser.Username, true)" target="_blank">@artUser.Nickname</a> 发表于 @Html.GetDateFormat(art.PostTime, "yyyy年M月d日 HH:mm:ss") </cite>
                      @if (!string.IsNullOrEmpty(art.Title))
                     {
                         <h1>@Html.HttpActionLink(art.Title, "Article","Blog", new { username = artUser.Username, artid = art.ArtID }, null)</h1>
