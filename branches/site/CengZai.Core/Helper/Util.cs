@@ -331,5 +331,21 @@ namespace CengZai.Helper
             }
         }
 
+
+        /// <summary>
+        /// 获取根域名
+        /// </summary>
+        /// <param name="domain"></param>
+        /// <returns></returns>
+        public static string GetRootDomain(string domain)
+        {
+            domain = (domain + "").ToLower().Trim();
+            if (domain.IndexOf("www.") == 0)
+            {
+                domain = domain.Substring(3);
+            }
+            return domain;
+        }
+
     }
 }

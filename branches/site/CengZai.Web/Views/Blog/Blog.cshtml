@@ -15,13 +15,13 @@ else
             var artUser = Html.GetUser(art.UserID);
             <section class="blog-feed">
                 <aside class="feed-avatar">
-                    <a href="@Url.Action("Blog", "Blog", new { username = artUser.Username })"><img src="@Url.GetAvatarUrl(artUser.Avatar)"></a>
+                    <a href="@Url.HttpAction("Blog", "Blog", new { username = artUser.Username })"><img src="@Url.GetAvatarUrl(artUser.Avatar)"></a>
                 </aside >
                 <div class="feed-content">
-                    <cite><a href="@Url.Action("Blog", "Blog", new { username = artUser.Username })" target="_blank">@artUser.Nickname</a> 发表于 @Html.GetDateFormat(art.PostTime, "yyyy年M月d日 HH:mm:ss") </cite>
+                    <cite><a href="@Url.HttpAction("Blog", "Blog", new { username = artUser.Username })" target="_blank">@artUser.Nickname</a> 发表于 @Html.GetDateFormat(art.PostTime, "yyyy年M月d日 HH:mm:ss") </cite>
                      @if (!string.IsNullOrEmpty(art.Title))
                     {
-                        <h1>@Html.ActionLink(art.Title, "Article", new { username = artUser.Username, artid = art.ArtID })</h1>
+                        <h1>@Html.HttpActionLink(art.Title, "Article","Blog", new { username = artUser.Username, artid = art.ArtID }, null)</h1>
                     }
                    
 			        <div class="text">
@@ -29,7 +29,7 @@ else
                     </div>
                     <hr />
                     <footer>
-                            @Html.ActionLink("阅读全文", "Article", "Blog", new { username = artUser.Username, artid = art.ArtID }, new { target = "_blank" })
+                            @Html.HttpActionLink("阅读全文", "Article", "Blog", new { username = artUser.Username, artid = art.ArtID }, new { target = "_blank" })
                     </footer>
                 </div>
                 <div class="clear"></div>

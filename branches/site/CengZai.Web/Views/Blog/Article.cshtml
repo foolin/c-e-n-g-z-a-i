@@ -8,7 +8,7 @@
 
     <!--内容区域-->
     <div class="article">
-        <p>您的位置：@Html.ActionLink(artUser.Nickname + "的博客", "Blog", new { username = artUser.Username }) -> <a>日志正文</a></p>
+        <p>您的位置：<a href="@Url.BlogUrl(artUser.Username)"><b>@artUser.Nickname</b>的博客</a> -> <a>日志正文</a></p>
         @if (!string.IsNullOrEmpty(art.Title))
         {
             <h2>@art.Title </h2>

@@ -325,7 +325,6 @@
     <Content Include="Views\Settings\Avatar.cshtml" />
     <Content Include="Views\Settings\_SettingNav.cshtml" />
     <Content Include="Views\Blog\Certificate.cshtml" />
-    <None Include="Views\Blog\Profile.cshtml.bak" />
     <Content Include="Views\Article\Index.cshtml" />
     <None Include="resource\psd\UploadImage.psd" />
     <None Include="resource\psd\结婚证封面.psd" />
@@ -333,11 +332,7 @@
     <None Include="resource\psd\证件封面.psd" />
     <None Include="resource\psd\证件背面.psd" />
     <Content Include="Views\Blog\Blog.cshtml" />
-    <None Include="Views\Blog\Certificate.cshtml.bak" />
     <Content Include="Views\Blog\Article.cshtml" />
-    <None Include="Views\Blog\BlogSingle.cshtml.bak" />
-    <None Include="Views\Blog\_BlogLayout.cshtml.bak" />
-    <None Include="Views\Blog\Blog.cshtml.bak" />
     <Content Include="Views\Friend\FeedFriendsForFirstLogin.cshtml" />
     <Content Include="Views\Friend\Find.cshtml" />
     <Content Include="Views\Friend\List.cshtml" />
@@ -345,7 +340,6 @@
     <Content Include="Views\Account\FindPassword.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\ApplyInvite.cshtml" />
-    <None Include="Views\Blog\LoveBlog.cshtml.bak" />
     <Content Include="Views\Blog\_BlogMaster.cshtml" />
     <Content Include="Views\Shared\_Topbar.cshtml" />
   </ItemGroup>

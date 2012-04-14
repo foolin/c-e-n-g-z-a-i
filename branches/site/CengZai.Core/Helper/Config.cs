@@ -82,13 +82,52 @@ namespace CengZai.Helper
 
 
         /// <summary>
-        /// 客服邮箱
+        /// 站点主域名
         /// </summary>
         public static string SiteDomain
         {
             get
             {
                 return ConfigurationManager.AppSettings["SiteDomain"] + "";
+            }
+        }
+
+        /// <summary>
+        /// 博客主域名
+        /// </summary>
+        public static string BlogDomain
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["BlogDomain"] + "";
+            }
+        }
+
+        /// <summary>
+        /// 特殊用户名博客名称，多用“|”进行分割
+        /// </summary>
+        public static string VipBlogName
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["VipBlogName"] + "";
+            }
+        }
+
+        /// <summary>
+        /// 是否打开二级域名
+        /// </summary>
+        public static int OpenBlogDomain
+        {
+            get
+            {
+                int val = 0;
+                try
+                {
+                    val = Convert.ToInt32(ConfigurationManager.AppSettings["OpenBlogDomain"]);
+                }
+                catch { }
+                return val;
             }
         }
 
@@ -102,9 +141,6 @@ namespace CengZai.Helper
                 return ConfigurationManager.ConnectionStrings["ConnString"] + "";
             }
         }
-
-
-
 
 
         /// <summary>

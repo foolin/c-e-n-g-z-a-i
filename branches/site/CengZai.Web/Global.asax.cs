@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using CengZai.Helper;
+using System.Text.RegularExpressions;
 
 namespace CengZai.Web
 {
@@ -22,28 +23,36 @@ namespace CengZai.Web
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-           // /********** 二级域名路由 ***********/
-           // routes.Add("DomainArticleRoute", new DomainRoute(
-           //"{username}.mvc.com"     // Domain with parameters 
-           // , "blog/{username}/article/{artid}/{id}" // URL with parameters
-           // , new { controller = "Blog", action = "Article", username = "", page = 0, @id = UrlParameter.Optional } // Parameter defaults
-           // , new { username = @"[\w]{5}", artid = "[0-9]+", page = "[0-9]+" }
-           //));
+            /********** 二级博客域名路由 ***********/
+            if (CengZai.Helper.Config.OpenBlogDomain == 1)
+            {
+                try
+                {
+                    //string rule = @"^[\w]{5,}";
+                    //if (!string.IsNullOrEmpty(CengZai.Helper.Config.VipBlogName))
+                    //{
+                    //    rule = @"^([\w]{5,}|" + CengZai.Helper.Config.VipBlogName + ")$";
+                    //}
+                    // routes.Add("DomainBlog", new DomainRoute(
+                    //"{username}." + Config.BlogDomain.ToLower()     // Domain with parameters 
+                    // , "{id}" // URL with parameters
+                    // , new { controller = "Blog", action = "Blog", id = UrlParameter.Optional } // Parameter defaults
+                    // , new { username = rule }
+                    //));
 
-           // routes.Add("DomainBlogRoute", new DomainRoute(
-           //"{username}." + Config.SiteDomain     // Domain with parameters 
-           // , "{action}/{page}/{id}" // URL with parameters
-           // , new { controller = "Blog", action = "Blog", username = "", page = 0, @id = UrlParameter.Optional } // Parameter defaults
-           // , new { username = @"[\w]{5}", page = "[0-9]+" }
-           //));
-
-           // routes.Add("DomainDefault", new DomainRoute(
-            //"{username}." + Config.SiteDomain     // Domain with parameters 
-           // , "{controller}/{action}/{page}/{id}" // URL with parameters
-           // , new { controller = "Blog", action = "Blog", username = "", page = 0, @id = UrlParameter.Optional } // Parameter defaults
-           // , new { username = @"[\w]{5}", page = "[0-9]+" }
-           //));
-
+                    string rule = @"(\b((?!www)\w)+\b)";
+                    routes.MapBlogDomainRoute("DomainBlog"
+                        , rule
+                        , "{controller}/{action}/{page}/{id}" // URL with parameters
+                        , new { controller = "Blog", action = "Blog", page = 1, id = UrlParameter.Optional } // Parameter defaults
+                        , new { page = "[0-9]+" }
+                        );
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("二级域名异常");
+                }
+            }
            // /********** 二级域名路由 end ***********/
 
             routes.MapLowerCaseUrlRoute(
@@ -85,17 +94,41 @@ namespace CengZai.Web
             try
             {
                 //如果为xxx.com则重定向为www.xxx.com
-                string strUrl = Request.Url.ToString().Trim().ToLower();
-                if (System.Text.RegularExpressions.Regex.IsMatch(strUrl, @"^http://([a-zA-Z_\-0-9]+\.[a-zA-Z_\-0-9]+)/"
-                    , System.Text.RegularExpressions.RegexOptions.Compiled 
-                    | System.Text.RegularExpressions.RegexOptions.IgnoreCase))
+                string strHost = Request.Headers["HOST"];
+                if (!string.IsNullOrEmpty(strHost))
                 {
-                    Response.RedirectPermanent(
-                        System.Text.RegularExpressions.Regex.Replace(
-                        strUrl
-                        , @"^http://([a-zA-Z_\-0-9]+\.[a-zA-Z_\-0-9]+)/"
-                        ,@"http://www.$1/"
-                        ));
+                    if (Config.SiteDomain.Replace("www.", "") != Config.SiteDomain)
+                    {
+                        string regexSiteDomain = @"^" + Config.SiteDomain.Replace("www.", "");
+                        regexSiteDomain = regexSiteDomain.Replace("/", @"\/");
+                        regexSiteDomain = regexSiteDomain.Replace(".", @"\.");
+                        regexSiteDomain = regexSiteDomain.Replace("-", @"\-");
+                        if (Regex.IsMatch(strHost, regexSiteDomain, RegexOptions.Compiled | RegexOptions.IgnoreCase))
+                        {
+                            Response.RedirectPermanent(Config.SiteHost);
+                        }
+                    }
+                    //博客二级域名
+                    string regexBlogDomain = Config.BlogDomain;
+                    regexBlogDomain = regexBlogDomain.Replace("/", @"\/");
+                    regexBlogDomain = regexBlogDomain.Replace(".", @"\.");
+                    regexBlogDomain = regexBlogDomain.Replace("-", @"\-");
+                    string strRule = @"^(?<username>\b((?!www)\w)+\b)\." + regexBlogDomain;
+                    Match math = Regex.Match(strHost, strRule, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+                    if (math.Success)
+                    {
+                        try
+                        {
+                            string username = math.Groups["username"].Value;
+                            Model.User user = new BLL.User().GetModelByCache(username);
+                            if (user == null)
+                            {
+                                Response.RedirectPermanent(Config.SiteHost);
+                            }
+                        }
+                        catch { }
+
+                    }
                 }
             }
             catch { }

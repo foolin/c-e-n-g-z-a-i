@@ -127,8 +127,13 @@ namespace CengZai.Web.Common
                                         else
                                         {
                                             //禁止登录
-                                            Current.Response.Cookies["LOGIN_USER"].Expires = DateTime.Now.AddDays(-9999);
                                             user = null;
+                                            cookie.Expires = DateTime.Now.AddDays(-9999);
+                                            if (string.IsNullOrEmpty(cookie.Domain))
+                                            {
+                                                cookie.Domain = Util.GetRootDomain(Config.SiteDomain);
+                                            }
+                                            HttpContext.Current.Response.SetCookie(cookie);
                                         }
                                     }
                                 }
