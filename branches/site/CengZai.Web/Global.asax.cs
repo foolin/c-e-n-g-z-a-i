@@ -108,26 +108,30 @@ namespace CengZai.Web
                             Response.RedirectPermanent(Config.SiteHost);
                         }
                     }
-                    //博客二级域名
-                    string regexBlogDomain = Config.BlogDomain;
-                    regexBlogDomain = regexBlogDomain.Replace("/", @"\/");
-                    regexBlogDomain = regexBlogDomain.Replace(".", @"\.");
-                    regexBlogDomain = regexBlogDomain.Replace("-", @"\-");
-                    string strRule = @"^(?<username>\b((?!www)\w)+\b)\." + regexBlogDomain;
-                    Match math = Regex.Match(strHost, strRule, RegexOptions.Compiled | RegexOptions.IgnoreCase);
-                    if (math.Success)
-                    {
-                        try
-                        {
-                            string username = math.Groups["username"].Value;
-                            Model.User user = new BLL.User().GetModelByCache(username);
-                            if (user == null)
-                            {
-                                Response.RedirectPermanent(Config.SiteHost);
-                            }
-                        }
-                        catch { }
 
+                    if (Config.OpenBlogDomain == 1)
+                    {
+                        //博客二级域名
+                        string regexBlogDomain = Config.BlogDomain;
+                        regexBlogDomain = regexBlogDomain.Replace("/", @"\/");
+                        regexBlogDomain = regexBlogDomain.Replace(".", @"\.");
+                        regexBlogDomain = regexBlogDomain.Replace("-", @"\-");
+                        string strRule = @"^(?<username>\b((?!www)\w)+\b)\." + regexBlogDomain;
+                        Match math = Regex.Match(strHost, strRule, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+                        if (math.Success)
+                        {
+                            try
+                            {
+                                string username = math.Groups["username"].Value;
+                                Model.User user = new BLL.User().GetModelByCache(username);
+                                if (user == null)
+                                {
+                                    Response.RedirectPermanent(Config.SiteHost);
+                                }
+                            }
+                            catch { }
+
+                        }
                     }
                 }
             }
