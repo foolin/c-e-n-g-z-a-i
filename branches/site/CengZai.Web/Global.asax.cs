@@ -45,8 +45,8 @@ namespace CengZai.Web
 
             routes.MapLowerCaseUrlRoute(
                 "BlogArticle", // Route name
-                "blog/{username}/article/{artid}/{id}", // URL with parameters
-                new { controller = "Blog", action = "Article", username = "", @id = UrlParameter.Optional } // Parameter defaults
+                "blog/{username}/article/{artid}.html", // URL with parameters
+                new { controller = "Blog", action = "Article", username = "" } // Parameter defaults
                 , new { username = @"[\w]+", artid = "[0-9]+" }
             );
 
