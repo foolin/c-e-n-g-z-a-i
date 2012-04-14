@@ -22,6 +22,19 @@ namespace System.Web.Mvc
             return new CengZai.BLL.Lover().GetCertificateName(certificate);
         }
 
+
+        /// <summary>
+        /// 取证书名称
+        /// </summary>
+        /// <param name="helper"></param>
+        /// <param name="certificate"></param>
+        /// <returns></returns>
+        public static string GetLoverRelation(this HtmlHelper helper, int? certificate)
+        {
+            return new CengZai.BLL.Lover().GetLoverRelation(certificate);
+        }
+
+
         /// <summary>
         /// 取状态节点名称
         /// </summary>

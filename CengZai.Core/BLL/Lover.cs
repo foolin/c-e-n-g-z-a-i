@@ -256,6 +256,24 @@ namespace CengZai.BLL
             return "";
         }
 
+        /// <summary>
+        /// 取两人的关系
+        /// </summary>
+        /// <param name="certificate"></param>
+        /// <returns></returns>
+        public string GetLoverRelation(int? certificate)
+        {
+            if (certificate == (int)CengZai.Model.LoverCertificate.Love)
+            {
+                return "恋爱";
+            }
+            if (certificate == (int)CengZai.Model.LoverCertificate.Marry)
+            {
+                return "结婚";
+            }
+
+            return "";
+        }
 
 
         /// <summary>

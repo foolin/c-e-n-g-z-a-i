@@ -1,7 +1,6 @@
 ﻿@{
     ViewBag.Title = "关于我们";
 }
-
 <div class="container row-fluid">
 
     <div class="span9">
@@ -11,8 +10,16 @@
                     <h1>关于我们 <small>@ViewBag.SiteSlogan</small></h1> 
                 </div> 
                 <article class="content">
-                    <h2>@CengZai.Helper.Config.SiteSlogan</h2>
-                    @CengZai.Helper.Config.SiteDescription
+                    <h3>@CengZai.Helper.Config.SiteSlogan</h3>
+                    <p>@CengZai.Helper.Config.SiteDescription</p>
+                    <br />
+                    <br />
+                    <h3>联系我们</h3>
+                    <p>
+                        市场合作、加入我们、投资意向、意见反馈等，请发送邮件到以下地址，谢谢！
+                        <br />
+                        Email：service[at]@CengZai.Helper.Config.SiteDomain.Replace("www.","")（请把“[at]”替换成“@@”）
+                    </p>
                 </article>
             </section>
         </div>
