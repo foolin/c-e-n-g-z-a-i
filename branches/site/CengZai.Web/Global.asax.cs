@@ -59,7 +59,7 @@ namespace CengZai.Web
                 "BlogArticle", // Route name
                 "blog/{username}/article/{artid}/{id}", // URL with parameters
                 new { controller = "Blog", action = "Article", username = "", @id = UrlParameter.Optional } // Parameter defaults
-                , new { username = @"[\w]*", artid = "[0-9]+" }
+                , new { username = @"[\w]+", artid = "[0-9]+" }
             );
 
             //博客{BlogController.Blog}
@@ -67,7 +67,7 @@ namespace CengZai.Web
                 "Blog", // Route name
                 "blog/{username}/{action}/{page}/{id}", // URL with parameters
                 new { controller = "Blog", action = "Blog", username = "",  page=0, @id = UrlParameter.Optional } // Parameter defaults
-                , new { username = @"[\w]*", page = "[0-9]+" }
+                , new { username = @"[\w]+", page = "[0-9]+" }
             );
 
 

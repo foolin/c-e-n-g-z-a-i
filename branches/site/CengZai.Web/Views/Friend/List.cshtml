@@ -61,8 +61,8 @@
                     {
                         <tr>
                             <td><input name="userid" type="checkbox" value="@user.UserID" /></td>
-                            <td><img src="@Url.GetAvatarUrl(user.Avatar)" alt="@user.Nickname" width="50" /></td>
-                            <td>@user.Nickname</td>
+                            <td><a href="@Url.BlogUrl(user.Username)" title="访问Ta的主页" target="_blank"><img src="@Url.GetAvatarUrl(user.Avatar)" alt="@user.Nickname" width="50" /></a></td>
+                            <td><a href="@Url.BlogUrl(user.Username)" title="访问Ta的主页" target="_blank">@user.Nickname</a></td>
                             <td>@Html.GetUserSexName(user.Sex)</td>
                             <td>@user.Sign</td>
                             <td>@Ajax.GetFriendAddLink(user.UserID, null)</td>

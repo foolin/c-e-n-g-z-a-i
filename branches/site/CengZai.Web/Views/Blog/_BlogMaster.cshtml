@@ -161,7 +161,7 @@ function initSkinClick() {
         {
     	<div class="user-info">
             <div class="avatar">
-                <a href="@Url.HttpAction("Blog", "Blog", new { username = boy.Username })"><img src="@Url.GetAvatarUrl(boy.Avatar)"></a>
+                <a href="@Url.BlogUrl(boy.Username)"><img src="@Url.GetAvatarUrl(boy.Avatar)"></a>
             </div>
             <div class="detail">
                 <div class="nums">
@@ -210,7 +210,7 @@ function initSkinClick() {
         {
     	<div class="user-info">
             <div class="avatar">
-                <a href="@Url.HttpAction("Blog", "Blog", new { username = girl.Username })"><img src="@Url.GetAvatarUrl(girl.Avatar)"></a>
+                <a href="@Url.BlogUrl(girl.Username)"><img src="@Url.GetAvatarUrl(girl.Avatar)"></a>
             </div>
             <div class="detail">
             	<div class="nums">
