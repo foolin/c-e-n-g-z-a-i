@@ -734,6 +734,41 @@ namespace CengZai.Web.Controllers
             }
         }
 
+
+
+        /// <summary>
+        /// Ajax获取收到请求数
+        /// </summary>
+        /// <param name="loverID"></param>
+        /// <returns></returns>
+        public ActionResult AjaxGetNewCount()
+        {
+            try
+            {
+                Model.User loginUser = GetLoginUser();
+                if (loginUser == null)
+                {
+                    return AjaxReturn("error", "操作错误，您尚未登录！或者登录超时");
+                }
+
+                BLL.Lover bllLover = new BLL.Lover();
+                //取我收到的Receive
+                List<Model.Lover> list = bllLover.GetReceiveList(loginUser.UserID);
+                int count = 0;
+                if (list != null)
+                {
+                    count = list.Count;
+                }
+                return AjaxReturn("success", count.ToString());
+
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Lover/Abolish出现异常：", ex);
+                return AjaxReturn("error", "操作错误，您尚未登录！或者登录超时");
+            }
+        }
+
     }
 
 

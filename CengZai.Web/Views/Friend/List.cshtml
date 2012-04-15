@@ -25,7 +25,7 @@
     <div>
     <ul class="nav nav-tabs">
         <li @if (active == "friend" || string.IsNullOrEmpty(active))
-            {<text>class="active"</text>}>@Html.ActionLink("朋友", "List", new { active = "friend" })</li>
+            {<text>class="active"</text>}>@Html.ActionLink("朋友（互相关注）", "List", new { active = "friend" })</li>
         <li @if (active == "follow")
             {<text>class="active"</text>}>@Html.ActionLink("我关注", "List", new { active = "follow" })</li>
         <li @if (active == "fans")
