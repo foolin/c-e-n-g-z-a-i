@@ -20,8 +20,20 @@
 
 <div class="container bg-white">
 <div class="padding">
-    <h2>@ViewBag.Title</h2>
-    <br />
+    <div class="row-fluid">
+        <div class="span8"><h2>@ViewBag.Title</h2></div>
+        <div class="span4">
+        @using (Html.BeginForm("Find", "Friend", FormMethod.Get, new { @class = "navbar-form" }))
+        {
+            <span class="input-append">
+                <input type="text" name="keyword" value="@Request["keyword"]" class="span2" id="appendedPrependedInput" size="16"  placeholder="搜索感兴趣的人"><input type="submit" class="btn" value="搜索" />
+                
+            </span>
+            <a href="@Url.Action("Find", "Friend")" class="btn btn-success">随机看看</a>
+            
+        }
+        </div>
+    </div>
     <div>
     <ul class="nav nav-tabs">
         <li @if (active == "friend" || string.IsNullOrEmpty(active))
@@ -66,7 +78,7 @@
                             <td>@Html.GetUserSexName(user.Sex)</td>
                             <td>@user.Sign</td>
                             <td>@Ajax.GetFriendAddLink(user.UserID, null)</td>
-                            <td>@Html.ActionLink("发送私信", "Send", "Inbox", new {touserid=user.UserID}, null)</td>
+                            <td>@Html.ActionLink("发送私信", "Send", "Inbox", new { touserid = user.UserID }, null)</td>
                         </tr>
                     }
                 }

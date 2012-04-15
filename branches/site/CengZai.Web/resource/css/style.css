@@ -535,3 +535,8 @@ a.blog-mini-avatar{
     margin-bottom:10px;
 }
 
+.content,.content p
+{
+    line-height:1.8em;
+    font-size:14px;
+}
