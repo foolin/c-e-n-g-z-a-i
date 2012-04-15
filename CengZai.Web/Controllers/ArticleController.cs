@@ -194,6 +194,14 @@ namespace CengZai.Web.Controllers
                 {
                     bll.Update(model);
                 }
+                try
+                {
+                    //用户添加一个积分
+                    loginUser.Credit += 1;
+                    new BLL.User().Update(loginUser);
+                    UpdateLoginUserSession(loginUser);
+                }
+                catch { }
 
                 return AjaxReturn("success", "恭喜，文章保存成功！");
             }
