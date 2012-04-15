@@ -73,12 +73,15 @@ function onAjaxSuccess(e) {
 
 /*********** 定期更新消息 **********/
 $(document).ready(function () {
+    //更新私信箱
     intervalUpdateInboxNewCount();
-    setInterval(intervalUpdateInboxNewCount, 180*1000);  //3分钟更新一次
+    setInterval(intervalUpdateInboxNewCount, 180 * 1000);  //3分钟更新一次
+    //更新是否有追求者
+    updateLoverNewCount();
 });
-
+//更新私信箱
 function intervalUpdateInboxNewCount() {
-    $.getJSON("/inbox/ajaxgetnewcount", function (json) {
+    $.getJSON("/inbox/ajaxgetnewcount?t=" + new Date().getMilliseconds(), function (json) {
         if (json.id == "success") {
             var count = parseInt(json.msg);
             if (count > 0) {
@@ -89,3 +92,17 @@ function intervalUpdateInboxNewCount() {
         }
     });
 }
+//更新是否有追求者
+function updateLoverNewCount() {
+    $.getJSON("/lover/ajaxgetnewcount?t=" + new Date().getMilliseconds(), function (json) {
+        if (json.id == "success") {
+            var count = parseInt(json.msg);
+            if (count > 0) {
+                $("#loverNewCount").html(count).show();
+                return;
+            }
+            $("#loverNewCount").html(0).hide();
+        }
+    });
+}
+

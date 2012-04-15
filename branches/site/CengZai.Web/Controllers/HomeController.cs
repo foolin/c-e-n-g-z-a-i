@@ -15,7 +15,7 @@ namespace CengZai.Web.Controllers
         // GET: /Home/
 
         [CheckAuthFilter]
-        public ActionResult Index()
+        public ActionResult Index(string active)
         {
             try
             {
@@ -24,31 +24,38 @@ namespace CengZai.Web.Controllers
                 {
                     return JumpToLogin();
                 }
-                bool isReadSystem = false;
                 DataSet dsArtList = null;   //文章列表
                 BLL.Article bllArt = new BLL.Article();
                 //取朋友文章
-                DataSet dsFollowUserList = new BLL.Friend().GetFriendUserList(loginUser.UserID, Model.FriendRelation.Follow, 0, "");
-                if (dsFollowUserList != null && dsFollowUserList.Tables.Count > 0 && dsFollowUserList.Tables[0].Rows.Count > 0)
+                DataSet dsFriendUserList = null;
+                string whereSql = "Privacy=0 And State=1";
+                if (active == "follow")
+                {
+                    dsFriendUserList = new BLL.Friend().GetFriendUserList(loginUser.UserID, Model.FriendRelation.Follow, 0, "");
+                }
+                else if (active == "fans")
+                {
+                    dsFriendUserList = new BLL.Friend().GetFriendUserList(loginUser.UserID, Model.FriendRelation.Fans, 0, "");
+                }
+                else if (active == "friend")
+                {
+                    dsFriendUserList = new BLL.Friend().GetFriendUserList(loginUser.UserID, Model.FriendRelation.Friend, 0, "");
+                }
+                if (dsFriendUserList != null && dsFriendUserList.Tables.Count > 0 && dsFriendUserList.Tables[0].Rows.Count > 0)
                 {
                     string userIds = loginUser.UserID.ToString();
-                    foreach (DataRow row in dsFollowUserList.Tables[0].Rows)
+                    foreach (DataRow row in dsFriendUserList.Tables[0].Rows)
                     {
                         userIds += "," + row["UserID"];
                     }
-                    dsArtList = bllArt.GetListByPage("Privacy=0 And State=1 and UserID in (" + userIds + ")", "ArtID DESC", mPageSize, mPageIndex, out mTotalCount);
+                    whereSql += " and UserID in (" + userIds + ") ";
                 }
-                if (dsArtList == null || dsArtList.Tables.Count == 0 || dsArtList.Tables[0].Rows.Count == 0)
-                {
-                    isReadSystem = true;    //读取系统文章
-                    dsArtList = bllArt.GetListByPage("Privacy=0 And State=1", "ArtID DESC", mPageSize, mPageIndex, out mTotalCount);
-                }
+                dsArtList = bllArt.GetListByPage(whereSql, "ArtID DESC", mPageSize, mPageIndex, out mTotalCount);
                 List<Model.Article> artList = null;
                 if (dsArtList != null && dsArtList.Tables.Count > 0)
                 {
                     artList = bllArt.DataTableToList(dsArtList.Tables[0]);
                 }
-                ViewBag.IsReadSystem = isReadSystem;
                 ViewBag.ArtList = artList;
                 SetPage();
             }
