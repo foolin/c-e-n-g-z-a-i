@@ -230,14 +230,7 @@
     <Content Include="resource\js\swfupload\swfupload.speed.js" />
     <Content Include="resource\js\swfupload\swfupload.swf" />
     <Content Include="resource\js\swfupload\swfupload_fp9.swf" />
-    <Content Include="resource\skin\default\bg.jpg" />
-    <Content Include="resource\skin\default\bg1.jpg" />
-    <Content Include="resource\skin\default\blog.css" />
     <Content Include="Global.asax" />
-    <Content Include="resource\skin\default\operate.png" />
-    <Content Include="resource\skin\default\toolbar-ie.png" />
-    <Content Include="resource\skin\default\toolbar-simple.png" />
-    <Content Include="resource\skin\default\toolbar.png" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -343,7 +336,6 @@
     <Content Include="Views\Account\ApplyInvite.cshtml" />
     <Content Include="Views\Blog\_BlogMaster.cshtml" />
     <Content Include="Views\Shared\_Topbar.cshtml" />
-    <Content Include="Views\Home\Square.cshtml" />
     <Content Include="Views\Square\Index.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
   </ItemGroup>

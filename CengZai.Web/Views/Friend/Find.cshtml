@@ -24,9 +24,10 @@
         <div class="span4">
         @using (Html.BeginForm("Find", "Friend", FormMethod.Get, new { @class = "navbar-form" }))
         {
-            <div class="input-append">
+            <span class="input-append">
                 <input type="text" name="keyword" value="@Request["keyword"]" class="span2" id="appendedPrependedInput" size="16"  placeholder="搜索感兴趣的人"><input type="submit" class="btn" value="搜索" />
-            </div>
+            </span>
+            <a href="@Url.Action("Find", "Friend")" class="btn btn-success">随机看看</a>
         }
         </div>
     </div>
