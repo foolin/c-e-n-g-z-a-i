@@ -384,7 +384,7 @@ namespace CengZai.Web.Controllers
                 mUser.Sign = "此家伙不懒，就是什么也没留下";
                 mUser.State = 0;
                 mUser.Vip = 0;
-                mUser.Credit = 0;
+                mUser.Credit = 5;   //初次登录赠送5个积分
                 mUser.Money = 0;
                 mUser.Config = new UserConfig();
                 mUser.UserID = bllUser.Add(mUser);
@@ -410,7 +410,7 @@ namespace CengZai.Web.Controllers
                                 }
                                 SendSysNotice((int)mInvite.UserID, "您邀请的用户【" + mInvite.Email
                                     + "】已经成功注册，注册的昵称为：<a href='" + Url.Action("Blog", "Blog", new { username = username }) + "'>"
-                                    + username + "</a>,快去看看吧！");
+                                    + nickname + "</a>,快去看看吧！");
                                 SendSysNotice(mUser.UserID, mUser.Nickname + "，邀请您邀请加入的人：<a href='" + Url.Action("Blog", "Blog", new { username = inviteUser.Username }) + "'>"
                                     + inviteUser.Nickname + "</a>,快去看看吧！");
                             }
