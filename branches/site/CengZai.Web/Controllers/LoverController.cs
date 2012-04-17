@@ -416,7 +416,7 @@ namespace CengZai.Web.Controllers
                 if (Config.LoverLimit == 0)
                 {
                     lover.Flow = (int)Model.LoverFlow.Award;    //直接授予证书
-                    lover.Flow = 3;
+                    lover.State = 1;
                 }
                 else
                 {
