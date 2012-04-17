@@ -190,12 +190,15 @@ namespace CengZai.Web.Controllers
             HttpCookie cookie = Response.Cookies["LOGIN_USER"];
             if (cookie != null)
             {
+                cookie.Expires = DateTime.Now.AddDays(-9999);
+                Response.SetCookie(cookie);
                 if (string.IsNullOrEmpty(cookie.Domain))
                 {
                     cookie.Domain = Util.GetRootDomain(Config.SiteDomain);
+                    cookie.Expires = DateTime.Now.AddDays(-9999);
+                    Response.SetCookie(cookie);
                 }
-                cookie.Expires = DateTime.Now.AddDays(-9999);
-                Response.SetCookie(cookie);
+                
             }
 
             Model.User loginUser = GetLoginUser();
@@ -215,6 +218,20 @@ namespace CengZai.Web.Controllers
         /// <returns></returns>
         public ActionResult SubdomainLogout(string url)
         {
+            HttpCookie cookie = Response.Cookies["LOGIN_USER"];
+            if (cookie != null)
+            {
+                cookie.Expires = DateTime.Now.AddDays(-9999);
+                Response.SetCookie(cookie);
+                if (string.IsNullOrEmpty(cookie.Domain))
+                {
+                    cookie.Domain = Util.GetRootDomain(Config.SiteDomain);
+                    cookie.Expires = DateTime.Now.AddDays(-9999);
+                    Response.SetCookie(cookie);
+                }
+
+            }
+
             Session["LOGIN_USER"] = null;
             if (string.IsNullOrEmpty(url))
             {
