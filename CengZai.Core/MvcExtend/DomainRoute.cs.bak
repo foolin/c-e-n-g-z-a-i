@@ -7,52 +7,76 @@ using System.Text.RegularExpressions;
 
 namespace System.Web.Mvc
 {
-    public class DomainRoute : Route
+    public class BlogRoute : Route
     {
         private Regex domainRegex;
         private Regex pathRegex;
 
-        /// <summary>
-        /// 判断是否匹配
-        /// </summary>
         public string Domain { get; set; }
-        /// <summary>
-        /// 判断是否匹配博客地址
-        /// </summary>
-        public bool IsMatch { set; get; }
 
 
-        public DomainRoute(string domain, string url, IRouteHandler routeHandler)
+        public BlogRoute(string domain, string url, IRouteHandler routeHandler)
             : base(url, routeHandler)
         {
             Domain = domain;
         }
 
-        public DomainRoute(string domain, string url, object defaults)
+        public BlogRoute(string domain, string url, object defaults)
             : base(url, new RouteValueDictionary(defaults), new MvcRouteHandler())
         {
             Domain = domain;
         }
 
-        public DomainRoute(string domain, string url, object defaults, IRouteHandler routeHandler)
+        public BlogRoute(string domain, string url, object defaults, IRouteHandler routeHandler)
             : base(url, new RouteValueDictionary(defaults), routeHandler)
         {
             Domain = domain;
         }
 
-        public DomainRoute(string domain, string url, object defaults, object constraints)
+        public BlogRoute(string domain, string url, object defaults, object constraints)
             : base(url, new RouteValueDictionary(defaults), new RouteValueDictionary(constraints), new MvcRouteHandler())
         {
+            if (url == null)
+            {
+                throw new ArgumentNullException("url");
+            }
+
+            base.Defaults = new RouteValueDictionary(defaults);
+            base.Constraints = Constraints = new RouteValueDictionary(constraints);
+
+            Domain = domain;
+        }
+
+        public BlogRoute(string domain, string url, object defaults, object constraints, string[] namespaces)
+            : base(url, new RouteValueDictionary(defaults), new MvcRouteHandler())
+        {
+            if (url == null)
+            {
+                throw new ArgumentNullException("url");
+            }
+
+            Route route = new Route(url, new MvcRouteHandler())
+            {
+                Defaults = new RouteValueDictionary(defaults),
+                Constraints = new RouteValueDictionary(constraints)
+            };
+            if ((namespaces != null) && (namespaces.Length > 0))
+            {
+                route.DataTokens = new RouteValueDictionary();
+                route.DataTokens["Namespaces"] = namespaces;
+            }
+            base.Defaults = new RouteValueDictionary(defaults);
+            base.Constraints = Constraints = new RouteValueDictionary(constraints);
+
+
             Domain = domain;
         }
 
         public override RouteData GetRouteData(HttpContextBase httpContext)
         {
-
             // 构造 regex
             domainRegex = CreateRegex(Domain);
             pathRegex = CreateRegex(Url);
-            object constraints = Constraints;
 
             // 请求信息
             string requestDomain = httpContext.Request.Headers["host"];
@@ -73,13 +97,10 @@ namespace System.Web.Mvc
             Match domainMatch = domainRegex.Match(requestDomain);
             Match pathMatch = pathRegex.Match(requestPath);
 
-            IsMatch = false;    //不匹配
             // 路由数据
             RouteData data = null;
             if (domainMatch.Success && pathMatch.Success)
             {
-                IsMatch = true; //设置为匹配
-
                 data = new RouteData(this, RouteHandler);
 
                 // 添加默认选项
@@ -160,23 +181,8 @@ namespace System.Web.Mvc
             source = source.Replace("/", @"\/?");
             source = source.Replace(".", @"\.?");
             source = source.Replace("-", @"\-?");
-            //Foolin 2012年4月13日 增加路由限制
-            RouteValueDictionary constraints = Constraints as RouteValueDictionary;
-            MatchCollection matchs = Regex.Matches(source, @"{(?<key>[a-zA-Z][a-zA-Z0-9_]*)}", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-            for (int i = 0; i < matchs.Count; i++)
-            {
-                string key = matchs[i].Groups["key"].Value;
-                if (constraints != null && constraints.ContainsKey(key))
-                {
-                    source = source.Replace("{" + key + "}", @"(?<" + key + ">(" + constraints[key] + @"))");
-                }
-                else
-                {
-                    source = source.Replace("{" + key + "}", @"(?<" + key + ">([a-zA-Z0-9_]*))");
-                }
-            }
-            //source = source.Replace("{", @"(?<");
-            //source = source.Replace("}", @">([a-zA-Z0-9_]*))");
+            source = source.Replace("{", @"(?<");
+            source = source.Replace("}", @">([a-zA-Z0-9_]*))");
 
             return new Regex("^" + source + "$");
         }
