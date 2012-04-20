@@ -53,6 +53,30 @@ namespace CengZai.Web.Controllers
             return Session["LOGIN_USER"] as Model.User;
         }
 
+
+        /// <summary>
+        /// 更新Cookies
+        /// </summary>
+        /// <param name="user"></param>
+        protected void UpdateLoginUserCookie(Model.User loginUser, bool isRemember)
+        {
+            /******* 写入Cookies ********/
+            //算法：
+            //1.首先得到明文Val：用户ID|时间戳|“用户ID|时间戳”的MD5校验码
+            //2.把明文经过DESEncrypt加密得到密文SecrectVal
+            //3.把密文SecrectVal写入Cookies
+            string cookieVal = loginUser.UserID + "|" + DateTime.Now.Ticks.ToString();
+            string cryptVal = cookieVal + "|" + System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(cookieVal, "MD5");
+            HttpCookie cookie = new HttpCookie("LOGIN_USER");
+            cookie.Value = DESEncrypt.Encrypt(cryptVal, Config.SecrectKey);    //加密存储
+            if (isRemember)
+            {
+                cookie.Expires = DateTime.Now.AddDays(30);  //30天不过期
+            }
+            cookie.Domain = Util.GetRootDomain(Config.SiteDomain);
+            Response.Cookies.Add(cookie);
+        }
+
         /// <summary>
         /// 更新登录用户状态
         /// </summary>
@@ -259,7 +283,7 @@ namespace CengZai.Web.Controllers
         /// <returns></returns>
         protected ViewResult JumpToHome(string title, string msg)
         {
-            return JumpToAction(title, msg, "Index", "Home", null, 5);
+            return JumpToAction(title, msg, "Index", "Home", null, 3);
         }
 
         /// <summary>
@@ -271,7 +295,7 @@ namespace CengZai.Web.Controllers
         /// <returns></returns>
         protected ViewResult JumpToLogin()
         {
-            return JumpToAction("操作错误", "您尚未登录或者操作超时！", "Login", "Account", null, 5);
+            return JumpToAction("操作错误", "您尚未登录或者操作超时！", "Login", "Account", null, 3);
         }
 
         /// <summary>

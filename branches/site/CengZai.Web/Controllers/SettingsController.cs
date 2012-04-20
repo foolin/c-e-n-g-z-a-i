@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using CengZai.Web.Common;
 using CengZai.Helper;
 using System.Drawing.Imaging;
+using CengZai.Model;
 
 namespace CengZai.Web.Controllers
 {
