@@ -1,0 +1,295 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using QConnectSDK.Context;
+using QConnectSDK;
+using CengZai.Model;
+using CengZai.Helper;
+using CengZai.Web.Common;
+using System.Text.RegularExpressions;
+using System.Web.Security;
+using System.Text;
+
+namespace CengZai.Web.Controllers
+{
+    public class OAuthController : BaseController
+    {
+        // QQ登录页面 
+        [HttpGet]
+        public ActionResult QQLogin()
+        {
+            Model.User loginUser = GetLoginUser();
+            if (loginUser == null)
+            {
+                var context = new QzoneContext();
+                string state = Guid.NewGuid().ToString().Replace("-", "");
+                Session["requeststate"] = state;
+                string scope = "get_user_info,add_share,list_album,upload_pic,check_page_fans,add_t,add_pic_t,del_t,get_repost_list,get_info,get_other_info,get_fanslist,get_idolist,add_idol,del_idol,add_one_blog,add_topic,get_tenpay_addr";
+                var authenticationUrl = context.GetAuthorizationUrl(state, scope);
+                return new RedirectResult(authenticationUrl);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+
+        // 回调页面 
+        public ActionResult QQCallback()
+        {
+            if (Request.Params["code"] != null)
+            {
+                QOpenClient qzone = null;
+                var verifier = Request.Params["code"];
+                var state = Request.Params["state"];
+                string requestState = Session["requeststate"].ToString();
+                if (state == requestState)
+                {
+                    qzone = new QOpenClient(verifier, state);
+                    var currentUser = qzone.GetCurrentUser();
+                    string openId = qzone.OAuthToken.OpenId;
+                    if (currentUser == null || string.IsNullOrEmpty(openId))
+                    {
+                        return JumpToTips("登录失败！", "授权错误！请稍后重试！");
+                    }
+                    BLL.User bllUser = new BLL.User();
+                    Model.User mUser = bllUser.GetModelByOpenId(openId, Model.LoginType.QQ);
+                    if (mUser == null)
+                    {
+                        mUser = new Model.User();
+                        mUser.AreaID = 0;
+                        mUser.Avatar = currentUser.Figureurl;
+                        mUser.Birth = null;
+                        mUser.Email = "";
+                        mUser.Intro = "";
+                        mUser.LoginCount = 0;
+                        mUser.LoginIp = "";
+                        mUser.LoginTime = null;
+                        mUser.Mobile = "";
+                        mUser.Username = "";
+                        mUser.Nickname = currentUser.Nickname;
+                        mUser.Password = "";
+                        mUser.Privacy = 0;
+                        mUser.RegIp = Helper.Util.GetIP();
+                        mUser.RegTime = DateTime.Now;
+                        mUser.Sex = (currentUser.Gender == "男" ? 1 : 2);
+                        mUser.Sign = "此家伙不懒，就是什么也没留下";
+                        mUser.State = 0;
+                        mUser.Vip = 0;
+                        mUser.Credit = 5;   //初次登录赠送5个积分
+                        mUser.Money = 0;
+                        mUser.Config = new UserConfig();
+                        //用户尚未注册
+                        mUser.LoginType = Model.LoginType.QQ;
+                        mUser.AccessToken = qzone.OAuthToken.AccessToken;
+                        mUser.OpenId = qzone.OAuthToken.OpenId;
+                        mUser.AuthTime = DateTime.Now;
+                        mUser.UserID = bllUser.Add(mUser);
+                        return RedirectToAction("Register");
+                    }
+
+                    //写入Cookies和Session登录
+                    UpdateLoginUserCookie(mUser, false);
+                    UpdateLoginUserSession(mUser);
+
+                    if (string.IsNullOrEmpty(mUser.Email) || string.IsNullOrEmpty(mUser.Username))
+                    {
+                        return RedirectToAction("Register");
+                    }
+                    else
+                    {
+                        return JumpToHome("登录成功！", "正在为您跳转到首页...");
+                    }
+                }
+            }
+            return JumpToTips("登录失败！", "未知错误！");
+        }
+
+        //完善用户信息
+        [CheckAuthFilter]
+        public ActionResult Register()
+        {
+            ViewBag.RegisterLimit = Config.RegisterLimit;
+            Model.User loginUser = GetLoginUser();
+            if (loginUser == null)
+            {
+                return JumpToTips("您尚未登录", "对不起，您尚未登录或者连接错误");
+            }
+            if (!string.IsNullOrEmpty(loginUser.Email) && !string.IsNullOrEmpty(loginUser.Username))
+            {
+                return JumpToHome("登录成功！", "正在为您跳转到首页...");
+            }
+            return View();
+        }
+
+        //完善用户信息
+        [CheckAuthFilter]
+        [HttpPost]
+        public ActionResult Register(string email, string username, string nickname, string invite)
+        {
+            try
+            {
+                BLL.User bllUser = new BLL.User();
+                Model.User loginUser = GetLoginUser();
+                if(loginUser == null)
+                {
+                    return JumpToTips("您尚未登录","对不起，您尚未登录或者连接错误");
+                }
+                if (!string.IsNullOrEmpty(loginUser.Email) && !string.IsNullOrEmpty(loginUser.Username))
+                {
+                    return JumpToHome("登录成功！", "正在为您跳转到首页...");
+                }
+
+                ViewBag.RegisterLimit = Config.RegisterLimit;
+                Model.InviteCode mInvite = null;
+
+                if (Config.RegisterLimit == 2)
+                {
+                    ModelState.AddModelError("Error", "系统在升级，暂停开放注册！");
+                    return View();
+                }
+                if (string.IsNullOrEmpty(email) || !Util.IsEmail(email))
+                {
+                    ModelState.AddModelError("Email", "请输入正确的邮箱！");
+                    return View();
+                }
+                if (bllUser.Exists(email))
+                {
+                    ModelState.AddModelError("Email", "对不起，该邮箱已经注册！");
+                    return View();
+                }
+                if (Config.RegisterLimit == 1)
+                {
+                    if (string.IsNullOrEmpty(invite))
+                    {
+                        ModelState.AddModelError("Invite", "请输入邀请码！");
+                        return View();
+                    }
+                    BLL.InviteCode bllInvite = new BLL.InviteCode();
+                    mInvite = bllInvite.GetModelByInvite(invite);
+                    if (mInvite == null)
+                    {
+                        ModelState.AddModelError("Invite", "邀请码无效！");
+                        return View();
+                    }
+                    //else if (mInvite.Email != email)
+                    //{
+                    //    ModelState.AddModelError("Invite", "该邀请码已经被其它用户使用！");
+                    //    return View();
+                    //}
+                }
+                if (string.IsNullOrEmpty(username))
+                {
+                    ModelState.AddModelError("Username", "用户名不能为空！");
+                    return View();
+                }
+                if (username.Length < 5 || username.Length > 20)
+                {
+                    ModelState.AddModelError("Username", "用户名必须5到20个字符之间！");
+                    return View();
+                }
+                if (!Regex.IsMatch(username, @"^[a-z][a-z0-9_]{4,19}$", RegexOptions.IgnoreCase))
+                {
+                    ModelState.AddModelError("Username", "用户名格式不正确！");
+                    return View();
+                }
+                string protectedUserName = "," + Config.ProtectUsername + ",";
+                if (!string.IsNullOrEmpty(protectedUserName) && protectedUserName.IndexOf("," + username + ",") != -1)
+                {
+                    ModelState.AddModelError("Username", "该用户名已经被注册或者保护！");
+                    return View();
+                }
+                if (new BLL.User().GetModelByUserName(username) != null)
+                {
+                    ModelState.AddModelError("Username", "该用户名已经被注册！");
+                    return View();
+                }
+                if (!string.IsNullOrEmpty(nickname) && nickname.Length > 20)
+                {
+                    nickname = nickname.Substring(0, 20);
+                }
+                if (string.IsNullOrEmpty(nickname))
+                {
+                    nickname = username;
+                }
+                loginUser.Email = email;
+                loginUser.Username = username;
+                loginUser.Nickname = nickname;
+                bllUser.Update(loginUser);
+
+                //发送激活邮件
+                SendActivateEmail(loginUser);
+
+                try
+                {
+                    QOpenClient qzone = new QOpenClient(new QConnectSDK.Models.OAuthToken { 
+                        AccessToken=loginUser.AccessToken, 
+                        OpenId=loginUser.OpenId 
+                    });
+                    //qzone.AddWeibo("我刚注册了" + Config.SiteName + "，快来看看吧", Url.BlogUrl(loginUser.Username), Config.SiteSlogan, Config.SiteDescription);
+                    qzone.AddFeeds("我刚注册了" + Config.SiteName + "，快来看看吧"
+                        , Url.BlogUrl(loginUser.Username)
+                        , Config.SiteSlogan
+                        , Config.SiteDescription);
+                }
+                catch { }
+                
+
+                return RedirectToAction("FeedFriendsForFirstLogin", "Friend");
+            }
+            catch (Exception ex)
+            {
+                Log.Error("使用第三方帐号登录，完善信息出现异常", ex);
+                return JumpToTips("完善信息异常", "完善信息异常，请稍后重试！");
+            }
+        }
+
+
+        private bool SendActivateEmail(Model.User mUser)
+        {
+            try
+            {
+                //激活码：邮箱#注册时间 转md5
+                string activeCode = FormsAuthentication.HashPasswordForStoringInConfigFile(mUser.Email + "#" + mUser.RegTime, "MD5");
+                string domainUrl = Request.Url.GetLeftPart(UriPartial.Authority);
+
+                StringBuilder mailContent = new StringBuilder();
+                string strActivateCodeURL = domainUrl + Url.Action("Activate", "Account", new { Email = mUser.Email, ActivateCode = activeCode });    // "/User/Activate?Email=" + email + "&ActivateCode=" + activeCode;
+
+                mailContent.Append("<div style=\"font-size:14px; line-height:25px;\">");
+                mailContent.Append("尊敬的" + mUser.Nickname + "：");
+                mailContent.Append("<br />&nbsp;&nbsp;&nbsp;&nbsp;");
+
+                mailContent.Append("恭喜您在<b>" + Config.SiteName + "</b>注册成功，您使用的是"+ BLL.User.GetLoginTypeName(mUser.LoginType) +"帐号进行登录。");
+                mailContent.Append("<br />&nbsp;&nbsp;&nbsp;&nbsp;");
+
+                mailContent.Append("您注册的账号需要激活才能正常使用，请尽快激活您的账号。<a href=\"" + strActivateCodeURL
+                    + "\"  target=\"_blank\">点击这里</a>进行激活，或者复制下面链接到浏览器进行激活：");
+                mailContent.Append("<br />&nbsp;&nbsp;&nbsp;&nbsp;");
+
+                mailContent.Append("<a href=\"" + strActivateCodeURL + "\"  target=\"_blank\">" + strActivateCodeURL + "</a>");
+                mailContent.Append("<br />");
+                mailContent.Append("<br />");
+
+                mailContent.Append("<a href=\"" + Config.SiteHost + "\"  target=\"_blank\"><span style=\"font-weight:bold; color:#F00; text-decoration:none;\">" + Config.SiteName + "（" + Config.SiteDomain + ")</span></a>");
+                mailContent.Append("<br />");
+                mailContent.Append(DateTime.Now.ToString("yyyy年MM月dd日"));
+                mailContent.Append("<hr />");
+                mailContent.Append("此邮件为自动发送，切勿回复。");
+                mailContent.Append("</div>");
+
+                Mail.Send(mUser.Email, Config.SiteName + "注册成功，请及时激活帐号！", mailContent.ToString());
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
+
+    }
+}

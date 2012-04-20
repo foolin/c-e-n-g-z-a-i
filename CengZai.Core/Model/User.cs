@@ -37,6 +37,10 @@ namespace CengZai.Model
         private int? _vip;
         private int? _money;
         private UserConfig _config;
+        private LoginType _logintype;
+        private string _accesstoken;
+        private string _openid;
+        private DateTime? _authtime;
 		/// <summary>
 		/// 用户ID
 		/// </summary>
@@ -237,79 +241,139 @@ namespace CengZai.Model
             set { _config = value; }
             get { return _config; }
         }
+        /// <summary>
+        /// 登录类型
+        /// </summary>
+        public LoginType LoginType
+        {
+            set { _logintype = value; }
+            get { return _logintype; }
+        }
+        /// <summary>
+        /// 授权凭证
+        /// </summary>
+        public string AccessToken
+        {
+            set { _accesstoken = value; }
+            get { return _accesstoken; }
+        }
+        /// <summary>
+        /// 授权凭证
+        /// </summary>
+        public string OpenId
+        {
+            set { _openid = value; }
+            get { return _openid; }
+        }
+        /// <summary>
+        /// 授权时间
+        /// </summary>
+        public DateTime? AuthTime
+        {
+            set { _authtime = value; }
+            get { return _authtime; }
+        }
 		#endregion Model
 
 	}
 
-}
-
-
-/// <summary>
-/// 恋爱状态
-/// </summary>
-public enum LoveState
-{
-    Waiting = 0, //爱我吧
-    Loving = 1, //我在恋爱
-    Lost = 2,   //失恋
-    Marry = 3, //已婚
-    Hide = 4, //请勿打扰
-}
-
-public class UserConfig
-{
-    public UserConfig()
-    {
-        this.BlogSkin = "";
-    }
 
     /// <summary>
-    /// 博客皮肤
+    /// 恋爱状态
     /// </summary>
-    public string BlogSkin
+    public enum LoveState
     {
-        set;
-        get;
+        Waiting = 0, //爱我吧
+        Loving = 1, //我在恋爱
+        Lost = 2,   //失恋
+        Marry = 3, //已婚
+        Hide = 4, //请勿打扰
     }
 
-
-    #region __静态转换方法___
-    public static UserConfig ToModel(string config)
+    public class UserConfig
     {
-        UserConfig modelConfig = null;
-        try
+        public UserConfig()
         {
-            modelConfig = JsonConvert.JavascriptDeserialize<UserConfig>(config);
+            this.BlogSkin = "";
         }
-        catch (Exception ex)
+        /// <summary>
+        /// 博客皮肤
+        /// </summary>
+        public string BlogSkin
         {
-            Log.Error("UserConfig转换JavascriptDeserialize异常：" + config, ex);
+            set;
+            get;
         }
-        return modelConfig;
+        #region __静态转换方法___
+        public static UserConfig ToModel(string config)
+        {
+            UserConfig modelConfig = null;
+            try
+            {
+                modelConfig = JsonConvert.JavascriptDeserialize<UserConfig>(config);
+            }
+            catch (Exception ex)
+            {
+                Log.Error("UserConfig转换JavascriptDeserialize异常：" + config, ex);
+            }
+            return modelConfig;
+        }
+
+        /// <summary>
+        /// 转换为字符串
+        /// </summary>
+        /// <returns></returns>
+        public static string ToString(UserConfig config)
+        {
+            if (config == null)
+            {
+                return "";
+            }
+            string ret = "";
+            try
+            {
+                ret = JsonConvert.JavascriptSerialize(config);
+            }
+            catch (Exception ex)
+            {
+                Log.Error("UserConfig转换Json异常", ex);
+            }
+            return ret;
+        }
+
+        #endregion
     }
 
+    
     /// <summary>
-    /// 转换为字符串
+    /// 登录类型
     /// </summary>
-    /// <returns></returns>
-    public static string ToString(UserConfig config)
+    public enum LoginType
     {
-        if (config == null)
-        {
-            return "";
-        }
-        string ret = "";
-        try
-        {
-            ret = JsonConvert.JavascriptSerialize(config);
-        }
-        catch (Exception ex)
-        {
-            Log.Error("UserConfig转换Json异常", ex);
-        }
-        return ret;
+        /// <summary>
+        /// 默认系统登录
+        /// </summary>
+        System = 0,
+        /// <summary>
+        /// QQ登录
+        /// </summary>
+        QQ = 1,
+        /// <summary>
+        /// 新浪微博
+        /// </summary>
+        Sina = 2,
+        /// <summary>
+        /// 人人网
+        /// </summary>
+        Renren = 3,
+        /// <summary>
+        /// 豆瓣网
+        /// </summary>
+        Douban = 4
     }
-    #endregion
+
+
 
 }
+
 

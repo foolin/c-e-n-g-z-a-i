@@ -3,6 +3,7 @@ using System.Data;
 using System.Text;
 using System.Data.SqlClient;
 using CengZai.Helper;
+using CengZai.Model;
 namespace CengZai.DAL
 {
 	/// <summary>
@@ -62,9 +63,9 @@ namespace CengZai.DAL
 		{
 			StringBuilder strSql=new StringBuilder();
 			strSql.Append("insert into T_User(");
-            strSql.Append("Email,Password,Username,Nickname,Love,Sign,Intro,Birth,Sex,AreaID,Mobile,LoginIp,LoginTime,LoginCount,RegIp,RegTime,State,Privacy,Credit,Vip,Money,Config,Avatar)");
+            strSql.Append("Email,Password,Username,Nickname,Love,Sign,Intro,Birth,Sex,AreaID,Mobile,LoginIp,LoginTime,LoginCount,RegIp,RegTime,State,Privacy,Credit,Vip,Money,Config,Avatar,LoginType,AccessToken,OpenId,AuthTime)");
             strSql.Append(" values (");
-            strSql.Append("@Email,@Password,@Username,@Nickname,@Love,@Sign,@Intro,@Birth,@Sex,@AreaID,@Mobile,@LoginIp,@LoginTime,@LoginCount,@RegIp,@RegTime,@State,@Privacy,@Credit,@Vip,@Money,@Config,@Avatar)");
+            strSql.Append("@Email,@Password,@Username,@Nickname,@Love,@Sign,@Intro,@Birth,@Sex,@AreaID,@Mobile,@LoginIp,@LoginTime,@LoginCount,@RegIp,@RegTime,@State,@Privacy,@Credit,@Vip,@Money,@Config,@Avatar,@LoginType,@AccessToken,@OpenId,@AuthTime)");
             strSql.Append(";select @@IDENTITY");
             SqlParameter[] parameters = {
 					new SqlParameter("@Email", SqlDbType.NVarChar,50),
@@ -89,7 +90,12 @@ namespace CengZai.DAL
 					new SqlParameter("@Vip", SqlDbType.Int,4),
 					new SqlParameter("@Money", SqlDbType.Int,4),
 					new SqlParameter("@Config", SqlDbType.NVarChar,2000),
-                    new SqlParameter("@Avatar", SqlDbType.NVarChar,50)};
+                    new SqlParameter("@Avatar", SqlDbType.NVarChar,50),
+                    new SqlParameter("@LoginType", SqlDbType.Int,4),
+                    new SqlParameter("@AccessToken", SqlDbType.NVarChar,50),
+                    new SqlParameter("@OpenId", SqlDbType.NVarChar,50),
+                    new SqlParameter("@AuthTime", SqlDbType.DateTime)
+                                        };
             parameters[0].Value = model.Email;
             parameters[1].Value = model.Password;
             parameters[2].Value = model.Username;
@@ -113,6 +119,10 @@ namespace CengZai.DAL
             parameters[20].Value = model.Money;
             parameters[21].Value = UserConfig.ToString(model.Config);
             parameters[22].Value = model.Avatar;
+            parameters[23].Value = (int)model.LoginType;
+            parameters[24].Value = model.AccessToken;
+            parameters[25].Value = model.OpenId;
+            parameters[26].Value = model.AuthTime;
 
 			object obj = DbHelperSQL.GetSingle(strSql.ToString(),parameters);
 			if (obj == null)
@@ -153,7 +163,11 @@ namespace CengZai.DAL
             strSql.Append("Vip=@Vip,");
             strSql.Append("Money=@Money,");
             strSql.Append("Config=@Config,");
-            strSql.Append("Avatar=@Avatar");
+            strSql.Append("Avatar=@Avatar,");
+            strSql.Append("LoginType=@LoginType,");
+            strSql.Append("AccessToken=@AccessToken,");
+            strSql.Append("OpenId=@OpenId,");
+            strSql.Append("AuthTime=@AuthTime");
             strSql.Append(" where UserID=@UserID");
             SqlParameter[] parameters = {
 					new SqlParameter("@Email", SqlDbType.NVarChar,50),
@@ -179,7 +193,12 @@ namespace CengZai.DAL
 					new SqlParameter("@Money", SqlDbType.Int,4),
 					new SqlParameter("@Config", SqlDbType.NVarChar,2000),
 					new SqlParameter("@UserID", SqlDbType.Int,4),
-                    new SqlParameter("@Avatar", SqlDbType.NVarChar,50)};
+                    new SqlParameter("@Avatar", SqlDbType.NVarChar,50),
+                    new SqlParameter("@LoginType", SqlDbType.Int),
+                    new SqlParameter("@AccessToken", SqlDbType.NVarChar,50),
+                    new SqlParameter("@OpenId", SqlDbType.NVarChar,50),
+                    new SqlParameter("@AuthTime", SqlDbType.DateTime)
+                                        };
             parameters[0].Value = model.Email;
             parameters[1].Value = model.Password;
             parameters[2].Value = model.Username;
@@ -204,6 +223,10 @@ namespace CengZai.DAL
             parameters[21].Value = UserConfig.ToString(model.Config);
             parameters[22].Value = model.UserID;
             parameters[23].Value = model.Avatar;
+            parameters[24].Value = (int)model.LoginType;
+            parameters[25].Value = model.AccessToken;
+            parameters[26].Value = model.OpenId;
+            parameters[27].Value = model.AuthTime;
 
 			int rows=DbHelperSQL.ExecuteSql(strSql.ToString(),parameters);
 			if (rows > 0)
@@ -312,6 +335,38 @@ namespace CengZai.DAL
 				new SqlParameter("@Username", SqlDbType.NVarChar,50)
 			};
             parameters[0].Value = username;
+
+            CengZai.Model.User model = new CengZai.Model.User();
+            DataSet ds = DbHelperSQL.Query(strSql.ToString(), parameters);
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                return RowToModel(ds.Tables[0].Rows[0]);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+
+        /// <summary>
+        /// 得到一个对象实体
+        /// </summary>
+        public CengZai.Model.User GetModelByOpenId(string openId, LoginType loginType)
+        {
+
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("select  top 1 * from T_User ");
+
+            strSql.Append(" where LoginType=@LoginType and OpenId=@OpenId");
+            SqlParameter[] parameters = new SqlParameter[] {
+				new SqlParameter("@OpenId", SqlDbType.NVarChar,50),
+                new SqlParameter("@LoginType", SqlDbType.Int,50)
+                
+			};
+            parameters[0].Value = openId;
+            parameters[1].Value = loginType;
+           
 
             CengZai.Model.User model = new CengZai.Model.User();
             DataSet ds = DbHelperSQL.Query(strSql.ToString(), parameters);
@@ -539,6 +594,22 @@ namespace CengZai.DAL
             if (row["Avatar"] != null && row["Avatar"].ToString() != "")
             {
                 model.Avatar = row["Avatar"].ToString();
+            }
+            if (row["LoginType"] != null && row["LoginType"].ToString() != "")
+            {
+                model.LoginType = (LoginType)System.Enum.Parse(typeof(LoginType), row["LoginType"].ToString(), true);
+            }
+            if (row["AccessToken"] != null && row["AccessToken"].ToString() != "")
+            {
+                model.AccessToken = row["AccessToken"].ToString();
+            }
+            if (row["OpenId"] != null && row["OpenId"].ToString() != "")
+            {
+                model.OpenId = row["OpenId"].ToString();
+            }
+            if (row["AuthTime"] != null && row["AuthTime"].ToString() != "")
+            {
+                model.AuthTime = DateTime.Parse(row["AuthTime"].ToString());
             }
             return model;
         }

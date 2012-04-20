@@ -540,3 +540,14 @@ a.blog-mini-avatar{
     line-height:1.8em;
     font-size:14px;
 }
+
+/******** oauthlink *******/
+.oauth-link
+{
+	line-height:16px;
+	height:16px;
+}
+.oauth-link img,.oauth-link a
+{
+	vertical-align:middle;
+}

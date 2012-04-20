@@ -28,8 +28,12 @@
                 <input type="submit" class="btn btn-primary" value="登录" />
                 @Html.ActionLink("尚未注册？", "Register", null, new { @class = "btn btn-danger" })
             </p>
+            
             <p></p>
             <p>@Html.ValidationSummary()</p>
+            <p>
+                @Html.Partial("~/Views/OAuth/_OauthLoginLink.cshtml")
+            </p>
             
         }
     </div>

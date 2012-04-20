@@ -10,6 +10,7 @@ using System.Web.Security;
 using CengZai.Helper;
 using System.Data;
 using System.Net;
+using CengZai.Model;
 
 namespace CengZai.Web.Controllers
 {
@@ -144,25 +145,9 @@ namespace CengZai.Web.Controllers
                 }
                 bll.Update(user);
 
-                
-                /******* 写入Cookies ********/
-                //算法：
-                //1.首先得到明文Val：用户ID|时间戳|“用户ID|时间戳”的MD5校验码
-                //2.把明文经过DESEncrypt加密得到密文SecrectVal
-                //3.把密文SecrectVal写入Cookies
-                string cookieVal = user.UserID + "|" + DateTime.Now.Ticks.ToString();
-                string cryptVal = cookieVal + "|" + System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(cookieVal, "MD5");
-                HttpCookie cookie = new HttpCookie("LOGIN_USER");
-                cookie.Value = DESEncrypt.Encrypt(cryptVal, Config.SecrectKey);    //加密存储
-                if (remember == 1)
-                {
-                    cookie.Expires = DateTime.Now.AddDays(30);  //30天不过期
-                }
-                cookie.Domain = Util.GetRootDomain(Config.SiteDomain);
-                Response.Cookies.Add(cookie);
-
-                //写入Session登录
-                Session["LOGIN_USER"] = user;
+                //写入Cookies和Session登录
+                UpdateLoginUserCookie(user, remember == 1);
+                UpdateLoginUserSession(user);
 
                 if (user.LoginCount <= 1)
                 {
@@ -404,6 +389,11 @@ namespace CengZai.Web.Controllers
                 mUser.Credit = 5;   //初次登录赠送5个积分
                 mUser.Money = 0;
                 mUser.Config = new UserConfig();
+                //用户尚未注册
+                mUser.LoginType = Model.LoginType.System;
+                mUser.AccessToken = "";
+                mUser.OpenId = "";
+                mUser.AuthTime = null;
                 mUser.UserID = bllUser.Add(mUser);
 
                 try

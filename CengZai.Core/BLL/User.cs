@@ -120,6 +120,14 @@ namespace CengZai.BLL
             return dal.GetModelByUsername(username);
         }
 
+        /// <summary>
+        /// 得到一个对象实体
+        /// </summary>
+        public CengZai.Model.User GetModelByOpenId(string openId, LoginType loginType)
+        {
+            return dal.GetModelByOpenId(openId, loginType);
+        }
+
 		/// <summary>
 		/// 获得数据列表
 		/// </summary>
@@ -370,6 +378,40 @@ namespace CengZai.BLL
             else
             {
                 return "保密";
+            }
+        }
+
+
+        /// <summary>
+        /// 取性别
+        /// </summary>
+        /// <param name="sex"></param>
+        /// <returns></returns>
+        public static string GetLoginTypeName(LoginType loginType)
+        {
+            if (loginType ==  LoginType.QQ)
+            {
+                return "腾讯QQ";
+            }
+            else if (loginType == LoginType.Sina)
+            {
+                return "新浪微博";
+            }
+            else if (loginType == LoginType.Renren)
+            {
+                return "人人网";
+            }
+            else if (loginType == LoginType.Douban)
+            {
+                return "豆瓣网";
+            }
+            else if (loginType == LoginType.System)
+            {
+                return Config.SiteName;
+            }
+            else
+            {
+                return "未知";
             }
         }
 	}
