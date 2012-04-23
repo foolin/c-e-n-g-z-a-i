@@ -105,47 +105,8 @@ namespace CengZai.Web.Controllers
                         break;
                     
                 }
-
-                //更新用户到数据库
-                bool isCreditPlus = false;
-                if (user.LoginTime != null)
-                {
-                    DateTime lastLoginDate = Convert.ToDateTime(user.LoginTime);
-                    DateTime nowDate = DateTime.Now;
-                    //两个小时登录一次，积分+1
-                    if (lastLoginDate.AddHours(2) < nowDate)
-                    {
-                        isCreditPlus = true;
-                    }
-                }
-                else
-                {
-                    isCreditPlus = true;
-                }
-                if(isCreditPlus)
-                {
-                    if (user.Credit == null)
-                    {
-                        user.Credit = 1;
-                    }
-                    else
-                    {
-                        user.Credit = user.Credit + 1;
-                    }
-                }
-                user.LoginIp = Helper.Util.GetIP();
-                user.LoginTime = DateTime.Now;
-                if (user.LoginCount != null)
-                {
-                    user.LoginCount += 1;
-                }
-                else
-                {
-                    user.LoginCount = 1;
-                }
-                bll.Update(user);
-
-                //写入Cookies和Session登录
+                //更新登录用户信息，写入Cookies和Session登录
+                UpdateLoginUserInfo(user);
                 UpdateLoginUserCookie(user, remember == 1);
                 UpdateLoginUserSession(user);
 

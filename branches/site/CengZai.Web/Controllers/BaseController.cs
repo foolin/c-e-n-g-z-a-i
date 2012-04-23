@@ -54,6 +54,56 @@ namespace CengZai.Web.Controllers
         }
 
 
+        protected bool UpdateLoginUserInfo(Model.User mUser)
+        {
+            try
+            {
+                //更新用户到数据库
+                bool isCreditPlus = false;
+                if (mUser.LoginTime != null)
+                {
+                    DateTime lastLoginDate = Convert.ToDateTime(mUser.LoginTime);
+                    DateTime nowDate = DateTime.Now;
+                    //两个小时登录一次，积分+1
+                    if (lastLoginDate.AddHours(2) < nowDate)
+                    {
+                        isCreditPlus = true;
+                    }
+                }
+                else
+                {
+                    isCreditPlus = true;
+                }
+                if (isCreditPlus)
+                {
+                    if (mUser.Credit == null)
+                    {
+                        mUser.Credit = 1;
+                    }
+                    else
+                    {
+                        mUser.Credit = mUser.Credit + 1;
+                    }
+                }
+                mUser.LoginIp = Helper.Util.GetIP();
+                mUser.LoginTime = DateTime.Now;
+                if (mUser.LoginCount != null)
+                {
+                    mUser.LoginCount += 1;
+                }
+                else
+                {
+                    mUser.LoginCount = 1;
+                }
+                return new BLL.User().Update(mUser);
+            }
+            catch(Exception ex) 
+            {
+                Log.Error("更新用户积分入库异常", ex);
+                return false;
+            }
+        }
+
         /// <summary>
         /// 更新Cookies
         /// </summary>
