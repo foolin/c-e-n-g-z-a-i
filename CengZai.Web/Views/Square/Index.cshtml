@@ -49,7 +49,7 @@
                 var boy = Html.GetUser(topLoverList[i].BoyUserID);
                 var girl = Html.GetUser(topLoverList[i].GirlUserID);
                 var applyUser = boy;
-                if (girl.UserID == topLoverList[i].ApplyUserID)
+                if (girl != null && girl.UserID == topLoverList[i].ApplyUserID)
                 {
                     applyUser = girl;
                 }
