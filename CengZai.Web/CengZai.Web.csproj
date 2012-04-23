@@ -36,18 +36,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=4.0.5.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Dlls\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="QConnectSDK, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Dlls\QConnectSDK.dll</HintPath>
-    </Reference>
-    <Reference Include="RestSharp, Version=102.5.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Dlls\RestSharp.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
@@ -286,6 +274,14 @@
     <ProjectReference Include="..\CengZai.Core\CengZai.csproj">
       <Project>{939C462C-17FF-4CDD-8F01-D1FB46218A42}</Project>
       <Name>CengZai</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QConnectSDK\QConnectSDK.csproj">
+      <Project>{DDF84840-7A36-425D-A0A0-ED63DABB78EF}</Project>
+      <Name>QConnectSDK</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sina2SDK\Open.Sina2SDK.csproj">
+      <Project>{C5399C53-98E7-45EB-BA32-782714AA6B4C}</Project>
+      <Name>Open.Sina2SDK</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

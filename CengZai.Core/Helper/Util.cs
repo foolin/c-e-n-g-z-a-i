@@ -180,6 +180,10 @@ namespace CengZai.Helper
             {
                 url = Config.ResourceHost +  "/img/noavatar.jpg";
             }
+            else if (imagePath.IndexOf(":") != -1)
+            {
+                return imagePath;
+            }
             else
             {
                 url = Config.UploadHttpPath + "/" + imagePath;
