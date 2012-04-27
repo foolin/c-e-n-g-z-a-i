@@ -275,6 +275,10 @@
       <Project>{939C462C-17FF-4CDD-8F01-D1FB46218A42}</Project>
       <Name>CengZai</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CengZai.OAuthSDK\CengZai.OAuthSDK.csproj">
+      <Project>{9CD3B146-A006-479F-8762-9C12275EA0F4}</Project>
+      <Name>CengZai.OAuthSDK</Name>
+    </ProjectReference>
     <ProjectReference Include="..\QConnectSDK\QConnectSDK.csproj">
       <Project>{DDF84840-7A36-425D-A0A0-ED63DABB78EF}</Project>
       <Name>QConnectSDK</Name>

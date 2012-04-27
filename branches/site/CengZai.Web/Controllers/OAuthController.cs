@@ -12,6 +12,8 @@ using System.Text.RegularExpressions;
 using System.Web.Security;
 using System.Text;
 using Open.Sina2SDK;
+using CengZai.OAuthSDK.QQ;
+using CengZai.OAuthSDK.Sina;
 
 namespace CengZai.Web.Controllers
 {
@@ -461,6 +463,75 @@ namespace CengZai.Web.Controllers
                 return false;
             }
 
+        }
+
+
+        public ActionResult TestLogin()
+        {
+            /********** qq测试 *********/
+            //var api = new QQApi();
+            //string state = Guid.NewGuid().ToString().Replace("-", "");
+            //Session["requeststate"] = state;
+            //string scope = "get_user_info,add_share,list_album,upload_pic,check_page_fans,add_t,add_pic_t,del_t,get_repost_list,get_info,get_other_info,get_fanslist,get_idolist,add_idol,del_idol,add_one_blog,add_topic,get_tenpay_addr";
+            //string url = api.GetAuthorizationUrl(state, scope);
+            //return Redirect(url);
+            
+            /********* 新浪微博测试 *********/
+            var api = new SinaApi();
+            string state = Guid.NewGuid().ToString().Replace("-", "");
+            Session["requeststate"] = state;
+            string url = api.GetAuthorizationUrl(state);
+            return Redirect(url);
+        }
+
+
+        public ActionResult TestCallBack()
+        {
+            //if (Request.Params["code"] != null)
+            //{
+            //    var verifier = Request.Params["code"];
+            //    var state = Request.Params["state"];
+            //    string requestState = Session["requeststate"].ToString();
+            //    if (state == requestState)
+            //    {
+            //        QQApi api = new QQApi();
+            //        api.GetAccessToken(Request.Params["code"]);
+            //        QQUser qqUser = api.GetUserInfo();
+            //        //api.AddShare("测试分享" + DateTime.Now.ToString()
+            //        //    , "http://foolin.cengzai.com"
+            //        //    , "我的来源说明"
+            //        //    , "这是评论哈哈哈哈"
+            //        //    , "这里是内容摘要"
+            //        //    , "http://www.cengzai.com/resource/img/logo_topbar.png"
+            //        //    , "1"
+            //        //    , "4"
+            //        //    , ""
+            //        //    , ""
+            //        //    );
+
+            //        byte[] fileBytes = System.IO.File.ReadAllBytes("E:\\test.jpg");
+            //        api.AddWeibo("测试微博，直接二进制发送微博" + DateTime.Now.ToString(), fileBytes, "202.12.1.12", "23", "53", "0");
+            //    }
+            //}
+
+
+            if (Request.Params["code"] != null)
+            {
+                var verifier = Request.Params["code"];
+                var state = Request.Params["state"];
+                string requestState = Session["requeststate"].ToString();
+                if (state == requestState)
+                {
+                    SinaApi api = new SinaApi();
+                    api.GetAccessToken(Request.Params["code"]);
+                    //SinaUser qqUser = api.GetUserInfo();
+                    byte[] fileBytes = System.IO.File.ReadAllBytes("E:\\test.jpg");
+                    api.AddWeibo("测试微博，直接二进制发送微博" + Guid.NewGuid().ToString());
+                    api.AddWeibo("测试微博，直接二进制发送微博" + Guid.NewGuid().ToString(), fileBytes, 23, 53, "");
+                    api.AddWeibo("测试微博，直接二进制发送微博" + Guid.NewGuid().ToString(), "E:\\test2.jpg", 23, 53, "");
+                }
+            }
+            return JumpToTips("",  "测试结束");
         }
 
     }
