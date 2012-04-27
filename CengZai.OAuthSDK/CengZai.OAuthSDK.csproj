@@ -56,6 +56,10 @@
     <Compile Include="QQ\Model\QQUser.cs" />
     <Compile Include="QQ\QQApi.cs" />
     <Compile Include="QQ\QQConfig.cs" />
+    <Compile Include="Sina\Model\SinaGeos.cs" />
+    <Compile Include="Sina\Model\SinaWeibo.cs" />
+    <Compile Include="Sina\Model\_AccessTokenModel.cs" />
+    <Compile Include="Sina\Model\SinaUser.cs" />
     <Compile Include="Sina\SinaApi.cs" />
     <Compile Include="Sina\SinaConfig.cs" />
   </ItemGroup>

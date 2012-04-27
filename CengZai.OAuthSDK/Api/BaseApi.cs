@@ -34,7 +34,7 @@ namespace CengZai.OAuthSDK.Api
             {
                 AccessToken = accessToken,
                 Uid = uid,
-                ExpiresAt = expiresAt
+                ExpiresIn = expiresAt
             };
         }
 

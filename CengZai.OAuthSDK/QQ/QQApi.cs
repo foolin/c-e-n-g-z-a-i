@@ -80,7 +80,7 @@ namespace CengZai.OAuthSDK.QQ
                     this.Token = new OAuthToken
                     {
                         AccessToken = accessToken,
-                        ExpiresAt = expiresIn,
+                        ExpiresIn = expiresIn,
                         Uid = openId
                     };
                     
