@@ -14,27 +14,27 @@ namespace CengZai.OAuthSDK.Sina
 
         public bool IsOpen()
         {
-            throw new NotImplementedException();
+            return true;
         }
 
         public string GetBaseUrl()
         {
-            throw new NotImplementedException();
+            return "https://api.weibo.com";
         }
 
         public string GetAppKey()
         {
-            throw new NotImplementedException();
+            return "3345715608";
         }
 
         public string GetAppSecret()
         {
-            throw new NotImplementedException();
+            return "9fc050dd16eb5478dc53b63ffb4a4b31";
         }
 
         public Uri GetCallbackUrl()
         {
-            throw new NotImplementedException();
+            return new Uri("http://www.cengzai.com/oauth/testcallback");
         }
     }
 }

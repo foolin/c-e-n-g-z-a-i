@@ -24,7 +24,7 @@ namespace CengZai.OAuthSDK.Api
         /// <summary>
         /// 过期时间
         /// </summary>
-        public int ExpiresAt { get; set; }
+        public int ExpiresIn { get; set; }
 
     }
 }
