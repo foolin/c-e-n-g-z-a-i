@@ -3,34 +3,58 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using CengZai.OAuthSDK.Api;
+using System.Collections.Specialized;
+using System.Configuration;
 
 namespace CengZai.OAuthSDK.QQ
 {
     public class QQConfig : IConfig
     {
-        public bool IsOpen()
+        private NameValueCollection Config = (NameValueCollection)ConfigurationManager.GetSection("OAuthSDK/QQ");
+
+        /// <summary>
+        /// 判断是否打开
+        /// </summary>
+        /// <returns></returns>
+        public bool Open()
         {
-            return true;
+            return Config["Open"] == "1";
         }
 
+        /// <summary>
+        /// 取接口的基础Url
+        /// </summary>
+        /// <returns></returns>
         public string GetBaseUrl()
         {
-            return "https://graph.qq.com";
+            return Config["BaseUrl"];
         }
 
+        /// <summary>
+        /// 应用Key
+        /// </summary>
+        /// <returns></returns>
         public string GetAppKey()
         {
-            return "100263911";
+            return Config["AppKey"];
         }
 
+        /// <summary>
+        /// 应用AppSecret
+        /// </summary>
+        /// <returns></returns>
         public string GetAppSecret()
         {
-            return "44f9b1cf8da0527be2b27479ba9485f3";
+            return Config["AppSecret"];
         }
 
+        /// <summary>
+        /// 授权后回调Url
+        /// </summary>
+        /// <returns></returns>
         public Uri GetCallbackUrl()
         {
-            return new Uri("http://www.cengzai.com/oauth/testcallback");
+            return new Uri(Config["CallbackUrl"]);
         }
     }
 }

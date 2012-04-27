@@ -11,7 +11,7 @@ namespace CengZai.OAuthSDK.Api
         /// 是否打开
         /// </summary>
         /// <returns></returns>
-        bool IsOpen();
+        bool Open();
 
 
         /// <summary>

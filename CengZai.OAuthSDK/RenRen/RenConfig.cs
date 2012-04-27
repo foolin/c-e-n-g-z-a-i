@@ -6,11 +6,11 @@ using CengZai.OAuthSDK.Api;
 using System.Collections.Specialized;
 using System.Configuration;
 
-namespace CengZai.OAuthSDK.Sina
+namespace CengZai.OAuthSDK.RenRen
 {
-    class SinaConfig : IConfig
+    public class RenConfig : IConfig
     {
-        private NameValueCollection Config = (NameValueCollection)ConfigurationManager.GetSection("OAuthSDK/Sina");
+        private NameValueCollection Config = (NameValueCollection)ConfigurationManager.GetSection("OAuthSDK/RenRen");
 
 
         /// <summary>
