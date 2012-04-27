@@ -5,6 +5,7 @@ using System.Text;
 using CengZai.OAuthSDK.Api;
 using System.Collections.Specialized;
 using System.Text.RegularExpressions;
+using System.IO;
 
 namespace CengZai.OAuthSDK.QQ
 {
@@ -177,8 +178,117 @@ namespace CengZai.OAuthSDK.QQ
         #endregion
 
         #region __微博__
-        #endregion
 
+        /// <summary>
+        /// 发表一条微博信息（纯文本）到腾讯微博平台上。
+        /// 注意连续两次发布的微博内容不可以重复。
+        /// </summary>
+        /// <param name="content">必须,表示要发表的微博内容。必须为UTF-8编码，最长为140个汉字，也就是420字节。
+        /// 如果微博内容中有URL，后台会自动将该URL转换为短URL，每个URL折算成11个字节。</param>
+        /// <param name="clientip">用户ip。必须正确填写用户侧真实ip，不能为内网ip及以127或255开头的ip，以分析用户所在地。</param>
+        /// <param name="jing">用户所在地理位置的经度。为实数，最多支持10位有效数字。有效范围：-180.0到+180.0，+表示东经，默认为0.0。</param>
+        /// <param name="wei">用户所在地理位置的纬度。为实数，最多支持10位有效数字。有效范围：-90.0到+90.0，+表示北纬，默认为0.0。</param>
+        /// <param name="syncflag">标识是否将发布的微博同步到QQ空间（0：同步； 1：不同步；），默认为0。</param>
+        /// <returns></returns>
+        public bool AddWeibo(string content, string clientip = "", string jing = "", string wei = "", string syncflag = "")
+        {
+            try
+            {
+                string urlAddWeibo = string.Format("{0}/t/add_t", this.config.GetBaseUrl());
+                Dictionary<object, object> parameters = this._createCommonPostParams();
+                parameters.Add("content", content);
+                parameters.Add("clientip", clientip);
+                parameters.Add("jing", jing);
+                parameters.Add("wei", wei);
+                parameters.Add("syncflag", syncflag);
+                string jsonResponse = HttpUtil.HttpPost(urlAddWeibo, parameters);
+                QQReturn ret = JsonConvert.JavascriptDeserialize<QQReturn>(jsonResponse);
+                if (ret == null || ret.ret > 0)
+                {
+                    return false;
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 发表一条微博信息（纯文本）到腾讯微博平台上。
+        /// 注意连续两次发布的微博内容不可以重复。
+        /// </summary>
+        /// <param name="content">必须,表示要发表的微博内容。必须为UTF-8编码，最长为140个汉字，也就是420字节。
+        /// 如果微博内容中有URL，后台会自动将该URL转换为短URL，每个URL折算成11个字节。</param>
+        /// <param name="clientip">用户ip。必须正确填写用户侧真实ip，不能为内网ip及以127或255开头的ip，以分析用户所在地。</param>
+        /// <param name="jing">用户所在地理位置的经度。为实数，最多支持10位有效数字。有效范围：-180.0到+180.0，+表示东经，默认为0.0。</param>
+        /// <param name="wei">用户所在地理位置的纬度。为实数，最多支持10位有效数字。有效范围：-90.0到+90.0，+表示北纬，默认为0.0。</param>
+        /// <param name="syncflag">标识是否将发布的微博同步到QQ空间（0：同步； 1：不同步；），默认为0。</param>
+        /// <returns></returns>
+        public bool AddWeibo(string content, byte[] pic, string clientip = "", string jing = "", string wei = "", string syncflag = "")
+        {
+            try
+            {
+                string urlAddWeibo = string.Format("{0}/t/add_pic_t ", this.config.GetBaseUrl());
+                Dictionary<object, object> parameters = this._createCommonPostParams();
+                parameters.Add("content", content);
+                parameters.Add("clientip", clientip);
+                parameters.Add("jing", jing);
+                parameters.Add("wei", wei);
+                parameters.Add("syncflag", syncflag);
+
+                string jsonResponse = HttpUtil.HttpPost(urlAddWeibo, parameters, "pic", pic);
+                QQReturn ret = JsonConvert.JavascriptDeserialize<QQReturn>(jsonResponse);
+                if (ret == null || ret.ret > 0)
+                {
+                    return false;
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+
+        /// <summary>
+        /// 发表一条微博信息（纯文本）到腾讯微博平台上。
+        /// 注意连续两次发布的微博内容不可以重复。
+        /// </summary>
+        /// <param name="content">必须,表示要发表的微博内容。必须为UTF-8编码，最长为140个汉字，也就是420字节。
+        /// 如果微博内容中有URL，后台会自动将该URL转换为短URL，每个URL折算成11个字节。</param>
+        /// <param name="clientip">用户ip。必须正确填写用户侧真实ip，不能为内网ip及以127或255开头的ip，以分析用户所在地。</param>
+        /// <param name="jing">用户所在地理位置的经度。为实数，最多支持10位有效数字。有效范围：-180.0到+180.0，+表示东经，默认为0.0。</param>
+        /// <param name="wei">用户所在地理位置的纬度。为实数，最多支持10位有效数字。有效范围：-90.0到+90.0，+表示北纬，默认为0.0。</param>
+        /// <param name="syncflag">标识是否将发布的微博同步到QQ空间（0：同步； 1：不同步；），默认为0。</param>
+        /// <returns></returns>
+        public bool AddWeibo(string content, string picPath, string clientip = "", string jing = "", string wei = "", string syncflag = "")
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(picPath))
+                {
+                    return AddWeibo(content, clientip, jing, wei, syncflag);
+                }
+
+                if (picPath.IndexOf(":") == -1)
+                {
+                    picPath = System.Web.HttpContext.Current.Server.MapPath(picPath);
+                }
+
+                byte[] fileBytes = File.ReadAllBytes(picPath);
+                return AddWeibo(content, fileBytes, clientip, jing, wei, syncflag);
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+
+        #endregion
 
 
         #region __私有辅助方法__

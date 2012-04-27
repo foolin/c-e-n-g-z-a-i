@@ -16,5 +16,10 @@ namespace CengZai.OAuthSDK.QQ
         /// msg: 如果ret＜0，会有相应的错误信息提示，返回数据全部用UTF-8编码
         /// </summary>
         public string msg { set; get; }
+
+        /// <summary>
+        /// 腾讯微博专用二级错误码
+        /// </summary>
+        public int errcode { set; get; } 
     }
 }
