@@ -52,9 +52,9 @@ namespace CengZai.OAuthSDK.QQ
         /// 授权后回调Url
         /// </summary>
         /// <returns></returns>
-        public Uri GetCallbackUrl()
+        public string GetCallbackUrl()
         {
-            return new Uri(Config["CallbackUrl"]);
+            return Config["CallbackUrl"];
         }
     }
 }

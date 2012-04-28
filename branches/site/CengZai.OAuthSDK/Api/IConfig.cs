@@ -36,6 +36,6 @@ namespace CengZai.OAuthSDK.Api
         /// 回调Url
         /// </summary>
         /// <returns></returns>
-        Uri GetCallbackUrl();
+        string GetCallbackUrl();
     }
 }
