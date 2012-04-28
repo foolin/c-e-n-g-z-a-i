@@ -529,6 +529,7 @@ namespace CengZai.Web.Controllers
                     api.AddWeibo("测试微博，直接二进制发送微博" + Guid.NewGuid().ToString());
                     api.AddWeibo("测试微博，直接二进制发送微博" + Guid.NewGuid().ToString(), fileBytes, 23, 53, "");
                     api.AddWeibo("测试微博，直接二进制发送微博" + Guid.NewGuid().ToString(), "E:\\test2.jpg", 23, 53, "");
+                    api.AddWeiboTestFiles("测试批量文件发微博，直接二进制发送微博" + Guid.NewGuid().ToString(), "E:\\test2.jpg");
                 }
             }
             return JumpToTips("",  "测试结束");

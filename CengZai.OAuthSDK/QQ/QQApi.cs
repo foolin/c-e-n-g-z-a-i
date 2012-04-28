@@ -151,17 +151,17 @@ namespace CengZai.OAuthSDK.QQ
             try
             {
                 string urlAddShare = string.Format("{0}/share/add_share", this.config.GetBaseUrl());
-                Dictionary<object, object> parameters = _createCommonPostParams();
-                parameters.Add("title", title);
-                parameters.Add("url", url);
+                List<HttpParameter> parameters = _createCommonPostParams();
+                parameters.Add(new HttpParameter("title", title));
+                parameters.Add(new HttpParameter("url", url));
                 //parameters.Add("site", Uri.EscapeUriString(site));
-                parameters.Add("comment", comment);
-                parameters.Add("summary", summary);
-                parameters.Add("images", images);
-                parameters.Add("source", source);
-                parameters.Add("type", type);
-                parameters.Add("playurl", playurl);
-                parameters.Add("nswb", nswb);
+                parameters.Add(new HttpParameter("comment", comment));
+                parameters.Add(new HttpParameter("summary", summary));
+                parameters.Add(new HttpParameter("images", images));
+                parameters.Add(new HttpParameter("source", source));
+                parameters.Add(new HttpParameter("type", type));
+                parameters.Add(new HttpParameter("playurl", playurl));
+                parameters.Add(new HttpParameter("nswb", nswb));
                 string jsonResponse = HttpUtil.HttpPost(urlAddShare, parameters);
                 QQReturn qqreturn = JsonConvert.JavascriptDeserialize<QQReturn>(jsonResponse);
                 if (qqreturn == null || qqreturn.ret > 0)
@@ -195,12 +195,12 @@ namespace CengZai.OAuthSDK.QQ
             try
             {
                 string urlAddWeibo = string.Format("{0}/t/add_t", this.config.GetBaseUrl());
-                Dictionary<object, object> parameters = this._createCommonPostParams();
-                parameters.Add("content", content);
-                parameters.Add("clientip", clientip);
-                parameters.Add("jing", jing);
-                parameters.Add("wei", wei);
-                parameters.Add("syncflag", syncflag);
+                List<HttpParameter> parameters = this._createCommonPostParams();
+                parameters.Add(new HttpParameter("content", content));
+                parameters.Add(new HttpParameter("clientip", clientip));
+                parameters.Add(new HttpParameter("jing", jing));
+                parameters.Add(new HttpParameter("wei", wei));
+                parameters.Add(new HttpParameter("syncflag", syncflag));
                 string jsonResponse = HttpUtil.HttpPost(urlAddWeibo, parameters);
                 QQReturn ret = JsonConvert.JavascriptDeserialize<QQReturn>(jsonResponse);
                 if (ret == null || ret.ret > 0)
@@ -231,12 +231,12 @@ namespace CengZai.OAuthSDK.QQ
             try
             {
                 string urlAddWeibo = string.Format("{0}/t/add_pic_t ", this.config.GetBaseUrl());
-                Dictionary<object, object> parameters = this._createCommonPostParams();
-                parameters.Add("content", content);
-                parameters.Add("clientip", clientip);
-                parameters.Add("jing", jing);
-                parameters.Add("wei", wei);
-                parameters.Add("syncflag", syncflag);
+                List<HttpParameter> parameters = this._createCommonPostParams();
+                parameters.Add(new HttpParameter("content", content));
+                parameters.Add(new HttpParameter("clientip", clientip));
+                parameters.Add(new HttpParameter("jing", jing));
+                parameters.Add(new HttpParameter("wei", wei));
+                parameters.Add(new HttpParameter("syncflag", syncflag));
 
                 string jsonResponse = HttpUtil.HttpPost(urlAddWeibo, parameters, "pic", pic);
                 QQReturn ret = JsonConvert.JavascriptDeserialize<QQReturn>(jsonResponse);
@@ -311,14 +311,14 @@ namespace CengZai.OAuthSDK.QQ
         /// </summary>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        private Dictionary<object, object> _createCommonPostParams()
+        private List<HttpParameter> _createCommonPostParams()
         {
-            Dictionary<object, object> dic = new Dictionary<object, object>();
-            dic.Add("access_token", this.Token.AccessToken);
-            dic.Add("oauth_consumer_key",this.config.GetAppKey());
-            dic.Add("openid",this.Token.Uid);
-            dic.Add("format","json");
-            return dic;
+            List<HttpParameter> parameters = new List<HttpParameter>();
+            parameters.Add(new HttpParameter("access_token", this.Token.AccessToken));
+            parameters.Add(new HttpParameter("oauth_consumer_key",this.config.GetAppKey()));
+            parameters.Add(new HttpParameter("openid",this.Token.Uid));
+            parameters.Add(new HttpParameter("format", "json"));
+            return parameters;
         }
         #endregion
 

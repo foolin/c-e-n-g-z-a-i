@@ -56,6 +56,7 @@
     <Compile Include="QQ\Model\QQUser.cs" />
     <Compile Include="QQ\QQApi.cs" />
     <Compile Include="QQ\QQConfig.cs" />
+    <Compile Include="RenRen\Model\_AccessTokenModel.cs" />
     <Compile Include="RenRen\RenApi.cs" />
     <Compile Include="RenRen\RenConfig.cs" />
     <Compile Include="Sina\Model\SinaGeos.cs" />
