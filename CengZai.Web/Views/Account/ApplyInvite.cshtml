@@ -30,7 +30,7 @@
             </script>
         </p>
         <p>
-            <input type="submit" class="btn" value="申请邀请码" />
+            <input type="submit" class="btn btn-danger" value="申请邀请码" />  @Html.ActionLink("已有邀请码？请注册", "Register", "Account", null, new { @class = "btn" }) 
         </p>
         <p class="muted">由于<b>@ViewBag.SiteName</b>正在紧张测试中，尚未正式开放注册，我们会根据定期发放邀请码，邀请部分用户试用。</p>
     }

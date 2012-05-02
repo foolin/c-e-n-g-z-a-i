@@ -12,16 +12,6 @@ namespace CengZai.OAuthSDK.RenRen
     {
         private NameValueCollection Config = (NameValueCollection)ConfigurationManager.GetSection("OAuthSDK/RenRen");
 
-
-        /// <summary>
-        /// 判断是否打开
-        /// </summary>
-        /// <returns></returns>
-        public bool Open()
-        {
-            return Config["Open"] == "1";
-        }
-
         /// <summary>
         /// 取接口的基础Url
         /// </summary>

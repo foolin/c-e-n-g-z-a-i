@@ -30,7 +30,16 @@
                   <input type="checkbox" id="remember" name="remember" /> 记住我
                 </label>
                 <button type="submit" class="btn btn-success">登录</button>
-                @Html.ActionLink("还没帐号？立即注册", "Register", "Account", null, new { @class = "btn btn-danger" })
+                @if (CengZai.Helper.Config.RegisterLimit == 1)
+                {
+                    @Html.ActionLink("申请内测邀请码", "ApplyInvite", "Account", null, new { @class = "btn btn-danger" })
+                    <text></text>
+                    @Html.ActionLink("已有邀请码注册", "Register", "Account", null, new { @class = "btn" }) 
+                }
+                else
+                {
+                    @Html.ActionLink("还没帐号？立即注册", "Register", "Account", null, new { @class = "btn btn-danger" })
+                }
                 @*<a href="http://weibo.com/i/cengzai" class="btn" target="_blank">关注我们（新浪微博）</a>*@
                </p>
                 <p>
@@ -65,7 +74,7 @@
                   <p>@Html.GetLoverRelation(topLoverList[i].Certificate)日期：@Html.GetDateFormat(topLoverList[i].JoinDate, "yyyy年M月d日")</p>
                   <p>
                     <a href="@Url.BlogUrl(applyUser.Username)" class="btn" target = "_blank">@Html.GetLoverRelation(topLoverList[i].Certificate)博客</a> 
-                    @Html.ActionLink(Html.GetCertificateName(topLoverList[i].Certificate), "Certificate", "Blog", new { username = applyUser.Username }, new { target = "_blank", @class="btn" }) 
+                    @Html.ActionLink(Html.GetCertificateName(topLoverList[i].Certificate), "Certificate", "Blog", new { username = applyUser.Username }, new { target = "_blank", @class = "btn" }) 
                     
                     @*@Html.ActionLink("访问主页", "Blog", "Blog", new { @username = applyUser.Username }, new { @class = "btn", target = "_blank" })*@</p>
                 </div>

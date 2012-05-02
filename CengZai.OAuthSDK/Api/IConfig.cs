@@ -7,12 +7,6 @@ namespace CengZai.OAuthSDK.Api
 {
     public interface IConfig
     {
-        /// <summary>
-        /// 是否打开
-        /// </summary>
-        /// <returns></returns>
-        bool Open();
-
 
         /// <summary>
         /// 获取ApiUrl

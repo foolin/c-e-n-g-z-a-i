@@ -17,7 +17,7 @@ namespace CengZai.OAuthSDK.Api
         {
         }
 
-        public BaseApi(OAuthToken oauthToken)
+        public void SetToken(OAuthToken oauthToken)
         {
             this.Token = oauthToken;
         }
@@ -28,7 +28,7 @@ namespace CengZai.OAuthSDK.Api
         /// <param name="accessToken"></param>
         /// <param name="uid"></param>
         /// <param name="expiresAt"></param>
-        public BaseApi(string accessToken, string uid, int expiresAt)
+        public void SetToken(string accessToken, string uid, int expiresAt)
         {
             this.Token = new OAuthToken
             {

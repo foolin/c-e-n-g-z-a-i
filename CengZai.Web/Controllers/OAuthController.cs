@@ -3,15 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using QConnectSDK.Context;
-using QConnectSDK;
 using CengZai.Model;
 using CengZai.Helper;
 using CengZai.Web.Common;
 using System.Text.RegularExpressions;
 using System.Web.Security;
 using System.Text;
-using Open.Sina2SDK;
 using CengZai.OAuthSDK.QQ;
 using CengZai.OAuthSDK.Sina;
 
@@ -26,11 +23,11 @@ namespace CengZai.Web.Controllers
             Model.User loginUser = GetLoginUser();
             if (loginUser == null)
             {
-                var context = new QzoneContext();
+                var qqApi = new QQApi();
                 string state = Guid.NewGuid().ToString().Replace("-", "");
                 Session["requeststate"] = state;
                 string scope = "get_user_info,add_share,list_album,upload_pic,check_page_fans,add_t,add_pic_t,del_t,get_repost_list,get_info,get_other_info,get_fanslist,get_idolist,add_idol,del_idol,add_one_blog,add_topic,get_tenpay_addr";
-                var authenticationUrl = context.GetAuthorizationUrl(state, scope);
+                var authenticationUrl = qqApi.GetAuthorizationUrl(state, scope);
                 return new RedirectResult(authenticationUrl);
             }
             else
@@ -45,15 +42,15 @@ namespace CengZai.Web.Controllers
         {
             if (Request.Params["code"] != null)
             {
-                QOpenClient qzone = null;
-                var verifier = Request.Params["code"];
+                var qqApi = new QQApi();
+                var code = Request.Params["code"];
                 var state = Request.Params["state"];
                 string requestState = Session["requeststate"].ToString();
                 if (state == requestState)
                 {
-                    qzone = new QOpenClient(verifier, state);
-                    var currentUser = qzone.GetCurrentUser();
-                    string openId = qzone.OAuthToken.OpenId;
+                    qqApi.GetAccessToken(code);
+                    var currentUser = qqApi.GetUserInfo();
+                    string openId = qqApi.Token.Uid;
                     if (currentUser == null || string.IsNullOrEmpty(openId))
                     {
                         return JumpToTips("登录失败！", "授权错误！请稍后重试！");
@@ -64,7 +61,7 @@ namespace CengZai.Web.Controllers
                     {
                         mUser = new Model.User();
                         mUser.AreaID = 0;
-                        mUser.Avatar = currentUser.Figureurl;
+                        mUser.Avatar = currentUser.figureurl_2;
                         mUser.Birth = null;
                         mUser.Email = "";
                         mUser.Intro = "";
@@ -73,12 +70,12 @@ namespace CengZai.Web.Controllers
                         mUser.LoginTime = null;
                         mUser.Mobile = "";
                         mUser.Username = "";
-                        mUser.Nickname = currentUser.Nickname;
+                        mUser.Nickname = currentUser.nickname;
                         mUser.Password = "";
                         mUser.Privacy = 0;
                         mUser.RegIp = Helper.Util.GetIP();
                         mUser.RegTime = DateTime.Now;
-                        mUser.Sex = (currentUser.Gender == "男" ? 1 : 2);
+                        mUser.Sex = (currentUser.gender == "男" ? 1 : 2);
                         mUser.Sign = "此家伙不懒，就是什么也没留下";
                         mUser.State = 0;
                         mUser.Vip = 0;
@@ -87,8 +84,8 @@ namespace CengZai.Web.Controllers
                         mUser.Config = new UserConfig();
                         //用户尚未注册
                         mUser.LoginType = Model.LoginType.QQ;
-                        mUser.AccessToken = qzone.OAuthToken.AccessToken;
-                        mUser.OpenId = qzone.OAuthToken.OpenId;
+                        mUser.AccessToken = qqApi.Token.AccessToken;
+                        mUser.OpenId = openId;
                         mUser.AuthTime = DateTime.Now;
                         mUser.UserID = bllUser.Add(mUser);
                     }
@@ -150,9 +147,19 @@ namespace CengZai.Web.Controllers
         //新浪登录
         public ActionResult SinaLogin()
         {
-            SinaSerive serive = new SinaSerive();
-            serive.GetAuthorizationCode();
-            return View();
+            Model.User loginUser = GetLoginUser();
+            if (loginUser == null)
+            {
+                SinaApi sinaApi = new SinaApi();
+                string state = Guid.NewGuid().ToString().Replace("-", "");
+                Session["requeststate"] = state;
+                var authenticationUrl = sinaApi.GetAuthorizationUrl(state);
+                return new RedirectResult(authenticationUrl);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         //新浪登录
@@ -160,105 +167,109 @@ namespace CengZai.Web.Controllers
         {
             try
             {
-                SinaSerive serive = new SinaSerive();
-                serive.GetAccessTokenByAuthorizationCode(Request["code"]);
-                Open.Sina2SDK.User sinaUser = serive.Users_Show();
-                if (sinaUser == null)
+                SinaApi sinaApi = new SinaApi();
+                var state = Request.Params["state"];
+                string requestState = Session["requeststate"].ToString();
+                if (state == requestState)
                 {
-                    return JumpToTips("读取用户信息失败", "对不起，读取您在新浪微博的帐号失败");
-                }
-                string accesstoken = serive.Token.access_token;
-                string openId = serive.Token.uid.ToString();
-                if (sinaUser == null || string.IsNullOrEmpty(openId))
-                {
-                    return JumpToTips("登录失败！", "授权错误！请稍后重试！");
-                }
-                BLL.User bllUser = new BLL.User();
-                Model.User mUser = bllUser.GetModelByOpenId(openId, Model.LoginType.Sina);
-                if (mUser == null)
-                {
-                    mUser = new Model.User();
-                    mUser.AreaID = 0;
-                    mUser.Avatar = sinaUser.profile_image_url;
-                    mUser.Birth = null;
-                    mUser.Email = "";
-                    mUser.Intro = sinaUser.description;
-                    mUser.LoginCount = 0;
-                    mUser.LoginIp = "";
-                    mUser.LoginTime = null;
-                    mUser.Mobile = "";
-                    mUser.Username = "";
-                    mUser.Nickname = sinaUser.name;
-                    mUser.Password = "";
-                    mUser.Privacy = 0;
-                    mUser.RegIp = Helper.Util.GetIP();
-                    mUser.RegTime = DateTime.Now;
-                    mUser.Sex = (sinaUser.gender == "m" ? 1 : 2);
-                    mUser.Sign = "此家伙不懒，就是什么也没留下";
-                    mUser.State = 0;
-                    mUser.Vip = 0;
-                    mUser.Credit = 5;   //初次登录赠送5个积分
-                    mUser.Money = 0;
-                    mUser.Config = new UserConfig();
-                    //用户尚未注册
-                    mUser.LoginType = Model.LoginType.Sina;
-                    mUser.AccessToken = accesstoken;
-                    mUser.OpenId = openId;
-                    mUser.AuthTime = DateTime.Now;
-                    mUser.UserID = bllUser.Add(mUser);
-                }
-                else
-                {
-                    switch (Config.LoginLimit)
+                    sinaApi.GetAccessToken(Request["code"]);
+                    SinaUser sinaUser = sinaApi.GetUserInfo();
+                    if (sinaUser == null)
                     {
-                        //禁止所有用户登录
-                        case 2:
-                            return JumpToTips("Error", "系统正在维护，暂停登录，请稍后再试！");
-                        //break;
+                        return JumpToTips("读取用户信息失败", "对不起，读取您在新浪微博的帐号失败");
+                    }
+                    string accesstoken = sinaApi.Token.AccessToken;
+                    string openId = sinaApi.Token.Uid;
+                    if (sinaUser == null || string.IsNullOrEmpty(openId))
+                    {
+                        return JumpToTips("登录失败！", "授权错误！请稍后重试！");
+                    }
+                    BLL.User bllUser = new BLL.User();
+                    Model.User mUser = bllUser.GetModelByOpenId(openId, Model.LoginType.Sina);
+                    if (mUser == null)
+                    {
+                        mUser = new Model.User();
+                        mUser.AreaID = 0;
+                        mUser.Avatar = sinaUser.profile_image_url;
+                        mUser.Birth = null;
+                        mUser.Email = "";
+                        mUser.Intro = sinaUser.description;
+                        mUser.LoginCount = 0;
+                        mUser.LoginIp = "";
+                        mUser.LoginTime = null;
+                        mUser.Mobile = "";
+                        mUser.Username = "";
+                        mUser.Nickname = sinaUser.name;
+                        mUser.Password = "";
+                        mUser.Privacy = 0;
+                        mUser.RegIp = Helper.Util.GetIP();
+                        mUser.RegTime = DateTime.Now;
+                        mUser.Sex = (sinaUser.gender == "m" ? 1 : 2);
+                        mUser.Sign = "此家伙不懒，就是什么也没留下";
+                        mUser.State = 0;
+                        mUser.Vip = 0;
+                        mUser.Credit = 5;   //初次登录赠送5个积分
+                        mUser.Money = 0;
+                        mUser.Config = new UserConfig();
+                        //用户尚未注册
+                        mUser.LoginType = Model.LoginType.Sina;
+                        mUser.AccessToken = accesstoken;
+                        mUser.OpenId = openId;
+                        mUser.AuthTime = DateTime.Now;
+                        mUser.UserID = bllUser.Add(mUser);
+                    }
+                    else
+                    {
+                        switch (Config.LoginLimit)
+                        {
+                            //禁止所有用户登录
+                            case 2:
+                                return JumpToTips("Error", "系统正在维护，暂停登录，请稍后再试！");
+                            //break;
 
-                        //只有激活用户可以登录
-                        case 1:
-                            if (mUser.State == 0)
-                            {
-                                return JumpToTips("Error", "您的帐号尚未激活，请先登录邮箱激活帐号！");
-                            }
-                            else if (mUser.State == -1)
-                            {
-                                return JumpToTips("Error", "您的帐号被冻结，暂时无法登录！");
-                            }
-                            break;
+                            //只有激活用户可以登录
+                            case 1:
+                                if (mUser.State == 0)
+                                {
+                                    return JumpToTips("Error", "您的帐号尚未激活，请先登录邮箱激活帐号！");
+                                }
+                                else if (mUser.State == -1)
+                                {
+                                    return JumpToTips("Error", "您的帐号被冻结，暂时无法登录！");
+                                }
+                                break;
 
-                        //全部用户可以登录，包括锁定用户
-                        case -1:
-                            //全部用户可以登录
-                            break;
+                            //全部用户可以登录，包括锁定用户
+                            case -1:
+                                //全部用户可以登录
+                                break;
 
-                        //非锁定用户可以登录
-                        case 0:
-                        default:
-                            if (mUser.State == -1)
-                            {
-                                return JumpToTips("Error", "您的帐号被冻结，暂时无法登录！");
-                            }
-                            break;
-                    } 
+                            //非锁定用户可以登录
+                            case 0:
+                            default:
+                                if (mUser.State == -1)
+                                {
+                                    return JumpToTips("Error", "您的帐号被冻结，暂时无法登录！");
+                                }
+                                break;
+                        }
+                    }
+                    //更新登录用户信息
+                    UpdateLoginUserInfo(mUser);
+                    //写入Cookies和Session登录
+                    UpdateLoginUserCookie(mUser, false);
+                    UpdateLoginUserSession(mUser);
+
+                    if (string.IsNullOrEmpty(mUser.Email) || string.IsNullOrEmpty(mUser.Username))
+                    {
+                        return RedirectToAction("Register");
+                    }
+                    else
+                    {
+                        return JumpToHome("登录成功！", "正在为您跳转到首页...");
+                    }
                 }
-                //更新登录用户信息
-                UpdateLoginUserInfo(mUser);
-                //写入Cookies和Session登录
-                UpdateLoginUserCookie(mUser, false);
-                UpdateLoginUserSession(mUser);
-
-                
-
-                if (string.IsNullOrEmpty(mUser.Email) || string.IsNullOrEmpty(mUser.Username))
-                {
-                    return RedirectToAction("Register");
-                }
-                else
-                {
-                    return JumpToHome("登录成功！", "正在为您跳转到首页...");
-                }
+                return JumpToTips("校验失败", "请重试！");
             }
             catch (Exception ex)
             {
@@ -386,27 +397,25 @@ namespace CengZai.Web.Controllers
                 {
                     if (loginUser.LoginType == LoginType.QQ)
                     {
-                        QOpenClient qzone = new QOpenClient(new QConnectSDK.Models.OAuthToken
-                        {
-                            AccessToken = loginUser.AccessToken,
-                            OpenId = loginUser.OpenId
-                        });
+                        QQApi qqApi = new QQApi();
+                        qqApi.SetToken(loginUser.AccessToken, loginUser.OpenId, 0);
                         //qzone.AddWeibo("我刚注册了" + Config.SiteName + "，快来看看吧", Url.BlogUrl(loginUser.Username), Config.SiteSlogan, Config.SiteDescription);
-                        qzone.AddFeeds("我刚注册了" + Config.SiteName + "，快来看看吧！"
+                        qqApi.AddShare("我刚注册了" + Config.SiteName + "，快来看看吧！"
                             , Url.BlogUrl(loginUser.Username)
                             , Config.SiteSlogan
                             , Config.SiteDescription);
                     }
                     else if (loginUser.LoginType == LoginType.Sina)
                     {
-                        SinaSerive sinaService = new SinaSerive();
+                        SinaApi sinaApi = new SinaApi();
+                        sinaApi.SetToken(loginUser.AccessToken, loginUser.OpenId, 0);
                         string content = "我刚注册了" + Config.SiteName + ":" + Url.BlogUrl(loginUser.Username) + "，快来看看吧！" + Config.SiteSlogan + "//" + Config.SiteDescription;
                         if (content.Length > 140)
                         {
                             content = content.Substring(0, 140);
                         }
                         string url = Url.BlogUrl(loginUser.Username);
-                        sinaService.Statuses_Update(content);
+                        sinaApi.AddWeibo(content);
                     }
                 }
                 catch { }
