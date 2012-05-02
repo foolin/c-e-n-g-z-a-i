@@ -17,7 +17,7 @@
             @Html.TextBox("invite", invite != null ? invite.Invite : "")
             @Html.ValidationMessage("invite") 
             <span class="muted">必须有邀请码才能注册
-            （您可以接受朋友的邀请，或者 @Html.ActionLink("申请邀请码", "ApplyInvite")）
+            （您可以接受朋友的邀请，或者 @Html.ActionLink("申请邀请码", "ApplyInvite", null, new {@class="btn btn-danger" })）
             </span>
         </p>
         }
