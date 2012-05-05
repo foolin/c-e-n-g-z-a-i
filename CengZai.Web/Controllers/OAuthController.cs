@@ -298,7 +298,7 @@ namespace CengZai.Web.Controllers
         //完善用户信息
         [CheckAuthFilter]
         [HttpPost]
-        public ActionResult Register(string email, string username, string nickname, string invite)
+        public ActionResult Register(string email, string username, string nickname, string invite, int? share)
         {
             try
             {
@@ -393,32 +393,36 @@ namespace CengZai.Web.Controllers
                 //发送激活邮件
                 SendActivateEmail(loginUser);
 
-                try
+                //分享到腾讯微博或者新浪微博
+                if (share == 1)
                 {
-                    if (loginUser.LoginType == LoginType.QQ)
+                    try
                     {
-                        QQApi qqApi = new QQApi();
-                        qqApi.SetToken(loginUser.AccessToken, loginUser.OpenId, 0);
-                        //qzone.AddWeibo("我刚注册了" + Config.SiteName + "，快来看看吧", Url.BlogUrl(loginUser.Username), Config.SiteSlogan, Config.SiteDescription);
-                        qqApi.AddShare("我刚注册了" + Config.SiteName + "，快来看看吧！"
-                            , Url.BlogUrl(loginUser.Username)
-                            , Config.SiteSlogan
-                            , Config.SiteDescription);
-                    }
-                    else if (loginUser.LoginType == LoginType.Sina)
-                    {
-                        SinaApi sinaApi = new SinaApi();
-                        sinaApi.SetToken(loginUser.AccessToken, loginUser.OpenId, 0);
-                        string content = "我刚注册了" + Config.SiteName + ":" + Url.BlogUrl(loginUser.Username) + "，快来看看吧！" + Config.SiteSlogan + "//" + Config.SiteDescription;
-                        if (content.Length > 140)
+                        if (loginUser.LoginType == LoginType.QQ)
                         {
-                            content = content.Substring(0, 140);
+                            QQApi qqApi = new QQApi();
+                            qqApi.SetToken(loginUser.AccessToken, loginUser.OpenId, 0);
+                            //qzone.AddWeibo("我刚注册了" + Config.SiteName + "，快来看看吧", Url.BlogUrl(loginUser.Username), Config.SiteSlogan, Config.SiteDescription);
+                            qqApi.AddShare("我刚注册了" + Config.SiteName + "，用户名为：【" + loginUser.Nickname + "】，快来看看吧！"
+                                , Url.BlogUrl(loginUser.Username)
+                                , Config.SiteSlogan
+                                , Config.SiteDescription);
                         }
-                        string url = Url.BlogUrl(loginUser.Username);
-                        sinaApi.AddWeibo(content);
+                        else if (loginUser.LoginType == LoginType.Sina)
+                        {
+                            SinaApi sinaApi = new SinaApi();
+                            sinaApi.SetToken(loginUser.AccessToken, loginUser.OpenId, 0);
+                            string content = "我刚注册了" + Config.SiteName + "，用户名为：【" + loginUser.Nickname + "】:" + Url.BlogUrl(loginUser.Username) + "，快来看看吧！" + Config.SiteSlogan + "//" + Config.SiteDescription;
+                            if (content.Length > 140)
+                            {
+                                content = content.Substring(0, 140);
+                            }
+                            string url = Url.BlogUrl(loginUser.Username);
+                            sinaApi.AddWeibo(content);
+                        }
                     }
+                    catch { }
                 }
-                catch { }
                 
 
                 return RedirectToAction("FeedFriendsForFirstLogin", "Friend");

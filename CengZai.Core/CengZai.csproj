@@ -85,6 +85,7 @@
     <Compile Include="Helper\Config.cs" />
     <Compile Include="Helper\DbHelperSQL.cs" />
     <Compile Include="Helper\DESEncrypt.cs" />
+    <Compile Include="Helper\Extends.cs" />
     <Compile Include="Helper\ImageHelper.cs" />
     <Compile Include="Helper\JsonConvert.cs" />
     <Compile Include="Helper\Log.cs" />

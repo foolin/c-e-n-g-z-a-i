@@ -149,7 +149,7 @@ namespace CengZai.Web.Controllers
 
             Model.User loginUser = GetLoginUser();
             Session["LOGIN_USER"]  = null;
-            if (Config.OpenBlogDomain == 1 && loginUser != null)
+            if (Config.OpenBlogDomain == 1 && loginUser != null && !string.IsNullOrEmpty(loginUser.Username))
             {
                 string subDomainLogoutUrl = Url.BlogUrl(loginUser.Username) + Url.Action("SubdomainLogout", "Account");
                 return Content("<script type=\"text/javascript\">top.location.href='" + subDomainLogoutUrl + "'</script>");

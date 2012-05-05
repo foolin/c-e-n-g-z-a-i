@@ -1,5 +1,6 @@
 ﻿using System;
 using CengZai.Helper;
+using System.ComponentModel;
 namespace CengZai.Model
 {
 	/// <summary>
@@ -348,27 +349,33 @@ namespace CengZai.Model
     /// <summary>
     /// 登录类型
     /// </summary>
+    [Description("登录类型")]
     public enum LoginType
     {
         /// <summary>
         /// 默认系统登录
         /// </summary>
+        [Description("系统")]
         System = 0,
         /// <summary>
-        /// QQ登录
+        /// 腾讯QQ
         /// </summary>
+        [Description("腾讯QQ")]
         QQ = 1,
         /// <summary>
         /// 新浪微博
         /// </summary>
+        [Description("新浪微博")]
         Sina = 2,
         /// <summary>
         /// 人人网
         /// </summary>
+        [Description("人人网")]
         Renren = 3,
         /// <summary>
         /// 豆瓣网
         /// </summary>
+        [Description("豆瓣网")]
         Douban = 4
     }
 
