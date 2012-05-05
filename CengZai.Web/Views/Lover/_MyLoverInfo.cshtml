@@ -1,0 +1,69 @@
+﻿@{
+    Layout = null;
+    var lover = PageData["Lover"] as CengZai.Model.Lover;
+}
+
+<table class="table">
+                    <thead> 
+                    <tr>
+                        <th style="width:10%">合照头像</th>
+                        <td style="width:40%"><img id="imgAvatar" src="@Url.GetAvatarUrl(lover.Avatar)"  width="180" height="120" alt=""/></td>
+                        <th style="width:10%"></th>
+                        <td style="width:40%"></td>
+                    </tr>
+                    </thead> 
+                    <tbody>
+                    <tr>
+                        <th style="width:10%">证件类型</th>
+                        <td style="width:40%">@Html.GetCertificateName(lover.Certificate)</td>
+                        <th style="width:10%">登记日期</th>
+                        <td style="width:40%">@Html.GetDateFormat(lover.JoinDate, "yyyy年MM月dd日")</td>
+                    </tr>
+                    <tr>
+                        <th>男方</th>
+                        <td>@Html.GetUserNickname(lover.BoyUserID)</td>
+                        <th>女方</th>
+                        <td>@Html.GetUserNickname(lover.GirlUserID)</td>
+                    </tr>
+                    <tr>
+                        <th>生日</th>
+                        <td>@Html.GetDateFormat(Html.GetUser(lover.BoyUserID).Birth, "yyyy年MM月dd日")</td>
+                        <th>生日</th>
+                        <td>@Html.GetDateFormat(Html.GetUser(lover.GirlUserID).Birth, "yyyy年MM月dd日")</td>
+                    </tr>
+                    <tr>
+                        <th>手机</th>
+                        <td>@Html.GetUser(lover.BoyUserID).Mobile</td>
+                        <th>手机</th>
+                        <td>@Html.GetUser(lover.GirlUserID).Mobile</td>
+                    </tr>
+                    <tr>
+                        <th>宣誓</th>
+                        <td>@lover.BoyOath</td>
+                        <th>宣誓</th>
+                        <td>@lover.GirlOath</td>
+                    </tr>
+                    <tr>
+                        <th>申请人</th>
+                        <td>@Html.GetUserNickname(lover.ApplyUserID)</td>
+                        <th>申请时间</th>
+                        <td>@Html.GetDateFormat(lover.ApplyTime, "yyyy年MM月dd日")</td>
+                    </tr>
+                    <tr>
+                        <th>状态</th>
+                        <td>
+                            @if (lover.State == 1)
+                            {
+                                <span class="label label-success">已通过</span>
+                            }
+                            else
+                            {
+                                <span class="label label-info">正在处理</span>
+                            }
+                        </td>
+                        <th>状态说明</th>
+                        <td><span class="label label-inverse">@Html.GetLoverFlowName(lover.Flow)</span></td>
+                    </tr>
+                    </tbody>
+                </table>
+

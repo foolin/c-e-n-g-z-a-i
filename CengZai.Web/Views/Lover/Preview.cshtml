@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "预览申请信息";
+    var user = ViewBag.User as CengZai.Model.User;
+    var lover = ViewBag.Lover as CengZai.Model.Lover;
+}
+@section head{
+    <style type="text/css">
+        .table th
+        {
+            vertical-align:top;
+        }
+    </style>
+}
+
+
+<div class="container  bg-white">
+
+        <div class="padding">
+
+            <!--登记表单-->
+            <fieldset>
+            <legend>申请【@Html.GetCertificateName(@lover.Certificate)】 <span class="help-block font14">信息预览</span></legend>
+                @RenderPage("_MyLoverInfo.cshtml", new { Lover = lover })
+                <div id="acceptCtrl">
+                @if (lover.ApplyUserID != user.UserID && lover.Flow == (int)CengZai.Model.LoverFlow.Apply)
+                {
+                    @Html.ActionLink("我接受并完善资料", "Accept", new { LoverID = lover.LoverID }, new { @class = "btn btn-primary" }) 
+                    <text>&nbsp;</text>
+                    @Html.ActionLink("我不接受", "UnAccept", new { LoverID = lover.LoverID }, new { @class = "btn btn-danger" })
+                }
+                else if (lover.Flow == (int)CengZai.Model.LoverFlow.UnAward)
+                {
+                    @Html.ActionLink("完善资料并重新提交审批", "ReAward", new { LoverID = lover.LoverID }, new { @class = "btn btn-primary" }) 
+                    <text>&nbsp;</text>
+                    @Html.ActionLink("注销申请", "Abolish", new { LoverID = lover.LoverID }, new { @class = "btn btn-danger" })
+                }
+                else
+                {
+                    <span class="pull-right">
+                        @Html.ActionLink("我要注销", "Abolish", new { LoverID = lover.LoverID }, new { @class = "" })
+                    </span>
+                }
+                </div>
+            </fieldset>
+      </div>
+</div>
+

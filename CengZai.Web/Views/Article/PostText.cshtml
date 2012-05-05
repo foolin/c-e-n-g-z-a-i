@@ -1,0 +1,194 @@
+﻿@{
+    ViewBag.Title = "撰写日志";
+    var content = Request.Unvalidated().Form["content"];
+    var article = ViewBag.Article as CengZai.Model.Article;
+    if(article == null)
+    {
+        article = new CengZai.Model.Article();
+    }
+}
+
+@section head{
+	<script type="text/javascript" charset="utf-8" src="@Url.GetResourceUrl("/js/kindeditor/kindeditor-min.js")"></script>
+	<script type="text/javascript" charset="utf-8" src="@Url.GetResourceUrl("/js/kindeditor/lang/zh_CN.js")"></script>
+	<script type="text/javascript">
+	    $(function () {
+	        var editor = KindEditor.create('textarea[name="content"]',
+            {
+                resizeType: 1,
+                allowPreviewEmoticons: false,
+                allowImageUpload: false,
+                filterMode: true,
+                htmlTags: {
+                        a: ['href', 'target', 'name'],
+                        img: ['src', 'width', 'height', 'border', 'alt', 'title', '.width', '.height'],
+                        'p,ol,ul,li,blockquote': ['align', '.text-align'],
+                        pre: ['class'],
+                        'hr,br,strong,b,sub,sup,em,i,u': []
+                },
+                items: [
+						'bold', 'italic', 'underline',
+						'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+						'insertunorderedlist', '|', 'link', 'unlink', 'image', '|', 'source', 'fullscreen']
+            });
+        });
+        //操作成功！
+        function articleOnSuccess(e) {
+            e = eval(e);
+            if (e.id == "success") {
+                $.dialog({
+                    title: '保存成功',
+                    content: e.msg,
+                    lock: true,
+                    time: 3000,
+                    focus: false,
+                    beforeunload: function () {
+                        location.href = "@(Request.UrlReferrer != null ? Request.UrlReferrer.PathAndQuery: "")";
+                        return true;
+                    }
+                });
+            }
+            else {
+                $.dialog({
+                    title: '保存失败',
+                    content: e.msg,
+                    lock: true,
+                    time: 3000,
+                    focus: false
+                });
+            }
+        }
+	</script>
+}
+
+<div class="container">
+@using (Ajax.BeginForm("AjaxPostText", "Article", new { artid=article.ArtID }
+    , new AjaxOptions { OnSuccess = "articleOnSuccess", OnFailure = "alert('对不起，出现异常，请稍后重试！');" }, new { @class = "form-horizontal" }))
+{
+    <div class="row-fluid">
+      <div class="span8 bg-white">
+      <div class="padding">
+        
+        <fieldset> 
+          <legend>@ViewBag.Title</legend>
+          <div class="control-group">
+              <label for="title">标题</label> 
+              @Html.TextBox("title", article.Title + "", new { @class = "input-xxlarge" }) 
+              <span class="muted">（可不填）</span>
+          </div>
+          <div class="control-group">
+            <label for="content">内容</label>
+            @Html.TextArea("content", article.Content, 15, 20, new { @class = "input-xxlarge editor" })
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">保存</button> 
+            @Html.ActionLink("取消", "Index", "Home", new { @class = "btn" })
+          </div> 
+          <div>@Html.ValidationSummary()</div>
+        </fieldset>
+      
+      </div>
+      </div>
+      <!--.span8-->
+      <div class="span4">
+          <div class="well">
+            <p><a data-toggle="modal" href="#categoryModal">新建分类</a></p>
+            @Html.DropDownList("categoryid", ViewData["CategoryList"] as SelectList, "默认分类")
+            @Ajax.ActionLink("删除", "AjaxCategoryDel", null
+            , new AjaxOptions { OnBegin = "return confirm('确定删除？');", OnSuccess = "cateDelOnSuccess", OnFailure = "cateDelOnSuccess" }
+            , new { id = "btnCategoryDel", @class = "hide" })
+            <hr />
+            @Html.DropDownList("privacy", ViewData["PrivateList"] as SelectList)
+            <hr />
+            <label class="checkbox inline"> 
+                <input type="checkbox"  name="top" @(article.IsTop == 1 ? "checked=\"checked\"":"") value="1"> 设为置顶
+             </label> 
+             <label class="checkbox inline"> 
+                <input type="checkbox" name="draft" value="1"> 存为草稿
+             </label> 
+
+          </div><!--/.well -->
+      </div>
+      <!--/.span4 -->
+    </div>
+    
+}
+</div>   
+<!--/.container -->
+
+<script type="text/javascript">
+
+    function cateAddOnSuccess(e) {
+        e = eval(e);
+        if (e.id == "success") {
+            var cate = eval('(' + e.msg + ')');
+            console.log(cate);
+            $("<option value=\"" + cate.CategoryID + "\">" + cate.CategoryName + "</option>").appendTo("#categoryid");
+            $("#categoryid").val(cate.CategoryID);
+            $('#categoryModal').modal('hide')
+        }
+        else {
+            alert(e.msg);
+        }
+    }
+    function cateAddOnFailure(e) {
+        alert('添加出现异常，请稍后重试！');
+    }
+    $(document).ready(function () {
+        //$("#btnCategoryDel").hide();
+        $("#categoryid").change(function () {
+            var val = parseInt($(this).val());
+            if (val > 0) {
+                $("#btnCategoryDel").attr("href", "/article/ajaxcategorydel?categoryid=" + val);
+                $("#btnCategoryDel").show();
+            }
+            else {
+                $("#btnCategoryDel").attr("href", "/article/ajaxcategorydel?categoryid=" + val);
+                $("#btnCategoryDel").hide();
+            }
+        });
+    });
+    function cateDelOnSuccess(e) {
+        e = eval(e);
+        if (e.id == "success") {
+            var cateID = e.msg;
+            $('#categoryid option[value=' + cateID + ']').remove();
+            $("#btnCategoryDel").hide();
+        }
+        else {
+            alert(e.msg);
+        }
+    }
+    function cateDelOnFailure(e) {
+        alert('添加出现异常，请稍后重试！');
+    }
+</script>
+
+ <!-- sample modal content -->
+<div id="categoryModal" class="modal hide fade">
+@using (Ajax.BeginForm("AjaxCategoryAdd", new AjaxOptions { OnBegin = "", OnSuccess = "cateAddOnSuccess", OnFailure = "cateAddOnFailure" }))
+{
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal" >&times;</a>
+        <h3>新建分类</h3>
+    </div>
+    <div class="modal-body">
+        <div class="control-group">
+              <label for="title">分类名称</label> 
+              @Html.TextBox("categoryName", "", new { @class = "input-middle" }) 
+              <span class="muted">必填，20个字符以内</span>
+         </div>
+         <div class="control-group">
+              <label for="title">分类描述</label> 
+              <textarea class="input-middle" rows="5"></textarea>
+              <span class="muted">最多300个字符以内（可不填）</span>
+         </div>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn" data-dismiss="modal" >关闭</a>
+        <input type="submit" value="保存" class="btn btn-primary" />
+    </div>
+}
+</div>
+          

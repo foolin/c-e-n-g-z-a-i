@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "重发激活帐号邮件";
+}
+
+<div class="container bg-white">
+<section class="padding">
+    <div class="page-header"> 
+        <h1>@ViewBag.Title</h1> 
+    </div> 
+    <div>
+    @using (Html.BeginForm("ResendActivate","Account", FormMethod.Post, new { @class = "well form-inline" }))
+    {
+        <p>
+        @Html.TextBox("email", "", new { @class = "span3", size = "16", placeholder = "请输入邮箱" })
+        <input type="submit" class="btn" value="重发激活邮件" />
+        </p>
+        <p class="muted">两小时内只能重发一次激活帐号的邮件，激活邮件在两个小时内有效</p>
+    }
+    
+    </div>
+    @if (!string.IsNullOrEmpty(ViewBag.Message))
+    {
+    <div class="alert alert-block">
+        @MvcHtmlString.Create(ViewBag.Message)
+    </div>
+    }
+</section>
+</div>

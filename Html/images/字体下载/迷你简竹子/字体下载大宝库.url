@@ -1,0 +1,17 @@
+[DEFAULT]
+BASEURL=http://font.knowsky.com/
+[DOC_baiduSpFrame]
+BASEURL=http://spcode.baidu.com/spcode/spstyle/style2842.jsp?tn=sayyes_sp&ctn=0&styleid=2842
+ORIGURL=http://spcode.baidu.com/spcode/spstyle/style2842.jsp?tn=sayyes_sp&ctn=0&styleid=2842
+[DOC#139]
+BASEURL=http://cpro.baidu.com/cpro/ui/uijs.php?fv=10&tn=text_default_728_90&n=sayyescpr&rsi1=90&rsi0=728&rad=&rss0=%23FFFFFF&rss1=%23FFFFFF&rss2=%230000ff&rss3=%23444444&rss4=%23008000&rss5=&rss6=%23e10900&rsi5=4&ts=1&at=7&cn=1&if=0&word=http%3A%2F%2Ffont.knowsky.com%2F&refer=&ch=7811&lmt=1245482245&csp=1280,1024&ccd=32&chi=1&cja=true&cpl=0&cmi=0&cce=true&csl=zh-cn&rt=16&cad=1&aurl=&rss7=&cpa=1&dt=1245574028&ev=67108864&jn=1
+ORIGURL=http://cpro.baidu.com/cpro/ui/uijs.php?fv=10&tn=text_default_728_90&n=sayyescpr&rsi1=90&rsi0=728&rad=&rss0=%23FFFFFF&rss1=%23FFFFFF&rss2=%230000ff&rss3=%23444444&rss4=%23008000&rss5=&rss6=%23e10900&rsi5=4&ts=1&at=7&cn=1&if=0&word=http%3A%2F%2Ffont.knowsky.com%2F&refer=&ch=7811&lmt=1245482245&csp=1280,1024&ccd=32&chi=1&cja=true&cpl=0&cmi=0&cce=true&csl=zh-cn&rt=16&cad=1&aurl=&rss7=&cpa=1&dt=1245574028&ev=67108864&jn=1
+[DOC#199]
+BASEURL=http://cpro.baidu.com/cpro/ui/uijs.php?fv=10&tn=text_default_580_90&n=sayyescpr&rsi1=90&rsi0=580&rad=&rss0=%23FFFFEC&rss1=%23FFFFEC&rss2=%233333CC&rss3=%23958998&rss4=%23090809&rss5=&rss6=%23e10900&rsi5=4&ts=1&at=7&cn=2&if=0&word=http%3A%2F%2Ffont.knowsky.com%2F&refer=&ch=0&lmt=1245482245&csp=1280,1024&ccd=32&chi=1&cja=true&cpl=0&cmi=0&cce=true&csl=zh-cn&rt=0&cad=1&aurl=&rss7=&cpa=1&dt=1245574028&pn=4|text_default_728_90&ev=50331648&jn=1
+ORIGURL=http://cpro.baidu.com/cpro/ui/uijs.php?fv=10&tn=text_default_580_90&n=sayyescpr&rsi1=90&rsi0=580&rad=&rss0=%23FFFFEC&rss1=%23FFFFEC&rss2=%233333CC&rss3=%23958998&rss4=%23090809&rss5=&rss6=%23e10900&rsi5=4&ts=1&at=7&cn=2&if=0&word=http%3A%2F%2Ffont.knowsky.com%2F&refer=&ch=0&lmt=1245482245&csp=1280,1024&ccd=32&chi=1&cja=true&cpl=0&cmi=0&cce=true&csl=zh-cn&rt=0&cad=1&aurl=&rss7=&cpa=1&dt=1245574028&pn=4|text_default_728_90&ev=50331648&jn=1
+[DOC#258]
+BASEURL=http://cpro.baidu.com/cpro/ui/uijs.php?fv=10&tn=text_default_580_90&n=sayyescpr&rsi1=90&rsi0=580&rad=&rss0=%23FFFFff&rss1=%23FFFFff&rss2=%233333CC&rss3=%23958998&rss4=%23090809&rss5=&rss6=%23e10900&rsi5=4&ts=1&at=7&cn=3&if=0&word=http%3A%2F%2Ffont.knowsky.com%2F&refer=&ch=0&lmt=1245482245&csp=1280,1024&ccd=32&chi=1&cja=true&cpl=0&cmi=0&cce=true&csl=zh-cn&rt=47&cad=1&aurl=&rss7=&cpa=1&dt=1245574028&pn=4:3|text_default_728_90:text_default_580_90&ev=50331648&jn=1
+ORIGURL=http://cpro.baidu.com/cpro/ui/uijs.php?fv=10&tn=text_default_580_90&n=sayyescpr&rsi1=90&rsi0=580&rad=&rss0=%23FFFFff&rss1=%23FFFFff&rss2=%233333CC&rss3=%23958998&rss4=%23090809&rss5=&rss6=%23e10900&rsi5=4&ts=1&at=7&cn=3&if=0&word=http%3A%2F%2Ffont.knowsky.com%2F&refer=&ch=0&lmt=1245482245&csp=1280,1024&ccd=32&chi=1&cja=true&cpl=0&cmi=0&cce=true&csl=zh-cn&rt=47&cad=1&aurl=&rss7=&cpa=1&dt=1245574028&pn=4:3|text_default_728_90:text_default_580_90&ev=50331648&jn=1
+[InternetShortcut]
+URL=http://font.knowsky.com/
+Modified=A08C96DC4CF2C901A6

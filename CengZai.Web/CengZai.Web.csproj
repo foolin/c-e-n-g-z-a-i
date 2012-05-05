@@ -1,0 +1,398 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{38606E1C-849E-4CD4-9FF1-54E49F84A565}</ProjectGuid>
+    <ProjectTypeGuids>{E53F8FEA-EAE0-44A6-8774-FFD645390401};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CengZai.Web</RootNamespace>
+    <AssemblyName>CengZai.Web</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>false</UseIISExpress>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <FilesToIncludeForPublish>OnlyFilesToRunTheApp</FilesToIncludeForPublish>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages" />
+    <Reference Include="System.Web.Helpers" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="404.aspx.cs">
+      <DependentUpon>404.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="404.aspx.designer.cs">
+      <DependentUpon>404.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Common\CheckAuthFilter.cs" />
+    <Compile Include="Common\ErrorFilter.cs" />
+    <Compile Include="Common\LowerCaseUrlRoute.cs" />
+    <Compile Include="Common\LowerCaseUrlRouteMapHelper.cs" />
+    <Compile Include="Common\WebHelper.cs" />
+    <Compile Include="Controllers\BlogController.cs" />
+    <Compile Include="Controllers\FriendController.cs" />
+    <Compile Include="Controllers\InboxController.cs" />
+    <Compile Include="Controllers\LoverController.cs" />
+    <Compile Include="Controllers\OAuthController.cs" />
+    <Compile Include="Controllers\SettingsController.cs" />
+    <Compile Include="Controllers\SquareController.cs" />
+    <Compile Include="Controllers\ToolController.cs" />
+    <Compile Include="page\VerifyCode.aspx.cs">
+      <DependentUpon>VerifyCode.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="page\VerifyCode.aspx.designer.cs">
+      <DependentUpon>VerifyCode.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\AboutController.cs" />
+    <Compile Include="Controllers\ArticleController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="404.aspx" />
+    <Content Include="Dlls\Newtonsoft.Json.dll" />
+    <Content Include="Dlls\Newtonsoft.Json.pdb" />
+    <Content Include="Dlls\Newtonsoft.Json.xml" />
+    <Content Include="Dlls\QConnectSDK.dll" />
+    <Content Include="Dlls\QConnectSDK.pdb" />
+    <Content Include="Dlls\QConnectSDK.XML" />
+    <Content Include="Dlls\README.txt" />
+    <Content Include="Dlls\RestSharp.dll" />
+    <Content Include="resource\css\blog.css" />
+    <Content Include="resource\css\bootstrap-responsive.css" />
+    <Content Include="resource\css\bootstrap-responsive.min.css" />
+    <Content Include="resource\img\bg.jpg" />
+    <Content Include="resource\img\blog\blog-bg.jpg" />
+    <Content Include="resource\img\blog\blog-bg1.jpg" />
+    <Content Include="resource\img\blog\blog-bg2.jpg" />
+    <Content Include="resource\img\blog\blog-bg3.jpg" />
+    <Content Include="resource\img\blog\blog-bg4.jpg" />
+    <Content Include="resource\img\blog\blog-bg5.jpg" />
+    <Content Include="resource\img\blog\blog-bg6.jpg" />
+    <Content Include="resource\img\blog\blog-skin-thumbnail.jpg" />
+    <Content Include="resource\img\blog\blog-skin1-thumbnail.jpg" />
+    <Content Include="resource\img\blog\blog-skin2-thumbnail.jpg" />
+    <Content Include="resource\img\blog\blog-skin3-thumbnail.jpg" />
+    <Content Include="resource\img\blog\blog-skin4-thumbnail.jpg" />
+    <Content Include="resource\img\blog\blog-skin5-thumbnail.jpg" />
+    <Content Include="resource\img\blog\blog-skin6-thumbnail.jpg" />
+    <Content Include="resource\img\btn-background.jpg" />
+    <Content Include="resource\img\btn-background.png" />
+    <Content Include="resource\img\btn-upload.png" />
+    <Content Include="resource\img\btn_douban.gif" />
+    <Content Include="resource\img\btn_qq.gif" />
+    <Content Include="resource\img\btn_qzone.gif" />
+    <Content Include="resource\img\btn_sina.gif" />
+    <Content Include="resource\img\certificate_bg2.jpg" />
+    <Content Include="resource\img\certificate_cover_end.png" />
+    <Content Include="resource\img\certificate_cover_end1.png" />
+    <Content Include="resource\img\certificate_cover_start.png" />
+    <Content Include="resource\img\certificate_cover_start1.png" />
+    <Content Include="resource\img\certificate_left.png" />
+    <Content Include="resource\img\certificate_right.png" />
+    <Content Include="resource\img\ico_qzone_16x16.png" />
+    <Content Include="resource\img\ico_renren_16x16.png" />
+    <Content Include="resource\img\ico_sina_16x16.png" />
+    <Content Include="resource\img\ico_tencent_16x16.png" />
+    <Content Include="resource\img\ico_tudou_16x16.png" />
+    <Content Include="resource\img\ie-certificate_bg.jpg" />
+    <Content Include="resource\img\ie-certificate_cover_love.png" />
+    <Content Include="resource\img\ie-certificate_cover_marry.png" />
+    <Content Include="resource\img\left-corner.png" />
+    <Content Include="resource\img\logo1.png" />
+    <Content Include="resource\img\logo2.png" />
+    <Content Include="resource\img\logo_topbar1.png" />
+    <Content Include="resource\img\noavatar.jpg" />
+    <Content Include="resource\img\证件内容背景.png" />
+    <Content Include="resource\js\dialog\artDialog.min.js" />
+    <Content Include="resource\js\dialog\artDialog.plugins.min.js" />
+    <Content Include="resource\js\dialog\index.html" />
+    <Content Include="resource\js\dialog\jquery.artDialog.min.js" />
+    <Content Include="resource\js\dialog\license.txt" />
+    <Content Include="resource\js\dialog\skins\default.css" />
+    <Content Include="resource\js\dialog\skins\loading.gif" />
+    <Content Include="resource\js\dialog\skins\simple.css" />
+    <Content Include="resource\js\dialog\skins\twitter.css" />
+    <Content Include="resource\js\dialog\source\artDialog.js" />
+    <Content Include="resource\js\dialog\source\artDialog.plugins.js" />
+    <Content Include="resource\js\dialog\source\jquery.artDialog.js" />
+    <Content Include="resource\js\calendar\calendar.css" />
+    <Content Include="resource\js\calendar\calendar_day.png" />
+    <Content Include="resource\js\calendar\jquery.calendar.js" />
+    <Content Include="resource\js\core.js" />
+    <Content Include="resource\js\mvc\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="resource\js\mvc\jquery.validate.min.js" />
+    <Content Include="resource\js\mvc\jquery.validate.unobtrusive.min.js" />
+    <Content Include="resource\js\mvc\MicrosoftAjax.js" />
+    <Content Include="resource\js\mvc\MicrosoftMvcAjax.js" />
+    <Content Include="resource\js\jcrop\css\Jcrop.gif" />
+    <Content Include="resource\js\jcrop\css\jquery.Jcrop.css" />
+    <Content Include="resource\js\jcrop\demos\demo_files\demos.css" />
+    <Content Include="resource\js\jcrop\demos\demo_files\flowers.jpg" />
+    <Content Include="resource\js\jcrop\demos\demo_files\sago.jpg" />
+    <Content Include="resource\js\jcrop\demos\demo_files\sagomod.jpg" />
+    <Content Include="resource\js\jcrop\demos\demo_files\sagomod.png" />
+    <Content Include="resource\js\jcrop\demos\tutorial1.html" />
+    <Content Include="resource\js\jcrop\demos\tutorial2.html" />
+    <Content Include="resource\js\jcrop\demos\tutorial3.html" />
+    <Content Include="resource\js\jcrop\demos\tutorial4.html" />
+    <Content Include="resource\js\jcrop\demos\tutorial5.html" />
+    <Content Include="resource\js\jcrop\index.html" />
+    <Content Include="resource\js\jcrop\js\jquery.color.js" />
+    <Content Include="resource\js\jcrop\js\jquery.Jcrop.js" />
+    <Content Include="resource\js\jcrop\js\jquery.Jcrop.min.js" />
+    <Content Include="resource\js\jcrop\MIT-LICENSE.txt" />
+    <Content Include="resource\js\swfupload\fileprogress.js" />
+    <Content Include="resource\js\swfupload\handlers.js" />
+    <Content Include="resource\js\turn.min.js" />
+    <Content Include="page\VerifyCode.aspx" />
+    <Content Include="resource\css\bootstrap.css" />
+    <Content Include="resource\css\bootstrap.min.css" />
+    <Content Include="resource\css\login.css" />
+    <Content Include="resource\css\style.css" />
+    <Content Include="resource\img\box-icons.png" />
+    <Content Include="resource\img\box-icons2.png" />
+    <Content Include="resource\img\box_top_bg.png" />
+    <Content Include="resource\img\box_triangle.png" />
+    <Content Include="resource\img\favicon.ico" />
+    <Content Include="resource\img\glyphicons-halflings-white.png" />
+    <Content Include="resource\img\glyphicons-halflings.png" />
+    <Content Include="resource\img\upload-photo.png" />
+    <Content Include="resource\js\bootstrap.js" />
+    <Content Include="resource\js\bootstrap.min.js" />
+    <Content Include="resource\js\html5.js" />
+    <Content Include="resource\js\imgzoom\images\css3buttons_backgrounds.png" />
+    <Content Include="resource\js\imgzoom\images\icons.png" />
+    <Content Include="resource\js\imgzoom\images\img.png" />
+    <Content Include="resource\js\imgzoom\images\loading.gif" />
+    <Content Include="resource\js\imgzoom\images\max.ico" />
+    <Content Include="resource\js\imgzoom\images\min.ico" />
+    <Content Include="resource\js\imgzoom\images\zoom.ico" />
+    <Content Include="resource\js\imgzoom\images\zoomin.cur" />
+    <Content Include="resource\js\imgzoom\images\zoomout.cur" />
+    <Content Include="resource\js\imgzoom\index.html" />
+    <Content Include="resource\js\imgzoom\jquery-1.6.1.min.js" />
+    <Content Include="resource\js\imgzoom\jquery.artZoom.css" />
+    <Content Include="resource\js\imgzoom\jquery.artZoom.js" />
+    <Content Include="resource\js\imgzoom\jquery.artZoom.min.js" />
+    <Content Include="resource\js\jquery.min.js" />
+    <Content Include="resource\js\kindeditor\kindeditor-min.js" />
+    <Content Include="resource\js\kindeditor\kindeditor.js" />
+    <Content Include="resource\js\kindeditor\lang\zh_CN.js" />
+    <Content Include="resource\js\kindeditor\license.txt" />
+    <Content Include="resource\js\kindeditor\themes\common\anchor.gif" />
+    <Content Include="resource\js\kindeditor\themes\common\blank.gif" />
+    <Content Include="resource\js\kindeditor\themes\common\flash.gif" />
+    <Content Include="resource\js\kindeditor\themes\common\loading.gif" />
+    <Content Include="resource\js\kindeditor\themes\common\media.gif" />
+    <Content Include="resource\js\kindeditor\themes\common\rm.gif" />
+    <Content Include="resource\js\kindeditor\themes\default\bg.gif" />
+    <Content Include="resource\js\kindeditor\themes\default\default.css" />
+    <Content Include="resource\js\kindeditor\themes\default\default.png" />
+    <Content Include="resource\js\kindeditor\themes\simple\simple.css" />
+    <Content Include="resource\js\swfupload\swfupload.cookies.js" />
+    <Content Include="resource\js\swfupload\swfupload.js" />
+    <Content Include="resource\js\swfupload\swfupload.proxy.js" />
+    <Content Include="resource\js\swfupload\swfupload.queue.js" />
+    <Content Include="resource\js\swfupload\swfupload.speed.js" />
+    <Content Include="resource\js\swfupload\swfupload.swf" />
+    <Content Include="resource\js\swfupload\swfupload_fp9.swf" />
+    <Content Include="Global.asax" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\" />
+    <Folder Include="resource\js\kindeditor\attached\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\Register.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CengZai.Core\CengZai.csproj">
+      <Project>{939C462C-17FF-4CDD-8F01-D1FB46218A42}</Project>
+      <Name>CengZai</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CengZai.OAuthSDK\CengZai.OAuthSDK.csproj">
+      <Project>{9CD3B146-A006-479F-8762-9C12275EA0F4}</Project>
+      <Name>CengZai.OAuthSDK</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\Login.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\RegisterOk.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\Activate.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Article\PostImage.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Article\PostAudio.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Article\PostVideo.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Article\PostLink.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Article\PostText.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\JumpTo.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resource\js\jcrop\build\LICENSE" />
+    <None Include="resource\js\jcrop\build\minimize.bash" />
+    <None Include="resource\js\jcrop\build\pre-commit.bash" />
+    <None Include="resource\js\jcrop\build\README" />
+    <None Include="resource\js\jcrop\demos\crop.php" />
+    <None Include="resource\psd\CengZai_Ico.psd" />
+    <None Include="resource\psd\logo_topbar.psd" />
+    <Content Include="Views\Account\_LoginLayout.cshtml" />
+    <Content Include="Views\About\Us.cshtml" />
+    <Content Include="Views\About\Agreement.cshtml" />
+    <Content Include="Views\About\Privacy.cshtml" />
+    <Content Include="Views\About\Join.cshtml" />
+    <Content Include="Views\About\_NavList.cshtml" />
+    <Content Include="Views\Account\ResendActivate.cshtml" />
+    <Content Include="Views\Lover\Apply.cshtml" />
+    <Content Include="Views\Lover\Accept.cshtml" />
+    <Content Include="Views\Lover\Preview.cshtml" />
+    <Content Include="Views\Lover\Index.cshtml" />
+    <Content Include="Views\Lover\Abolish.cshtml" />
+    <Content Include="Views\Lover\_MyLoverInfo.cshtml" />
+    <Content Include="Views\Lover\UnAccept.cshtml" />
+    <Content Include="Views\Lover\_BlogHeader.cshtml" />
+    <Content Include="Views\Inbox\Send.cshtml" />
+    <Content Include="Views\Inbox\Read.cshtml" />
+    <Content Include="Views\Inbox\Index.cshtml" />
+    <Content Include="Views\Settings\Profile.cshtml" />
+    <Content Include="Views\Settings\Password.cshtml" />
+    <Content Include="Views\Settings\Avatar.cshtml" />
+    <Content Include="Views\Settings\_SettingNav.cshtml" />
+    <Content Include="Views\Blog\Certificate.cshtml" />
+    <Content Include="Views\Article\Index.cshtml" />
+    <None Include="resource\psd\UploadImage.psd" />
+    <None Include="resource\psd\结婚证封面.psd" />
+    <None Include="resource\psd\证件内容背景.psd" />
+    <None Include="resource\psd\证件封面.psd" />
+    <None Include="resource\psd\证件背面.psd" />
+    <Content Include="Views\Blog\Blog.cshtml" />
+    <Content Include="Views\Blog\Article.cshtml" />
+    <Content Include="Views\Friend\FeedFriendsForFirstLogin.cshtml" />
+    <Content Include="Views\Friend\Find.cshtml" />
+    <Content Include="Views\Friend\List.cshtml" />
+    <Content Include="Views\Friend\Invite.cshtml" />
+    <Content Include="Views\Account\FindPassword.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Account\ApplyInvite.cshtml" />
+    <Content Include="Views\Blog\_BlogMaster.cshtml" />
+    <Content Include="Views\Shared\_Topbar.cshtml" />
+    <Content Include="Views\Square\Index.cshtml" />
+    <Content Include="Views\Shared\_Footer.cshtml" />
+    <Content Include="Views\OAuth\Register.cshtml" />
+    <Content Include="Views\OAuth\_OauthLoginLink.cshtml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>False</AutoAssignPort>
+          <DevelopmentServerPort>80</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

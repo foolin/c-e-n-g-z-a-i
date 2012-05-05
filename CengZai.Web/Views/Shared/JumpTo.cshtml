@@ -1,0 +1,43 @@
+﻿@{
+    if (ViewBag.Title == null)
+    {
+        ViewBag.Title = "跳转提示";
+    }
+    if (ViewBag.Message == null)
+    {
+        ViewBag.Message = "正在跳转，请稍后...";
+    }
+    if (ViewBag.Time == null)
+    {
+        ViewBag.Time = 5;//5秒
+    }
+}
+@section head{
+    @if (!string.IsNullOrEmpty(ViewBag.Url))
+    {
+        <text><meta http-equiv="refresh" content="@ViewBag.Time;url=@ViewBag.Url"></text>
+    }
+}
+
+<div class="container  bg-white">
+
+        <div class="padding">
+
+            <!--登记表单-->
+            <fieldset>
+            <legend>@ViewBag.Title</legend>
+                
+                <p style="padding:20px 10px; line-height:2em; font-size:14px;">@MvcHtmlString.Create(ViewBag.Message)</p>
+                
+                @if (@ViewBag.Time > 0 && !string.IsNullOrEmpty(ViewBag.Url))
+                {
+                    <p class="help-block">
+                        本页面将在<b>@ViewBag.Time</b>秒后自动跳转，如果没有跳转，<a href="@ViewBag.Url">请点击这里</a>
+                    </p>
+                }
+            </fieldset>
+      </div>
+</div>
+
+
+

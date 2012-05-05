@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "注册成功";
+    var email = ViewBag.Email as string;
+}
+
+<div class="container bg-white">
+<div class="padding">
+    <div class="page-header"> 
+        <h1>@ViewBag.Title</h1> 
+    </div> 
+    <div class = "well">
+        <p>
+            @MvcHtmlString.Create(ViewBag.Message)
+        </p>
+        <p>
+            @Html.ActionLink("点击这里返回登录", "Login", "Account")
+        </p>
+    </div>
+
+</div>
+</div>
+

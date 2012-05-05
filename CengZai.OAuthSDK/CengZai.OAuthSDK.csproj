@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9CD3B146-A006-479F-8762-9C12275EA0F4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CengZai.OAuthSDK</RootNamespace>
+    <AssemblyName>CengZai.OAuthSDK</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Api\BaseApi.cs" />
+    <Compile Include="Api\HelpUtil.cs" />
+    <Compile Include="Api\HttpUtil.cs" />
+    <Compile Include="Api\IConfig.cs" />
+    <Compile Include="Api\ILog.cs" />
+    <Compile Include="Api\JsonConvert.cs" />
+    <Compile Include="Api\OAuthToken.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QQ\Model\QQReturn.cs" />
+    <Compile Include="QQ\Model\QQUser.cs" />
+    <Compile Include="QQ\QQApi.cs" />
+    <Compile Include="QQ\QQConfig.cs" />
+    <Compile Include="RenRen\Model\_AccessTokenModel.cs" />
+    <Compile Include="RenRen\RenApi.cs" />
+    <Compile Include="RenRen\RenConfig.cs" />
+    <Compile Include="Sina\Model\SinaGeos.cs" />
+    <Compile Include="Sina\Model\SinaWeibo.cs" />
+    <Compile Include="Sina\Model\_AccessTokenModel.cs" />
+    <Compile Include="Sina\Model\SinaUser.cs" />
+    <Compile Include="Sina\SinaApi.cs" />
+    <Compile Include="Sina\SinaConfig.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

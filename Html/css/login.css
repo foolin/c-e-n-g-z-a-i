@@ -1,0 +1,74 @@
+@charset "utf-8";
+
+body,html{color:#555555; font-size:13px; font-family: 微软雅黑, Tahoma, Geneva, sans-serif;height: 100%; margin:0; padding:0;}
+a:link,a:visited{color:#06F; text-decoration:none;}
+a:hover,a:active{color:#F00; text-decoration:none;}
+p{ line-height:24px; margin:10px 0;}
+
+/* 头部样式 */
+header {height:120px; width:980px; margin:0 auto; display:block; background:url(../images/header-btn-line.png) bottom center no-repeat;}
+header h1 {float:left; margin:20px 0;}
+header nav{float:right;}
+header nav ul{margin-top:43px;}
+header nav li{list-style:none; float:left; margin-right:15px; display:block; }
+
+
+
+/* 内容区域样式 */
+article{display:block; margin:20px auto;width:980px;}
+article .slogan img{float:left; padding:30px 0;}
+article .side{float:right; width:280px; overflow:hidden;}
+.form label{display:block;}
+
+/* 边栏样式 */
+article .aside{width:240px;float:left; margin:20px 40px 20px 20px;}
+article .aside ul li{list-style:none; margin:10px 0; border-bottom:dotted 1px #CCC;}
+article .aside ul li a:link, article .aside ul li a:active{padding:8px 20px; display:block;}
+article .aside ul li a:hover, article .aside ul li a:active{ background: #CCC; color:#FFF; display:block; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; behavior: url(css/PIE.htc);}
+article .main-info{width:680px; float:left;}
+article .main-info h2{display:block; margin:20px 0; font-size:20px;} 
+
+/* 用于页脚置底 */
+#wrapper { min-height:100%; height: auto !important; height: 100%; /*IE6不识别min-height*/ position: relative;}
+
+
+/* 页脚样式 */
+footer{display:block; clear:both; background:#fafafa url(../images/footer-top-line.png) 0 0 repeat-x ; padding:20px 0; width:100%;bottom: 0; height:30px;/*脚部的高度*/ }
+footer nav{margin:0px auto; width:980px;display:block;}
+footer nav ul{ margin:0; padding:0;}
+footer nav li{list-style:none;margin-right:10px; float:left;}
+footer #copright{ float:right;}
+
+
+/* 弹出窗口测试表单 */
+#box h2{margin-bottom:15px;}
+input.text{padding: 9px;  border: solid 1px #E5E5E5;outline: 0; width: 200px;    
+ background: -webkit-gradient(linear, left top, left 25, from(#FFFFFF), color-stop(4%, #EEEEEE), to(#FFFFFF)); background: -moz-linear-gradient(top, #FFFFFF, #EEEEEE 1px, #FFFFFF 25px); }
+input.text:hover,
+input.text:focus{border-color: #C9C9C9;-webkit-box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 8px;  }  
+.btn-green {width: auto; padding: 9px 15px; margin-left:10px; background: #093;border: 0; font-size: 14px;color: #FFFFFF;  -moz-border-radius: 5px;  -webkit-border-radius: 5px; border-radius: 5px;}
+
+.btn-green2 {width: auto; padding: 9px 15px; margin-left:10px; background: #a4ca00;border: 0; font-size: 14px;color: #FFFFFF;  -moz-border-radius: 5px;  -webkit-border-radius: 5px; border-radius: 5px;}
+.btn-blue {width: auto; padding: 9px 15px; margin-left:10px; background: #a4ca00;border: 0; font-size: 14px;color: #FFFFFF;  -moz-border-radius: 5px;  -webkit-border-radius: 5px; border-radius: 5px;}
+.btn-orange {width: auto; padding: 9px 15px; margin-left:10px; background: #a4ca00;border: 0; font-size: 14px;color: #FFFFFF;  -moz-border-radius: 5px;  -webkit-border-radius: 5px; border-radius: 5px;}
+.btn-green a,.orange a{ color:#FFFFFF; text-decoration:none;}
+.btn-green a,.orange a:hover{ color:#FFFFFF; text-decoration:none;}
+
+
+
+/**** 按钮 ************/
+a.link-btn:link,a.link-btn:visited{color:#FFF;}
+a.link-btn:link,a.link-btn:visited{background:#a4ca00; padding:5px 8px;display:inline-block; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; behavior: url(PIE/PIE.htc);}
+a.link-btn:hover,a.link-btn:active{background-color:#add501;}
+a.link-btn1:link,a.link-btn1:visited{color:#FFF;}
+a.link-btn1:link,a.link-btn1:visited{background:#ff8100;padding:5px 8px;display:inline-block;-webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;behavior: url(PIE/PIE.htc);}
+a.link-btn1:hover,a.link-btn1:active{background-color:#fe9931;}
+a.link-btn2:link,a.link-btn2:visited{color:#FFF;}
+a.link-btn2:link,a.link-btn2:visited{background:#008dff;padding:5px 8px;display:inline-block;-webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;behavior: url(PIE/PIE.htc);}
+a.link-btn2:hover,a.link-btn2:active{background-color:#2a9efc;}
+
+/********** hr ********/
+.hr{ border:0; border-top:1px solid #cccccc; display:block; }
+
+
+*{margin: 0;padding:0;} .clearfix:before, .clearfix:after { content:""; display:table; } .clearfix:after { clear:both; } .clearfix { zoom:1; /* IE <8 */ }

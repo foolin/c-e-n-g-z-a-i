@@ -1,0 +1,405 @@
+@charset "utf-8";
+
+body{
+	font-size: 12px;
+	font-family: "Microsoft Yahei","微软雅黑",Tahoma,Arial,Helvetica,STHeiti;
+	background:url(../images/content_bg.png) repeat-x #dde1e5;
+}
+
+a{
+	color:#333333;
+}
+a:hover{
+	color:#FF0000;
+	text-decoration:underline;
+}
+.clear{ clear:both;}
+.clearfix{zoom: 1;}
+#wrapper{
+	height:100%;
+}
+
+/******** 顶部 ************/
+header{
+	height:72px;
+	background:url(../images/header_bg.png) repeat-x 0 -20px;
+}
+.header-inner{
+	width: 900px;
+	margin: 0 auto;
+	_overflow: hidden;
+}
+#logo{
+	float:left;
+	position: relative;
+}
+#logo a{
+	height: 71px;
+	width: 200px;
+	background:url(../images/logo_white.png) no-repeat 0 center;
+	display:block;
+	text-indent: -9999px;
+}
+nav.menu{
+	padding-top: 10px;
+	float:left;
+	position: relative;
+}
+nav.menu ul {
+	list-style: none;
+}
+nav.menu li {
+	float: left;
+}
+.nav-item-class{
+	color:#6f889a;
+	text-shadow:1px 1px 2px #0b2c45;
+	font-size:16px
+}
+nav.menu {
+	padding-top:10px;
+	float:left
+}
+nav.menu ul{
+	list-style: none;
+}
+nav.menu ul li{
+	float:left;
+	position: relative;
+}
+nav.menu ul li a.nav-item{
+	float:left;
+	height:62px;
+	line-height:62px;
+	padding:0 13px;
+	color:#6f889a;
+	text-shadow:1px 1px 2px #0b2c45;
+	font-size:16px;
+	text-decoration:none;
+	
+}
+nav.menu ul li.active a.nav-item{
+	background:url(../images/header_bg.png) no-repeat center 51px;
+	color:#fff
+}
+nav.menu ul li a.nav-item:hover{
+	color:#fff
+}
+
+nav.action{
+	float:right;
+	position: relative;
+	padding-top: 32px;
+	height: 33px;
+	position: relative;
+}
+nav.action .action-item{
+	float: left;
+	margin-left: 20px;
+	display: inline;
+	position: relative;
+	zoom: 1;
+}
+nav.action li.action-item a{
+	color:#CCC;
+	text-decoration:none;
+}
+nav.action li.action-item a:hover{
+	color:#ffffff;
+	text-decoration:underline;
+}
+nav.action li.action-item a.action-icon{
+	overflow: hidden;
+	display: block;
+	height: 20px;
+	width: 20px;
+	background-repeat: no-repeat;
+	text-indent: -999px;
+	background-image: url('../images/header-icons.png');
+	_background-image: url('/img/icon/header-icons-ie.png');
+}
+nav.action li.action-item  a.discovery {
+	background-position: 0 -98px;
+}
+nav.action a.discovery:hover
+,nav.action .active a.discovery{
+	
+	background-position:0 -128px
+}
+nav.action a.inbox {
+	background-position: -36px -98px;
+}
+nav.action a.inbox:hover,nav.action .active a.inbox{
+	background-position: -36px -128px;
+}
+nav.action a.settings {
+	background-position: -72px -98px;
+}
+nav.action a.settings:hover,nav.action .active a.settings{
+	background-position: -72px -128px;
+}
+nav.action a.logout {
+	background-position: -109px -98px;
+}
+nav.action a.logout:hover,nav.action .active a.logout{
+	background-position: -109px -128px;
+}
+
+/***********内容区域 ***********/
+#content{
+	padding-bottom: 20px;
+	padding-top: 20px;
+	width:900px;
+	margin:0 auto;
+	position:relative;
+
+}
+#main{
+	float:left;
+	width:625px;
+}
+#side{
+	float:right;
+	width:250px;
+	background:#0000FF;
+}
+
+/*** poster *****/
+.poster{
+
+}
+.avatar{
+	float:left;
+	position:relative;
+}
+.avatar a.blog-avatar {
+	display: block;
+	width: 64px;
+	height: 64px;
+	background-position: center center;
+	text-indent: -9999px;
+	outline: none;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	box-shadow: 0 1px 2px #b0b3b6;
+	-moz-box-shadow: 0 1px 2px #b0b3b6;
+	-webkit-box-shadow: 0 1px 2px #b0b3b6;
+	box-shadow: 0 1px 2px #b0b3b6;
+	-moz-box-shadow: 0 1px 2px #b0b3b6;
+	-webkit-box-shadow: 0 1px 2px #b0b3b6;
+	box-shadow: 0 1px 2px #b0b3b6;
+	-moz-box-shadow: 0 1px 2px #b0b3b6;
+	-webkit-box-shadow: 0 1px 2px #b0b3b6;
+}
+.poster-action{
+	float:right;
+	width: 544px;
+	position: relative;
+	margin: -2px -2px -2px 19px;
+}
+.box-triangle {
+	height: 20px;
+	width: 17px;
+	background:url(../images/box_triangle.png) no-repeat;
+	position: absolute;
+	left: -15px;
+	top: 24px;
+	z-index: 1;
+	overflow: hidden;
+}
+.box-shadow-top {
+	height: 5px;
+	background: url('../images/box_top_bg.png') 0 0 no-repeat;
+}
+.box-content{
+	background: url('../images/box_top_bg.png') -1200px 0 repeat-y;
+}
+.box-shadow-bottom {
+	height: 10px;
+	background: url('../images/box_top_bg.png') -600px bottom no-repeat;
+}
+.poster .poster-action ul {
+padding: 10px 20px 5px;
+}
+.poster .poster-action ul li{
+	float: left;
+}
+.poster .poster-action ul li a {
+	display: block;
+	width: 100px;
+	height: 74px;
+	background: url('../images/poster.png') no-repeat 0 0;
+	text-indent: -9999px;
+	outline: none;
+}
+.poster .poster-action ul li a:hover{
+	background-position:0 -74px
+}
+.poster .poster-action .music{
+	background-position:-200px 0
+	}
+.poster .poster-action .music:hover{
+	background-position:-200px -74px
+}
+.poster .poster-action .photo{
+	background-position:-100px 0
+}
+.poster .poster-action .photo:hover{
+	background-position:-100px -74px
+}
+.poster .poster-action .video{
+	background-position:-300px 0
+}
+.poster .poster-action .video:hover{
+	background-position:-300px -74px
+}
+.poster .poster-action .link{
+	background-position:-400px 0
+}
+.poster .poster-action .link:hover{
+	background-position:-400px -74px
+}
+
+/*** feed *****/
+.feed, .feed-header, .feed-cotent {
+	zoom: 1;
+}
+.feed-list {
+	clear: both;
+	padding: 5px 0;
+}
+
+.feed {
+	margin: 10px 0;
+	color: #444;
+	padding: 5px 0;
+	position: relative;
+}
+
+.feed .feed-header {
+	padding: 15px 22px 0;
+	overflow: hidden;
+}
+.feed .feed-header a{
+	color:#999;
+	text-decoration:none;
+}
+.feed .feed-header a:hover{
+	color:#ff0000;
+}
+.feed .feed-title {
+	padding:10px 20px;
+	color: #444;
+	font-size: 22px;
+	font-weight: normal;
+	_font-weight: bold;
+	line-height: 1.3em;
+	margin: 10px 0 0;
+	word-wrap: break-word;
+	clear: both;
+	overflow: hidden;
+	_overflow: visiable;
+}
+.feed .feed-content {
+	padding: 20px;
+	overflow: hidden;
+	line-height: 20px;
+}
+.feed .link-to-post-holder{
+	position:absolute;right:-2px;
+	top:-3px;
+	z-index:1
+}
+.feed a.link-to-post{
+	display:block;
+	text-indent:-9999px;
+	outline:none;
+	background:url("../images/feed-icons.png") no-repeat 0 -90px;
+	_background:url("/img/icon/feed-icons-ie.$5106.png") no-repeat 0 -90px;
+	width:30px;
+	height:32px
+}
+@-webkit-keyframes animLinkToPost{
+	0%{background-position:0 -90px}
+	10%{background-position:-40px -90px}
+	30%{background-position:-80px -90px}
+	70%{background-position:-120px -90px}
+	100%{background-position:-160px -90px}
+}
+@-moz-keyframes animLinkToPost{
+	0%{background-position:0 -90px}
+	10%{background-position:-40px -90px}
+	30%{background-position:-80px -90px}
+	70%{background-position:-120px -90px}
+	100%{background-position:-160px -90px}
+}
+@-ms-keyframes animLinkToPost{
+	0%{background-position:0 -90px}
+	10%{background-position:-40px -90px}
+	30%{background-position:-80px -90px}
+	70%{background-position:-120px -90px}
+	100%{background-position:-160px -90px}
+}
+.feed a.link-to-post:hover{
+	background-position:-160px -90px;
+	-webkit-animation:animLinkToPost 100ms step-start;
+	-moz-animation:animLinkToPost 100ms step-start;
+	-ms-animation:animLinkToPost 100ms step-start
+}
+.feed .feed-tag {
+	float: left;
+	margin-left:20px;
+	padding-bottom:10px;
+	color: #A8B1BA;
+	width: 220px;
+	height: 14px;
+	line-height: 14px;
+	overflow: hidden;
+	display: block;
+}
+.feed .feed-action {
+	float: right;
+	margin-right:20px;
+	padding-bottom:10px;
+}
+.feed .feed-tag a,.feed .feed-action a {
+	color: #999;
+	text-decoration: none;
+}
+.feed .feed-tag a:hover,.feed .feed-action a:hover {
+	color: #ff0000;
+	text-decoration:underline;
+}
+/********** 底部 ****************/
+footer{
+	border-top:solid 1px #ccc;
+	line-height:1.5em;
+	padding-top:10px;
+}
+#footer-inner{
+	margin:0 auto;
+	width:900px;
+	text-align:center;
+	
+}
+footer nav {
+	margin-left:40%;
+}
+footer nav ul{
+	list-style:none;
+}
+footer nav ul li{
+	float:left;
+	position:relative;
+	margin-left:5px;
+}
+footer #copright{
+	line-height:30px;
+}

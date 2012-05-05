@@ -1,0 +1,110 @@
+﻿@{
+    ViewBag.Title = "我的首页";
+    var user = ViewBag.User as CengZai.Model.User;
+    var myLover = ViewBag.MyLover as CengZai.Model.Lover;
+    var receiveLoverList = ViewBag.ReceiveLoverList as List<CengZai.Model.Lover>;
+    var topLoverList = ViewBag.TopLoverList as List<CengZai.Model.Lover>;
+    var imgPath = "";
+}
+@section head{
+<style type="text/css">
+.caption
+{
+	color:#666;
+}
+.caption h5
+{
+	padding:5px;
+}
+</style>
+<script type="text/javascript">
+//    $(document).ready(function () {
+//        $('.thumbnail .caption p').slideUp();
+//        $('.thumbnail').hover(
+//		function () {
+//		    $(this).find(".caption p").slideDown();
+//		},
+//		 function () {
+//		     $(this).find(".caption p").slideUp();
+//		 }
+//        );
+//    });
+</script>
+}
+
+<div class="container  bg-white">
+<div class="padding">
+
+        
+    @if (receiveLoverList != null && receiveLoverList.Count > 0)
+    {
+        <div class="alert alert-block"> 
+            <a class="close" data-dismiss="alert" href="#">&times;</a> 
+            <h4 class="alert-heading">@ViewBag.User.Nickname，您收到 @receiveLoverList.Count 个好友的登记申请!</h4> 
+            <ul>
+                @foreach(CengZai.Model.Lover m in receiveLoverList){
+                <li>@Html.ActionLink("" + Html.GetUserNickname(m.ApplyUserID) + "向您提交【" + Html.GetCertificateName(m.Certificate) + "】登记申请","Preview",new {LoverID=m.LoverID})</li>
+                }
+            </ul>
+        </div>
+    }
+
+    <div class="well"> 
+    @if (myLover != null)
+    {
+        if (myLover.State == 1)
+        {
+            @Html.ActionLink("查看我的" + Html.GetCertificateName(myLover.Certificate), "Certificate", "Blog", new { username=@user.Username }, new { @class = "btn btn-large btn-primary" })
+        }
+        else
+        {
+            @Html.ActionLink("查看我的" + Html.GetCertificateName(myLover.Certificate) + "状态", "Preview", "Lover", new { LoverID = @myLover.LoverID }, new { @class = "btn btn-large btn-primary" })
+        }
+    }
+    else
+    {
+        <p><h4 class="alert-heading">@ViewBag.User.Nickname，您尚未申请登记!</h4> </p>
+        <p>登记是爱情的见证，是承诺的表示方式，不管是正在恋爱还是已经结婚，都可以！快快和自己的另一半登记吧，与其被动地等待还不如主动抓住幸福!</p> 
+        <p>
+            @Html.ActionLink("我要申请登记", "Apply", "Lover", null, new { @class = "btn btn-large btn-success" })
+        </p> 
+    }
+    </div>
+    
+    <!--内容区域-->
+    <ul class="thumbnails">
+        @if (topLoverList != null || topLoverList.Count > 0)
+        {
+            for(var i=0; i < topLoverList.Count; i++)
+            {
+                imgPath =  Url.GetAvatarUrl(topLoverList[i].Avatar);
+                var boy = Html.GetUser(topLoverList[i].BoyUserID);
+                var girl = Html.GetUser(topLoverList[i].GirlUserID);
+                var applyUser = boy;
+                if(girl.UserID == topLoverList[i].ApplyUserID){
+                    applyUser = girl;
+                }
+            <li class="span3">
+              <div class="thumbnail">
+                <img src="@imgPath" alt="合影">
+                <div class="caption">
+                  <h5>
+                    @Html.ActionLink(boy.Nickname, "Certificate", "Blog", new { username = boy.Username }, new { target="_blank" })
+                    & 
+                    @Html.ActionLink(girl.Nickname, "Certificate", "Blog", new { username = girl.Username }, new { target = "_blank" })</h5>
+                  <p>证书类型：@Html.ActionLink(@Html.GetCertificateName(topLoverList[i].Certificate), "Certificate", "Blog", new { username = applyUser.Username }, new { target = "_blank" })</p>
+                  <p>@Html.GetLoverRelation(topLoverList[i].Certificate)日期：@Html.GetDateFormat(topLoverList[i].JoinDate, "yyyy年M月d日")</p>
+                  <p>@Html.ActionLink("访问主页", "Blog", "Blog", new { @username = applyUser.Username }, new { @class = "btn", target = "_blank" })</p>
+                </div>
+              </div>
+            </li>
+            }
+        }
+    </ul>
+    <!--/内容区域-->
+
+</div>
+</div>
+
+
+

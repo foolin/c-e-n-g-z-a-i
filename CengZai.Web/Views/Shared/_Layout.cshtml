@@ -1,0 +1,45 @@
+﻿@{
+    
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.SiteName - @ViewBag.Title</title>
+    <meta name="keywords" content="@ViewBag.SiteKeyword" />
+    <meta name="description" content="@ViewBag.SiteDescription" />
+    <meta property="qc:admins" content="1541240606635672116375" />
+    <link href="@Url.GetResourceUrl("/css/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.GetResourceUrl("/css/style.css")" rel="stylesheet" type="text/css" />
+    
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="@Url.GetResourceUrl("/js/html5.js")" type="text/javascript"></script>
+    <![endif]-->
+    <script src="@Url.GetResourceUrl("/js/jquery.min.js")" type="text/javascript"></script>
+    <script src="@Url.GetResourceUrl("/js/bootstrap.min.js")" type="text/javascript"></script>
+    <script src="@Url.GetResourceUrl("/js/mvc/MicrosoftAjax.js")" type="text/javascript"></script> 
+    <script src="@Url.GetResourceUrl("/js/mvc/MicrosoftMvcAjax.js")" type="text/javascript"></script>
+    <script src="@Url.GetResourceUrl("/js/mvc/jquery.unobtrusive-ajax.min.js")" type="text/javascript"></script>
+    <link href="@Url.GetResourceUrl("/js/dialog/skins/twitter.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.GetResourceUrl("/js/dialog/jquery.artDialog.min.js")" type="text/javascript"></script>
+    <script src="@Url.GetResourceUrl("/js/dialog/artDialog.plugins.min.js")" type="text/javascript"></script>
+    <script src="@Url.GetResourceUrl("/js/core.js")" type="text/javascript"></script>
+    <link rel="shortcut icon" href="@Url.GetResourceUrl("img/favicon.ico")">
+@*    <!-- Le fav and touch icons -->
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">*@
+    @RenderSection("head", false)
+</head>
+
+<body>
+@Html.Partial("_Topbar")
+
+@RenderBody()
+
+<hr class="hr-gray" />
+
+@Html.Partial("_Footer")
+</body>
+</html>
+

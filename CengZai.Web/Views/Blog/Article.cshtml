@@ -1,0 +1,19 @@
+﻿@{
+    
+    Layout = "~/Views/Blog/_BlogMaster.cshtml";
+    var art = ViewBag.Article as CengZai.Model.Article;
+    var artUser = Html.GetUser(art.UserID);
+    ViewBag.Title = (art.Title ?? "")  + artUser.Nickname + "的博客";
+}
+
+    <!--内容区域-->
+    <div class="article">
+        <p>您的位置：<a href="@Url.BlogUrl(artUser.Username, true)"><b>@artUser.Nickname</b>的博客</a> -> <a>日志正文</a></p>
+        @if (!string.IsNullOrEmpty(art.Title))
+        {
+            <h2>@art.Title </h2>
+        }
+        <p class="font14 muted">作者：@Html.GetUserNickname(art.UserID) | 发表:@Html.GetDateFormat(art.PostTime, "yyyy-M-d HH:mm:ss") | 阅读：<b>@art.ViewCount</b>次</p>
+        <div class="art-content" style="font-size:14px;">@MvcHtmlString.Create(art.Content)</div>
+    </div>
+    <!--/内容区域-->

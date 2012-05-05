@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "我要注销";
+    var user = ViewBag.User as CengZai.Model.User;
+    var lover = ViewBag.Lover as CengZai.Model.Lover;
+}
+@section head{
+    <style type="text/css">
+        .table th
+        {
+            vertical-align:top;
+        }
+    </style>
+}
+
+
+<div class="container  bg-white">
+
+        <div class="padding">
+           @using (Html.BeginForm("Abolish", "Lover", FormMethod.Post, new { @class = "form-horizontal"}))
+           {
+            <!--登记表单-->
+            <fieldset>
+            <legend>注销我们的【@Html.GetCertificateName(@lover.Certificate)】<span class="help-block">信息预览</span></legend>
+                @RenderPage("_MyLoverInfo.cshtml", new { Lover = lover })
+                <hr />
+                <div class="label label-warning">
+                  注意：注销将会立刻解除您和Ta的关系！而且您们相关资料也会自动删除，请慎重操作！
+                </div>
+                <div class="alert alert-error">
+                  <p class="font14">两个人相爱相遇是缘分，相爱不容易，只要两人真心相爱的，一切都会挺过去！感情需要双方努力和付出，才能结出盛夏的果实！
+                  两个人相处，偶尔吵吵架闹闹小脾气很正常，有时候不是非得走到这一步！
+                  </p>
+                  <p class="font14">建议：最好冷静最少一个月到三个月，如果过后还觉得还是需要注销，那就过来注销吧！</p>
+                </div>
+                <input type="hidden" name="loverID" value="@lover.LoverID" />
+                <div class="control-group">
+                    <label class="control-label" for="why">注销原因：</label>
+                    <div class="controls">
+                        <textarea name="why" id="why" class="input-xlarge" style="width:400px;" rows="8"></textarea>
+                        <span class="field-validation-error" data-valmsg-for="why" id="tips-why" data-valmsg-replace="true"></span>
+                        <p class="help-block"></p>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">&nbsp;</label>
+                    <div class="controls">
+                    <input type="submit" class="btn btn-danger" value="立刻注销" onclick="return confirm('警告！！！\n注销后您和对方的关系将被解除！资料也会删除！\n确定继续注销？？？');" />
+                    @Html.ActionLink("放弃操作并返回", "Index", "Lover", new {@class="btn btn-primary" })
+                    </div>
+                </div>
+                
+                
+            </fieldset>
+           }
+      </div>
+</div>

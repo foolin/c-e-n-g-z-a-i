@@ -1,0 +1,116 @@
+﻿@{
+    ViewBag.Title = "发送私信";
+    var touser = ViewBag.ToUser as CengZai.Model.User;
+    if(touser == null){
+        touser = new CengZai.Model.User();
+    }
+    var friendList = ViewBag.FriendList as List<CengZai.Model.User>;
+}
+
+@section head{
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#error").hide();
+        $("#friendList").change(function () {
+            $("#nickname").val($(this).find("option:selected").text());
+            $("#toUserID").val($(this).val());
+            
+        });
+    });
+
+    function beginSubmit() {
+        $("#error").hide();
+        $('#save').button('发送中...');
+    }
+
+    function succ(err) {
+        err = eval(err);
+        if (!err) {
+            alert("操作异常！");
+        }
+        if (err.id == "success") {
+            alert(err.msg);
+            window.location.href = "/Inbox";
+            return;
+        }
+        else {
+            $("#errmsg").html(err.msg);
+            $("#error").show();
+        }
+        $('#save').button('reset');
+    }
+
+    function fail(res) {
+        $("#errmsg").html(res.responseText);
+        $("#error").show();
+        $('#save').button('reset');
+    }
+</script>
+}
+
+<div class="container">
+    <div class="row-fluid">
+      <div class="span8 bg-white">
+      <div class="padding">
+        
+            <div class="page-header">
+            <h2>发送私信</h2> 
+            </div>
+
+            @*@using (Html.BeginForm("Send", "Inbox", FormMethod.Post, new {@class="form-horizontal"}))*@
+            @using (Ajax.BeginForm(new AjaxOptions { OnSuccess = "succ", OnFailure = "fail", OnBegin = "beginSubmit" }))
+            {
+                <p>
+                    <label>用户</label>
+                    @Html.Hidden("toUserID", touser.UserID)
+                    @if (touser != null && touser.UserID > 0)
+                    {
+                        @Html.TextBox("nickname", touser.Username, new { disabled = "disabled", @class = "input-middle" })
+                    }
+                    else
+                    {
+                        if (friendList != null && friendList.Count > 0)
+                        {
+                             <select id="friendList"class = "input-middle">
+                                <option value="0">通讯录</option>
+                                @foreach (CengZai.Model.User user in friendList)
+                                {
+                                    <option value="@user.UserID">@user.Nickname</option>
+                                }
+                            </select>
+                        }
+                        else if (touser == null)
+                        {
+                            <text>您尚未有关注的朋友</text>
+                        }
+                    }
+                </p>
+                <p><label>发送内容</label>
+                <textarea name="content" class="input-xlarge" rows="6"></textarea>
+                </p>
+                <p>
+                    <input type="submit" value="发送" class="btn btn-primary" />
+                </p>
+            }
+            <div class="alert alert-block alert-error" id="error">
+            <a class="close" href="#" onclick="$('#error').hide(); return false;">&times;</a>
+            <h4 class="alert-heading">唉哟，出错了！</h4>
+            <p id="errmsg"></p>
+            </div>
+      </div>
+      </div>
+      <!--.span8-->
+      <div class="span4">
+          <div class="well">
+            @Html.ActionLink("返回私信", "Index", null, new { @class = "btn" })
+            <hr />
+          </div><!--/.well -->
+      </div>
+      <!--/.span4 -->
+
+    </div>
+</div>   
+<!--/.container -->
+
+
+

@@ -1,0 +1,19 @@
+﻿@{
+    Layout = null;
+}
+
+<ul class="nav nav-list"> 
+    <li class="nav-header"><text>关于</text>@ViewBag.SiteName</li> 
+    <li @if (@PageData["Active"] == "Us"){<text>class="active"</text>}>
+        @Html.ActionLink("联系我们", "Us", "About")
+    </li> 
+    <li @if (@PageData["Active"] == "Join"){<text>class="active"</text>}>
+        @Html.ActionLink("加入我们", "Join", "About")
+    </li> 
+    <li @if (@PageData["Active"] == "Agreement") {<text>class="active"</text>}>
+        @Html.ActionLink("用户协议", "Agreement", "About")
+    </li>
+    <li @if (@PageData["Active"] == "Privacy") {<text>class="active"</text>}>
+        @Html.ActionLink("隐私策略", "Privacy", "About")
+    </li> 
+</ul>

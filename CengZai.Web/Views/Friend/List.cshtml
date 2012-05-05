@@ -1,0 +1,105 @@
+﻿@{
+    ViewBag.Title = "好友管理";
+    var userList = ViewBag.UserList as List<CengZai.Model.User>;
+    var active = Request["active"];
+}
+@section head{
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("input[name='selAll']").click(function () {
+            if ($(this).attr("checked")) {
+                $("input[name='userid']").attr("checked", true);
+            }
+            else {
+                $("input[name='userid']").attr("checked", false);
+            }
+        });
+    });
+</script>
+}
+
+<div class="container bg-white">
+<div class="padding">
+    <div class="row-fluid">
+        <div class="span8"><h2>@ViewBag.Title</h2></div>
+        <div class="span4">
+        @using (Html.BeginForm("Find", "Friend", FormMethod.Get, new { @class = "navbar-form" }))
+        {
+            <span class="input-append">
+                <input type="text" name="keyword" value="@Request["keyword"]" class="span2" id="appendedPrependedInput" size="16"  placeholder="搜索感兴趣的人"><input type="submit" class="btn" value="搜索" />
+                
+            </span>
+            <a href="@Url.Action("Find", "Friend")" class="btn btn-success">随机看看</a>
+            
+        }
+        </div>
+    </div>
+    <div>
+    <ul class="nav nav-tabs">
+        <li @if (active == "friend" || string.IsNullOrEmpty(active))
+            {<text>class="active"</text>}>@Html.ActionLink("朋友（互相关注）", "List", new { active = "friend" })</li>
+        <li @if (active == "follow")
+            {<text>class="active"</text>}>@Html.ActionLink("我关注", "List", new { active = "follow" })</li>
+        <li @if (active == "fans")
+            {<text>class="active"</text>}>@Html.ActionLink("关注我", "List", new { active = "fans" })</li>
+        <li @if (active == "black")
+            {<text>class="active"</text>}>@Html.ActionLink("黑名单", "List", new { active = "black" })</li>
+    </ul>
+    </div>
+
+
+
+    <!--用户列表-->
+    <div class="tab-content">
+        <div class="tab-pane active">
+        @using (Html.BeginForm("EditFriend", "Friend"))
+        {
+            <table class="table">
+                <thead>
+                <tr>
+                    <th><input name="selAll" type="checkbox" value="0" /></th>
+                    <th>头像</th>
+                    <th>昵称</th>
+                    <th>性别</th>
+                    <th>签名</th>
+                    <th>关注</th>
+                    <th>私信</th>
+                </tr>
+                </thead>
+                <tbody>
+                @if (userList != null)
+                {
+                    foreach (CengZai.Model.User user in userList)
+                    {
+                        <tr>
+                            <td><input name="userid" type="checkbox" value="@user.UserID" /></td>
+                            <td><a href="@Url.BlogUrl(user.Username, true)" title="访问Ta的主页" target="_blank"><img src="@Url.GetAvatarUrl(user.Avatar)" alt="@user.Nickname" width="50" /></a></td>
+                            <td><a href="@Url.BlogUrl(user.Username, true)" title="访问Ta的主页" target="_blank">@user.Nickname</a></td>
+                            <td>@Html.GetUserSexName(user.Sex)</td>
+                            <td>@user.Sign</td>
+                            <td>@Ajax.GetFriendAddLink(user.UserID, null)</td>
+                            <td>@Html.ActionLink("发送私信", "Send", "Inbox", new { touserid = user.UserID }, null)</td>
+                        </tr>
+                    }
+                }
+                </tbody>
+            </table>
+            <div>
+                <input type="hidden" name="type" value="@(active == "black" ? "0" : "-1")" />
+                @if (active == "black")
+                {
+                    <input type="submit" value="移除黑名单" class="btn btn-primary" />
+                }
+                else
+                {
+                    <input type="submit" value="加入黑名单" class="btn btn-danger" />
+                }
+            </div>
+            }
+        </div>
+    </div>
+    <!--/用户列表-->
+
+</div>
+</div>   
+<!--/.container -->
