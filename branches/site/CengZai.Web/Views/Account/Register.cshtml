@@ -52,7 +52,7 @@
         <p>
             <label for="username">真实名字：</label>
             @Html.TextBox("nickname")
-            @Html.ValidationMessage("nickname") <span class="alert">可使用中文、英文（真爱是不会用假名去掩饰滴(*^__^*)）</span>
+            @Html.ValidationMessage("nickname") <span class="alert">请输入<span style="color: red;font-weight: bold">真实中文姓名</span>，方便朋友查找</span>
         </p>
         <p>
             <label for="confirmPassword">性 别：</label>

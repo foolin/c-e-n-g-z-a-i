@@ -73,18 +73,18 @@
                 </div>
             </div>
             <div class="control-group">
+                <label class="control-label" for="nickname">姓名：</label>
+                <div class="controls">
+                    @Html.TextBox("nickname", user.Nickname, new { @class = "input-middle" })
+                    <span class="field-validation-error" data-valmsg-for="nickname" id="tips-nickname" data-valmsg-replace="true"></span>
+                    <p class="help-block">本站是真实的恋爱社区，建议用真实名字</p>
+                </div>
+            </div>
+            <div class="control-group">
                 <label class="control-label" for="username">邮箱：</label>
                 <div class="controls">
                     @Html.TextBox("email", user.Email, new { @class = "input-middle", disabled = "disabled" })
                     <p class="help-block">邮箱暂时不可更改</p>
-                </div>
-            </div>
-            <div class="control-group">
-                <label class="control-label" for="nickname">昵称：</label>
-                <div class="controls">
-                    @Html.TextBox("nickname", user.Nickname, new { @class = "input-middle" })
-                    <span class="field-validation-error" data-valmsg-for="nickname" id="tips-nickname" data-valmsg-replace="true"></span>
-                    <p class="help-block">这里是你帐号的昵称，建议用真实名字</p>
                 </div>
             </div>
             <div class="control-group">
