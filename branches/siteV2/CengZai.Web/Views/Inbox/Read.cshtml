@@ -1,0 +1,80 @@
+﻿@{
+    ViewBag.Title = "Read";
+}
+
+<div class="container">
+    <div class="row-fluid">
+      <div class="span8 bg-white">
+      <div class="padding">
+
+            <h2>我的私信</h2> 
+
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#all">全部</a></li>
+                <li><a href="#receive">收到</a></li>
+                <li><a href="#send">已发送</a></li>
+            </ul>
+ 
+            <div class="tab-content">
+                <div class="tab-pane active" id="all">
+                    <table class="table table-condensed">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>发送人</th>
+                        <th>内容</th>
+                        <th>时间</th>
+                        <th>操作</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>1</td>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>xxx</td>
+                        <td>回复</td>
+                      </tr>
+                      <tr>
+                        <td>2</td>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        <td>@@fat</td>
+                        <td>回复</td>
+                      </tr>
+                      <tr>
+                        <td>3</td>
+                        <td colspan="2">Larry the Bird</td>
+                        <td>@@twitter</td>
+                        <td>回复</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="tab-pane" id="receive">...</div>
+                <div class="tab-pane" id="send">...</div>
+            </div>
+ 
+            <script>
+                $(function () {
+                    $('.tabs a:last').tab('show')
+                })
+            </script>
+
+      </div>
+      </div>
+      <!--.span8-->
+      <div class="span4">
+          <div class="well">
+            @Html.ActionLink("发送私信", "Send", null, new { @class = "btn" })
+            <a href="#" class="btn"></a>
+            <hr />
+            @Html.ActionLink("发送私信", "Send", null, new { @class = "btn" })
+            <hr />
+          </div><!--/.well -->
+      </div>
+    </div>
+    <!--/.span4 -->
+
+</div>   
+<!--/.container -->

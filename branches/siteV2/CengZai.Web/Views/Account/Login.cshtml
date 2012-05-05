@@ -1,0 +1,46 @@
+﻿@{
+    ViewBag.Title = "用户登录";
+    Layout = "_LoginLayout.cshtml";
+}
+
+    <div class="login-form">
+        @using (Html.BeginForm("Login", "Account")) 
+        {
+            <p>
+                <label for="email">邮 箱：</label>
+                @Html.TextBox("email")
+                @Html.ValidationMessage("email")
+            </p>
+            <p>
+                <label for="password">密 码：</label>
+                @Html.Password("password")
+                @Html.ValidationMessage("password") 
+                @Html.ActionLink("忘记密码？", "FindPassword")
+            </p>
+                
+            <p>
+                <label class="checkbox inline"> 
+                    <input type="checkbox" name="remember" id="remember" value="1"> 一个月内自动登录 <span class="muted">（使用公共电脑切勿选择此项）</span>
+                </label> 
+                
+            </p>
+            <p class="btn-group">
+                <input type="submit" class="btn btn-primary" value="登录" />
+                @if (CengZai.Helper.Config.RegisterLimit == 1)
+                {
+                    @Html.ActionLink("尚未注册？", "ApplyInvite", null, new { @class = "btn btn-danger" })
+                }
+                else
+                {
+                @Html.ActionLink("尚未注册？", "Register", null, new { @class = "btn btn-danger" })
+                }
+            </p>
+            
+            <p></p>
+            <p>@Html.ValidationSummary()</p>
+            <p>
+                @Html.Partial("~/Views/OAuth/_OauthLoginLink.cshtml")
+            </p>
+            
+        }
+    </div>

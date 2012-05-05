@@ -1,0 +1,42 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace CengZai.OAuthSDK.Api
+{
+    public class BaseApi
+    {
+        /// <summary>
+        /// OAuthToken
+        /// </summary>
+        public OAuthToken Token = null;
+        
+
+        public BaseApi()
+        {
+        }
+
+        public void SetToken(OAuthToken oauthToken)
+        {
+            this.Token = oauthToken;
+        }
+
+        /// <summary>
+        /// 根据AccessToken来获取相关权限
+        /// </summary>
+        /// <param name="accessToken"></param>
+        /// <param name="uid"></param>
+        /// <param name="expiresAt"></param>
+        public void SetToken(string accessToken, string uid, int expiresAt)
+        {
+            this.Token = new OAuthToken
+            {
+                AccessToken = accessToken,
+                Uid = uid,
+                ExpiresIn = expiresAt
+            };
+        }
+
+    }
+}

@@ -1,0 +1,376 @@
+﻿@{
+    var blogUser = ViewBag.BlogUser as CengZai.Model.User;
+    var lover = ViewBag.BlogLover as CengZai.Model.Lover;
+    var loverUser = ViewBag.LoverUser as CengZai.Model.User;
+    var boy = ViewBag.Boy as CengZai.Model.User;
+    var girl = ViewBag.Girl as CengZai.Model.User;
+    if (boy == null) 
+    {
+        boy = new CengZai.Model.User();
+    }
+    if (girl == null) 
+    {
+        girl = new CengZai.Model.User();
+    }
+    ViewBag.Title = boy.Nickname + "和" + girl.Nickname + "的"+ Html.GetCertificateName(lover.Certificate);
+    var coverImg = string.Format("ie-certificate_cover_{0}.png",
+        lover.Certificate == (int)CengZai.Model.LoverCertificate.Marry ? "marry" : "love");
+}
+
+@section head{
+    <link href="@Url.GetResourceUrl("/js/calendar/calendar.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.GetResourceUrl("/js/calendar/jquery.calendar.js")" type="text/javascript"></script>
+    <script src="@Url.GetResourceUrl("/js/swfupload/swfupload.js")" type="text/javascript"></script>
+    <script src="@Url.GetResourceUrl("/js/swfupload/handlers.js")" type="text/javascript"></script>
+    @*<script src="@Url.GetResourceUrl("/js/turn.min.js")" type="text/javascript"></script>*@
+    <style type="text/css">
+        #ctrl-link
+        {
+            margin-top:10px;
+	        width:522px;
+	        padding:5px 0;
+        }
+        #ctrl-link pull-left
+        {
+            padding-left:20px;
+        }
+        #ctrl-link pull-right
+        {
+            padding-right:20px;
+        }
+        #certificate{
+	        width:522px;
+	        height:421px;
+	        overflow:hidden;
+        }
+        #certificate .turn-page{
+	        width:260px;
+	        height:421px;
+	        overflow:hidden;
+        }
+        #certificate .info-left
+        {
+            background:url(@Url.GetResourceUrl("/img/certificate_left.png")) no-repeat;
+        }
+        
+        #certificate .info-right
+        {
+            background:url(@Url.GetResourceUrl("/img/certificate_right.png")) no-repeat;
+        }
+        .info-left span
+        {
+            position:absolute;
+        }
+        .info-right span
+        {
+            position:absolute;
+        }
+        .certificate .avatar
+        {
+            margin-left:40px;
+            margin-top:40px;
+        }
+        .certificate .avatar img
+        {
+            width:180px;
+            height:120px;
+        }
+        .certificate .owner
+        {
+            margin-left:116px;
+            margin-top:184px;
+        }
+        .certificate .date
+        {
+            margin-left:116px;
+            margin-top:226px;
+        }
+        .certificate .loverid
+        {
+            margin-left:116px;
+            margin-top:268px;
+        }
+        .certificate .note
+        {
+            margin-left:116px;
+            margin-top:309px;
+        }
+        .certificate .boy-name
+        {
+            margin-left:62px;
+            margin-top:48px;
+        }
+        .certificate .boy-sex
+        {
+            margin-left:155px;
+            margin-top:48px;
+        }
+        .certificate .boy-nation
+        {
+            margin-left:62px;
+            margin-top:86px;
+        }
+        .certificate .boy-age
+        {
+            margin-left:155px;
+            margin-top:86px;
+        }
+        .certificate .boy-mobile
+        {
+            margin-left:80px;
+            margin-top:122px;
+        }
+        .certificate .girl-name
+        {
+            margin-left:62px;
+            margin-top:236px;
+        }
+        .certificate .girl-sex
+        {
+            margin-left:155px;
+            margin-top:236px;
+        }
+        .certificate .girl-nation
+        {
+            margin-left:62px;
+            margin-top:274px;
+        }
+        .certificate .girl-age
+        {
+            margin-left:155px;
+            margin-top:274px;
+        }
+        .certificate .girl-mobile
+        {
+            margin-left:80px;
+            margin-top:310px;
+        }
+        .certificate .apply-date
+        {
+            position:absolute;
+            font-size:10pt;
+            font-family:"宋体";
+            font-weight:bolder;
+            color:#c48c2d;
+            margin-left:90px;
+            margin-top:320px;
+        }
+        /*********** ie-certificate *******/
+        #ie-certificate
+        {
+            height:421px;
+        }
+        #ie-certificate .conver
+        {
+            position:absolute;
+            width:522px;
+            height:421px;
+            background:url(@Url.GetResourceUrl("/img/" + coverImg)) no-repeat;
+            overflow:hidden;
+            z-index:999;
+            cursor:pointer;
+        }
+        #ie-certificate .info
+        {
+            position:absolute;
+            width:522px;
+            height:421px;
+            background:url(@Url.GetResourceUrl("/img/ie-certificate_bg.jpg")) no-repeat;
+            overflow:hidden;
+            z-index:999;
+            cursor:pointer;
+        }
+        #ie-certificate .info-left
+        {
+            float:left;
+            width:260px;
+        }
+        
+        #ie-certificate .info-right
+        {
+            float:right;
+            width:260px;
+            
+        }
+    </style>
+}
+
+<div class="container">
+ <div class="padding">
+    
+    <div class="page-header">
+        <div class="row-fluid">
+        <span class="pull-left">
+            <h2>@ViewBag.Title </h2>
+            <div class="muted">@Url.HttpAction("Certificate","Blog", new { username = blogUser.Username })
+            <p>
+                <!-- JiaThis Button BEGIN -->
+                <div id="ckepop">
+	                <a class="jiathis_button_qzone"></a>
+	                <a class="jiathis_button_tsina"></a>
+	                <a class="jiathis_button_tqq"></a>
+	                <a class="jiathis_button_renren"></a>
+	                <a class="jiathis_button_kaixin001"></a>
+	                @*<a href="http://www.jiathis.com/share?uid=1513908" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>*@
+                </div>
+                <script type="text/javascript">                    var jiathis_config = { data_track_clickback: true };</script>
+                <script type="text/javascript" src="http://v2.jiathis.com/code/jia.js?uid=1513908" charset="utf-8"></script>
+                <!-- JiaThis Button END -->
+            </p>
+            </div>
+        </span>
+        <span class="span3 pull-right">
+            <p><a href="@Url.BlogUrl(blogUser.Username, true)" class="btn btn-danger" >访问我们主页</a></p>
+            <p>@Html.HttpActionLink("我也申请证书", "Apply", "Lover", null, new { @class = "btn btn-primary" })</p>
+        </span>
+        </div>
+    </div>
+
+    
+@*    <div id="certificate" class="certificate">
+        <div class="conver-start"><img src="../../img/certificate_cover_start.png" /></div>
+	    <div class="info-left">
+            <span class="avatar"><img class="thumbnail" src="@Url.GetUploadUrl(lover.Avatar)" /></span>
+            <span class="owner">@blogUser.Nickname</span>
+            <span class="date">@Html.GetDateFormat(lover.JoinDate, "yyyy年M月d日")</span>
+            <span class="loverid">CZ-@Html.GetDateFormat(lover.ApplyTime, "yyMMdd")-@lover.LoverID</span>
+            <span class="note"></span>
+        </div>
+        <div class="info-right">
+            <span class="boy-name">@boy.Nickname</span>
+            <span class="boy-sex">男</span>
+            <span class="boy-nation">中国</span>
+            <span class="boy-age">@if (boy.Birth == null)
+                                  {
+                                     <text>保密</text>
+                                  }
+                                  else
+                                  {
+                                      @(DateTime.Now.Year - Convert.ToDateTime(boy.Birth).Year);
+                                  }
+                                  </span>
+            <span class="boy-mobile">@boy.Mobile.Substring(0, 7)****</span>
+            <span class="girl-name">@girl.Nickname</span>
+            <span class="girl-sex">女</span>
+            <span class="girl-nation">中国</span>
+            <span class="girl-age">@if (girl.Birth == null)
+                                   {
+                                     <text>保密</text>
+                                   }
+                                   else
+                                   {
+                                      @(DateTime.Now.Year - Convert.ToDateTime(girl.Birth).Year);
+                                   }
+                                  </span>
+            <span class="girl-mobile">@girl.Mobile.Substring(0, 7)****</span>
+        </div>
+	    <div class="conver-end"><img src="../../img/certificate_cover_end.png" /></div>
+    </div>*@
+
+    <div id="ie-certificate" class="certificate">
+        <div id="ie-certificate-conver" class="conver">
+            <span class="apply-date">@CengZai.Helper.Util.GetChinseDate(@lover.JoinDate, "yyyy年M月")</span>
+        </div>
+        <div id="ie-certificate-info" class="info">
+            <div class="info-left">
+                <span class="avatar"><img class="thumbnail" src="@Url.GetUploadUrl(lover.Avatar)" /></span>
+                <span class="owner">@blogUser.Nickname</span>
+                <span class="date">@Html.GetDateFormat(lover.JoinDate, "yyyy年M月d日")</span>
+                <span class="loverid">CZ-@Html.GetDateFormat(lover.ApplyTime, "yyMMdd")-@lover.LoverID</span>
+                <span class="note"></span>
+            </div>
+            <div class="info-right">
+                <span class="boy-name">@boy.Nickname</span>
+                <span class="boy-sex">男</span>
+                <span class="boy-nation">中国</span>
+                <span class="boy-age">@if (boy.Birth == null)
+                                      {
+                                         <text>保密</text>
+                                      }
+                                      else
+                                      {
+                                          @(DateTime.Now.Year - Convert.ToDateTime(boy.Birth).Year);
+                                      }
+                                      </span>
+                <span class="boy-mobile">@boy.Mobile.Substring(0, 7)****</span>
+                <span class="girl-name">@girl.Nickname</span>
+                <span class="girl-sex">女</span>
+                <span class="girl-nation">中国</span>
+                <span class="girl-age">@if (girl.Birth == null)
+                                       {
+                                         <text>保密</text>
+                                       }
+                                       else
+                                       {
+                                          @(DateTime.Now.Year - Convert.ToDateTime(girl.Birth).Year);
+                                       }
+                                      </span>
+                <span class="girl-mobile">@girl.Mobile.Substring(0, 7)****</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="ctrl-link">
+        <span class="pull-left">@Html.HttpActionLink("男方证书", "Certificate","Blog", new { username = boy.Username }, new { @class = "link" })</span>
+        <span class="pull-right">@Html.HttpActionLink("女方证书", "Certificate", "Blog", new { username = girl.Username }, new { @class = "link" })</span>
+        <div class="clear"></div>
+    </div>
+
+    <p class="muted">鼠标移到证件可以暂停自动切换页面，而且可以手动点击来进行切换页面。</p>
+
+ </div>
+</div>
+<script type="text/javascript">
+
+    var certificateFlag = 0;
+    function certificateOpenCover() {
+        $("#ie-certificate-conver").animate({
+            width: 0, height: 421
+        }, 1000);
+        $("#ie-certificate-info").animate({
+            width: 522, height: 421
+        }, 1000);
+        //$("#ie-certificate-info span").css("display","block");
+        certificateFlag = 1;
+    }
+    function certificateOpenInfo() {
+        $("#ie-certificate-conver").animate({
+            width: 522, height: 421
+        }, 1000, "swing");
+        $("#ie-certificate-info").animate({
+            width: 0, height: 421
+        }, 1000, "swing");
+        //$("#ie-certificate-info span").css("display", "none");
+        //$("#ie-certificate-info span").css("width", "auto");
+        certificateFlag = 0;
+    }
+    function certificateAutoSwitch() {
+        if (certificateFlag == 0) {
+            certificateOpenCover();
+        }
+        else {
+            certificateOpenInfo();
+        }
+    }
+    var certificateTimer = setInterval(certificateAutoSwitch, 5000);
+    $(document).ready(function () {
+        $("#ie-certificate-conver").click(function () {
+            certificateOpenCover();
+        });
+        $("#ie-certificate-info").click(function () {
+            certificateOpenInfo();
+        });
+        $("#ie-certificate-conver,#ie-certificate-info").hover(
+          function () {
+              if (certificateTimer) {
+                  clearInterval(certificateTimer);
+              }
+          },
+          function () {
+              certificateTimer = setInterval(certificateAutoSwitch, 5000);
+          }
+        );
+        //$('#certificate').turn({ page: 2, acceleration: false });
+
+    });
+</script>

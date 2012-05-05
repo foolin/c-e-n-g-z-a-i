@@ -1,0 +1,61 @@
+﻿@{
+    ViewBag.Title = "完善注册信息";
+    CengZai.Model.User loginUser = Html.GetLoginUser();
+    ViewBag.HideMenu = 1;
+}
+
+<div class="container bg-white">
+<section class="padding">
+    <div class="page-header"> 
+        <h1>@ViewBag.Title</h1> 
+    </div> 
+    <div>
+    @using (Html.BeginForm("Register", "OAuth", FormMethod.Post, new { @class = "well" }))
+    {
+        if (ViewBag.RegisterLimit == 1)
+        {
+        <p>
+            <label for="username">邀请码：</label>
+            @Html.TextBox("invite", "")
+            @Html.ValidationMessage("invite") 
+            <span class="muted">必须有邀请码才能注册
+            （您可以接受朋友的邀请，或者 @Html.ActionLink("申请邀请码", "ApplyInvite")）
+            </span>
+        </p>
+        }
+        <p>
+            <label for="username">邮 箱： </label>
+            @Html.TextBox("email", loginUser != null ? loginUser.Email : "")
+            @Html.ValidationMessage("email") <span class="alert">请真实填写，用来找回密码，不可修改</span>
+        </p>
+        <p>
+            <label for="username">用户名：<span class="muted">用来做主页地址，如myname，则主页地址为：@Url.BlogUrl("myname")</span></label>
+            @if (CengZai.Helper.Config.OpenBlogDomain == 1)
+            {
+                @Html.TextBox("username", loginUser != null ? loginUser.Username : "", new { @class = "input-small" })<text>.</text>@CengZai.Helper.Config.BlogDomain
+            }
+            else
+            {
+                @Html.TextBox("username", loginUser != null ? loginUser.Username : "")
+            }
+            @Html.ValidationMessage("username") <span class="alert">5~20位字符，字母开头，只能是英文、数字、下划线组合，不分大小写</span>
+            
+        </p>
+        <p>
+            <label for="username">真实姓名：</label>
+            @Html.TextBox("nickname", "")
+            @Html.ValidationMessage("nickname") <span class="alert">请输入<span style="color: red;font-weight: bold">真实中文姓名</span>，方便朋友查找</span>
+        </p>
+        <p>
+            <label class="checkbox inline"> 
+                <input type="checkbox" checked="checked" name="share" id="share" value="1"> 分享到 @CengZai.Helper.Util.GetDescription(loginUser.LoginType) <span class="muted">（方便朋友查找和联系）</span>
+            </label> 
+        </p>
+        <p>
+            <input type="submit" class="btn btn-primary" value="保存" />
+        </p>
+    }
+    
+    </div>
+</section>
+</div>

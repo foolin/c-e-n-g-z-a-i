@@ -1,0 +1,60 @@
+﻿@{
+    ViewBag.Title = "关注朋友";
+    var userList = ViewBag.UserList as List<CengZai.Model.User>;
+}
+@section head{
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("input[name='selAll']").click(function () {
+            if ($(this).attr("checked")) {
+                $("input[name='userid']").attr("checked", true);
+            }
+            else {
+                $("input[name='userid']").attr("checked", false);
+            }
+        });
+    });
+</script>
+}
+
+<div class="container bg-white">
+<div class="padding">
+    <h2>@ViewBag.Title</h2>
+
+    @using (Html.BeginForm())
+    {
+    <table class="table">
+        <thead>
+        <tr>
+            <th><input name="selAll" type="checkbox" value="0" /></th>
+            <th>头像</th>
+            <th>昵称</th>
+            <th>性别</th>
+            <th>签名</th>
+            <th>关注</th>
+        </tr>
+        </thead>
+        <tbody>
+        @if (userList != null)
+        {
+            foreach (CengZai.Model.User user in userList)
+            {
+                <tr>
+                    <td><input name="userid" checked="checked" type="checkbox" value="@user.UserID" /></td>
+                    <td><img src="@Url.GetAvatarUrl(user.Avatar)" alt="@user.Nickname" width="50" /></td>
+                    <td>@user.Nickname</td>
+                    <td>@Html.GetUserSexName(user.Sex)</td>
+                    <td>@user.Sign</td>
+                    <td>@Ajax.GetFriendAddLink(user.UserID, null)</td>
+                </tr>
+            }
+        }
+        </tbody>
+    </table>
+    <div>
+        <input type="submit" value="关注选中用户" class="btn btn-primary" /> &nbsp;&nbsp; @Html.ActionLink("跳过", "Avatar", "Settings")
+    </div>
+    }
+</div>
+</div>   
+<!--/.container -->

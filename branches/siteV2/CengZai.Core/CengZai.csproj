@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{939C462C-17FF-4CDD-8F01-D1FB46218A42}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CengZai.Core</RootNamespace>
+    <AssemblyName>CengZai.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dll\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BLL\Area.cs" />
+    <Compile Include="BLL\Article.cs" />
+    <Compile Include="BLL\ArtReply.cs" />
+    <Compile Include="BLL\Attachment.cs" />
+    <Compile Include="BLL\Category.cs" />
+    <Compile Include="BLL\Dynamic.cs" />
+    <Compile Include="BLL\Friend.cs" />
+    <Compile Include="BLL\Inbox.cs" />
+    <Compile Include="BLL\InviteCode.cs" />
+    <Compile Include="BLL\Lover.cs" />
+    <Compile Include="BLL\LoverComment.cs" />
+    <Compile Include="BLL\Message.cs" />
+    <Compile Include="BLL\MessageReply.cs" />
+    <Compile Include="BLL\User.cs" />
+    <Compile Include="DAL\Area.cs" />
+    <Compile Include="DAL\Article.cs" />
+    <Compile Include="DAL\ArtReply.cs" />
+    <Compile Include="DAL\Attachment.cs" />
+    <Compile Include="DAL\Category.cs" />
+    <Compile Include="DAL\Dynamic.cs" />
+    <Compile Include="DAL\Friend.cs" />
+    <Compile Include="DAL\Inbox.cs" />
+    <Compile Include="DAL\InviteCode.cs" />
+    <Compile Include="DAL\Lover.cs" />
+    <Compile Include="DAL\LoverComment.cs" />
+    <Compile Include="DAL\Message.cs" />
+    <Compile Include="DAL\MessageReply.cs" />
+    <Compile Include="DAL\User.cs" />
+    <Compile Include="Helper\CommandInfo.cs" />
+    <Compile Include="Helper\Config.cs" />
+    <Compile Include="Helper\DbHelperSQL.cs" />
+    <Compile Include="Helper\DESEncrypt.cs" />
+    <Compile Include="Helper\Extends.cs" />
+    <Compile Include="Helper\ImageHelper.cs" />
+    <Compile Include="Helper\JsonConvert.cs" />
+    <Compile Include="Helper\Log.cs" />
+    <Compile Include="Helper\Mail.cs" />
+    <Compile Include="Helper\SqlHelperEx.cs" />
+    <Compile Include="Helper\Util.cs" />
+    <Compile Include="Helper\SqlHelper.cs" />
+    <Compile Include="Model\Area.cs" />
+    <Compile Include="Model\Article.cs" />
+    <Compile Include="Model\ArtReply.cs" />
+    <Compile Include="Model\Attachment.cs" />
+    <Compile Include="Model\Category.cs" />
+    <Compile Include="Model\Dynamic.cs" />
+    <Compile Include="Model\Friend.cs" />
+    <Compile Include="Model\Inbox.cs" />
+    <Compile Include="Model\InviteCode.cs" />
+    <Compile Include="Model\Lover.cs" />
+    <Compile Include="Model\LoverComment.cs" />
+    <Compile Include="Model\Message.cs" />
+    <Compile Include="Model\MessageReply.cs" />
+    <Compile Include="Model\User.cs" />
+    <Compile Include="MvcExtend\AjaxExtend.cs" />
+    <Compile Include="MvcExtend\BlogDomainRoute.cs" />
+    <Compile Include="MvcExtend\BlogDomainRouteCollectionExtend.cs" />
+    <Compile Include="MvcExtend\HtmlExtend.cs" />
+    <Compile Include="MvcExtend\HtmlExtendForApp.cs" />
+    <Compile Include="MvcExtend\HtmlExtendForUser.cs" />
+    <Compile Include="MvcExtend\UrlExtend.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Dll\log4net.dll" />
+    <Content Include="Dll\log4net.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Web\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
