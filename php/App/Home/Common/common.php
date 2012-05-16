@@ -51,4 +51,51 @@ function send_mail($address,$title,$message)
     return($mail->Send());
 }
 
+//判断是否是邮箱
+function is_email($email){
+	if(empty($email)){
+		return false;
+	}
+	$rule = '/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/';
+	return preg_match($rule,$email)===1;
+}
+
+//取当前时间
+function now_datetime(){
+	return date('Y-m-d H:i:s');
+}
+
+//获取邮箱domain
+function get_email_domain($email){
+	if(empty($email)){
+		return '';
+	}
+	$domain = substr($email, stristr($email, '@'));
+	return $domain;
+}
+
+/****************** 加解密 ***************/
+//DES加密
+function des_encrypt($str, $key)      
+{      
+    $block = mcrypt_get_block_size('des', 'ecb');      
+    $pad = $block - (strlen($str) % $block);      
+    $str .= str_repeat(chr($pad), $pad);      
+    $data = mcrypt_encrypt(MCRYPT_DES, $key, $str, MCRYPT_MODE_ECB);
+	return base64_encode($data);    
+}
+
+//DES解密
+function des_decrypt($str, $key)      
+{
+	$str = base64_decode($str);
+    $str = mcrypt_decrypt(MCRYPT_DES, $key, $str, MCRYPT_MODE_ECB);
+    $block = mcrypt_get_block_size('des', 'ecb');      
+    $pad = ord($str[($len = strlen($str)) - 1]);      
+    return substr($str, 0, strlen($str) - $pad);      
+}
+
+
+
+
 ?>

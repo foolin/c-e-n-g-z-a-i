@@ -23,7 +23,7 @@ class UserModel extends Model {
 	protected $_auto = array (
 		array('password','md5',1,'function') , // 对password字段在新增的时候使md5函数处理
 		array('state', '0', 1), // 注册时，字段默认为0
-		array('regtime',"getCurrentDatetime",1,'callback'), // 对regtime字段在更新的时候写入当前时间戳
+		array('regtime',"now_datetime",1,'function'), // 对regtime字段在更新的时候写入当前时间戳
 		array('regip','get_client_ip',1,'function'), //取ip
 	);
 	
@@ -34,11 +34,6 @@ class UserModel extends Model {
 			return false;
 		}
 		return true;
-	}
-	
-	//取当前时间
-	function getCurrentDatetime(){
-		return date('Y-m-d H:i:s');
 	}
 }
 

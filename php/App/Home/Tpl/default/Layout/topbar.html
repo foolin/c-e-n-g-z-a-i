@@ -6,29 +6,24 @@
 		<span class="icon-bar"></span>
 		<span class="icon-bar"></span>
 		</a>
-		<a class="brand logo" href="@ViewBag.SiteHost">@ViewBag.SiteName</a>
+		<a class="brand logo" href="{:C('SITE_HOST')}">{:C('SITE_NAME')}</a>
 		<div class="nav-collapse">
         
 		<if condition="empty($user)">
         	<ul class="nav">
-                <li><a href="{:U('User/login')}">登录</a></li>
+                <li><a href="{:U('Account/login')}">登录</a></li>
             </ul>
             <p class="navbar-text pull-right">还有没有注册？ <a href="{:U('User/register')}">立即注册</a></p>
         <else />
 		    <ul class="nav">
 			    <li class="active"><a href="{:U('Home/index')}">首页</a></li>
-                <li><a href="{:U('Blog/'.$user['userid'])}">我的主页</a></li>
+                <li><a href="{:U('Profile/index')}">我的主页</a></li>
                 <!--<li><a href="{:U('Twitter/index')}">唠叨</a></li>-->
-                <li><a href="{:U('Love/index')}">情侣<sup id="loverNewCount" class="label label-important hide">0</sup></a></li>
 			    <li><a href="{:U('Friend/index')}">好友</a></li>
 		    </ul>
-            <!--<form class="navbar-form pull-left" action="">-->
-            <form method="get" action="{:U('Friend/find')}" class="navbar-form pull-left">
-                <div class="input-append">
-                    <input type="text" name="keyword" class="span2" id="appendedPrependedInput" size="16"  placeholder="搜索感兴趣的人"><input type="submit" class="btn" value="搜索" />
-                </div>
-            </form>
-            <!--</form>-->
+            <form class="navbar-search pull-left" action="">
+           		<input type="text" class="search-query span2" placeholder="搜索感兴趣的人">
+          	</form>
             <ul class="nav pull-right nav-mini-link">
                 <li class="dropdown"> 
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">{$user['name']} <b class="caret"></b></a> 
@@ -43,7 +38,7 @@
                 <li class="divider-vertical"></li> 
                 <li><a href="{:U('Inbox/unread')}">私信<sup id="inboxNewCount" class="label label-success hide">0</sup></a></li>
                 <li><a href="{:U('Settings/avatar')}">邀请</a></li> 
-                <li><a href="{:U('Settings/logout')}">退出</a></li>
+                <li><a href="{:U('Account/logout')}">退出</a></li>
             </ul>
 		</if>
         

@@ -8,7 +8,7 @@
  * Copyright (c) 2012 cengzai.com All rights reserved.
  +------------------------------------------------------------------------------
  */
-class IndexAction extends Action {
+class IndexAction extends BaseAction {
 	
     /**
      +----------------------------------------------------------
@@ -16,7 +16,9 @@ class IndexAction extends Action {
      +----------------------------------------------------------
      */
 	function index(){
-		
+		$this->checkLogin();
+		echo '<a href="'. U('Account/login') .'">登录</a>';
+		echo '<a href="'. U('Account/register') .'">注册</a>';
 	}
 
 }

@@ -14,3 +14,19 @@ function valid(id){
 	$('#' + id).removeClass('input-error');
 	$('[validation-for="' + id + '"]').removeClass().addClass('validation-valid').html('');
 }
+
+
+/*********公共函数**********/
+function isEmail(email){
+	var reg = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+    return reg.test(email);
+}
+
+
+
+
+//刷新验证码
+function refreshVerify(id) {
+	var img = document.getElementById(id);
+	img.src = "{:U('Public/verify')}?t=" + new Date().getTime();
+}

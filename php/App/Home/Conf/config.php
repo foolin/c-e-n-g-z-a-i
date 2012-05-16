@@ -5,17 +5,21 @@ $appconfig = array(
 	//'配置项'=>'配置值'
 	
 	//系统相关
-	'SHOW_PAGE_TRACE'       => false, 	//开启调试
+	'SHOW_PAGE_TRACE'       => false, 		//开启调试=true
 	'DEFAULT_CHARSET'		=> 'utf-8',
 	'DEFAULT_THEME'			=> 'default',	//默认模板主题
+	'URL_CASE_INSENSITIVE' 	=> true,		//Url不区分分大小写=true，区分=false
 	
 	//网站相关
-	'SITE_NAME'=>'MVC学习',
-	'SITE_SLOGAN'=>'PHP,MVC学习',
-	'SITE_DOMAIN'=>'www.mvc.com',
-	'SITE_HOST'=>'http://test.cengzai.com',
-	'SITE_KEYWORDS'=>'曾在,真爱,恋爱',
-	'SITE_DESCRIPTION'=>'曾在网是一个真实恋爱社区，致力于情侣或夫妻之间交流，基于朋友之间的介绍或者追求的情感社区！',
+	'SITE_NAME'				=> 'MVC学习',
+	'SITE_SLOGAN'			=> 'PHP,MVC学习',
+	'SITE_DOMAIN'			=> 'www.mvc.com',
+	'SITE_HOST'				=> 'http://test.cengzai.com',
+	'SITE_KEYWORDS'			=> '曾在,真爱,恋爱',
+	'SITE_DESCRIPTION'		=> '曾在网是一个真实恋爱社区，致力于情侣或夫妻之间交流，基于朋友之间的介绍或者追求的情感社区！',
+	
+	//安全相关
+	'AUTH_DES_KEY'				=> 'CENGZAI_AUTH_1314',
 	
 
 
