@@ -3,8 +3,7 @@ Ext.define('CengZai.controller.Main', {
     
     config: {
         refs: {
-            //main:'main'
-            
+            main:'main'
         },
         control: {
             
@@ -14,6 +13,7 @@ Ext.define('CengZai.controller.Main', {
     //called when the Application is launched, remove if not needed
     launch: function(app) {
     	console.log('哈哈，初始化！')
+    	//this.getMain().setActiveItem(1);
     	/*
         var isLogin = false;
         if(isLogin){
@@ -23,5 +23,13 @@ Ext.define('CengZai.controller.Main', {
         	this.getMain().setActiveItem(0);
         }
         */
-    }
+    },
+    
+    /************ 登录操作 ***********/
+   showLogin: function(){
+   		this.getMain().setActiveItem(1);
+   },
+   showHome: function(){
+   		this.getMain().setActiveItem(0);
+   }
 });

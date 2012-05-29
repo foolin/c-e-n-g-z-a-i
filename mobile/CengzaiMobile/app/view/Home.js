@@ -1,15 +1,46 @@
 Ext.define("CengZai.view.Home", {
     extend: 'Ext.tab.Panel',
+    xtype:'home',
+    
     requires: [
         'Ext.TitleBar',
-        'Ext.Video'
+        'Ext.Video',
+        'CengZai.view.home.Index',
+        'CengZai.view.home.Inbox',
+        'CengZai.view.home.Friend',
+        'CengZai.view.home.Profile',
+        'CengZai.view.home.Settings',
     ],
+    
     config: {
+
         tabBarPosition: 'bottom',
+        
+        layout: {
+			//type: 'card',
+			animation : null
+		},
+
 
         items: [
+        	{
+        		xtype:'homeindex',
+        	},
+        	{
+        		xtype:'homeinbox',
+        	},
+        	{
+        		xtype:'homefriend',
+        	},
+        	{
+        		xtype:'homeprofile',
+        	},
+        	{
+        		xtype:'homesettings',
+        	},
+        	/*
             {
-                title: 'Welcome',
+                title: '首页2',
                 iconCls: 'home',
 
                 styleHtmlContent: true,
@@ -28,7 +59,7 @@ Ext.define("CengZai.view.Home", {
                 ].join("")
             },
             {
-                title: 'Get Started',
+                title: '关于',
                 iconCls: 'action',
 
                 items: [
@@ -38,12 +69,12 @@ Ext.define("CengZai.view.Home", {
                         title: 'Getting Started'
                     },
                     {
-                        xtype: 'video',
-                        url: 'http://av.vimeo.com/64284/137/87347327.mp4?token=1330978144_f9b698fea38cd408d52a2393240c896c',
-                        posterUrl: 'http://b.vimeocdn.com/ts/261/062/261062119_640.jpg'
+                        xtype: 'panel',
+                        html:'这是测试啊'
                     }
                 ]
             }
+            */
         ]
     }
 });

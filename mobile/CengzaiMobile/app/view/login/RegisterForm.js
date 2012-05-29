@@ -10,7 +10,7 @@ Ext.define('CengZai.view.login.RegisterForm',{
 			{
 				xtype: 'titlebar',
 			    docked: 'top',
-			    title: '曾在网',
+			    title: APP.NAME,
 			    items: [
 			        {
 			            align: 'left',
@@ -57,7 +57,10 @@ Ext.define('CengZai.view.login.RegisterForm',{
             {
                 xtype: 'button',
                 text:'注册',
-                ui:'confirm'
+                ui:'confirm',
+                handler:function(){
+                	
+                }
             }
 		]
 	}
