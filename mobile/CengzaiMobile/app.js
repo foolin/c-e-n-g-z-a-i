@@ -7,7 +7,7 @@ Ext.application({
         'Ext.MessageBox'
     ],
 
-    views: ['Main','Login'],
+    views: ['Main','Login', 'Home'],
 
     icon: {
         '57': 'resources/icons/Icon.png',
@@ -30,7 +30,6 @@ Ext.application({
     launch: function() {
         // Destroy the #appLoadingIndicator element
         Ext.fly('appLoadingIndicator').destroy();
-
         // Initialize the main view
         Ext.Viewport.add(Ext.create('CengZai.view.Main'));
     },

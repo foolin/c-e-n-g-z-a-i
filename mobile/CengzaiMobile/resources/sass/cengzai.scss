@@ -1,3 +1,4 @@
+/*
 $body-bg-color: #000;
  
 $base-color: #666;
@@ -11,8 +12,10 @@ $tabs-bottom-radius: .4em;
 $tabs-bottom-gradient: 'bevel';
 $tabs-bar-gradient: 'matte';
 $tabs-bottom-active-gradient: 'recessed';
- 
+*/
 //$toolbar-gradient: 'glossy';
+
+$base-color: #666360;
 
 @import 'sencha-touch/default/all';
 
@@ -31,5 +34,9 @@ $tabs-bottom-active-gradient: 'recessed';
 @include sencha-carousel;
 @include sencha-form;
 @include sencha-msgbox;
+@include sencha-loading-spinner;
 
 // Your custom code goes here...
+.x-toolbar .x-toolbar-title {
+    color: #5a3d23;
+}

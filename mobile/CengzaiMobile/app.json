@@ -16,7 +16,7 @@
      * This value is needed when build to resolve your application's dependencies if it requires server-side resources
      * that are not accessible via file system protocol.
      */
-    "url": null,
+    "url": 'http://mobile/CengzaiMobile/index.html',
 
     /**
      * List of all JavaScript assets in the right execution order.
@@ -32,8 +32,14 @@
      *      }
      */
     "js": [
+    	{
+            "path": "sdk/config.js"
+        },
         {
             "path": "sdk/sencha-touch.js"
+        },
+        {
+            "path": "cordova.js"
         },
         {
             "path": "app.js",
