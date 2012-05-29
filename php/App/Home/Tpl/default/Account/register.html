@@ -1,17 +1,19 @@
-<?php if (!defined('THINK_PATH')) exit();?><div class="container bg-white">
+<include file="$headerfile" />
+
+<div class="container bg-white">
 <section class="padding">
 
     <div class="page-header"> 
-        <h1>新用户注册</h1> 
+        <h1>{$title}</h1> 
     </div> 
     
     <div class="register-form">
-        <form action="<?php echo U('User/register');?>" method="post">
+        <form action="{:U('Account/register')}" method="post">
         	<p>
-                <label for="code">邀请码： </label>
+                <label for="code">注册码： </label>
                 <input id="code" name="code" type="text" value="" />
                 <span validation-for="code" class="validation-valid"></span> 
-                <span tips-for="code" class="muted">请输入朋友的邀请码或者<a class="btn btn-primary" href="<?php echo U('User/applyInvite');?>">申请邀请码</a></span>
+                <span tips-for="code" class="muted">请输入朋友邀请的注册码或者<a class="btn btn-primary" href="{:U('Account/apply')}">申请注册码</a></span>
             </p>
             <p>
                 <label for="email">邮 箱： </label>
@@ -43,13 +45,13 @@
             <p>
                 <label for="verify">验证码： </label>
                 <input id="verify" name="verify" type="text" value="" />
-                <img src="<?php echo U('Public/verify');?>" id="imgVerify"  alt="刷新验证码" style="cursor:pointer;" onclick="refreshVerify('imgVerify')"  />
+                <img src="{:U('Public/verify')}" id="imgVerify"  alt="刷新验证码" style="cursor:pointer;" onclick="refreshVerify('imgVerify')"  />
                 <span class="validation-valid" validation-for="verify"></span> 
                 <span tips-for="verify" class="muted">请输入验证码</span>
             </p>
             <p class="btn-group">
                 <input type="submit" class="btn btn-primary" value="立刻注册" />
-                <a href="<?php echo U('User/login');?>" class = "btn btn-danger">已经注册？</a>
+                <a href="{:U('Account/login')}" class = "btn btn-danger">已经有帐号？</a>
             </p>
             
         </form>
@@ -57,6 +59,10 @@
     
 </section>
 </div>
+
+<include file="$footerfile" />
+
+
 <script type="text/javascript">
 $(function(){
 	$("#code").focus(function(){
@@ -69,7 +75,7 @@ $(function(){
 		else{
 			$.ajax({
 				type: "POST",
-				url: "<?php echo U('User/ajaxValidateCode');?>",
+				url: "{:U('Account/ajaxValidateCode')}",
 				data: "code=" + code,
 				success: function(msg){
 					var obj = $.parseJSON(msg);
@@ -92,11 +98,10 @@ $(function(){
 			error('email','邮箱不能为空');
 			return;
 		}
-		var reg = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
-        if(reg.test(email)){
+        if(isEmail(email)){
 			$.ajax({
 				type: "POST",
-				url: "<?php echo U('User/ajaxValidateEmail');?>",
+				url: "{:U('Account/ajaxValidateEmail')}",
 				data: "email=" + email,
 				success: function(msg){
 					var obj = $.parseJSON(msg);
@@ -168,14 +173,5 @@ $(function(){
 	
 });
 
-//刷新
-function refreshVerify(id) {
-	var img = document.getElementById(id);
-	img.src = "<?php echo U('Public/verify');?>?t=" + new Date().getTime();
-}
-
-function onSubmit(){
-	
-}
 
 </script>

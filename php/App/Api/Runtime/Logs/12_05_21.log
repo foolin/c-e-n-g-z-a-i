@@ -1,0 +1,60 @@
+[ 2012-05-21T20:54:32+08:00 ] /api.php | INFO: Tag[ app_begin ] --START--
+[ 2012-05-21T20:54:32+08:00 ] /api.php | INFO: Run ReadHtmlCache Behavior [ RunTime:0.007088s ]
+[ 2012-05-21T20:54:32+08:00 ] /api.php | INFO: Tag[ app_begin ] --END-- [ RunTime:0.007238s ]
+[ 2012-05-21T20:54:34+08:00 ] /api.php | INFO: Tag[ app_begin ] --START--
+[ 2012-05-21T20:54:34+08:00 ] /api.php | INFO: Run ReadHtmlCache Behavior [ RunTime:0.007587s ]
+[ 2012-05-21T20:54:34+08:00 ] /api.php | INFO: Tag[ app_begin ] --END-- [ RunTime:0.007721s ]
+[ 2012-05-21T20:57:13+08:00 ] /api.php | INFO: Tag[ app_begin ] --START--
+[ 2012-05-21T20:57:13+08:00 ] /api.php | INFO: Run ReadHtmlCache Behavior [ RunTime:0.006595s ]
+[ 2012-05-21T20:57:13+08:00 ] /api.php | INFO: Tag[ app_begin ] --END-- [ RunTime:0.006796s ]
+[ 2012-05-21T21:01:15+08:00 ] /api.php/Account/login() | ERR: (ThinkException) 无法加载模块Account
+[ 2012-05-21T21:01:17+08:00 ] /api.php/Account/login() | ERR: (ThinkException) 无法加载模块Account
+[ 2012-05-21T21:01:57+08:00 ] /api.php/Account/login() | ERR: (ThinkException) 无法加载模块Account
+[ 2012-05-21T21:02:24+08:00 ] /api.php/Account/login | ERR: (ThinkException) 无法加载模块Account
+[ 2012-05-21T21:02:30+08:00 ] /api.php/Account/login | ERR: (ThinkException) 无法加载模块Account
+[ 2012-05-21T21:02:31+08:00 ] /api.php/Account/login | ERR: (ThinkException) 无法加载模块Account
+[ 2012-05-21T21:02:32+08:00 ] /api.php/Account/login | ERR: (ThinkException) 无法加载模块Account
+[ 2012-05-21T21:02:32+08:00 ] /api.php/Account/login | ERR: (ThinkException) 无法加载模块Account
+[ 2012-05-21T21:02:32+08:00 ] /api.php/Account/login | ERR: (ThinkException) 无法加载模块Account
+[ 2012-05-21T21:02:32+08:00 ] /api.php/Account/login | ERR: (ThinkException) 无法加载模块Account
+[ 2012-05-21T21:03:08+08:00 ] /api.php/cccount/login | ERR: (ThinkException) 无法加载模块Cccount
+[ 2012-05-21T21:03:43+08:00 ] /api.php/cccount/login | ERR: (ThinkException) 无法加载模块Cccount
+[ 2012-05-21T21:03:46+08:00 ] /api.php/account/login | ERR: (ThinkException) 无法加载模块Account
+[ 2012-05-21T21:03:49+08:00 ] /api.php/account/login | ERR: (ThinkException) 无法加载模块Account
+[ 2012-05-21T21:03:49+08:00 ] /api.php/account/login | ERR: (ThinkException) 无法加载模块Account
+[ 2012-05-21T21:03:49+08:00 ] /api.php/account/login | ERR: (ThinkException) 无法加载模块Account
+[ 2012-05-21T21:03:50+08:00 ] /api.php/account/login | ERR: (ThinkException) 无法加载模块Account
+[ 2012-05-21T21:04:29+08:00 ] /api.php/account/login | INFO: Tag[ route_check ] --START--
+[ 2012-05-21T21:04:29+08:00 ] /api.php/account/login | INFO: Run CheckRoute Behavior [ RunTime:0.006827s ]
+[ 2012-05-21T21:04:29+08:00 ] /api.php/account/login | INFO: Tag[ route_check ] --END-- [ RunTime:0.007022s ]
+[ 2012-05-21T21:04:29+08:00 ] /api.php/account/login | INFO: Tag[ app_begin ] --START--
+[ 2012-05-21T21:04:29+08:00 ] /api.php/account/login | INFO: Run ReadHtmlCache Behavior [ RunTime:0.005813s ]
+[ 2012-05-21T21:04:29+08:00 ] /api.php/account/login | INFO: Tag[ app_begin ] --END-- [ RunTime:0.005891s ]
+[ 2012-05-21T21:04:29+08:00 ] /api.php/account/login | SQL: SHOW COLUMNS FROM `t_user` [ RunTime:0.044237s ]
+[ 2012-05-21T21:04:29+08:00 ] /api.php/account/login | SQL: SELECT * FROM `t_user`  [ RunTime:0.001836s ]
+[ 2012-05-21T21:04:30+08:00 ] /api.php/account/login | INFO: Tag[ route_check ] --START--
+[ 2012-05-21T21:04:30+08:00 ] /api.php/account/login | INFO: Run CheckRoute Behavior [ RunTime:0.006608s ]
+[ 2012-05-21T21:04:30+08:00 ] /api.php/account/login | INFO: Tag[ route_check ] --END-- [ RunTime:0.006754s ]
+[ 2012-05-21T21:04:30+08:00 ] /api.php/account/login | INFO: Tag[ app_begin ] --START--
+[ 2012-05-21T21:04:30+08:00 ] /api.php/account/login | INFO: Run ReadHtmlCache Behavior [ RunTime:0.007143s ]
+[ 2012-05-21T21:04:30+08:00 ] /api.php/account/login | INFO: Tag[ app_begin ] --END-- [ RunTime:0.007242s ]
+[ 2012-05-21T21:04:30+08:00 ] /api.php/account/login | SQL: SHOW COLUMNS FROM `t_user` [ RunTime:0.004395s ]
+[ 2012-05-21T21:04:30+08:00 ] /api.php/account/login | SQL: SELECT * FROM `t_user`  [ RunTime:0.001340s ]
+[ 2012-05-21T23:28:36+08:00 ] /api.php/account/dologin?email=aa&password=aaa&callback=Ext.data.JsonP.callback1&_dc=1337614115967 | ERR: (ThinkException) 非法操作dologin
+[ 2012-05-21T23:29:32+08:00 ] /api.php/account/dologin?email=aa&password=aaa&callback=Ext.data.JsonP.callback1&_dc=1337614115967 | ERR: (ThinkException) 非法操作dologin
+[ 2012-05-21T23:31:50+08:00 ] /api.php/account/dologin?email=aa&password=aaa&callback=Ext.data.JsonP.callback1&_dc=1337614115967 | ERR: (ThinkException) 非法操作dologin
+[ 2012-05-21T23:32:16+08:00 ] /api.php/account/dologin/email/aa/password/aaa | ERR: (ThinkException) 非法操作dologin
+[ 2012-05-21T23:32:19+08:00 ] /api.php/account/dologin/email/aa/password/aaa | ERR: (ThinkException) 非法操作dologin
+[ 2012-05-21T23:32:23+08:00 ] /api.php/account/dologin/ | ERR: (ThinkException) 非法操作dologin
+[ 2012-05-21T23:32:25+08:00 ] /api.php/account/dologin | ERR: (ThinkException) 非法操作dologin
+[ 2012-05-21T23:32:28+08:00 ] /api.php/account/dologin | ERR: (ThinkException) 非法操作dologin
+[ 2012-05-21T23:32:28+08:00 ] /api.php/account/dologin | ERR: (ThinkException) 非法操作dologin
+[ 2012-05-21T23:32:29+08:00 ] /api.php/account/dologin | ERR: (ThinkException) 非法操作dologin
+[ 2012-05-21T23:32:29+08:00 ] /api.php/account/dologin | ERR: (ThinkException) 非法操作dologin
+[ 2012-05-21T23:32:29+08:00 ] /api.php/account/dologin | ERR: (ThinkException) 非法操作dologin
+[ 2012-05-21T23:32:30+08:00 ] /api.php/account/dologin | ERR: (ThinkException) 非法操作dologin
+[ 2012-05-21T23:32:30+08:00 ] /api.php/account/dologin | ERR: (ThinkException) 非法操作dologin
+[ 2012-05-21T23:32:59+08:00 ] /api.php/account/dologin | ERR: (ThinkException) 非法操作dologin
+[ 2012-05-21T23:38:59+08:00 ] /api.php/account/dologin?email=&password=&jsonp=Ext.data.JsonP.callback1&_dc=1337614738961 | ERR: (ThinkException) Action:get您所请求的方法不存在！
+[ 2012-05-21T23:39:24+08:00 ] /api.php/account/dologin?email=&password=&jsonp=Ext.data.JsonP.callback1&_dc=1337614764240 | ERR: (ThinkException) Action:get您所请求的方法不存在！
+[ 2012-05-21T23:39:41+08:00 ] /api.php/account/dologin?email=&password=&jsonp=Ext.data.JsonP.callback1&_dc=1337614764240 | ERR: (ThinkException) Action:get您所请求的方法不存在！

@@ -1,0 +1,57 @@
+<php>
+$head_section = '
+<style type="text/css">
+	#text{
+		width:98%;
+		height:50px;
+	}
+</style>
+';
+</php>
+<include file="$headerfile" />
+
+<div class="container">
+    <if condition = "$user['state'] == 0">
+    <div class="alert alert-block fade in"> 
+        <a class="close" data-dismiss="alert" href="#">&times;</a> 
+        <h4 class="alert-heading">{$user['name']}，你的邮箱[{$user['email']}]尚未激活!</h4> 
+        <p>您的邮箱尚未激活！邮箱是作为找回密码的重要方式，为了您的帐号安全，建议您立刻登录邮箱进行激活！</p> 
+        <p> 
+            <a class="btn btn-danger" href="http://mail.{:get_email_domain($user['email'])}" target="_blank">登录邮箱进行激活</a> 
+            <a class = "btn" href="{:U('Account/resendActive')}">重新发送激活邮件</a>
+        </p> 
+    </div>
+   </if>
+
+	<!--container-->
+	<div class="row-fluid  bg-white">
+	  <!--container-left-->
+      <div class="span2">
+      	<div class="padding">
+        </div>
+      </div>
+      <!--/container-left-->
+      <!--container-main-->
+      <div class="span7">
+      	<div class="padding">
+            <div class="twitter">
+                {:W('Tpost')}
+            </div>
+      	</div>
+      </div>
+      <!--/container-main-->
+      <!--container-sider-->
+      <div class="span3">
+      	<div class="padding">
+        </div>
+      </div>
+      <!--/container-sider-->
+    </div>
+    <!--/container-->
+    
+
+
+</div>
+
+
+<include file="$footerfile" />

@@ -1,0 +1,64 @@
+
+<include file="$headerfile" />
+
+<div class="container">
+    <if condition = "$user['state'] == 0">
+    <div class="alert alert-block fade in"> 
+        <a class="close" data-dismiss="alert" href="#">&times;</a> 
+        <h4 class="alert-heading">{$user['name']}，你的邮箱[{$user['email']}]尚未激活!</h4> 
+        <p>您的邮箱尚未激活！邮箱是作为找回密码的重要方式，为了您的帐号安全，建议您立刻登录邮箱进行激活！</p> 
+        <p> 
+            <a class="btn btn-danger" href="http://mail.{:get_email_domain($user['email'])}" target="_blank">登录邮箱进行激活</a> 
+            <a class = "btn" href="{:U('Account/resendActive')}">重新发送激活邮件</a>
+        </p> 
+    </div>
+   </if>
+
+	<!--container-->
+	<div class="row-fluid  bg-white">
+      <!--container-main-->
+      <div class="span8">
+      	<div class="padding">
+        
+            <div class="profile row-fluid">
+                    <div class="span4">
+                        <div class="inner inner-profile-avatar">
+                            <img src="__PUBLIC__/img/girl.png">
+                        </div>
+                    </div>
+                    <div class="span8">
+                        <div class="inner inner-profile-brief">
+                            <div class="hd">
+                                <div class="brief-name vc24">张思思<img class="mgr5" src="__PUBLIC__/img/girl.png"></div>
+                                <div class="brief-desc">单身，26岁，摩羯座，来自北京海淀</div>
+                            </div>
+                            <div class="bd"></div>
+                            <div class="ft profile-operation">
+                                                        <div class="left-button message-btn mgr10" id="message-btn">私信</div>
+                                <div class="left-button wire-btn mgr10">牵线</div>
+                                <div class="big-rlt-btn-box" id="relation-btn" data="BOTH"><div class="big-rlt-both-btn">认识</div></div>
+                             </div>
+                        </div>
+                    </div>
+            </div>
+            
+            
+            
+      	</div>
+      </div>
+      <!--/container-main-->
+      <!--container-sider-->
+      <div class="span4">
+      	<div class="padding">
+        </div>
+      </div>
+      <!--/container-sider-->
+    </div>
+    <!--/container-->
+    
+
+
+</div>
+
+
+<include file="$footerfile" />
