@@ -23,7 +23,7 @@ class BaseAction extends Action {
 		} 
 	}
 	
-	
+    
 	/**
      +----------------------------------------------------------
      * 取用户登录信息
@@ -82,7 +82,7 @@ class BaseAction extends Action {
 		
 		//登录用户
 		$user = $this->getLoginUser();
-		$this->assign('user', $user);
+		$this->assign('login_user', $user);
 		
 		//显示模板
 		$this->assign('headerfile', 'Layout:header');

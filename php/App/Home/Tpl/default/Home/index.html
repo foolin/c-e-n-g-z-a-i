@@ -1,14 +1,105 @@
-<php>
-$head_section = '
-<style type="text/css">
-	#text{
-		width:98%;
-		height:50px;
-	}
-</style>
-';
-</php>
+
 <include file="$headerfile" />
+<script type="text/javascript">
+$(document).ready(function(){
+	//**************** 发表说说 *******************//
+	//检查字数
+	checkTCount();
+	$('#ttext').keyup(function(){
+	  checkTCount();
+	});
+	//提交
+	$("#tsubmit").click(function(){
+		var text = $('#ttext').val();
+		if(text == ''){
+			$.dialog({
+			    title: '囧！没东西说？',
+			    content: '先随便说两句吧...',
+			    lock: true,
+			    time: 3000,
+			    focus: false
+			});
+			return;
+		}
+		if(text.length > 140){
+			$.dialog({
+			    title: '囧！太长了？',
+			    content: '亲，不能超过140个字符噢，简洁点吧...',
+			    lock: true,
+			    time: 3000,
+			    focus: false
+			});
+			return;
+		}
+		$.ajax({
+			type: "POST",
+			url:"{:U('Twitter/ajaxpost')}",
+			data: "text=" + text,
+		   	success: function(msg){
+		   		var ret = eval('(' + msg + ')');
+		   		if(ret && ret.status == 1){
+		   			//重置内容
+		   			$('#ttext').val('');
+		   			$('#tcount').html('0/140');
+		   			//弹出信息
+		   			$.dialog({
+					    title: '发布成功',
+					    content: ret.info,
+					    lock: true,
+					    time: 3000,
+			    		focus: false
+					});
+					loadTwitterList();
+		   		}
+		   		else{
+		   			$.dialog({
+					    title: '出错喇！',
+					    content: ret.info,
+					    lock: true,
+					    time: 5000,
+			    		focus: false
+					});
+		   		}
+		     	
+		   	}
+		})
+		
+	})
+	
+	//***************** 加载最新的说说 *************//
+	loadTwitterList();
+});
+//检查字数
+function checkTCount () {
+	var length = $('#ttext').val().length;
+	if(length > 140){
+	 	$("#tcount").html('<b style="color:red">'+ length + '/140</b>');
+	}
+	else{
+		$("#tcount").html('<b>' + length + '/140</b>');
+	}
+}
+
+function loadTwitterList(){
+	$("#twitter-list").html('正在加载数据，请稍后...');
+	$.ajax("{:U('Twitter/ajaxList')}",
+	{
+		type:'GET',
+		data:'page=1',
+		dataType: 'json',
+		cache: false,
+		success:function(data){
+			if(data.status > 0){
+				$("#twitter-list").html(data.data);
+			}
+			else{
+				$("#twitter-list").html(data.info);
+			}
+		}
+	});
+}
+	
+</script>
 
 <div class="container">
     <if condition = "$user['state'] == 0">
@@ -23,35 +114,89 @@ $head_section = '
     </div>
    </if>
 
-	<!--container-->
-	<div class="row-fluid  bg-white">
-	  <!--container-left-->
-      <div class="span2">
-      	<div class="padding">
-        </div>
-      </div>
-      <!--/container-left-->
+	<!--内容区域-->
+	<div class="row-fluid">
       <!--container-main-->
-      <div class="span7">
+      <div class="span8  bg-white">
       	<div class="padding">
-            <div class="twitter">
-                {:W('Tpost')}
+        
+        	<!-- /////////////////////// 发表说说区域 /////////////////-->
+			<div class="twitter-form">
+				<p>
+					<h3>说说爱情那些事？</h3>
+	        		<textarea id="ttext" id="ttext" class="twitter-areatext"></textarea>
+        		</p>
+        		<p>
+        			<a href="#" class="btn"><i class="icon-picture"></i>图片</a>
+        			<a href="#" class="btn"><i class="icon-facetime-video"></i>视频</a>
+        			<span class="pull-right">
+        				<span id="tcount">0/140</span>
+        				<input id="tsubmit" name="tsubmit" type="button" class="btn btn-large btn-primary" value="发表" />
+        			</span>
+        			
+        		</p>
+            </div>
+            <!-- /profile -->
+            <hr>
+			
+            <div class="feed-list" id="twitter-list">
+				暂无内容
             </div>
       	</div>
       </div>
       <!--/container-main-->
       <!--container-sider-->
-      <div class="span3">
-      	<div class="padding">
-        </div>
+
+      <div class="span4">
+	  	<div class="padding bg-white">
+	  		
+	  		<div class="my-profile">
+	  			<div class="row-fluid clearfix">
+		  			<div class="span5">
+		  				<a href="#" >
+					      <img class="thumbnail" width="100" src="__PUBLIC__/img/noavatar.jpg">
+					    </a>
+					    <p class="center"><a href="#">上传头像</a></p>
+		  			</div>
+		  			<div class="span7 my-info">
+		  				<h3 style="text-indent: 1em;">{$login_user['name']} <img class="mgr5" src="__PUBLIC__/img/girl.png"></h3>
+		  				<p>
+  							<table class="user-counts">
+								<tr>
+									<th><a href="#">20</a><p>我认识</p></th>
+									<th><a href="#">20</a><p>认识我</p></th>
+									<td><a href="#">201</a><p>说说</p></td>
+								</tr>
+							</table>
+		  				</p>
+		  				<p class="center">
+		  					<a href="#" class="btn btn-warning"><i class="icon-home icon-white"></i> 主页</a>
+		  					<a href="#" class="btn btn-success disabled"><i class="icon-heart icon-white"></i> 单身</a>
+		  					<!--<a href="#" class="btn btn-success"><i class="icon-heart icon-white"></i> 陈缪斌</a>-->
+		  				</p>
+		  			</div>
+	  			</div>
+	  			<!-- /头像和姓名结束-->
+				<hr>
+				<ul>
+					<li><a href="#">我的主页</a></li>
+					<li><a href="#">我的说说</a></li>
+					<li><a href="#">我认识的人</a></li>
+					<li><a href="#">认识我的人</a></li>
+				</ul>
+	  		</div>
+	  		
+	  		
+	  	</div>
       </div>
       <!--/container-sider-->
     </div>
-    <!--/container-->
+    <!--/内容区域-->
     
 
 
 </div>
+
 
 
 <include file="$footerfile" />

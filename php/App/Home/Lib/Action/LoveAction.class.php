@@ -1,25 +1,25 @@
 <?php
 /**
  +------------------------------------------------------------------------------
- * UserAction 用户相关管理和操作
+ * LoveAction 爱窝
  +------------------------------------------------------------------------------
  * @author    foolin <foolin@126.com>
- * @version   2012-05-09 20:14:11
+ * @version   2012-06-10 15:24:36
  * Copyright (c) 2012 cengzai.com All rights reserved.
  +------------------------------------------------------------------------------
  */
-class UserAction extends BaseAction {
-	
+class LoveAction extends BaseAction {
+    
     /**
      +----------------------------------------------------------
-     * 用户登录界面
+     * 默认首页
      +----------------------------------------------------------
-     * /
-	function login(){
-		$this->tpl('登录');
-	}
-	*/
-
+     */
+    function index(){
+        $this->checkLogin();
+        //echo "登录成功喇！<a href='".U('Account/login') ."'>登录</a> ！<a href='". U('Account/logout') ."'>退出</a> ";
+        $this->tpl('我的爱窝');
+    }
 
 }
 

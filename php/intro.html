@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>我的首页 - MVC学习</title>
+    <meta name="keywords" content="曾在,真爱,恋爱" />
+    <meta name="description" content="曾在网是一个真实恋爱社区，致力于情侣或夫妻之间交流，基于朋友之间的介绍或者追求的情感社区！" />
+    <meta property="qc:admins" content="1541240606635672116375" />
+    <link href="/Public/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="/Public/css/style.css" rel="stylesheet" type="text/css" />
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="/Public/js/html5.js" type="text/javascript"></script>
+    <![endif]-->
+    <script src="/Public/js/jquery.min.js" type="text/javascript"></script>
+    <script src="/Public/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="/Public/js/mvc/jquery.unobtrusive-ajax.min.js" type="text/javascript"></script>
+    <link href="/Public/js/dialog/skins/twitter.css" rel="stylesheet" type="text/css" />
+    <script src="/Public/js/dialog/jquery.artDialog.min.js" type="text/javascript"></script>
+    <script src="/Public/js/dialog/artDialog.plugins.min.js" type="text/javascript"></script>
+    <script src="/Public/js/core.js" type="text/javascript"></script>
+    <link rel="shortcut icon" href="/Public/img/favicon.ico">
+    <script type="text/javascript" charset="utf-8">
+	</script>
+</head>
+
+
+
+<body>
+<div id="loginContainer">
+	<img id="bg" src="http://imglf4.ph.126.net/SBLX0JNO1iBOUoqb14esLw==/2532711840460076534.jpg" style="width: 1263px; height: auto; margin-left: 0px; margin-top: -76.22678571428571px; visibility: visible; opacity: 1; ">
+	<div class="container bg-white">
+	<section class="padding">
+	
+	    <div class="page-header"> 
+	        <h1>{$title}</h1> 
+	    </div> 
+	
+	    <div class="login-form">
+	        <form action="{:U('Account/login')}" method="post">
+	            <p>
+	                <label for="email">邮 箱： </label>
+	                <input id="email" name="email" type="text" value="" />
+	                <span class="validation-valid" validation-for="email"></span> 
+	                <span tips-for="email" class="muted">请输入注册帐号的邮箱</span>
+	            </p>
+	            <p>
+	                <label for="password">密 码： </label>
+	                <input id="password" name="password" type="password" value="" />
+	                <span class="validation-valid" validation-for="password"></span> 
+	                <span tips-for="password" class="muted">请输入密码</span>
+	                <a href="{:U('Account/findPassword')}">忘记密码？</a>
+	            </p>
+	            <p>
+	                <label class="checkbox inline"> 
+	                    <input type="checkbox" name="remember" id="remember" value="1"> 一个月内自动登录 <span class="muted">（使用公共电脑切勿选择此项）</span>
+	                </label> 
+	            </p>
+	            <p class="btn-group">
+	                <input type="submit" class="btn btn-primary" value="登录" />
+	                <a href="{:U('Account/register')}" class = "btn btn-danger">尚未注册？</a>
+	            </p>
+	        </form>
+	    </div>
+	    
+	    <div id="link-to-intro">
+	    	关于MVC学习？
+	    </div>
+	    
+	</section>
+	</div>
+	<script type="text/javascript">
+	$(function(){
+		$("#email").focus(function(){
+			valid('email');
+		}).blur(function(){
+			var email = $(this).val();
+			if(email==''){
+				error('email','邮箱不能为空');
+				return;
+			}
+	        if(!isEmail(email)){
+				error('email','邮箱不合法！');
+			}
+		});
+		
+		//密码
+		$("#password").focus(function(){
+			valid('password');
+		}).blur(function(){
+			var password = $(this).val();
+			if(password==''){
+				error('password','密码不能为空');
+				return;
+			}
+			if(password.length < 6){
+				error('password','密码不能少于6位');
+				return;
+			}
+			if(password.length > 16){
+				error('password','密码不能大于16位');
+				return;
+			}
+			success('password','密码合法');
+		});
+	});
+	</script>
+
+</div>
+<div id="aboutContainer">
+	<div id="link-to-top">
+    	关于MVC学习？
+    </div>
+	<div class="container bg-white">
+	<div class="padding">
+		<div class="page-header"> 
+	        <h1>{$title}</h1> 
+	    </div> 
+	    
+		<section>
+			<h2>一个基于朋友之间的真实的恋爱社交网络 </h2>
+			<div class="info">
+				1.	真实的姓名、性别，真实的朋友
+				2.	反映朋友和自己真实生活的恋爱状态。
+
+			</div>
+		</section>
+		
+		<section>
+			<h2>情侣之间交流和沟通平台 </h2>
+			<div class="info">
+				1.	真实的姓名、性别，真实的朋友
+				2.	反映朋友和自己真实生活的恋爱状态。
+
+			</div>
+		</section>
+		
+		<section>
+			<h2>拒绝与陌生人相亲，恋爱从朋友开始！ </h2>
+			<div class="info">
+				1.	真实的姓名、性别，真实的朋友
+				2.	反映朋友和自己真实生活的恋爱状态。
+			</div>
+		</section>
+		
+		<section>
+			<h2>暗恋已久对方？一个真实的表白平台！ </h2>
+			<div class="info">
+				1.	真实的姓名、性别，真实的朋友
+				2.	反映朋友和自己真实生活的恋爱状态。
+
+			</div>
+		</section>
+		
+		
+		<section>
+			<h2>爱Ta就向朋友公开恋人的关系，让爱天长地久 </h2>
+			<div class="info">
+				1.	真实的姓名、性别，真实的朋友
+				2.	反映朋友和自己真实生活的恋爱状态。
+			</div>
+		</section>
+		
+	</div>
+	</div>
+</div>
+</body>
+</html>

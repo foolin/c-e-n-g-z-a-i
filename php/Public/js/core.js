@@ -1,4 +1,14 @@
-﻿/*************** 表单提示 *****************/
+﻿//对话框按钮
+(function (d) {
+    d['okValue'] = '确定';
+    d['cancelValue'] = '取消';
+    d['title'] = '消息';
+    // [more..]
+})($.dialog.defaults);
+
+
+
+/*************** 表单提示 *****************/
 //成功提示
 function success(id, msg){
 	$('#' + id).removeClass('input-error');
@@ -22,11 +32,10 @@ function isEmail(email){
     return reg.test(email);
 }
 
-
-
-
 //刷新验证码
 function refreshVerify(id) {
 	var img = document.getElementById(id);
 	img.src = "{:U('Public/verify')}?t=" + new Date().getTime();
 }
+
+

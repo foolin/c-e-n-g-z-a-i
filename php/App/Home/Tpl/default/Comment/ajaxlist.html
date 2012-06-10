@@ -1,0 +1,23 @@
+<volist name="list" id="vo"  >
+	<div class="comment row-fluid clearfix">
+		<div class="span2">
+	    	<a href="#" usercard="{$vo.userid}">
+		      <img width="50" class="thumbnail"  src="__PUBLIC__/img/noavatar.jpg">
+		    </a>
+	    </div>
+	    <div class="span10">
+	    	<a href="#userid" class="name" usercard="{$vo.userid}">{:user($vo['userid'], 'name')}</a>{$vo.text}
+	    	<p class="info clearfix">
+	    		<span class="pull-left">{$vo.createtime}</span>
+	    	</p>
+	    </div>
+	</div>
+	<!-- /comment -->
+</volist>
+
+<script type="text/javascript">
+	
+	//初始化用户信息卡事件
+	initUserCard();
+	
+</script>

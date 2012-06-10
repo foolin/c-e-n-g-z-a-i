@@ -1,0 +1,159 @@
+<volist name="list" id="vo"  >
+
+	<!-- 单条最新动态 -->
+	<div class="feed row-fluid clearfix">
+		<div class="span2 center">
+	    	<a href="{:U('Profile/index', 'userid='. $vo.userid)}" usercard="{$vo.userid}">
+		      <img width="64" class="thumbnail"  src="{$vo.avartar}">
+		    </a>
+		    <br>
+	    </div>
+	    <div class="span10">
+	        <div class="content">
+	        	<a href="#userid" class="name" usercard="{$vo.userid}">{:user($vo['userid'],'name')}</a>{$vo.text}
+	        	<p class="info clearfix">
+	        		<span class="pull-left">{$vo.createtime}</span>
+	        		<span class="pull-right">
+	        			<a href="#" onclick="loadTwitterCommentList('{$vo.twitterid}'); return false;">
+	        				评论(<span id="twitter-comments-{$vo.twitterid}">{$vo.comments}</span>)
+	        			</a>
+	        		</span>
+	        	</p>
+	        </div>
+	        <!-- 评论列表 -->
+	        <div class="comment-list">
+	        	<div  id="comment-list-{$vo.twitterid}">
+	        	</div>
+		        <div class="comment-form comment-actions">
+	        		<textarea id="comment-areatext-{$vo.twitterid}" class="comment-areatext" placeholder="我也来说一句"></textarea>
+	        		<div class="comment-ctrl">
+	        			<input ctrl='btn-submit-comment' data="{$vo.twitterid}" type="button" class="btn btn-primary" value="发表" /> &nbsp;
+	        			<input type="button" ctrl='btn-cancel-comment' class="btn" value="放弃" />
+	        			<span class="pull-right" ctrl="comment-count">0/140</span>
+	        		</div>
+	        	</div>
+	        </div>
+	        
+	    </div>
+	</div>
+	<!-- /单条最新动态  -->
+	
+</volist>
+
+<script type="text/javascript">
+var GLOABLE_COMMENT_FORM_FLAG = 0;
+$(document).ready(function(){
+	
+	//编辑评论框
+	$(".comment-areatext").focus(function() {
+		$('.comment-action').removeClass('comment-action');
+		$(this).parent().addClass('comment-action');
+	});
+	
+	//判断评论框的字数
+	$(".comment-areatext").keyup(function() {
+		var length = $(this).val().length;
+		if(length > 140){
+		 	$(this).parent().find("[ctrl='comment-count']").html('<b style="color:red">'+ length + '/140</b>');
+		}
+		else{
+			$(this).parent().find("[ctrl='comment-count']").html('<b>' + length + '/140</b>');
+		}
+	});
+	
+	//放弃编辑
+	$("[ctrl='btn-cancel-comment']").click(function(){
+		$('.comment-action textarea').val('');
+		$('.comment-action').removeClass('comment-action');
+	});
+	
+	$("[ctrl='btn-submit-comment']").click(function(){
+		var id = $(this).attr('data');
+		if(!id || id <= 0){
+			$.alert('对不起，操作异常，请稍后重试！');
+			return;
+		}
+		var text = $('#comment-areatext-' + id).val();
+		if(text == ''){
+			$.dialog({
+			    title: '囧！没东西说？',
+			    content: '先随便说两句吧...',
+			    lock: true,
+			    time: 3000,
+			    focus: false
+			});
+			return;
+		}
+		if(text.length > 140){
+			$.dialog({
+			    title: '囧！太长了？',
+			    content: '亲，不能超过140个字符噢，简洁点吧...',
+			    lock: true,
+			    time: 3000,
+			    focus: false
+			});
+			return;
+		}
+		//提交
+		$.ajax({
+			type: "POST",
+			url:"{:U('Comment/ajaxpost')}",
+			data: "text=" + text + '&type=1&typeid=' + id,
+		   	success: function(msg){
+		   		var ret = eval('(' + msg + ')');
+		   		if(ret && ret.status == 1){
+		   			//重置内容
+		   			$('.comment-action textarea').val('');
+					$('.comment-action').removeClass('comment-action');
+		   			//弹出信息
+		   			$.dialog({
+					    title: '发布成功',
+					    content: ret.info,
+					    lock: true,
+					    time: 3000,
+			    		focus: false
+					});
+					var commments =  $('#twitter-comments-' + id);
+					commments.html(parseInt(commments.html()) + 1);
+					loadTwitterCommentList(id);
+		   		}
+		   		else{
+		   			$.dialog({
+					    title: '出错喇！',
+					    content: ret.info,
+					    lock: true,
+					    time: 5000,
+			    		focus: false
+					});
+		   		}
+		     	
+		   	}
+		})
+	})
+	
+})
+
+function loadTwitterCommentList(id){
+	$("#comment-list-" + id).html('正在加载数据，请稍后...');
+	$.ajax("{:U('Comment/ajaxList')}",
+	{
+		type:'GET',
+		data:'page=1&type=1&typeid=' + id,
+		dataType: 'json',
+		cache: false,
+		success:function(data){
+			if(data.status > 0){
+				$("#comment-list-" + id).html(data.data);
+			}
+			else{
+				$("#comment-list-" + id).html(data.info);
+			}
+		}
+	});
+}
+
+//初始化用户信息卡事件
+initUserCard();
+
+</script>
+

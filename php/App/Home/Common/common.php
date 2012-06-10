@@ -96,6 +96,31 @@ function des_decrypt($str, $key)
 }
 
 
+/*************** 用户相关  *************/
+//取用户，或者某个用户的信息
+function user($userid, $field = ''){
+    //dump($userid);
+    $dbUser = M('User');
+    $user = $dbUser->find($userid);
+    if(empty($user)){
+        return NULL;
+    }
+    //dump($user);
+    if(empty($field)){
+        return $user;
+    }
+    else{
+        return $user[$field];
+    } 
+}
 
+function user_avatar($userid){
+    $user = M('User')->find($userid);
+    if(empty($user) || empty($user['avatar'])){
+        return "__PUBLIC__/img/noavatar.jpg";
+    }
+    //dump($user);
+    return "__PUBLIC__/upload/".$user['avatar'];
+}
 
 ?>

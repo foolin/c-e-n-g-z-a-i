@@ -1,26 +1,18 @@
 <?php
 /**
  +------------------------------------------------------------------------------
- * UserAction 用户相关管理和操作
+ * 提交Twitter的表单功能
  +------------------------------------------------------------------------------
  * @author    foolin <foolin@126.com>
  * @version   2012-05-09 20:14:11
  * Copyright (c) 2012 cengzai.com All rights reserved.
  +------------------------------------------------------------------------------
  */
-class UserAction extends BaseAction {
-	
-    /**
-     +----------------------------------------------------------
-     * 用户登录界面
-     +----------------------------------------------------------
-     * /
-	function login(){
-		$this->tpl('登录');
-	}
-	*/
-
-
+class TpostWidget extends Widget{ 
+    public function render($data){ 
+		$conent = $this->renderFile('tpost',$data);
+  		return $conent;
+    } 
 }
-
 ?>
+
