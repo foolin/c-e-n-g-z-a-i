@@ -13,13 +13,14 @@
         	<ul class="nav">
                 <li><a href="{:U('Account/login')}">登录</a></li>
             </ul>
-            <p class="navbar-text pull-right">还有没有注册？ <a href="{:U('User/register')}">立即注册</a></p>
+            <p class="navbar-text pull-right">还有没有注册？ <a href="{:U('Account/register')}">立即注册</a></p>
         <else />
 		    <ul class="nav">
 			    <li <if condition="MODULE_NAME eq 'Home'">class="active"</if>><a href="{:U('Home/index')}">首页</a></li>
                 <!--<li><a href="{:U('Twitter/index')}">唠叨</a></li>-->
-			    <!--<li <if condition="MODULE_NAME eq 'Love'">class="active"</if>><a href="{:U('Love/index')}">爱窝</a></li>-->
 			    <li <if condition="MODULE_NAME eq 'Profile'">class="active"</if>><a href="{:U('Profile/index')}">主页</a></li>
+			    <!--<li <if condition="MODULE_NAME eq 'Love'">class="active"</if>><a href="{:U('Love/index')}">蜜窝</a></li>-->
+			    <li <if condition="MODULE_NAME eq 'Inbox'">class="active"</if>><a href="{:U('Inbox/index')}">信箱<sup id="inboxNewCount" class="label label-success">3</sup></a></li>
 		    </ul>
             <form class="navbar-search pull-left" action="">
            		<input type="text" class="search-query span2" placeholder="搜索感兴趣的人">
@@ -32,11 +33,11 @@
                     <li><a href="{:U('Settings/profile')}">完善资料</a></li> 
                     <li><a href="{:U('Settings/password')}">修改密码</a></li> 
                     <li class="divider"></li> 
-                    <li><a href="{:U('User/logout')}">退出登录</a></li> 
+                    <li><a href="{:U('Account/logout')}">退出登录</a></li> 
                     </ul> 
                 </li>
                 <li class="divider-vertical"></li> 
-                <li><a href="{:U('Inbox/unread')}">私信<sup id="inboxNewCount" class="label label-success hide">0</sup></a></li>
+                <li><a href="{:U('Mobile/index')}">手机版</a></li> 
                 <li><a href="{:U('Settings/avatar')}">邀请</a></li> 
                 <li><a href="{:U('Account/logout')}">退出</a></li>
             </ul>

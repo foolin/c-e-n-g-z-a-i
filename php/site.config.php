@@ -11,6 +11,7 @@ return array(
     'SITE_KEYWORDS'         => '曾在,真爱,恋爱',
     'SITE_DESCRIPTION'      => '曾在网是一个真实恋爱社区，致力于情侣或夫妻之间交流，基于朋友之间的介绍或者追求的情感社区！',
     
+    'DEFAULT_MODULE'        => 'Home',
 
     /* 数据库设置 */
     'DB_TYPE'               => 'mysql',     // 数据库类型

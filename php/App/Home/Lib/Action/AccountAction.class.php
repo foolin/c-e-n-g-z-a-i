@@ -17,7 +17,7 @@ class AccountAction extends BaseAction {
      */
 	function login(){
 		//判断是否登录，登录则直接跳转
-		$login_user = $this->getLoginUser();
+		$login_user = $this->get_login_user();
 		if(!empty($login_user)){
 			$this->redirect('Home/index');
 		}
@@ -98,12 +98,12 @@ class AccountAction extends BaseAction {
      */
 	function register(){
 		//判断是否登录，登录则直接跳转
-		$login_user = $this->getLoginUser();
+		$login_user = $this->get_login_user();
 		if(!empty($login_user)){
 			$this->redirect('Home/index');
 		}
 		
-		//是否为post提交
+		//是否为post提交g
 		if($this->isPost()){
 			//验证码
 			if($this->_session('verify') != md5($this->_post('verify'))){
@@ -189,7 +189,7 @@ class AccountAction extends BaseAction {
      * 检查邀请码是否有效
      +----------------------------------------------------------
      */
-	function ajaxvalidatecode(){
+	function ajax_validate_code(){
 		if($this->isAjax()){
 			$code = $this->_post('code');
 			if(empty($code)){
@@ -217,7 +217,7 @@ class AccountAction extends BaseAction {
      * 检查邮箱是否注册
      +----------------------------------------------------------
      */
-	function ajaxvalidateemail(){
+	function ajax_validate_email(){
 		if($this->isAjax()){
 			$email = $this->_post('email');
 			if (empty($email) || !ereg("^[-a-zA-Z0-9_\.]+\@([0-9A-Za-z][0-9A-Za-z-]+\.)+[A-Za-z]{2,5}$",$email)){
@@ -243,7 +243,7 @@ class AccountAction extends BaseAction {
      * 用户注册第二步：完善资料
      +----------------------------------------------------------
      */
-	function regstep2(){
+	function reg_step2(){
 	}
 	
 	
@@ -252,7 +252,7 @@ class AccountAction extends BaseAction {
      * 用户注册第三步：挑选认识的朋友
      +----------------------------------------------------------
      */
-	function regstep3(){
+	function reg_step3(){
 	}
 	
 	
@@ -324,12 +324,12 @@ class AccountAction extends BaseAction {
 	}
 	
 	
-	function findpassword(){
+	function find_password(){
 		$this->tpl('找回密码');
 	}
 	
 	
-	function resendactive(){
+	function resend_active(){
 		$this->tpl('模板');
 	}
 	

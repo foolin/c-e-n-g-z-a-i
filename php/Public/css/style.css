@@ -257,6 +257,10 @@ table.user-counts{
 table.user-counts th{
 	font-weight:normal;
 	border-right: dashed 1px #CCCCCC;
+	width: 33.3%;
+}
+table.user-counts td{
+	width: 33.3%;
 }
 
 table.user-counts p{
@@ -335,5 +339,5 @@ table.user-counts a{
 	background: #fff;
 	border:5px solid #CCCCCC;
 	padding: 10px;
-	width: 280px;
+	width: 300px;
 }

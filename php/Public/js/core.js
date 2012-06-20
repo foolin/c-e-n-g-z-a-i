@@ -35,7 +35,7 @@ function isEmail(email){
 //刷新验证码
 function refreshVerify(id) {
 	var img = document.getElementById(id);
-	img.src = "{:U('Public/verify')}?t=" + new Date().getTime();
+	img.src = APP.HOST + "/Public/verify?t=" + new Date().getTime();
 }
 
 

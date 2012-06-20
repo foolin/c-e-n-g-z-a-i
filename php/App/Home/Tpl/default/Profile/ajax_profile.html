@@ -1,0 +1,41 @@
+<table class="table">
+	<thead>
+		<!--<tr>
+			<th colspan="2">{$user['name']}的个人资料</th>
+		</tr>-->
+		<tr>
+			<th>姓名</th>
+			<td>{$user['name']}</td>
+		</tr>
+	</thead>
+	<tbody>
+	
+	<tr>
+		<th>性别</th>
+		<td>{:sex($user['sex'])}</td>
+	</tr>
+	<tr>
+		<th>年龄</th>
+		<td>{:age($user['birth'])}</td>
+	</tr>
+	<tr>
+		<th>生日</th>
+		<td>{$user['birth']}</td>
+	</tr>
+	<tr>
+		<th>星座</th>
+		<td>{:constellation($user['birth'])}</td>
+	</tr>
+	<tr>
+		<th>签名</th>
+		<td>{$user['sign']}</td>
+	</tr>
+	<tr>
+		<th>介绍</th>
+		<td>{$user['intro']}</td>
+	</tr>
+	</tbody>
+</table>
+<if condition="$user['userid'] eq $login_user['userid']">
+	<a href="{:U('Settings/profile')}" class="btn btn-primary">编辑资料</a>
+</if>

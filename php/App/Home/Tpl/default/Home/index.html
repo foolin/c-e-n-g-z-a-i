@@ -33,7 +33,7 @@ $(document).ready(function(){
 		}
 		$.ajax({
 			type: "POST",
-			url:"{:U('Twitter/ajaxpost')}",
+			url:"{:U('Twitter/ajax_post')}",
 			data: "text=" + text,
 		   	success: function(msg){
 		   		var ret = eval('(' + msg + ')');
@@ -82,7 +82,7 @@ function checkTCount () {
 
 function loadTwitterList(){
 	$("#twitter-list").html('正在加载数据，请稍后...');
-	$.ajax("{:U('Twitter/ajaxList')}",
+	$.ajax("{:U('Twitter/ajax_friends_list')}",
 	{
 		type:'GET',
 		data:'page=1',
@@ -163,9 +163,9 @@ function loadTwitterList(){
 		  				<p>
   							<table class="user-counts">
 								<tr>
-									<th><a href="#">20</a><p>我认识</p></th>
-									<th><a href="#">20</a><p>认识我</p></th>
-									<td><a href="#">201</a><p>说说</p></td>
+									<th><a href="#">{$login_user['friends']}</a><p>我认识</p></th>
+									<th><a href="#">{$login_user['fans']}</a><p>认识我</p></th>
+									<td><a href="#">{$login_user['twitters']}</a><p>说说</p></td>
 								</tr>
 							</table>
 		  				</p>

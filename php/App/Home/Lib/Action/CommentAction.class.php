@@ -15,13 +15,13 @@ class CommentAction extends BaseAction {
      * 发表评论
      +----------------------------------------------------------
      */
-    function ajaxPost(){
+    function ajax_post(){
         //判断是否Ajax提交
         if(!$this->isAjax()){
             $this->ajaxReturn('', '非法操作！', 0);
             return;
         }
-        $user = $this->getLoginUser();
+        $user = $this->get_login_user();
         //判断是否登录
         if(empty($user)){
             $this->ajaxReturn('', '你尚未登录或者登录超时！', 0);
@@ -90,14 +90,14 @@ class CommentAction extends BaseAction {
      * 获取列表
      +----------------------------------------------------------
      */
-    function ajaxList(){
+    function ajax_list(){
         //判断是否Ajax提交
         if(!$this->isAjax()){
             $this->ajaxReturn('', '非法操作！', 0);
             return;
         }
         //判断是否登录
-        $user = $this->getLoginUser();
+        $user = $this->get_login_user();
         if(empty($user)){
             $this->ajaxReturn('', '你尚未登录或者登录超时！', 0);
             return;

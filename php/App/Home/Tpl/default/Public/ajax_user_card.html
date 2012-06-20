@@ -1,0 +1,43 @@
+<div id="user-card-{$user['userid']}" class="user-card">
+	<div class="row-fluid clearfix">
+		<div class="span3">
+			<a href="{:U('Profile/index', 'userid='. $user['userid'])}" >
+		      <img class="thumbnail" width="64" src="{:avatar_url($user['avartar'])}">
+		    </a>
+		</div>
+		<div class="span9">
+			<h3 style="text-indent: 1em;"><a href="{:U('Profile/index', 'userid='. $user['userid'])}">{$user['name']}</a> 
+				<img class="mgr5" src="__PUBLIC__/img/<if condition="$user['sex'] eq 2">girl<else />boy</if>.png"> 
+				<!--<span class="font12">单身</span>-- >
+				<span class="font12"><a href="#">张姐</a></span>-->
+			</h3>
+			<table class="user-counts">
+				<tr>
+					<th><a href="#">{$user['friends']}</a><p>Ta认识</p></th>
+					<th><a href="#">{$user['fans']}</a><p>认识Ta</p></th>
+					<td><a href="#">{$user['twitters']}</a><p>说说</p></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<p>
+		{$user['sign']}
+	</p>
+	<div>
+		<if condition="$user['userid'] eq $login_user['userid']">
+			自己
+		<else />
+			{:follow_link($login_user['userid'], $user['userid'])} 
+	     	<a href="#" class="btn btn-success"><i class="icon-envelope icon-white"></i> 私信</a> 
+	     	<a href="#" class="btn btn-warning"><i class="icon-magnet icon-white"></i> 牵线</a> 
+	     	<a href="#" class="btn btn-danger"><i class="icon-heart icon-white"></i> 追求</a> 
+		</if>
+     	<!--<a href="#" class="btn btn-info"><i class="icon-ok icon-white"></i> 认识</a> &nbsp;
+     	<a href="#" class="btn btn-info"><i class="icon-ok icon-white"></i> 认识</a> &nbsp;-->
+
+     	<!--<a href="#" class="btn btn-success"><i class="icon-heart icon-white"></i> 陈缪斌</a>-->
+	</div>
+</div>
+<script>
+	initFollowLinkAction();
+</script>

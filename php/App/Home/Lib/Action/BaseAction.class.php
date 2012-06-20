@@ -16,8 +16,8 @@ class BaseAction extends Action {
 	 * 登录则返回true，不登录则直接跳转到登录页面
      +----------------------------------------------------------
      */
-	function checkLogin(){
-		$user = $this->getLoginUser();
+	function check_login(){
+		$user = $this->get_login_user();
 		if(empty($user)){
 			$this->redirect('Account/login');
 		} 
@@ -30,7 +30,7 @@ class BaseAction extends Action {
 	 * 返回用户实体
      +----------------------------------------------------------
      */
-	function getLoginUser(){
+	function get_login_user(){
 		$user = session('LOGIN_USER');
 		if(empty($user)){
 				//加密算法：
@@ -81,7 +81,7 @@ class BaseAction extends Action {
 		$this->assign('title', $title);
 		
 		//登录用户
-		$user = $this->getLoginUser();
+		$user = $this->get_login_user();
 		$this->assign('login_user', $user);
 		
 		//显示模板

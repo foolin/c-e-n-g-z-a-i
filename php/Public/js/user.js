@@ -24,7 +24,7 @@ function openUserCard(_this){
 		return;
 	}
 	//异地获取
-	$.ajax(APP.HOST + '/public/ajaxusercard',{
+	$.ajax(APP.HOST + '/Public/ajax_user_card',{
 		type:'GET',
 		data:'userid=' + uid,
 		dataType:'json',
@@ -87,6 +87,47 @@ function initUserCard(){
 }
 
 
+/****************** 互相认识操作 *****************/
+function initFollowLinkAction(){
+	$("a[action='follow']").click(function(){
+		var url = $(this).attr('href');
+		var ths = $(this);
+		if(url.indexOf('del') != -1){
+			$.confirm('确定取消认识吗？'
+			, function(){
+				_doFollowAction(ths, url);
+			}, function(){
+				//alert('取消');
+			})
+		}
+		else{
+			_doFollowAction(ths, url);
+		}
+		return false;
+		
+	});
+}
+
+function _doFollowAction(ths, url){
+	$.ajax({
+		url:url,
+		type:'POST',
+		dataType:'json',
+		success:function(data){
+			if(data.status > 0){
+				ths.replaceWith(data.data);
+				initFollowLinkAction();
+			}
+			else{
+				$.alert(data.info);
+			}
+		}
+	})
+	return false;
+}
+
+
 $(document).ready(function(){
 	initUserCard();
+	initFollowLinkAction();
 })

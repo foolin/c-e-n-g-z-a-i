@@ -5,35 +5,38 @@
 	
     <div class="alert alert-block fade in"> 
         <a class="close" data-dismiss="alert" href="#">&times;</a> 
-        <p>爱窝，只有你和对方可以看到，别人是完全看不到的！</p>
+        <p>爱窝，你和Ta可以看到，别人是完全看不到的，秘密地带噢！</p>
     </div>
 	
-	<div class="container bg-white">
-		<div class="padding">
-			<div class="row-fluid">
-				<div class="boy-head span3 center">
-					<a href="#" >
-				      <img class="thumbnail" width="100" src="__PUBLIC__/img/noavatar.jpg">
-				    </a>
-				</div>
-				<div class="love-head span6 center">
-					<h1>刘付灵&卢常春的爱窝</h1>
-					<a href="#" >
-				      <img class="thumbnail" width="100" src="__PUBLIC__/img/noavatar.jpg">
-				    </a>
-				</div>
-				<div class="girl-head span3 center">
-					<a href="#" >
-				      <img class="thumbnail" width="100" src="__PUBLIC__/img/noavatar.jpg">
-				    </a>
-				</div>
-			</div>
-		</div>
-	</div>
-	<br>
-
 	<!--container-->
 	<div class="row-fluid">
+		
+	 <!--男方-->
+      <div class="span2">
+	  	<div class="padding bg-white">
+	  		
+	  		<div class="my-profile">
+	  			<!-- 头像和姓名-->
+	  			<div>
+	  				<a href="#" >
+				      <img class="thumbnail" width="100" src="__PUBLIC__/img/noavatar.jpg">
+				    </a>
+				    <h3 class="center">
+				    	<a href="#">傅凌</a> 
+				    	<img class="mgr5" src="__PUBLIC__/img/boy.png"> 
+				    </h3> 
+				    <p>心情很糟糕</p>
+	  			</div>
+	  			<!-- /头像和姓名-->
+				<hr>
+				<p>
+					我爱你天荒地老 <a href="#">编辑誓言</a>
+				</p>
+	  		</div>
+	  	</div>
+      </div>
+      <!--/男方-->
+      
       <!--container-main-->
       <div class="span8  bg-white">
       	<div class="padding">
@@ -41,7 +44,7 @@
         	<!-- /////////////////////// 发表说说区域 /////////////////-->
 			<div class="twitter-form">
 				<p>
-					<h3>说说爱情那些事？</h3>
+					<h3>我们已经相恋了1008天</h3>
 	        		<textarea id="ttext" id="ttext" class="twitter-areatext"></textarea>
         		</p>
         		<p>
@@ -49,7 +52,7 @@
         			<a href="#" class="btn"><i class="icon-facetime-video"></i>视频</a>
         			<span class="pull-right">
         				<span id="tcount">0/140</span>
-        				<input id="tsubmit" name="tsubmit" type="button" class="btn btn-large btn-primary" value="发表" />
+        				<input id="tsubmit" name="tsubmit" type="button" class="btn btn-large btn-primary" value="密语" />
         			</span>
         			
         		</p>
@@ -57,57 +60,51 @@
             <!-- /profile -->
             <hr>
 			
-            <div class="feed-list" id="twitter-list">
-				暂无内容
-            </div>
+			<!--内容区域-->
+			<ul class="nav nav-tabs">
+			  <li class="active"><a href="#twitter" data-toggle="tab">密语</a></li>
+			  <li><a href="#profile" data-toggle="tab">纪念日</a></li>
+			  <li><a href="#profile" data-toggle="tab">心愿</a></li>
+			  <!--<li><a href="#profile" data-toggle="tab">相册</a></li>-->
+			</ul>
+			<div class="tab-content">
+			  <div class="tab-pane active" id="home">...</div>
+			  <div class="tab-pane" id="profile">...</div>
+			  <div class="tab-pane" id="messages">...</div>
+			  <div class="tab-pane" id="settings">...</div>
+			</div>
+			<!--/内容区域-->
+
       	</div>
       </div>
       <!--/container-main-->
-      <!--container-sider-->
 
-      <div class="span4">
+	 <!--女方-->
+      <div class="span2">
 	  	<div class="padding bg-white">
 	  		
 	  		<div class="my-profile">
-	  			<div class="row-fluid clearfix">
-		  			<div class="span5">
-		  				<a href="#" >
-					      <img class="thumbnail" width="100" src="__PUBLIC__/img/noavatar.jpg">
-					    </a>
-					    <p class="center"><a href="#">上传头像</a></p>
-		  			</div>
-		  			<div class="span7 my-info">
-		  				<h3 style="text-indent: 1em;">{$login_user['name']} <img class="mgr5" src="__PUBLIC__/img/girl.png"></h3>
-		  				<p>
-  							<table class="user-counts">
-								<tr>
-									<th><a href="#">20</a><p>我认识</p></th>
-									<th><a href="#">20</a><p>认识我</p></th>
-									<td><a href="#">201</a><p>说说</p></td>
-								</tr>
-							</table>
-		  				</p>
-		  				<p class="center">
-		  					<a href="#" class="btn btn-warning"><i class="icon-home icon-white"></i> 主页</a>
-		  					<a href="#" class="btn btn-success disabled"><i class="icon-heart icon-white"></i> 单身</a>
-		  					<!--<a href="#" class="btn btn-success"><i class="icon-heart icon-white"></i> 陈缪斌</a>-->
-		  				</p>
-		  			</div>
+	  			<!-- 头像和姓名-->
+	  			<div>
+	  				<a href="#" >
+				      <img class="thumbnail" width="100" src="__PUBLIC__/img/noavatar.jpg">
+				    </a>
+				    <h3 class="center">
+				    	<a href="#">卢常春</a> 
+				    	<img class="mgr5" src="__PUBLIC__/img/girl.png"> 
+				    </h3> 
+				    <p>谢谢亲爱的</p>
 	  			</div>
-	  			<!-- /头像和姓名结束-->
+	  			<!-- /头像和姓名-->
 				<hr>
-				<ul>
-					<li><a href="#">我的主页</a></li>
-					<li><a href="#">我的说说</a></li>
-					<li><a href="#">我认识的人</a></li>
-					<li><a href="#">认识我的人</a></li>
-				</ul>
+				<p>
+					我爱你一生一世<a href="#">编辑誓言</a>
+				</p>
 	  		</div>
-	  		
-	  		
 	  	</div>
       </div>
-      <!--/container-sider-->
+      <!--/女方-->
+      
     </div>
     <!--/container-->
     

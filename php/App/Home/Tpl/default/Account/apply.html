@@ -66,7 +66,7 @@ $(function(){
         if(isEmail(email)){
 			$.ajax({
 				type: "POST",
-				url: "{:U('Account/ajaxValidateEmail')}",
+				url: "{:U('Account/ajax_validate_email')}",
 				data: "email=" + email,
 				success: function(msg){
 					var obj = $.parseJSON(msg);

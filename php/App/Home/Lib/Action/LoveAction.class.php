@@ -16,7 +16,7 @@ class LoveAction extends BaseAction {
      +----------------------------------------------------------
      */
     function index(){
-        $this->checkLogin();
+        $this->check_login();
         //echo "登录成功喇！<a href='".U('Account/login') ."'>登录</a> ！<a href='". U('Account/logout') ."'>退出</a> ";
         $this->tpl('我的爱窝');
     }

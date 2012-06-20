@@ -75,7 +75,7 @@ $(function(){
 		else{
 			$.ajax({
 				type: "POST",
-				url: "{:U('Account/ajaxValidateCode')}",
+				url: "{:U('Account/ajax_validate_code')}",
 				data: "code=" + code,
 				success: function(msg){
 					var obj = $.parseJSON(msg);
@@ -101,7 +101,7 @@ $(function(){
         if(isEmail(email)){
 			$.ajax({
 				type: "POST",
-				url: "{:U('Account/ajaxValidateEmail')}",
+				url: "{:U('Account/ajax_validate_email')}",
 				data: "email=" + email,
 				success: function(msg){
 					var obj = $.parseJSON(msg);

@@ -8,7 +8,7 @@
  * Copyright (c) 2012 cengzai.com All rights reserved.
  +------------------------------------------------------------------------------
  */
-class TwitterModel extends Model {
+class TwitterModel extends RelationModel {
     
     const TYPE_TEXT      =   0;       //文本
     const TYPE_IMAGE      =   1;      //图片
@@ -25,6 +25,17 @@ class TwitterModel extends Model {
         array('createtime',"now_datetime",1,'function'), // 对regtime字段在更新的时候写入当前时间戳
         array('createip','get_client_ip',1,'function'), //取ip
     );
+    
+    public $_link = array(
+       'User'=> array(
+        'mapping_type'      => BELONGS_TO,
+        'mapping_name'        => 'user',
+        'foreign_key'       => 'userid',
+        'mapping_fields'    => 'email,name,avatar,sex'
+       ),
+       
+    );
+
 }
 
 ?>

@@ -1,0 +1,10 @@
+<volist name="storys" id="story" empty="我de故事都绝密了(*^__^*)">
+<h3>{$story['title']}</h3>
+<p>{$story['content']}</p>
+</volist>
+<hr>
+<div>
+<if condition="$user['userid'] eq $login_user['userid']">
+	<a href="{:U('Settings/story')}" class="btn btn-primary">编辑故事</a>
+</if>
+</div>
